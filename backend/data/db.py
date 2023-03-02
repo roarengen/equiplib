@@ -10,11 +10,6 @@ class DatabaseTables:
     EQUIPMENT = "Equipment"
     ORG = "Organization"
 
-DATABASETABLECOLUMNS = {
-    DatabaseTables.ROLES : "roleName, isActive",
-    DatabaseTables.USERS : "roleid, username, password, name, phone, membershipId, otherId, street, city, postalcode, datOfBirth, comment, other1, other2, activeFromDate, activeToDate, organizationId",
-}
-
 class DatabaseObject(Protocol):
     def serialize(self) -> list:
         ...
@@ -93,7 +88,7 @@ class DatabaseManager:
                     )
         cur.close()
 
-    def insert_into(self, table: DatabaseTables , object : DatabaseObject):
+    def insert_into(self, table: DatabaseTables, object : DatabaseObject):
         cur = self.connection.cursor()
         id = self._find_highest_id(table)
         data = object.serialize()
