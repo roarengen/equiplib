@@ -102,8 +102,19 @@ class DatabaseManager:
         cur = self.connection.cursor()
         cur.execute(f"SELECT * from {table}")
         raw_list_of_entities = cur.fetchall()
+        instance = expected_type()
+        keys = list(instance.serialize().keys())
+        
+        data = []
+        for entity in raw_list_of_entities:
+            dict = {}
+            for i in range(len(entity)):
+                dict[keys[i]] = entity[i]
+                
+            data.append(dict)
+            
         cur.close()
-        list_of_entities: expected_type = [expected_type.deserialize(y) for y in raw_list_of_entities]
+        list_of_entities: expected_type = [expected_type.deserialize(entity) for entity in data]
         return list_of_entities
         
 
