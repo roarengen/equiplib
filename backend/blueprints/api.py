@@ -37,7 +37,7 @@ def make_new_user():
     if not password or not email or not name:
         raise ValueError("Not enough information")
     new_user = User()
-    new_user.password = password
+    new_user.password = str(password)
     new_user.email = email
     new_user.name = name
     new_user.hash_password()
@@ -67,5 +67,5 @@ def get_users():
     serialized_users = []
     
     for user in users:
-        serialized_users.append(user.to_dict())
+        serialized_users.append(user.serialize())
     return jsonify(serialized_users)
