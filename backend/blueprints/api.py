@@ -41,12 +41,28 @@ def make_new_user():
     dbm.insert_into(DatabaseTables.USERS, new_user)
     return make_response("", 201)
     
-@api.get("/users")
+@api.get("/users/<int:id>")
+def get_user(id):
+    users = dbm.query(DatabaseTables.USERS, User)
+    serialized_users = []
+    
+    for user in users:
+        serialized_users.append(user.to_dict())
+        
+    current_user = None  
+    for user in serialized_users:
+        if user['id'] == id:
+            current_user = user
+    
+    if current_user == None:
+        return make_response("Index out of range", 400)
+    return jsonify(current_user)
+
+@api.route("/users")
 def get_users():
     users = dbm.query(DatabaseTables.USERS, User)
     serialized_users = []
+    
     for user in users:
         serialized_users.append(user.to_dict())
     return jsonify(serialized_users)
-
-
