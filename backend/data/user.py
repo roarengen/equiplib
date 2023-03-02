@@ -2,6 +2,7 @@ from extensions import db
 from data.organization import Organization
 from data.role import Role
 from data.serializer import Serializable
+import bcrypt
 
 class User(db.Model, Serializable):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,6 +23,10 @@ class User(db.Model, Serializable):
     activeFromDate = db.Column(db.Date)
     activeToDate = db.Column(db.Date)
     organizationid = db.Column(db.Integer, db.ForeignKey(Organization.id), nullable=False)
+
+    def verify_password(self, password):
+        pwhash = bcrypt.hashpw(password, self.password)
+        return self.password == pwhash
 
     def __repr__(self):
         return '<User %r>' % self.username
