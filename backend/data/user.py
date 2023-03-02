@@ -1,74 +1,27 @@
-from __future__ import annotations
-import bcrypt
+from extensions import db
+from data.organization import Organization
+from data.role import Role
+from data.serializer import Serializable
 
-class User:
-    def __init__(self) -> None:
-        self.id = 1
-        self.roleid = 1
-        self.username = ""
-        self.password = ""
-        self.name = ""
-        self.email = ""
-        self.phone = ""
-        self.membershipid = ""
-        self.otherid = ""
-        self.city = ""
-        self.postalcode = ""
-        self.dateofbirth = ""
-        self.comment = ""
-        self.other1 = ""
-        self.other2 = ""
-        self.activefromdate = ""
-        self.activetodate = ""
-        self.organizationid = 1
+class User(db.Model, Serializable):
+    id = db.Column(db.Integer, primary_key=True)
+    roleid = db.Column(db.Integer, db.ForeignKey(Role.id), nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(80), nullable=False)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    phone = db.Column(db.String(20))
+    membershipid = db.Column(db.String(80))
+    otherid = db.Column(db.String(80))
+    city = db.Column(db.String(80))
+    postalcode = db.Column(db.String(80))
+    dateOfBirth = db.Column(db.Date)
+    comment = db.Column(db.String(80))
+    other1 = db.Column(db.String(80))
+    other2 = db.Column(db.String(80))
+    activeFromDate = db.Column(db.Date)
+    activeToDate = db.Column(db.Date)
+    organizationid = db.Column(db.Integer, db.ForeignKey(Organization.id), nullable=False)
 
-
-    @staticmethod
-    def deserialize(data:dict[str, any] | tuple[any]) -> User:
-        new_user = User()
-        if type(data) == dict:
-            # from web
-            for attr in data:
-                setattr(new_user, attr, data[attr])
-
-        elif type(data) == tuple:
-            # from db
-            setattr(new_user, 'id', data[0])
-            setattr(new_user, 'username', data[1])
-            setattr(new_user, 'role', data[2])
-        
-        return new_user
-    
-    def serialize(self):
-        return {
-        "id" : self.id,
-        "roleid" : self.roleid,
-        "username" : self.username,
-        "password" : self.password,
-        "name" : self.name,
-        "email" : self.email,
-        "phone" : self.phone,
-        "membershipid" : self.membershipid,
-        "otherid" : self.otherid,
-        "city" : self.city,
-        "postalcode" : self.postalcode,
-        "dateofbirth   " : self.dateofbirth,
-        "comment" : self.comment,
-        "other1" : self.other1,
-        "other2" : self.other2,
-        "activefromdate" : self.activefromdate,
-        "activetodate" : self.activetodate,
-        "organizationid" : self.organizationid,
-        }
-
-    def hash_password(self):
-        if self.password:
-            password = self.password
-            bytes = password.encode('utf-8')
-            salt = bcrypt.gensalt()
-            hash = bcrypt.hashpw(bytes, salt)
-            self.password = hash
-            
-
-    def __str__(self):
-        return str(self.username)
+    def __repr__(self):
+        return '<User %r>' % self.username
