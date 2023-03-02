@@ -18,15 +18,21 @@ class User:
 
         elif type(data) == tuple:
             # from db
-            setattr(new_user, 'userid', data[0])
-            setattr(new_user, 'roleid', data[1])
-            setattr(new_user, 'username', data[2])
+            setattr(new_user, 'id', data[0])
+            setattr(new_user, 'username', data[1])
+            setattr(new_user, 'role', data[2])
         
         return new_user
-        
+    
+    def to_dict(self):
+        return {
+            "id" : self.id,
+            "username" : self.username,
+            "role" : self.role,
+        }
 
     def serialize(self) -> list[any]:
-       return [self.id, self.role, self.username] 
+       return [self.role, self.username] 
 
     def hash_password(self):
         ...
