@@ -54,7 +54,6 @@ class DatabaseManager:
         cur.execute(f"SELECT * from {table}")
         raw_list_of_entities = cur.fetchall()
         cur.close()
-        print(raw_list_of_entities)
         list_of_entities: expected_type = [expected_type.deserialize(y) for y in raw_list_of_entities]
         return list_of_entities
         
