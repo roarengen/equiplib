@@ -1,28 +1,35 @@
 from __future__ import annotations
 
 class User:
-    def __init__(self, name:str, password:str, email:str, *args) -> None:
-        self.name = name
+    def __init__(self, username:str, password:str, email:str, *args) -> None:
+        self.id = 1
+        self.username = username
         self.password = password
         self.email = email
         self.role = 1
 
     @staticmethod
-    def deserialize(data:dict) -> User:
-        try:
-            name = data['name']
-            password = data['password']
-            email = data['email']
-        except:
-            raise ValueError("unable to deserialize data to produce a user. \ndata.", data)
+    def deserialize(data:dict[str, any] | tuple[any]) -> User:
+        new_user = User("", "", "")
+        if type(data) == dict:
+            # from web
+            for attr in data:
+                setattr(new_user, attr, data[attr])
 
-        return User(name, password, email)
+        elif type(data) == tuple:
+            # from db
+            setattr(new_user, 'userid', data[0])
+            setattr(new_user, 'roleid', data[1])
+            setattr(new_user, 'username', data[2])
+        
+        return new_user
+        
 
-    def save(self):
-        ...
+    def serialize(self) -> list[any]:
+       return [self.id, self.role, self.username] 
 
     def hash_password(self):
         ...
 
     def __str__(self):
-        return self.email
+        return str(self.username)
