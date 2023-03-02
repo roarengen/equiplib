@@ -36,7 +36,10 @@ def make_new_user():
         
     if not password or not email or not name:
         raise ValueError("Not enough information")
-    new_user = User(name, password, email)
+    new_user = User()
+    new_user.password = password
+    new_user.email = email
+    new_user.name = name
     new_user.hash_password()
     dbm.insert_into(DatabaseTables.USERS, new_user)
     return make_response("", 201)
@@ -46,7 +49,7 @@ def get_users():
     users = dbm.query(DatabaseTables.USERS, User)
     serialized_users = []
     for user in users:
-        serialized_users.append(user.to_dict())
+        serialized_users.append(user.serialize())
     return jsonify(serialized_users)
 
 

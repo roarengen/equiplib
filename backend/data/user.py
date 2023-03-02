@@ -1,16 +1,30 @@
 from __future__ import annotations
 
 class User:
-    def __init__(self, username:str, password:str, email:str, *args) -> None:
+    def __init__(self) -> None:
         self.id = 1
-        self.username = username
-        self.password = password
-        self.email = email
-        self.role = 1
+        self.roleid = 1
+        self.username = ""
+        self.password = ""
+        self.name = ""
+        self.email = ""
+        self.phone = ""
+        self.membershipid = ""
+        self.otherid = ""
+        self.city = ""
+        self.postalcode = ""
+        self.dateofbirth = ""
+        self.comment = ""
+        self.other1 = ""
+        self.other2 = ""
+        self.activefromdate = ""
+        self.activetodate = ""
+        self.organizationid = 1
+
 
     @staticmethod
     def deserialize(data:dict[str, any] | tuple[any]) -> User:
-        new_user = User("", "", "")
+        new_user = User()
         if type(data) == dict:
             # from web
             for attr in data:
@@ -24,15 +38,27 @@ class User:
         
         return new_user
     
-    def to_dict(self):
+    def serialize(self):
         return {
-            "id" : self.id,
-            "username" : self.username,
-            "role" : self.role,
+        "id" : self.id            ,
+        "roleid" : self.roleid        ,
+        "username" : self.username      ,
+        "password" : self.password      ,
+        "name" : self.name          ,
+        "email" : self.email         ,
+        "phone" : self.phone         ,
+        "membershipid" : self.membershipid  ,
+        "otherid" : self.otherid       ,
+        "city" : self.city          ,
+        "postalcode" : self.postalcode    ,
+        "dateofbirth   " : self.dateofbirth   ,
+        "comment" : self.comment       ,
+        "other1" : self.other1        ,
+        "other2" : self.other2        ,
+        "activefromdate" : self.activefromdate,
+        "activetodate" : self.activetodate  ,
+        "organizationid" : self.organizationid,
         }
-
-    def serialize(self) -> list[any]:
-       return [self.role, self.username] 
 
     def hash_password(self):
         ...

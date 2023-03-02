@@ -10,8 +10,13 @@ class DatabaseTables:
     EQUIPMENT = "Equipment"
     ORG = "Organization"
 
+DATABASETABLECOLUMNS = {
+    DatabaseTables.ROLES : "roleName, isActive",
+    DatabaseTables.USERS : "roleid, username, password, name, phone, membershipId, otherId, street, city, postalcode, datOfBirth, comment, other1, other2, activeFromDate, activeToDate, organizationId",
+}
+
 class DatabaseObject(Protocol):
-    def serialize(self):
+    def serialize(self) -> list:
         ...
 
     @staticmethod
@@ -22,21 +27,67 @@ class DatabaseManager:
     def __init__(self, path: str = ":memory:") -> None:
         self.connection = sqlite3.connect(path, check_same_thread=False)
 
+    def _find_highest_id(self, table: DatabaseTables) -> int:
+        cur = self.connection.cursor()
+        cur.execute(f"""SELECT * FROM {table} order by id desc
+        """)
+        entity = cur.fetchone()
+        cur.close()
+        if not entity:
+            return 0
+        return entity[0]
+
     def initalize(self):
         cur = self.connection.cursor()
 
-        cur = cur.execute(f"""CREATE TABLE IF NOT EXISTS {DatabaseTables.ROLES} (
-        roleid integer PRIMARY KEY AUTOINCREMENT,
+        cur.execute(f"""CREATE TABLE IF NOT EXISTS {DatabaseTables.ORG} (
+                id integer PRIMARY KEY,
+                organizationNumber text not null,
+                organizationName text not null,
+                email text,
+                phone text,
+                street text,
+                city text,
+                postalCode text,
+                otherId text,
+                other1 text,
+                other2 text,
+                organizationOtherIdLabel text,
+                organizationOther1Label text,
+                organizationOther2Label text,
+                userOtherIdLabel text,
+                userOther1Label text,
+                userOther2Label text
+            );""")
+
+        cur.execute(f"""CREATE TABLE IF NOT EXISTS {DatabaseTables.ROLES} (
+        id integer PRIMARY KEY,
         roleName text not null,
         isActive int not null
         );
         """)
 
         cur.execute(f"""CREATE TABLE IF NOT EXISTS {DatabaseTables.USERS}(
-                    userid integer PRIMARY KEY AUTOINCREMENT,
+                    id integer PRIMARY KEY,
+                    roleid integer not null,
                     username text not null,
-                    roleid int not null,
-                    FOREIGN KEY (roleid) REFERENCES Roles(roleid)
+                    password text not null,
+                    name text not null,
+                    email text not null,
+                    phone text,
+                    membershipid text,
+                    otherId text,
+                    city text,
+                    postalcode text,
+                    dateOfBirth text,
+                    comment text,
+                    other1 text,
+                    other2 text,
+                    activeFromDate text,
+                    activeToDate text,
+                    organizationId int not null,
+                    FOREIGN KEY (organizationId) REFERENCES Organizations(id)
+                    FOREIGN KEY (roleid) REFERENCES Roles(id)
                     );
                     """
                     )
@@ -44,9 +95,12 @@ class DatabaseManager:
 
     def insert_into(self, table: DatabaseTables , object : DatabaseObject):
         cur = self.connection.cursor()
+        id = self._find_highest_id(table)
         data = object.serialize()
-        values:str = "".join(["?, " for _ in data])[:-2]
-        cur.execute(f"INSERT INTO {table} (roleid, username) VALUES({values})", data)
+        data['id'] = id + 1
+        data = [point for point in data.values()]
+        values: str = "".join(["?, " for _ in data])[:-2]
+        cur.execute(f"INSERT INTO {table} VALUES({values})", data)
         cur.close()
 
     def query(self, table: DatabaseTables, expected_type: DatabaseObject) -> list[DatabaseObject]:
