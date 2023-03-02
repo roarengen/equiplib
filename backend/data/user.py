@@ -1,4 +1,5 @@
 from __future__ import annotations
+import bcrypt
 
 class User:
     def __init__(self) -> None:
@@ -61,7 +62,13 @@ class User:
         }
 
     def hash_password(self):
-        ...
+        if self.password:
+            password = self.password
+            bytes = password.encode('utf-8')
+            salt = bcrypt.gensalt()
+            hash = bcrypt.hashpw(bytes, salt)
+            self.password = hash
+            
 
     def __str__(self):
         return str(self.username)
