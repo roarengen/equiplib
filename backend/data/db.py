@@ -1,3 +1,3 @@
 import sqlite3
 
-sqlite3.connect("sqlite.db")
+sqlite3.connect(":memory:") # RUNS IN MEMORY DURING PROTOPYING
