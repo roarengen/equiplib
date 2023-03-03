@@ -21,20 +21,25 @@ def make_new_user():
     roleid = 1
     username = ""
     password = ""
-    name = ""
+    lastname = ""
+    firstname = ""
     email = ""
     organizationid = 1
     data = request.get_json()
     for key in data:
-        if key == "name":
-            name = data[key]
+        if key == "username":
+            username = data[key]
+        if key == "firstname":
+            firstname = data[key]
+        if key == "lastname":
+            lastname = data[key]
         if key == "password":
             password = data[key]
         if key == "email":
             email = data[key]
 
-    new_user = User(roleid=roleid, username=username, password=password, name=name, email=email, organizationid=organizationid)
-    if not password or not email or not name:
+    new_user = User(roleid=roleid, firstname=firstname, lastname=lastname, username=username, password=password, email=email, organizationid=organizationid)
+    if not password or not email or not firstname or not username or not lastname:
         raise ValueError("Not enough information")
     db.session.add(new_user)
     db.session.commit()
