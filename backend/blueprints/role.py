@@ -16,5 +16,5 @@ def get_roles():
 def get_role(id):
     roles = Role.query.filter(Role.id==id).first()
     if not roles:
-        return make_response("", RESPONSE_CODES.BAD_REQUEST)
+        return make_response(f"role with id: {id} not found", RESPONSE_CODES.BAD_REQUEST)
     return jsonify(roles.serialize())
