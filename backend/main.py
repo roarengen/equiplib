@@ -17,6 +17,8 @@ app.app_context().push()
 
 
 def seed_database():
+    db.drop_all()
+    db.create_all()
     test_org = Organization(organizationName="Kjell's taco", organizationNumber="1234567")
     boss_role = Role(name="boss", active=True)
     test_user = User(firstname="Kjell", lastname="Taco", password="test", username="kjelltaco", email="kjelltaco@taco.com", roleid=1, organizationid=1)
