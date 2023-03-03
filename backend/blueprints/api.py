@@ -35,11 +35,14 @@ def get_user(id):
 @api.put("/users/<int:id>")
 def update_user(id):
     RESPONSE_CODE = 404
-    current_user = User.query.filter(User.id==id).first()
+    data = request.json()
+    user = User.query.filter(User.id==id).first()
     if current_user:
-        db.session.delete(current_user)
+        for key, value in data.items():
+            setattr(user, key, value)
+        db.session.update(user)
         db.session.commit()
-        RESPONSE_CODE = 204
+        RESPONSE_CODE = 201
     return make_response("",RESPONSE_CODE)
 
 @api.delete("/users/<int:id>")
