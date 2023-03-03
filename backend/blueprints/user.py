@@ -25,12 +25,12 @@ def post_user():
     data = request.get_json()
     try:
         new_user = User(
-            roleid=data['roleid'], 
-            firstname=data['firstname'], 
-            lastname=data['lastname'], 
-            username=data['username'], 
-            password=data['password'], 
-            email=data['email'], 
+            roleid=data['roleid'],
+            firstname=data['firstname'],
+            lastname=data['lastname'],
+            username=data['username'],
+            password=data['password'],
+            email=data['email'],
             organizationid=data['organizationid'])
     except KeyError:
         return make_response("invalid request", RESPONSE_CODES.BAD_REQUEST)
@@ -110,5 +110,13 @@ def login_user_qr():
     except:
         make_response("", RESPONSE_CODES.BAD_REQUEST)
     return make_response("", RESPONSE_CODES.UNAUTHORIZED)
+
+@api.post("/by_org/<int:orgid>")
+@cross_origin()
+def get_users_by_org(orgid:int):
+    users = User.query.filter(User.organizationid == orgid).all()
+    if users:
+        return jsonify(User.serialize_list(users))
+    return make_response("", RESPONSE_CODES.NOT_FOUND)
 
 docs.register(post_user, blueprint="api.users")

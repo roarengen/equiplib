@@ -15,3 +15,6 @@ class Template(db.Model, Serializable):
     userOther2 = db.Column(db.String(15))
     rentPurpose = db.Column(db.String(15))
     rentComment = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Template>'
