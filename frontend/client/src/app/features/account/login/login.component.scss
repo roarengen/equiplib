@@ -41,4 +41,19 @@
     }
   }
 
+  .login-qr{
+    text-align: center;
+    color: var(--palette-orange);
+  }
+
+
+
+}
+
+:host zxing-scanner::ng-deep {
+  max-height: 10vh;
+  width: 300px;
+  object-fit: contain;
+  border-radius: 25px;
+
 }
