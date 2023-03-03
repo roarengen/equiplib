@@ -1,0 +1,55 @@
+html {
+  height: 100%;
+  // font-size: 16px;
+  font-size: 1rem;
+  font-family:  'Open Sans' , sans-serif;
+  text-size-adjust: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+@media (display-mode: fullscreen) {
+  body {
+    height: 100%;
+  }
+}
+
+@media (display-mode: standalone) {
+  body {
+    height: 100%;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.hide-small {
+  @include media-breakpoint-down(tablet) {
+    display: none;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
