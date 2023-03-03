@@ -21,6 +21,10 @@
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
     "@angular/service-worker": "^15.2.0",
+    "@zxing/browser": "^0.1.1",
+    "@zxing/library": "^0.19.2",
+    "@zxing/ngx-scanner": "^3.8.1",
+    "jsqr": "^1.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
