@@ -24,7 +24,9 @@ root*
 * flask-SQLalchemy
 
 ### Style guide
-Follow the [PEP-8](https://peps.python.org/pep-0008/) style guide
+Follow the [PEP-8](https://peps.python.org/pep-0008/) style guide.
+Always use type hints if possible.
+(if you're struggling with type hints: [annotations](https://docs.python.org/3/howto/annotations.html), [Protocols](https://peps.python.org/pep-0544/))
 
 ### How to:
 
