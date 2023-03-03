@@ -8,6 +8,7 @@ click==8.1.3
 colorama==0.4.5
 dill==0.3.5.1
 Flask==2.2.3
+flak-cors==3.0.10
 flask-apispec==0.11.4
 Flask-SQLAlchemy==3.0.3
 future==0.18.2
@@ -25,11 +26,9 @@ neovim==0.3.1
 packaging==23.0
 parso==0.8.3
 pefile==2022.5.30
-Pillow==9.2.0
 platformdirs==2.5.2
 pycodestyle==2.9.1
 pylint==2.15.2
-pynvim==0.4.3
 pywin32-ctypes==0.2.0
 SQLAlchemy==2.0.4
 sqlparse==0.4.3
