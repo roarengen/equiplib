@@ -9,6 +9,7 @@ import { User } from '../models/user'
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
+    singleEvent$: BehaviorSubject<Event>;
     private userSubject: BehaviorSubject<User>;
     public user: Observable<User>;
 
@@ -25,17 +26,18 @@ export class AccountService {
     }
 
     login(username: any, password:any) {
-        return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })
+        return this.http.post<User>(`${environment.apiUrl}/users/login`, { username, password })
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
+                console.log(user)
                 this.userSubject.next(user);
                 return user;
             }));
     }
 
     qrCodeLogin(id: any, password:any) {
-      return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { id, password })
+      return this.http.post<User>(`${environment.apiUrl}/users`, { id, password })
           .pipe(map(user => {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               localStorage.setItem('user', JSON.stringify(user));
@@ -77,7 +79,7 @@ export class AccountService {
             }));
     }
 
-    delete(id: string) {
+    delete(id: number) {
         return this.http.delete(`${environment.apiUrl}/users/${id}`)
             .pipe(map(x => {
                 if (id == this.userValue.id) {

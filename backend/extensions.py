@@ -1,7 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_apispec import FlaskApiSpec
-db = SQLAlchemy()
+from flask_cors import CORS
 docs = FlaskApiSpec()
+cors = CORS()
+db = SQLAlchemy()
+
 def seed_database():
     from data.user import User
     from data.role import Role
@@ -20,4 +23,3 @@ def seed_database():
     db.session.add(boss_role)
     db.session.add(test_user)
     db.session.commit()
-
