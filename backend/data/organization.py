@@ -19,3 +19,5 @@ class Organization(db.Model, Serializable):
     userOther1Label = db.Column(db.String(80))
     userOther2Label = db.Column(db.String(80))
 
+    def __repr__(self):
+        return '<Organization %r>' % self.organizationName
