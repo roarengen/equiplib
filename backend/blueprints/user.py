@@ -1,11 +1,23 @@
 from flask import Blueprint, request, jsonify, make_response
+from flask_apispec import use_kwargs, marshal_with
+from webargs import fields
 from sqlalchemy.sql.functions import current_user
 import sqlalchemy
 from data.user import User
-from extensions import db
+from extensions import db, docs
 
 api = Blueprint("users", __name__)
 
+@use_kwargs({
+    'roleid' : fields.Int(),
+    'firstname' : fields.Str(),
+    'lastname' : fields.Str(),
+    'username' : fields.Str(),
+    'password' : fields.Str(),
+    'email' : fields.Str(),
+    'organizationid' : fields.Str(),
+    })
+@marshal_with(User)
 @api.post("/")
 def post_user():
     data = request.get_json()
@@ -62,3 +74,6 @@ def delete_user(id):
 def get_users():
     users = User.query.all()
     return jsonify(User.serialize_list(users))
+
+
+docs.register(post_user, blueprint="api.users")

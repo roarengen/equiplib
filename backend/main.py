@@ -1,7 +1,6 @@
 from blueprints import api
 from flask import Flask
-from extensions import db, seed_database
-
+from extensions import db, docs, seed_database
 
 app = Flask(__name__)
 app.register_blueprint(api, url_prefix='/api/')
@@ -9,6 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+docs.init_app(app)
 app.app_context().push()
 
 

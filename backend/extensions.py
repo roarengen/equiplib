@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_apispec import FlaskApiSpec
 db = SQLAlchemy()
+docs = FlaskApiSpec()
 def seed_database():
     from data.user import User
     from data.role import Role
