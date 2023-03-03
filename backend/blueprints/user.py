@@ -4,10 +4,10 @@ import sqlalchemy
 from data.user import User
 from extensions import db
 
-api = Blueprint("api", __name__)
+api = Blueprint("users", __name__)
 
-@api.post("/users")
-def make_new_user():
+@api.post("/")
+def post_user():
     data = request.get_json()
     try:
         new_user = User(
@@ -28,11 +28,14 @@ def make_new_user():
 
     return make_response("", 201)
 
-@api.get("/users/<int:id>")
+@api.get("/<int:id>")
 def get_user(id):
-    ...
+    user = User.query.filter(User.id==id).first()
+    if user:
+        return jsonify(user.serialize())
+    return make_response("",404)
 
-@api.put("/users/<int:id>")
+@api.put("/<int:id>")
 def update_user(id):
     RESPONSE_CODE = 404
     data = request.json()
@@ -45,7 +48,7 @@ def update_user(id):
         RESPONSE_CODE = 201
     return make_response("",RESPONSE_CODE)
 
-@api.delete("/users/<int:id>")
+@api.delete("/<int:id>")
 def delete_user(id):
     RESPONSE_CODE = 404
     current_user = User.query.filter(User.id==id).first()
@@ -55,7 +58,7 @@ def delete_user(id):
         RESPONSE_CODE = 204
     return make_response("",RESPONSE_CODE)
 
-@api.route("/users")
+@api.get("/")
 def get_users():
     users = User.query.all()
     return jsonify(User.serialize_list(users))
