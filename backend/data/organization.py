@@ -1,5 +1,6 @@
 from extensions import db
 from data.serializer import Serializable
+from data.template import Template
 
 class Organization(db.Model, Serializable):
     id = db.Column(db.Integer, primary_key=True)
@@ -12,12 +13,7 @@ class Organization(db.Model, Serializable):
     otherId = db.Column(db.String(80))
     other1 = db.Column(db.String(80))
     other2 = db.Column(db.String(80))
-    organizationOtherIdLabel = db.Column(db.String(80))
-    organizationOther1Label = db.Column(db.String(80))
-    organizationOther2Label = db.Column(db.String(80))
-    userOtherIdLabel = db.Column(db.String(80))
-    userOther1Label = db.Column(db.String(80))
-    userOther2Label = db.Column(db.String(80))
+    templateid = db.Column(db.Integer, db.ForeignKey(Template.id), nullable=False)
 
     def __repr__(self):
         return '<Organization %r>' % self.organizationName
