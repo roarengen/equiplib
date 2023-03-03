@@ -13,8 +13,6 @@ db.init_app(app)
 docs.init_app(app)
 app.app_context().push()
 
-
-
 #seed_database()
 
 if __name__ == "__main__":

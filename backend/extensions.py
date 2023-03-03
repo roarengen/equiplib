@@ -5,6 +5,15 @@ docs = FlaskApiSpec()
 cors = CORS()
 db = SQLAlchemy()
 
+class RESPONSE_CODES:
+    SUCCESS = 200
+    CREATED = 201
+    BAD_REQUEST = 400
+    UNAUTHORIZED = 403
+    NOT_FOUND = 404
+    SERVER_ERROR = 500
+
+
 def seed_database():
     from data.user import User
     from data.role import Role

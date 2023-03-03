@@ -5,7 +5,7 @@ from webargs import fields
 from sqlalchemy.sql.functions import current_user
 import sqlalchemy
 from data.user import User
-from extensions import db, docs
+from extensions import db, docs, RESPONSE_CODES
 
 api = Blueprint("users", __name__)
 
@@ -33,14 +33,14 @@ def post_user():
             email=data['email'], 
             organizationid=data['organizationid'])
     except KeyError:
-        return make_response("invalid request", 400)
+        return make_response("invalid request", RESPONSE_CODES.BAD_REQUEST)
     try:
         db.session.add(new_user)
         db.session.commit()
     except sqlalchemy.exc.IntegrityError:
-        return make_response("user with that username already exists", 400)
+        return make_response("user with that username already exists", RESPONSE_CODES.BAD_REQUEST)
 
-    return make_response("", 201)
+    return make_response("", RESPONSE_CODES.SUCCESS)
 
 @api.get("/<int:id>")
 @cross_origin()
@@ -48,12 +48,12 @@ def get_user(id):
     user = User.query.filter(User.id==id).first()
     if user:
         return jsonify(user.serialize())
-    return make_response("",404)
+    return make_response("",RESPONSE_CODES.NOT_FOUND)
 
 @api.put("/<int:id>")
 @cross_origin()
 def update_user(id):
-    RESPONSE_CODE = 404
+    RESPONSE_CODE = RESPONSE_CODES.NOT_FOUND
     data = request.json()
     user = User.query.filter(User.id==id).first()
     if current_user:
@@ -61,18 +61,18 @@ def update_user(id):
             setattr(user, key, value)
         db.session.update(user)
         db.session.commit()
-        RESPONSE_CODE = 201
+        RESPONSE_CODE = RESPONSE_CODES.CREATED
     return make_response("",RESPONSE_CODE)
 
 @api.delete("/<int:id>")
 @cross_origin()
 def delete_user(id):
-    RESPONSE_CODE = 404
+    RESPONSE_CODE = RESPONSE_CODES.NOT_FOUND
     current_user = User.query.filter(User.id==id).first()
     if current_user:
         db.session.delete(current_user)
         db.session.commit()
-        RESPONSE_CODE = 204
+        RESPONSE_CODE = RESPONSE_CODES.CREATED
     return make_response("",RESPONSE_CODE)
 
 @api.get("/")
@@ -88,14 +88,14 @@ def login_user():
     try:
         username, password = data['username'], data['password']
     except:
-        make_response("", 400)
+        make_response("", RESPONSE_CODES.BAD_REQUEST)
 
     user = User.query.filter(User.username == username).first()
     if user:
         #user.verify_password(password)
         return jsonify(user.serialize())
 
-    return make_response("", 403)
+    return make_response("", RESPONSE_CODES.UNAUTHORIZED)
 
 docs.register(post_user, blueprint="api.users")
 
@@ -106,13 +106,13 @@ def login_user_qr():
     try:
         qrstring, password = data['username'], data['password']
     except:
-        make_response("", 400)
+        make_response("", RESPONSE_CODES.BAD_REQUEST)
 
     user = User.query.filter(User.id == qrstring).first()
     if user:
         #user.verify_password(password)
         return jsonify(user.serialize())
 
-    return make_response("", 403)
+    return make_response("", RESPONSE_CODES.UNAUTHORIZED)
 
 docs.register(post_user, blueprint="api.users")
