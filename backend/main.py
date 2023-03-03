@@ -31,7 +31,7 @@ def seed_database():
     db.session.add(test_user)
     db.session.commit()
 
-seed_database()
+#seed_database()
 
 if __name__ == "__main__":
     app.run("localhost", 8888, True)

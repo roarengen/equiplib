@@ -1,54 +1,56 @@
 from flask import Blueprint, request, jsonify, make_response
 from sqlalchemy.sql.functions import current_user
+import sqlalchemy
 from data.user import User
 from extensions import db
 
 api = Blueprint("api", __name__)
 
-def register_user(data:dict):
-    new_user = User.deserialize(data)
-    ...
-
-@api.route("/", methods=["get", "post"])
-def register():
-    if request.method == "POST":
-        register_user(request.get_json())
-        return "post"
-    return jsonify("hello, world")
-
 @api.post("/users")
 def make_new_user():
-    roleid = 1
-    username = ""
-    password = ""
-    lastname = ""
-    firstname = ""
-    email = ""
-    organizationid = 1
     data = request.get_json()
-    for key in data:
-        if key == "username":
-            username = data[key]
-        if key == "firstname":
-            firstname = data[key]
-        if key == "lastname":
-            lastname = data[key]
-        if key == "password":
-            password = data[key]
-        if key == "email":
-            email = data[key]
+    try:
+        new_user = User(
+            roleid=data['roleid'], 
+            firstname=data['firstname'], 
+            lastname=data['lastname'], 
+            username=data['username'], 
+            password=data['password'], 
+            email=data['email'], 
+            organizationid=data['organizationid'])
+    except KeyError:
+        return make_response("invalid request", 400)
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except sqlalchemy.exc.IntegrityError:
+        return make_response("user with that username already exists", 400)
 
-    new_user = User(roleid=roleid, firstname=firstname, lastname=lastname, username=username, password=password, email=email, organizationid=organizationid)
-    if not password or not email or not firstname or not username or not lastname:
-        raise ValueError("Not enough information")
-    db.session.add(new_user)
-    db.session.commit()
     return make_response("", 201)
 
 @api.get("/users/<int:id>")
 def get_user(id):
+    ...
+
+@api.put("/users/<int:id>")
+def update_user(id):
+    RESPONSE_CODE = 404
     current_user = User.query.filter(User.id==id).first()
-    return jsonify(current_user.serialize())
+    if current_user:
+        db.session.delete(current_user)
+        db.session.commit()
+        RESPONSE_CODE = 204
+    return make_response("",RESPONSE_CODE)
+
+@api.delete("/users/<int:id>")
+def delete_user(id):
+    RESPONSE_CODE = 404
+    current_user = User.query.filter(User.id==id).first()
+    if current_user:
+        db.session.delete(current_user)
+        db.session.commit()
+        RESPONSE_CODE = 204
+    return make_response("",RESPONSE_CODE)
 
 @api.route("/users")
 def get_users():
