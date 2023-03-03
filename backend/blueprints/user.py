@@ -3,7 +3,7 @@ from flask_apispec import use_kwargs, marshal_with
 from flask_cors import cross_origin
 from webargs import fields
 from sqlalchemy.sql.functions import current_user
-import sqlalchemy
+from sqlalchemy.exc import IntegrityError
 from data.user import User
 from extensions import db, docs, RESPONSE_CODES, encrypt
 
@@ -38,7 +38,7 @@ def post_user():
     try:
         db.session.add(new_user)
         db.session.commit()
-    except sqlalchemy.exc.IntegrityError:
+    except IntegrityError:
         return make_response("user with that username already exists", RESPONSE_CODES.BAD_REQUEST)
 
     return make_response("", RESPONSE_CODES.SUCCESS)
@@ -49,7 +49,7 @@ def get_user(id):
     user = User.query.filter(User.id==id).first()
     if user:
         return jsonify(user.serialize())
-    return make_response("",RESPONSE_CODES.NOT_FOUND)
+    return make_response(f"user with id: {id} not found",RESPONSE_CODES.NOT_FOUND)
 
 @api.put("/<int:id>")
 @cross_origin()
@@ -74,7 +74,7 @@ def delete_user(id):
         db.session.delete(current_user)
         db.session.commit()
         RESPONSE_CODE = RESPONSE_CODES.CREATED
-    return make_response("",RESPONSE_CODE)
+    return make_response(f"user with id: {id} not found",RESPONSE_CODE)
 
 @api.get("/")
 @cross_origin()
@@ -94,11 +94,9 @@ def login_user():
             if valid:
                 return jsonify(user.serialize())
             else:
-                return make_response("", RESPONSE_CODES.UNAUTHORIZED)
+                return make_response("password is invalid", RESPONSE_CODES.UNAUTHORIZED)
     except:
-        make_response("", RESPONSE_CODES.BAD_REQUEST)
-    return make_response("", RESPONSE_CODES.UNAUTHORIZED)
-
+        return make_response("user with that username does not exist", RESPONSE_CODES.BAD_REQUEST)
 
 @api.post("/qrlogin")
 @cross_origin()
@@ -112,10 +110,9 @@ def login_user_qr():
             if valid:
                 return jsonify(user.serialize())
             else:
-                return make_response("", RESPONSE_CODES.UNAUTHORIZED)
+                return make_response("password invalid", RESPONSE_CODES.UNAUTHORIZED)
     except:
-        make_response("", RESPONSE_CODES.BAD_REQUEST)
-    return make_response("", RESPONSE_CODES.UNAUTHORIZED)
+        return make_response("user with that username does not exist", RESPONSE_CODES.BAD_REQUEST)
 
 @api.post("/by_org/<int:orgid>")
 @cross_origin()
@@ -123,6 +120,6 @@ def get_users_by_org(orgid:int):
     users = User.query.filter(User.organizationid == orgid).all()
     if users:
         return jsonify(User.serialize_list(users))
-    return make_response("", RESPONSE_CODES.NOT_FOUND)
+    return make_response(f"no user found with orgid: {orgid}", RESPONSE_CODES.NOT_FOUND)
 
 docs.register(post_user, blueprint="api.users")
