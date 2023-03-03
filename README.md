@@ -56,3 +56,23 @@ To start the flask instance:
 cd backend
 python main.py
 ```
+## Frontend Stack
+* Angular.js
+* Ionic Framework
+* SCSS
+* Materials 3
+
+### Style guide
+* Will implement Stylelint for scss-based code control.
+* Will implement Eslint for scss-based code control.
+### How to:
+
+To install the necessary node modules use:
+
+npm install in the /client directory.
+
+To run the client use:
+
+ng serve --open
+
+----
