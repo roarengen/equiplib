@@ -1,7 +1,14 @@
+from typing import Any
 from flask_sqlalchemy import SQLAlchemy
 from flask_apispec import FlaskApiSpec
 from flask_cors import CORS
 
+import logging
+import time
+
+from collections.abc import Callable
+
+logger = logging.getLogger("equiplib.sub")
 docs = FlaskApiSpec()
 cors = CORS()
 db = SQLAlchemy()
@@ -16,7 +23,16 @@ class RESPONSE_CODES:
     NOT_FOUND = 404
     SERVER_ERROR = 500
 
-def encrypt(data:str)->str:
+def benchmark(func: Callable[..., Any]) -> Callable[..., Any]:
+    def wrapper(*args, **kwargs):
+        time_start = time.time()
+        value = func(args, kwargs)
+        time_end = time.time()
+        logger.info(f"benchmark of {func.__name__} took {(time_start - time_end):.2f}s")
+        return value
+    return wrapper
+
+def encrypt(data:str) -> str:
     return bcrypt.hashpw(data.encode("utf-8"), bcrypt.gensalt(10)).decode("utf-8")
 
 def seed_database():

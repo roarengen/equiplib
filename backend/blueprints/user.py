@@ -5,7 +5,7 @@ from webargs import fields
 from sqlalchemy.sql.functions import current_user
 from sqlalchemy.exc import IntegrityError
 from data.user import User
-from extensions import db, docs, RESPONSE_CODES, encrypt
+from extensions import benchmark, db, docs, RESPONSE_CODES, encrypt, logger
 
 api = Blueprint("users", __name__)
 
@@ -43,6 +43,7 @@ def post_user():
 
     return make_response("", RESPONSE_CODES.SUCCESS)
 
+@benchmark
 @api.get("/<int:id>")
 @cross_origin()
 def get_user(id):
@@ -88,12 +89,14 @@ def login_user():
     data = request.get_json()
     try:
         username, password = data['username'], data['password']
+        logger.debug(f"attempted login with {username}")
         user = User.query.filter(User.username == username).first()
         if user:
             valid = user.verify_password(password)
             if valid:
                 return jsonify(user.serialize())
             else:
+                logger.debug(f"attempted login with {username} failed!")
                 return make_response("password is invalid", RESPONSE_CODES.UNAUTHORIZED)
     except:
         return make_response("user with that username does not exist", RESPONSE_CODES.BAD_REQUEST)
@@ -104,12 +107,14 @@ def login_user_qr():
     data = request.get_json()
     try:
         qrstring, password = data['username'], data['password']
+        logger.debug(f"attempted qrlogin with {qrstring}")
         user = User.query.filter(User.id == qrstring).first()
         if user:
             valid = user.verify_password(password)
             if valid:
                 return jsonify(user.serialize())
             else:
+                logger.debug(f"attempted qrlogin with {qrstring} failed!")
                 return make_response("password invalid", RESPONSE_CODES.UNAUTHORIZED)
     except:
         return make_response("user with that username does not exist", RESPONSE_CODES.BAD_REQUEST)
