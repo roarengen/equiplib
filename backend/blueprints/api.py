@@ -18,9 +18,12 @@ def register():
 
 @api.post("/users")
 def make_new_user():
+    roleid = 1
+    username = ""
     password = ""
-    email = ""
     name = ""
+    email = ""
+    organizationid = 1
     data = request.get_json()
     for key in data:
         if key == "name":
@@ -30,14 +33,17 @@ def make_new_user():
         if key == "email":
             email = data[key]
 
+    new_user = User(roleid=roleid, username=username, password=password, name=name, email=email, organizationid=organizationid)
     if not password or not email or not name:
         raise ValueError("Not enough information")
+    db.session.add(new_user)
+    db.session.commit()
     return make_response("", 201)
 
 @api.get("/users/<int:id>")
 def get_user(id):
-    current_user = User.query.filter(id=id)
-    return jsonify(current_user)
+    current_user = User.query.filter(User.id==id).first()
+    return jsonify(current_user.serialize())
 
 @api.route("/users")
 def get_users():
