@@ -1,20 +1,10 @@
-from __future__ import annotations
-class Role:
-    def __init__(self) -> None:
-        self.id = 0
-        self.role_name = ""
-        self.is_active = 0
-    
-    def serialize(self) -> dict:
-        return {
-            "id" : self.id,
-            "roleName" : self.role_name,
-            "isActive" : self.is_active,
-        }
+from extensions import db
+from data.serializer import Serializable
 
-    @staticmethod
-    def deserialize(data:dict) -> Role:
-        new_role = Role()
-        for attr in data:
-            setattr(new_role, attr, data[attr])
-        return new_role
+class Role(db.Model, Serializable):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    active = db.Column(db.Boolean, nullable=False)
+
+    def __repr__(self):
+        return '<Role %r>' % self.name
