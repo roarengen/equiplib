@@ -54,7 +54,7 @@ def get_user(id):
 @cross_origin()
 def update_user(id):
     RESPONSE_CODE = RESPONSE_CODES.NOT_FOUND
-    data = request.json()
+    data = request.get_json()
     user = User.query.filter(User.id==id).first()
     if current_user:
         for key, value in data.items():
@@ -87,14 +87,12 @@ def login_user():
     data = request.get_json()
     try:
         username, password = data['username'], data['password']
+        user = User.query.filter(User.username == username).first()
+        if user:
+            #user.verify_password(password)
+            return jsonify(user.serialize())
     except:
         make_response("", RESPONSE_CODES.BAD_REQUEST)
-
-    user = User.query.filter(User.username == username).first()
-    if user:
-        #user.verify_password(password)
-        return jsonify(user.serialize())
-
     return make_response("", RESPONSE_CODES.UNAUTHORIZED)
 
 docs.register(post_user, blueprint="api.users")
@@ -102,17 +100,15 @@ docs.register(post_user, blueprint="api.users")
 @api.post("/qrlogin")
 @cross_origin()
 def login_user_qr():
-    data = request.json()
+    data = request.get_json()
     try:
         qrstring, password = data['username'], data['password']
+        user = User.query.filter(User.id == qrstring).first()
+        if user:
+            #user.verify_password(password)
+            return jsonify(user.serialize())
     except:
         make_response("", RESPONSE_CODES.BAD_REQUEST)
-
-    user = User.query.filter(User.id == qrstring).first()
-    if user:
-        #user.verify_password(password)
-        return jsonify(user.serialize())
-
     return make_response("", RESPONSE_CODES.UNAUTHORIZED)
 
 docs.register(post_user, blueprint="api.users")
