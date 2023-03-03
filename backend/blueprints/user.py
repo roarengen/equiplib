@@ -5,9 +5,10 @@ from webargs import fields
 from sqlalchemy.sql.functions import current_user
 import sqlalchemy
 from data.user import User
-from extensions import db, docs, RESPONSE_CODES
+from extensions import db, docs, RESPONSE_CODES, encrypt
 
 api = Blueprint("users", __name__)
+
 
 @use_kwargs({
     'roleid' : fields.Int(),
@@ -29,7 +30,7 @@ def post_user():
             firstname=data['firstname'],
             lastname=data['lastname'],
             username=data['username'],
-            password=data['password'],
+            password=encrypt(data['password']),
             email=data['email'],
             organizationid=data['organizationid'])
     except KeyError:
@@ -89,13 +90,15 @@ def login_user():
         username, password = data['username'], data['password']
         user = User.query.filter(User.username == username).first()
         if user:
-            #user.verify_password(password)
-            return jsonify(user.serialize())
+            valid = user.verify_password(password)
+            if valid:
+                return jsonify(user.serialize())
+            else:
+                return make_response("", RESPONSE_CODES.UNAUTHORIZED)
     except:
         make_response("", RESPONSE_CODES.BAD_REQUEST)
     return make_response("", RESPONSE_CODES.UNAUTHORIZED)
 
-docs.register(post_user, blueprint="api.users")
 
 @api.post("/qrlogin")
 @cross_origin()
@@ -105,8 +108,11 @@ def login_user_qr():
         qrstring, password = data['username'], data['password']
         user = User.query.filter(User.id == qrstring).first()
         if user:
-            #user.verify_password(password)
-            return jsonify(user.serialize())
+            valid = user.verify_password(password)
+            if valid:
+                return jsonify(user.serialize())
+            else:
+                return make_response("", RESPONSE_CODES.UNAUTHORIZED)
     except:
         make_response("", RESPONSE_CODES.BAD_REQUEST)
     return make_response("", RESPONSE_CODES.UNAUTHORIZED)

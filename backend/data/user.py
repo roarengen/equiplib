@@ -25,9 +25,8 @@ class User(db.Model, Serializable):
     activeToDate = db.Column(db.Date)
     organizationid = db.Column(db.Integer, db.ForeignKey(Organization.id), nullable=False)
 
-    def verify_password(self, password):
-        pwhash = bcrypt.hashpw(password, self.password)
-        return self.password == pwhash
+    def verify_password(self, password: str) -> bool:
+        return self.password == bcrypt.hashpw(password.encode("utf-8"), self.password.encode("utf-8")).decode("utf-8")
 
     def __repr__(self):
         return '<User %r>' % self.username
