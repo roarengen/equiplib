@@ -4,9 +4,16 @@ from flask_apispec import FlaskApiSpec
 from flask_cors import CORS
 
 import logging
+from logging.handlers import SysLogHandler
 import time
 
 from collections.abc import Callable
+
+sys_log_handler = SysLogHandler(address=('logs6.papertrailapp.com',49683)) # UNSAFE STRING THIS WILL BE ABUSED
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler = logging.FileHandler("log.log", mode="a+")
+file_handler.setFormatter(formatter)
+sys_log_handler.setFormatter(formatter)
 
 logger = logging.getLogger("equiplib.sub")
 docs = FlaskApiSpec()

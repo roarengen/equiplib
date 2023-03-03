@@ -34,6 +34,7 @@ def post_user():
             email=data['email'],
             organizationid=data['organizationid'])
     except KeyError:
+        logger.info(f"failed user creation request with data: {data}")
         return make_response("invalid request", RESPONSE_CODES.BAD_REQUEST)
     try:
         db.session.add(new_user)
@@ -41,15 +42,16 @@ def post_user():
     except IntegrityError:
         return make_response("user with that username already exists", RESPONSE_CODES.BAD_REQUEST)
 
+    logger.info(f"new user created with name {new_user.username}")
     return make_response("", RESPONSE_CODES.SUCCESS)
 
-@benchmark
 @api.get("/<int:id>")
 @cross_origin()
 def get_user(id):
     user = User.query.filter(User.id==id).first()
     if user:
         return jsonify(user.serialize())
+    logger.info(f"user with id: {id} not found in get_user")
     return make_response(f"user with id: {id} not found",RESPONSE_CODES.NOT_FOUND)
 
 @api.put("/<int:id>")

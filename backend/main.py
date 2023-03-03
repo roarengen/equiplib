@@ -1,8 +1,8 @@
 from blueprints import api
 from flask import Flask
 from extensions import db, docs, cors, seed_database
+from extensions import sys_log_handler, file_handler
 import logging
-import sys
 
 # intializing app
 app = Flask("equiplib")
@@ -16,11 +16,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CORS_HEADER'] = 'Content-Type'
 
 # logging
-handler = logging.StreamHandler(sys.stdout)
-handler.setFormatter(logging.Formatter(
-    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 app.logger.handlers.clear()
-app.logger.addHandler(handler)
+app.logger.addHandler(sys_log_handler)
+app.logger.addHandler(file_handler)
 app.logger.setLevel(logging.DEBUG)
 
 # initing extensions
