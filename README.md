@@ -14,6 +14,17 @@ root*
 | | | rent.py
 | | extensions.py		# global instances like database instance
 | frontend
+| | client 
+| | app.routing.module.ts # Sets Urls for the different types of components. Note that components can have nested children components.
+| | app.module.ts # 
+| | | |features/   # home to all the components.
+| | | |helpers/   # different types of helper functions, for f.ex auth.gard.
+| | | |models/    # stores datamodels
+| | | |assets/    # storage for unstructured files, such as .pngs.
+| | | |services/    # Provides stateless functions, mainly to link with the backend.
+| | | |environments/    # Set the current environment parameters for prod / dev.
+| | | |styles/    # Global style palettes and layout for all components.
+| | || models/    # stores datamodels, mapped in services.
 | readme
 ```
 
