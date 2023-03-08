@@ -43,15 +43,11 @@ def encrypt(data:str) -> str:
     return bcrypt.hashpw(data.encode("utf-8"), bcrypt.gensalt(10)).decode("utf-8")
 
 def seed_database():
-    from data.user import User
-    from data.role import Role
-    from data.organization import Organization
-    from data.location import Location
-    from data.template import Template
+    from data import User, Role, Template, Organization
     db.create_all()
     db.drop_all()
     db.create_all()
-    test_temp = Template()
+    test_temp = Template(name="default")
     test_org = Organization(organizationName="Kjell's taco", organizationNumber="1234567", templateid=1)
     boss_role = Role(name="boss", active=True)
     test_user = User(firstname="Kjell", lastname="Taco", password=encrypt("test"), username="kjelltaco", email="kjelltaco@taco.com", roleid=1, organizationid=1)

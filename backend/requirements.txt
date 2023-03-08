@@ -30,3 +30,4 @@ typing_extensions==4.5.0
 webargs==8.2.0
 Werkzeug==2.2.3
 wxPython==4.2.0
+pytest
