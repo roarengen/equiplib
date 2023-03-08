@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      NJFF
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-tabs>
+    <ion-router-outlet></ion-router-outlet>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="">
+        <ion-icon name="home-outline"></ion-icon>
+        Hjem
+      </ion-tab-button>
+      <ion-tab-button tab="radio">
+        <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
+        qr-kode skanner
+      </ion-tab-button>
+      <ion-tab-button tab="login">
+        <ion-icon name="person-outline"></ion-icon>
+        profile
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon color="success"name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="document"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="color-palette"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="globe"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>
+

@@ -1,9 +1,0 @@
-@mixin break-text-on-overflow {
-  overflow-wrap: anywhere;
-
-  @media not all and (min-resolution: 0.001dpcm) {
-    @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-      word-break: break-all;
-    }
-  }
-}
