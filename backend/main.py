@@ -18,7 +18,7 @@ def create_app(launch_arg : LaunchArg) -> Flask:
     app.register_blueprint(api, url_prefix='/api/')
 
     # setting configs
-    if launch_arg == LaunchArg.DEV:
+    if launch_arg == LaunchArg.DEV or launch_arg == LaunchArg.PRD:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
         app.logger.handlers.clear()
         app.logger.addHandler(sys_log_handler)
