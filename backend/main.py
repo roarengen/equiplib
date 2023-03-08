@@ -39,8 +39,8 @@ def create_app(launch_arg : LaunchArg) -> Flask:
     return app
 
 
-#seed_database()
 
 if __name__ == "__main__":
     app = create_app(LaunchArg.DEV)
+    seed_database(app)
     app.run("localhost", 8888, True)

@@ -2,6 +2,7 @@ from typing import Any
 from flask_sqlalchemy import SQLAlchemy
 from flask_apispec import FlaskApiSpec
 from flask_cors import CORS
+from flask import Flask
 
 import logging
 from logging.handlers import SysLogHandler
@@ -42,17 +43,18 @@ def benchmark(func: Callable[..., Any]) -> Callable[..., Any]:
 def encrypt(data:str) -> str:
     return bcrypt.hashpw(data.encode("utf-8"), bcrypt.gensalt(10)).decode("utf-8")
 
-def seed_database():
+def seed_database(app: Flask):
     from data import User, Role, Template, Organization
-    db.create_all()
-    db.drop_all()
-    db.create_all()
-    test_temp = Template(name="default")
-    test_org = Organization(organizationName="Kjell's taco", organizationNumber="1234567", templateid=1)
-    boss_role = Role(name="boss", active=True)
-    test_user = User(firstname="Kjell", lastname="Taco", password=encrypt("test"), username="kjelltaco", email="kjelltaco@taco.com", roleid=1, organizationid=1)
-    db.session.add(test_temp)
-    db.session.add(test_org)
-    db.session.add(boss_role)
-    db.session.add(test_user)
-    db.session.commit()
+    with app.app_context():
+        db.create_all()
+        db.drop_all()
+        db.create_all()
+        test_temp = Template(name="default")
+        test_org = Organization(organizationName="Kjell's taco", organizationNumber="1234567", templateid=1)
+        boss_role = Role(name="boss", active=True)
+        test_user = User(firstname="Kjell", lastname="Taco", password=encrypt("test"), username="kjelltaco", email="kjelltaco@taco.com", roleid=1, organizationid=1)
+        db.session.add(test_temp)
+        db.session.add(test_org)
+        db.session.add(boss_role)
+        db.session.add(test_user)
+        db.session.commit()
