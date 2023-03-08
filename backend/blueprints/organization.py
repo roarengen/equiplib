@@ -1,9 +1,7 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_cors import cross_origin
-from data.organization import Organization
-from extensions import RESPONSE_CODES, db
-
-import logging
+from data import Organization
+from extensions import RESPONSE_CODES, db, logger
 
 api = Blueprint("organizations", __name__)
 
@@ -35,9 +33,9 @@ def update_org():
     try:
         db.session.commit()
     except:
-        logging.debug(f"FAILED of org [name: {org.name}, id: {org.id}] with data:\n{data}")
+        logger.debug(f"FAILED of org [name: {org.name}, id: {org.id}] with data:\n{data}")
         return make_response("", RESPONSE_CODES.BAD_REQUEST)
-    logging.info(f"alteration of org [name: {org.name}, id: {org.id}] with data:\n{data}")
+    logger.info(f"alteration of org [name: {org.name}, id: {org.id}] with data:\n{data}")
     return make_response("", RESPONSE_CODES.CREATED)
 
 @cross_origin()
