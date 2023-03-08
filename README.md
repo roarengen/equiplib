@@ -84,6 +84,6 @@ npm install in the /client directory.
 
 To run the client use:
 
-ng serve --open
+ionic serve for dev.
 
 ----
