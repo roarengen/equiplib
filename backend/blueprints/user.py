@@ -121,7 +121,7 @@ def login_user_qr():
     except:
         return make_response("user with that username does not exist", RESPONSE_CODES.BAD_REQUEST)
 
-@api.post("/by_org/<int:orgid>")
+@api.get("/by_org/<int:orgid>")
 @cross_origin()
 def get_users_by_org(orgid:int):
     users = User.query.filter(User.organizationid == orgid).all()
