@@ -8,10 +8,19 @@ root*
 | | requirements.txt 
 | | main.py				# the entry point for flask app / wsgi application
 | | blueprints/
-| | | api.py 
+| | | __int__.py        # contains all the different blueprints. Can behave as a "feature toggle"
+| | | user.py
+| | | rent.py
+| | | etc...
 | | data/				# stores the datamodels
 | | | user.py
 | | | rent.py
+| | | etc...
+| | tests/				# unit tests
+| | | conftest.py
+| | | test_user.py
+| | | rent.py
+| | | etc...
 | | extensions.py		# global instances like database instance
 | frontend
 | | client 
@@ -32,7 +41,6 @@ root*
 * Python
 * Flask
 * SQLalchemy
-* flask-SQLalchemy
 
 ### Style guide
 Follow the [PEP-8](https://peps.python.org/pep-0008/) style guide.
@@ -49,7 +57,7 @@ from extensions import db
 
 db.create_all() #  creates all tables for models defined
 db.drop_all() # drops all tables
-# not that in order to update a table, we need to drop it and re-create it
+# note that in order to update a table, we need to drop it and re-create it
 
 # to make an new user
 from data.user import User
@@ -61,12 +69,32 @@ ref: [flask-sqlalchemy doc](https://flask-sqlalchemy.palletsprojects.com/en/2.x/
 
 ----
 
+# Development
 To start the flask instance:
 
+## windows
 ```bash
 cd backend
+python -m venv venv
+venv/Scripts/activate.bat
+python -m pip install -r requirements.txt
 python main.py
 ```
+
+## linux
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate
+python -m pip install -r requirements.txt
+python main.py
+```
+
+# Deployment
+* NGINX reverse-proxy pointing to the Gunicorn WSGI instances.
+* systemd proccess
+* * 
+
 ## Frontend Stack
 * Angular.js
 * Ionic Framework
