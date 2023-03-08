@@ -8,6 +8,8 @@ class Organization(db.Model, Serializable):
     organizationName = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120))
     phone = db.Column(db.String(20))
+    street = db.Column(db.String(80))
+    city = db.Column(db.String(80))
     postalcode = db.Column(db.String(80))
     comment = db.Column(db.String(80))
     otherId = db.Column(db.String(80))
