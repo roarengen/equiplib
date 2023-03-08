@@ -1,5 +1,6 @@
 import pytest
 from main import create_app, LaunchArg, seed_database, Flask
+from flask.testing import FlaskClient, FlaskCliRunner
 
 @pytest.fixture()
 def app():
@@ -17,10 +18,10 @@ def app():
     # clean up / reset resources here
 
 @pytest.fixture()
-def client(app: Flask):
+def client(app: Flask) -> FlaskClient:
     return app.test_client()
 
 
 @pytest.fixture()
-def runner(app: Flask):
+def runner(app: Flask) -> FlaskCliRunner:
     return app.test_cli_runner()
