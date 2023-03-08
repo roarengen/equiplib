@@ -3,6 +3,8 @@ from flask_cors import cross_origin
 from data.organization import Organization
 from extensions import RESPONSE_CODES, db
 
+import logging
+
 api = Blueprint("organizations", __name__)
 
 @cross_origin()
@@ -20,9 +22,28 @@ def get_org(id: int):
     return make_response("", RESPONSE_CODES.NOT_FOUND)
 
 @cross_origin()
+@api.put("/<int:id>")
+def update_org():
+    data = request.get_json()
+    org = Organization.query.filter(Organization.id == id).first()
+    if not org:
+        make_response("", RESPONSE_CODES.NOT_FOUND)
+
+    for key, value in data.items():
+        setattr(org, key, value)
+
+    try:
+        db.session.commit()
+    except:
+        logging.debug(f"FAILED of org [name: {org.name}, id: {org.id}] with data:\n{data}")
+        return make_response("", RESPONSE_CODES.BAD_REQUEST)
+    logging.info(f"alteration of org [name: {org.name}, id: {org.id}] with data:\n{data}")
+    return make_response("", RESPONSE_CODES.CREATED)
+
+@cross_origin()
 @api.post("/")
 def post_org():
-    data = request.json()
+    data = request.get_json()
     org = Organization()
     for key, value in data.items():
         setattr(org, key, value)
