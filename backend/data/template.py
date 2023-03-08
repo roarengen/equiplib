@@ -3,7 +3,7 @@ from data.serializer import Serializable
 
 class Template(db.Model, Serializable):
     id = db.Column(db.Integer, primary_key=True)
-    name =  equipName = db.Column(db.String(25))
+    name = db.Column(db.String(25), unique=True, nullable=False)
     equipName = db.Column(db.String(15))
     equipModel = db.Column(db.String(15))
     equipDescription = db.Column(db.String(15))
