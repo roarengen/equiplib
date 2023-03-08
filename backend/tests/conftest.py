@@ -11,7 +11,7 @@ def app():
 
     # other setup can go here
     with app.app_context():
-        seed_database()
+        seed_database(app)
 
     yield app
 
