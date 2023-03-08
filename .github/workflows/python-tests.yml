@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  CI:
 
     runs-on: ubuntu-latest
 
@@ -31,5 +31,5 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        cd backend
+        working-directory: ./backend
         pytest tests/
