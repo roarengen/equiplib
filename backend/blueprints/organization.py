@@ -10,7 +10,7 @@ api = Blueprint("organizations", __name__)
 @cross_origin()
 @api.get("/")
 def get_orgs():
-    orgs = Organization.query.all()
+    orgs: list[Organization] = Organization.query.all()
     return jsonify(Organization.serialize_list(orgs))
 
 @cross_origin()
