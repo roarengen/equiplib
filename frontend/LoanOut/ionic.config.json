@@ -1,0 +1,7 @@
+{
+  "name": "LoanOut",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

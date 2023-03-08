@@ -1,0 +1,110 @@
+
+<!--
+<div class="login">
+  <div class="login-title">
+    <h1>LoanOut</h1>
+    <h4>Enkel oversikt, for alt av utstyr</h4>
+  </div>
+  <div class="login-form-container">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form-grid">
+          <div class="form-group">
+              <label for="username">Brukernavn</label>
+              <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                  <div *ngIf="f.username.errors.required">Username is required</div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="password">Passord</label>
+              <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">Password is required</div>
+              </div>
+          </div>
+          <div class="form-group-button">
+              <button>
+
+              </button>
+          </div>
+      </form>
+    </div>
+      <div class="login-qr">
+        <h4>Eller</h4>
+        <h2>Scan din QR kode</h2>
+        <zxing-scanner
+        (scanSuccess) = "scanSuccessHandler($event)"
+        (scanError)= "scanErrorHandler($event)"
+        ></zxing-scanner>
+
+      <div class="overlay" *ngIf="enterPinCode">
+        <div class="popup">
+            <h2>PIN kode</h2>
+            <a class="close" (click)="enterPinCode = false">&times;</a>
+            <div class="content">
+              <form [formGroup]="form" (ngSubmit)="onSubmitQrCode()" class="login-form-grid">
+              <div class="form-group">
+                <label for="password">Passord</label>
+                <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">PIN is required</div>
+                    <div class="form-group-button">
+                      <button>
+                      </button>
+                </div>
+            </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      </div>
+    </div>
+-->
+
+
+
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title class="ion-text-center" color="tertiary" size="large">LoanOut</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-text-center">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+    <ion-col size="8">
+  <ion-list>
+    <ion-item color="secondary">
+      <ion-label position="floating">Brukernavn</ion-label>
+      <ion-input formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [clearInput]="true" ></ion-input>
+    </ion-item>
+
+    <ion-item color="secondary">
+      <ion-label position="floating">Passord</ion-label>
+      <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" inputmode="numeric" type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+
+</ion-col>
+<ion-col size="4">
+  <ion-button size="large" color="secondary">
+    <ion-icon src="../../../../assets/icons/icon_login.svg"></ion-icon>
+  </ion-button>
+</ion-col>
+</ion-row>
+</ion-grid>
+</form>
+<ion-text color="tertiary">
+  <h3>Eller</h3>
+  <h2>Skann din QR kode</h2>
+</ion-text>
+
+<ion-item-group>
+  <ion-button size="large" color="secondary">
+    <ion-icon src="../../../../assets/icons/qr_icon.svg"></ion-icon>
+  </ion-button>
+  <zxing-scanner
+  (scanSuccess) = "scanSuccessHandler($event)"
+  (scanError)= "scanErrorHandler($event)"
+  ></zxing-scanner>
+</ion-item-group>
+
