@@ -18,18 +18,18 @@ def create_app(launch_arg : LaunchArg) -> Flask:
     app.register_blueprint(api, url_prefix='/api/')
 
     # setting configs
-    if launch_arg == LaunchArg.DEV: 
+    if launch_arg == LaunchArg.DEV:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+        app.logger.handlers.clear()
+        app.logger.addHandler(sys_log_handler)
+        app.logger.addHandler(file_handler)
+        app.logger.setLevel(logging.DEBUG)
     elif launch_arg == LaunchArg.TEST:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
+
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['CORS_HEADER'] = 'Content-Type'
 
-    # logging
-    app.logger.handlers.clear()
-    app.logger.addHandler(sys_log_handler)
-    app.logger.addHandler(file_handler)
-    app.logger.setLevel(logging.DEBUG)
 
     # initing extensions
     db.init_app(app)

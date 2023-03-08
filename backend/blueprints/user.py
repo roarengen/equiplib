@@ -4,7 +4,7 @@ from flask_cors import cross_origin
 from webargs import fields
 from sqlalchemy.sql.functions import current_user
 from sqlalchemy.exc import IntegrityError
-from data.user import User
+from data import User
 from extensions import benchmark, db, docs, RESPONSE_CODES, encrypt, logger
 
 api = Blueprint("users", __name__)
