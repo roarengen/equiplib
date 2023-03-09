@@ -12,6 +12,10 @@ class Equipment(db.Model, Serializable):
     type = db.Column(db.String(80))
     serialnumber = db.Column(db.String(80))
     brand = db.Column(db.String(80))
+    other1 = db.Column(db.String(80))
+    other2 = db.Column(db.String(80))
+    other3 = db.Column(db.String(80))
+    comment = db.Column(db.String(80))
     locationid = db.Column(db.Integer, db.ForeignKey(Location.id), nullable=False)
     active = db.Column(db.Boolean, nullable=False)
 
