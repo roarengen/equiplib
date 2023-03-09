@@ -6,15 +6,31 @@ from extensions import RESPONSE_CODES, db
 api = Blueprint("rents", __name__)
 
 @cross_origin()
+@api.get("/")
+def get_rents():
+    return make_response("illegal endpoint", RESPONSE_CODES.UNAUTHORIZED)
+
+@cross_origin()
+@api.get("/<int:id>")
+def get_rent(id: int):
+    rent: Rent = Rent.query.filter(Rent.id == id).first()
+    if not rent:
+        return make_response("rent not found", RESPONSE_CODES.NOT_FOUND)
+    return jsonify(rent.serialize())
+
+@cross_origin()
 @api.get("/by_org/<int:orgid>")
 def get_rent_by_orgid(orgid: int):
     users: list[User] = User.query.filter(User.organizationid==orgid).all()
     if not users:
-        make_response("no users with that orgid", RESPONSE_CODES.NOT_FOUND)
+        print("no users found in org")
+        return make_response("no users with that orgid", RESPONSE_CODES.NOT_FOUND)
 
-    rents: list[Rent] = Rent.query.filter(Rent.userid in [user.id for user in users]).all()
+    userids = [user.id for user in users]
+    rents: list[Rent] = Rent.query.filter(Rent.userid.in_((userids))).all()
     if not rents:
-        make_response("no rents for this orgid", RESPONSE_CODES.NOT_FOUND)
+        print("no rents found in org")
+        return make_response("no rents for this orgid", RESPONSE_CODES.NOT_FOUND)
 
     return jsonify(Rent.serialize_list(rents))
 

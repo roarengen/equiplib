@@ -42,5 +42,5 @@ def create_app(launch_arg : LaunchArg) -> Flask:
 
 if __name__ == "__main__":
     app = create_app(LaunchArg.DEV)
-    seed_database(app)
+    seed_database(app) # UNCOMMENT THIS TO RESERVE STATE
     app.run("localhost", 8888, True)
