@@ -23,13 +23,17 @@ def get_equips(id: int):
 def post_equips():
     data = request.get_json()
     equip = Equipment()
+
+    if "active" not in data.keys():
+        equip.active = True
+
     for key, val in data.items():
         setattr(equip, key, val)
 
     try:
         db.session.add(equip)
         db.session.commit()
-    except:
+    except Exception as e:
         return make_response(f"invalid data: {data}", RESPONSE_CODES.BAD_REQUEST)
     return make_response("", RESPONSE_CODES.CREATED)
 
