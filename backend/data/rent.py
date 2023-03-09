@@ -18,3 +18,4 @@ class Rent(db.Model, Serializable):
 
     def __repr__(self):
         return '<Rent %r>' % self.equipmentid
+
