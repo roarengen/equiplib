@@ -12,6 +12,11 @@ def get_roles():
     return jsonify(Role.serialize_list(roles))
 
 @cross_origin()
+@api.post("/")
+def post_roles():
+    return make_response("", RESPONSE_CODES.NOT_FOUND)
+
+@cross_origin()
 @api.get("/<int:id>")
 def get_role(id):
     roles = Role.query.filter(Role.id==id).first()

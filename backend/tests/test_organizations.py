@@ -15,11 +15,19 @@ def test_org_registration(client: FlaskClient) -> None:
     response = client.post("api/orgs/",
                            json={
                                     "organizationNumber" : "231312131",
-                                    "organizationName " : "yoyo",
+                                    "organizationName" : "yoyo",
                                     "templateid" : 1
                                 }
                            )
     test_org = Organization.query.filter(Organization.organizationName == "yoyo").first()
     assert test_org
-    assert response.status_code == 200
+    assert response.status_code == 201
 
+def test_org_registration_not_sufficient_fields(client: FlaskClient) -> None:
+    response = client.post("api/orgs/",
+                           json={
+                                    "organizationNumber" : "231312131",
+                                    "templateid" : 1
+                                }
+                           )
+    assert response.status_code == 400
