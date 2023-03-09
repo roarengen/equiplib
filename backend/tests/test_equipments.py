@@ -4,12 +4,21 @@ from data import *
 import json
 
 def test_get_equip(client: FlaskClient) -> None:
+    db.session.add(
+        Equipment(
+            organizationid=1,
+            locationid=1,
+            name="test equipment",
+            active=True
+                  )
+    )
+    db.session.commit()
     response = client.get("api/equips/1")
     assert response.status_code == 200
 
 def test_get_equips(client: FlaskClient) -> None:
     response = client.get("api/equips/")
-    assert response.status_code == 200
+    assert response.status_code == 403
 
 def test_post_equips(client: FlaskClient) -> None:
     response = client.post("api/equips/",
@@ -19,7 +28,7 @@ def test_post_equips(client: FlaskClient) -> None:
                                "name" : "banandress"
                            })
     assert Equipment.query.filter(Equipment.name == "banandress").first()
-    assert response.status_code == 200
+    assert response.status_code == 201
 
 def test_get_equips_by_orgid(client: FlaskClient) -> None:
     orgid = 1

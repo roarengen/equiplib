@@ -7,6 +7,7 @@ from flask import Flask
 import logging
 from logging.handlers import SysLogHandler
 import time
+from datetime import datetime
 
 from collections.abc import Callable
 
@@ -58,3 +59,6 @@ def seed_database(app: Flask):
         db.session.add(boss_role)
         db.session.add(test_user)
         db.session.commit()
+
+def datetime_from_string(datetime_string:str) -> datetime:
+    return datetime.strptime(datetime_string, "%a, %d %b %Y %H:%M:%S %Z")
