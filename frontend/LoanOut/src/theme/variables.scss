@@ -5,8 +5,24 @@
 /* To quickly generate your own theme, check out the color generator */
 /* https://ionicframework.com/docs/theming/color-generator */
 
+@font-face {
+  font-family: 'OpenSans';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/typography/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/typography/OpenSans-SemiBold.ttf');
+}
+
 
 :root {
+  --ion-font-family: 'OpenSans';
+
 	--ion-color-primary: #1E2124;
 	--ion-color-primary-rgb: 30,33,36;
 	--ion-color-primary-contrast: #ffffff;

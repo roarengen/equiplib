@@ -1,9 +1,10 @@
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { AccountService } from '../../../services/user.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   templateUrl: './login.page.html',
@@ -13,10 +14,12 @@ export class LoginPage implements OnInit {
   form!: FormGroup;
   loading: boolean = false;
   submitted: boolean = false;
-  enterPinCode: boolean = false
+  openQrCode: boolean = false;
+  enterPinCode: boolean = false;
   QrCode!: string;
-
+  pin!: string;
   constructor(
+    private alertController: AlertController,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -32,7 +35,10 @@ export class LoginPage implements OnInit {
 
 get f() { return this.form.controls; }
 
+
+
 onSubmit() {
+  console.log(this.f['username'].value)
     this.submitted = true;
 
     if (this.form.invalid) {
@@ -55,16 +61,11 @@ onSubmit() {
         });
 }
 
-
 onSubmitQrCode() {
     this.submitted = true;
 
-    if (this.form.invalid) {
-        return;
-    }
-
     this.loading = true;
-    this.accountService.login(this.QrCode, this.f['password'].value)
+    this.accountService.login(this.QrCode, this.pin)
         .pipe(first())
         .subscribe({
             next: () => {
@@ -79,7 +80,12 @@ onSubmitQrCode() {
         });
 }
 
+onOpenQrScanner() {
+  this.openQrCode = true;
+}
+
   scanSuccessHandler(scanValue: string) {
+    console.log(scanValue)
     this.enterPinCode = true;
     this.QrCode = scanValue;
     console.log(scanValue)
@@ -89,5 +95,30 @@ onSubmitQrCode() {
   scanErrorHandler(scanError: any) {
     console.log(scanError)
   }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Skriv inn din PIN kode',
+      buttons: [
+        {
+          text: 'Logg inn',
+          handler: (alertData) => {
+            this.pin = alertData.inputField
+            this.onSubmitQrCode()
+        }
+    }],
+      inputs: [
+        {
+          name: 'inputField',
+          type: 'number',
+          placeholder: 'PIN',
+          min: 1,
+          max: 4,
+        },
+      ],
+    });
+    await alert.present();
+  }
+
 }
 

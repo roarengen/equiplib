@@ -1,19 +1,16 @@
 
-input {
-  background: black;
-  color: white;
-
+.login-title {
+  text-align: center;
+  font-size: xx-large;
+  margin-top: 65px;
+  padding-bottom: 45px;
 }
-::-ms-reveal {
-  filter: invert(100%);
-}
-
 
 ion-icon { zoom: 2.5 }
 
 ion-button {
-
-  height: 100px;
+  padding-top: 15px;
+  height: 75px;
   width:auto;
 }
 
@@ -22,8 +19,19 @@ ion-input {
   border-bottom: 1px solid rgb(255, 255, 255);
 }
 
-
 .login-body {
   padding-top: 10px;
 
+}
+
+ion-toolbar {
+  padding-top: 74px;
+  padding-bottom: 85px;
+}
+
+zxing-scanner {
+  width:100vw;
+  height:100vh;
+  overflow:auto;
+  position: fixed;
 }

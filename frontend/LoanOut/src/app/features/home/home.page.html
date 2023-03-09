@@ -1,27 +1,75 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      NJFF
-    </ion-title>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-grid>
+    <ion-text class="homescreen-title">
+      NJFF Skytterlag
+    </ion-text>
+  </ion-grid>
+  <ion-grid>
+    <ion-button item-end><ion-icon src="../../../assets/icons/icon _settings.svg"></ion-icon></ion-button>
+  </ion-grid>
+  </ion-row>
+<ion-row>    <ion-text>Organisasjonsnr: 12390</ion-text>
+</ion-row>
+
+</ion-grid>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="secondary">
+        <ion-label>First Accordion</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        First Content
+      </div>
+    </ion-accordion>
+    <ion-accordion value="second">
+      <ion-item slot="header" color="secondary">
+        <ion-label>Second Accordion</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        Second Content
+      </div>
+    </ion-accordion>
+    <ion-accordion value="third">
+      <ion-item slot="header" color="secondary">
+        <ion-label>Third Accordion</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        Third Content
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
+  <ion-item-group>
+    <ion-item *ngIf="this.openQrCode">
+    <zxing-scanner
+    (scanSuccess) = "scanSuccessHandler($event)"
+    (scanError)= "scanErrorHandler($event)"
+    ></zxing-scanner>
+  </ion-item>
+  </ion-item-group>
+
   <ion-tabs>
     <ion-router-outlet></ion-router-outlet>
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="">
-        <ion-icon name="home-outline"></ion-icon>
-        Hjem
+        <ion-icon src="../../../assets/icons/box-search.svg"></ion-icon>
+        Inventar
       </ion-tab-button>
-      <ion-tab-button tab="radio">
+      <ion-tab-button (click)="onOpenQrScanner()"color="secondary-contrast" tab="radio">
         <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
-        qr-kode skanner
+        skanner
       </ion-tab-button>
       <ion-tab-button tab="login">
-        <ion-icon name="person-outline"></ion-icon>
-        profile
+        <ion-icon color="secondary-contrast" name="person-outline"></ion-icon>
+        Brukere
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
@@ -30,17 +78,6 @@
     <ion-fab-button>
       <ion-icon color="success"name="add"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button>
-        <ion-icon name="document"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button>
-        <ion-icon name="color-palette"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button>
-        <ion-icon name="globe"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
   </ion-fab>
 
 </ion-content>
