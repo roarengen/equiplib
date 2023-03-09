@@ -21,7 +21,7 @@ def get_org(id: int):
 
 @cross_origin()
 @api.put("/<int:id>")
-def update_org():
+def update_org(id: int):
     data = request.get_json()
     org = Organization.query.filter(Organization.id == id).first()
     if not org:

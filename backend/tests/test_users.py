@@ -11,7 +11,7 @@ def test_users(client: FlaskClient) -> None:
     response = client.get("api/users/")
     assert response.status_code == 200
 
-def test_user_registration(client: FlaskClient):
+def test_user_registration(client: FlaskClient) -> None:
     response = client.post("api/users/",
                            json={
                                     "firstname" : "løvblåser",
@@ -23,11 +23,11 @@ def test_user_registration(client: FlaskClient):
                                     "organizationid" : 1
                                 }
                            )
-    
+
     assert response.status_code == 200
 
-def test_user_registration_user_in_db(client: FlaskClient):
-    client.post("api/users/", 
+def test_user_registration_user_in_db(client: FlaskClient) -> None:
+    client.post("api/users/",
                            json={
                                     "firstname" : "løvblåser",
                                     "lastname" : "jens",
