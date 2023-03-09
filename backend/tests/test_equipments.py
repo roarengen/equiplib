@@ -30,6 +30,50 @@ def test_post_equips(client: FlaskClient) -> None:
     assert Equipment.query.filter(Equipment.name == "banandress").first()
     assert response.status_code == 201
 
+def test_post_equips_many(client: FlaskClient) -> None:
+    client.post("api/equips/",
+                json={
+                    "organizationid" : 1,
+                    "locationid" : 1,
+                    "name" : "banandress"
+                })
+    client.post("api/equips/",
+                json={
+                    "organizationid" : 1,
+                    "locationid" : 1,
+                    "name" : "cola-glass fra 2011"
+                })
+    client.post("api/equips/",
+                json={
+                    "organizationid" : 1,
+                    "locationid" : 1,
+                    "name" : "løvblåser"
+                })
+    assert len(Equipment.query.all()) == 3
+
+def test_post_equips_many_inactive(client: FlaskClient) -> None:
+    client.post("api/equips/",
+                json={
+                    "organizationid" : 1,
+                    "locationid" : 1,
+                    "name" : "banandress",
+                    "active": False
+                })
+    client.post("api/equips/",
+                json={
+                    "organizationid" : 1,
+                    "locationid" : 1,
+                    "name" : "kjell-e-dress"
+                })
+    client.post("api/equips/",
+                json={
+                    "organizationid" : 1,
+                    "locationid" : 1,
+                    "name" : "tacokrydder"
+                })
+    assert len(Equipment.query.all()) == 3
+    assert not Equipment.query.filter_by(name="banandress").first().active
+
 def test_get_equips_by_orgid(client: FlaskClient) -> None:
     orgid = 1
 
