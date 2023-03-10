@@ -5,13 +5,16 @@ from extensions import db, docs, cors, seed_database
 from extensions import sys_log_handler, file_handler
 import logging
 
+
 class LaunchArg(Enum):
     TEST = auto()
     DEV = auto()
     PRD = auto()
 
 # intializing app
-def create_app(launch_arg : LaunchArg) -> Flask:
+
+
+def create_app(launch_arg: LaunchArg) -> Flask:
     app = Flask("equiplib")
     cors.init_app(app)
     # registering blueprint
@@ -21,7 +24,8 @@ def create_app(launch_arg : LaunchArg) -> Flask:
     if launch_arg == LaunchArg.DEV or launch_arg == LaunchArg.PRD:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
         app.logger.handlers.clear()
-        app.logger.addHandler(sys_log_handler)
+        if sys_log_handler:
+            app.logger.addHandler(sys_log_handler)
         app.logger.addHandler(file_handler)
         app.logger.setLevel(logging.DEBUG)
     elif launch_arg == LaunchArg.TEST:
@@ -29,7 +33,6 @@ def create_app(launch_arg : LaunchArg) -> Flask:
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['CORS_HEADER'] = 'Content-Type'
-
 
     # initing extensions
     db.init_app(app)
@@ -39,8 +42,7 @@ def create_app(launch_arg : LaunchArg) -> Flask:
     return app
 
 
-
 if __name__ == "__main__":
     app = create_app(LaunchArg.DEV)
-    seed_database(app) # UNCOMMENT THIS TO RESERVE STATE
+    seed_database(app)  # UNCOMMENT THIS TO RESERVE STATE
     app.run("localhost", 8888, True)
