@@ -14,5 +14,5 @@ export class User {
   dateOfBirth!: string;
   activeFromDate!: Date; //Set to datetime?
   activeToDate!: Date;
-  organizationId!: number;
+  organizationid!: number;
 }

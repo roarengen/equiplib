@@ -3,8 +3,9 @@ import { AccountService } from '../../../services/user.service';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { concatWith, first } from 'rxjs/operators';
 import { AlertController } from '@ionic/angular';
+import { concat } from 'rxjs/operators';
 
 @Component({
 	templateUrl: './login.page.html',
@@ -41,8 +42,8 @@ export class LoginPage implements OnInit {
 		this.submitted = true;
 
 		this.loading = true;
-		this.accountService.login(username, passowrd)
-			.pipe(first())
+		this.accountService.login(username, password)
+			.pipe(concatWith(this.accountService.getOrganization(this.accountService.userValue.organizationid)))
 			.subscribe({
 				next: () => {
 					// default to the set component else til will default to base url

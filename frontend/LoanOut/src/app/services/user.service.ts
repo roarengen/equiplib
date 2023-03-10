@@ -1,3 +1,4 @@
+import { Organization } from './../models/organization';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -11,12 +12,14 @@ import { User } from '../models/user'
 export class AccountService {
     singleEvent$: BehaviorSubject<Event> | undefined;
     private userSubject: BehaviorSubject<User>;
+    private organizationSubject: BehaviorSubject<Organization>;
     public user: Observable<User>;
 
     constructor(
         private router: Router,
         private http: HttpClient
     ) {
+        this.organizationSubject = new BehaviorSubject<Organization>(JSON.parse(localStorage.getItem('organization')!))
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')!));
         this.user = this.userSubject.asObservable();
     }
@@ -36,18 +39,8 @@ export class AccountService {
             }));
     }
 
-    qrCodeLogin(id: any, password:any) {
-      return this.http.post<User>(`${environment.apiUrl}/users`, { id, password })
-          .pipe(map(user => {
-              // store user details and jwt token in local storage to keep user logged in between page refreshes
-              localStorage.setItem('user', JSON.stringify(user));
-              this.userSubject.next(user);
-              return user;
-          }));
-  }
-
     logout() {
-        localStorage.removeItem('user');
+        localStorage.clear();
         this.router.navigate(['/account/login']);
     }
 
@@ -88,4 +81,15 @@ export class AccountService {
                 return x;
             }));
     }
+
+    getOrganization(organizationid: number) {
+      return this.http.get<Organization>(`${environment.apiUrl}/orgs/${organizationid}`)
+          .pipe(map(organization => {
+              // store user details and jwt token in local storage to keep user logged in between page refreshes
+              localStorage.setItem('organization', JSON.stringify(organization));
+              console.log(organization)
+              this.organizationSubject.next(organization);
+              return organization;
+          }));
+  }
 }
