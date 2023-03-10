@@ -64,9 +64,10 @@ def seed_database(app: Flask):
         test_org = Organization(name="Kjell's taco",
                                 number="1234567", templateid=1)
         users = [Role(name="Bruker", active=True),
-                 Role(name="Leder", active=True),
                  Role(name="Utstyrsansvarlig", active=True),
-                 Role(name="Administrator", active=True)]
+                 Role(name="Administrator", active=True),
+                 Role(name="Leder", active=True)
+		]
         test_user = User(firstname="Kjell", lastname="Taco", password=encrypt(
             "test"), username="kjelltaco", email="kjelltaco@taco.com", roleid=1, organizationid=1)
         db.session.add(test_temp)
