@@ -1,3 +1,4 @@
+import { Organization } from './../../models/organization';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -13,12 +14,19 @@ export class HomePage {
   openQrCode: boolean = false;
   enterPinCode: boolean = false;
   QrCode!: string;
+  organization!: Organization;
 
   constructor(
     private alertController: AlertController,
     private route: ActivatedRoute,
     private router: Router,
   ) {}
+
+  ngOnInit(){
+    let org_json = localStorage.getItem('organization')
+    if (org_json)
+      this.organization = JSON.parse(org_json);
+  }
 
 
 onOpenQrScanner() {
