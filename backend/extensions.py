@@ -17,8 +17,8 @@ formatter = logging.Formatter(
 file_handler = logging.FileHandler("log.log", mode="a+")
 file_handler.setFormatter(formatter)
 try:
-    import secrets
-    sys_log_handler = SysLogHandler(address=secrets.SYSLOG_ADDRESS)
+    import secret
+    sys_log_handler = SysLogHandler(address=secret.SYSLOG_ADDRESS)
     sys_log_handler.setFormatter(formatter)
 except:
     sys_log_handler = None
