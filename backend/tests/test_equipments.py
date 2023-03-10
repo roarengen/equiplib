@@ -78,8 +78,8 @@ def test_get_equips_by_orgid(client: FlaskClient) -> None:
     orgid = 1
 
     test_org = Organization(
-        organizationNumber="21312313",
-        organizationName="different organization",
+        number="21312313",
+        name="different organization",
         templateid=1
     )
     db.session.add(test_org)
