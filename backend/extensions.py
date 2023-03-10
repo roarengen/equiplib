@@ -55,7 +55,7 @@ def encrypt(data: str) -> str:
 
 
 def seed_database(app: Flask):
-    from data import User, Role, Template, Organization
+    from data import User, Role, ROLES, Template, Organization
     with app.app_context():
         db.create_all()
         db.drop_all()
@@ -63,10 +63,11 @@ def seed_database(app: Flask):
         test_temp = Template(name="default")
         test_org = Organization(name="Kjell's taco",
                                 number="1234567", templateid=1)
-        users = [Role(name="Bruker", active=True),
-                 Role(name="Utstyrsansvarlig", active=True),
-                 Role(name="Administrator", active=True),
-                 Role(name="Leder", active=True)
+        users = [
+            Role(name=ROLES.USER.value, active=True),
+            Role(name=ROLES.LENDER.value, active=True),
+            Role(name=ROLES.ADMIN.value, active=True),
+            Role(name=ROLES.LEADER.value, active=True)
 		]
         test_user = User(firstname="Kjell", lastname="Taco", password=encrypt(
             "test"), username="kjelltaco", email="kjelltaco@taco.com", roleid=1, organizationid=1)
@@ -75,6 +76,7 @@ def seed_database(app: Flask):
         [db.session.add(user) for user in users]
         db.session.add(test_user)
         db.session.commit()
+
 
 
 def datetime_from_string(datetime_string: str) -> datetime:
