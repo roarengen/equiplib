@@ -14,7 +14,7 @@ class Rent(db.Model, Serializable):
     purpose = db.Column(db.String(80))
     comment = db.Column(db.Text)
     rentedFromLocation = db.Column(db.Integer, db.ForeignKey(Location.id))
-    DeliveredToLocation = db.Column(db.Integer, db.ForeignKey(Location.id))
+    deliveredToLocation = db.Column(db.Integer, db.ForeignKey(Location.id))
 
     def __repr__(self):
         return '<Rent %r>' % self.equipmentid

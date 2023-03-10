@@ -4,8 +4,8 @@ from data.template import Template
 
 class Organization(db.Model, Serializable):
     id = db.Column(db.Integer, primary_key=True)
-    organizationNumber = db.Column(db.String(80), unique=True, nullable=False)
-    organizationName = db.Column(db.String(80), unique=True, nullable=False)
+    number = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120))
     phone = db.Column(db.String(20))
     street = db.Column(db.String(80))
