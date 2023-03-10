@@ -9,8 +9,9 @@ api = Blueprint("location", __name__)
 @cross_origin()
 @api.get("/")
 def get_locs():
-    locs : list[Location] = Location.query.all()
+    locs: list[Location] = Location.query.all()
     return jsonify(Location.serialize_list(locs))
+
 
 @cross_origin()
 @api.get("/<int:id>")
@@ -20,6 +21,7 @@ def get_loc(id: int):
         return jsonify(loc.serialize())
     return make_response("", RESPONSE_CODES.NOT_FOUND)
 
+
 @cross_origin()
 @api.get("/by_org/<int:orgid>")
 def get_loc_by_org_id(orgid: int):
@@ -28,15 +30,16 @@ def get_loc_by_org_id(orgid: int):
         return jsonify(locs.serialize())
     return make_response("", RESPONSE_CODES.NOT_FOUND)
 
+
 @api.post("/")
 @cross_origin()
 def post_location():
     data = request.get_json()
     try:
         new_loc = Location(
-            organizationid = data['organizationid'],
-            name = data['name'],
-            active = True
+            organizationid=data['organizationid'],
+            name=data['name'],
+            active=True
         )
     except KeyError:
         logger.info(f"failed location creation request with data: {data}")
@@ -47,13 +50,26 @@ def post_location():
 
     return make_response("", RESPONSE_CODES.SUCCESS)
 
+
+@api.put("/<int:id>")
+@cross_origin()
+def put_location(id: int):
+    loc = Location.query.filter(id == id).first()
+    if not loc:
+        return make_response(f"location not found with id {id}", RESPONSE_CODES.NOT_FOUND)
+    for key, value in request.get_json().items():
+        setattr(loc, key, value)
+
+    db.session.commit()
+    return make_response(f"disabled location with id {id}", RESPONSE_CODES.SUCCESS)
+
+
 @api.get("/<int:id>/disable")
 @cross_origin()
 def disable(id: int):
-    loc = Location.query.filter(id==id).first()
+    loc = Location.query.filter(id == id).first()
     if not loc:
         return make_response(f"location not found with id {id}", RESPONSE_CODES.NOT_FOUND)
     loc.active = False
     db.session.commit()
     return make_response(f"disabled location with id {id}", RESPONSE_CODES.SUCCESS)
-

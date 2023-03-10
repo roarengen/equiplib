@@ -1,9 +1,13 @@
 root=true
 
 [*.py]
-indent_style = tab
+indent_style = space
 indent_size = 4
 
 [*.js]
+indent_style = space
+indent_size = 2
+
+[*.ts]
 indent_style = space
 indent_size = 2
