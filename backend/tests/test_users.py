@@ -105,8 +105,8 @@ def test_get_users_by_org(client: FlaskClient) -> None:
 
 def test_get_users_by_org_with_multiple_orgs_and_users(client: FlaskClient) -> None:
 
-    new_org = Organization(organizationNumber="2323423",
-                           organizationName="løblåser jens'",
+    new_org = Organization(number="2323423",
+                           name="løblåser jens'",
                            templateid=1
                            )
     db.session.add(new_org)

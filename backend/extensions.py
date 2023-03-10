@@ -51,7 +51,7 @@ def seed_database(app: Flask):
         db.drop_all()
         db.create_all()
         test_temp = Template(name="default")
-        test_org = Organization(organizationName="Kjell's taco", organizationNumber="1234567", templateid=1)
+        test_org = Organization(name="Kjell's taco", number="1234567", templateid=1)
         boss_role = Role(name="boss", active=True)
         test_user = User(firstname="Kjell", lastname="Taco", password=encrypt("test"), username="kjelltaco", email="kjelltaco@taco.com", roleid=1, organizationid=1)
         db.session.add(test_temp)
