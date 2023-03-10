@@ -59,7 +59,7 @@ def post_template():
         logger.debug(f"failed creation of template with data: {data}")
         return make_response(f"failed creation of template with data: {data}", RESPONSE_CODES.BAD_REQUEST)
 
-    return make_response("", RESPONSE_CODES.SUCCESS)
+    return make_response("", RESPONSE_CODES.CREATED)
 
 
 @api.get("/<int:id>/disable")
