@@ -3,9 +3,7 @@ import { AccountService } from '../../../services/user.service';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { concatWith, first } from 'rxjs/operators';
 import { AlertController } from '@ionic/angular';
-import { concat } from 'rxjs/operators';
 
 @Component({
 	templateUrl: './login.page.html',
@@ -40,27 +38,12 @@ export class LoginPage implements OnInit {
 	login(username: string, password: string)
 	{
 		this.submitted = true;
+		this.accountService.login(username, password)
 
 		this.loading = true;
-		this.accountService.login(username, password)
-			.pipe(concatWith(this.accountService.getOrganization(this.accountService.userValue.organizationid)))
-			.subscribe({
-				next: () => {
-					// default to the set component else til will default to base url
-					const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-					this.router.navigateByUrl(returnUrl);
-				},
-				error: error => {
-					console.log(error)
-					this.loading = false;
-				}
-			});
 	}
 
 	onSubmit() {
-		if (this.form.invalid) {
-			return;
-		}
 		this.login(this.f['username'].value, this.f['password'].value)
 
 	}

@@ -4,14 +4,14 @@
       <ion-row>
         <ion-grid>
     <ion-text class="homescreen-title">
-      {{organization.name}}
+      {{accountService.organization?.name|| "-"}}
     </ion-text>
   </ion-grid>
   <ion-grid>
     <ion-button item-end><ion-icon src="../../../assets/icons/icon _settings.svg"></ion-icon></ion-button>
   </ion-grid>
   </ion-row>
-<ion-row>    <ion-text>{{organization.number}}</ion-text>
+<ion-row>    <ion-text >{{accountService.organization?.number || "-"}}</ion-text>
 </ion-row>
 
 </ion-grid>
