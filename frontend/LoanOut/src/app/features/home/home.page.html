@@ -22,8 +22,8 @@
 
   <ion-accordion-group>
     <ion-accordion value="first">
-      <ion-item slot="header" color="secondary">
-        <ion-label>First Accordion</ion-label>
+      <ion-item *ngFor="let equipment of equipmentService.equipments;"slot="header" color="secondary">
+        <ion-label>{{equipment.name}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         First Content
