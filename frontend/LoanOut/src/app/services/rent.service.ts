@@ -6,17 +6,16 @@ import { HttpClient} from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class RentService {
 
-    public rents!: Rent[];
     constructor(
         private http: HttpClient
     ) {
     }
     fetchRentsByOrg(orgid: number)
     {
-        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/by_org/${orgid}`).subscribe(rent => this.rents = rent)
+        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/by_org/${orgid}`)
     }
     fetchRentsByUser(userid: number)
     {
-        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/${userid}`).subscribe(rent => this.rents = rent)
+        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/${userid}`)
     }
 }
