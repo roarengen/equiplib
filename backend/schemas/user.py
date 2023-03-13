@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+import bcrypt
 #from sqlalchemy.orm import Relationship
 from database import Base
 from schemas.organization import Organization
@@ -26,3 +27,7 @@ class User(Base, Serializable):
     activeFromDate = Column(DateTime)
     activeToDate = Column(DateTime)
     organizationid = Column(Integer, ForeignKey(Organization.id), nullable=False)
+
+    def verify_password(self, password: str) -> bool:
+        return str(self.password) == bcrypt.hashpw(password.encode("utf-8"), str(self.password).encode("utf-8")).decode("utf-8")
+

@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from extensions import encrypt
+import bcrypt
 
 import models.user
 import schemas.user
@@ -24,5 +25,3 @@ def create_user(db: Session, user: models.user.UserCreate):
     db.refresh(new_user)
     return new_user
 
-def login(db: Session, password:str, username: str):
-    return db.query(schemas.user.User).filter(schemas.user.User.username == username).first()

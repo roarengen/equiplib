@@ -3,8 +3,13 @@ from sqlalchemy.orm import Session
 from database import SessionLocal
 from models.user import UserCreate, User
 import services.userservice as crud
+from pydantic import BaseModel
 
 api = APIRouter(prefix="/users")
+
+class LoginObject(BaseModel):
+    password: str
+    username: str
 
 def get_db():
     db = SessionLocal()
@@ -34,9 +39,16 @@ def get_users(db: Session = Depends(get_db)):
     return users
 
 
-@api.post("/login", response_model=User)
-def user_login(password:str, username:str, db: Session = Depends(get_db)):
-    crud.login(password, username)
+@api.post("/login", response_model=User|None)
+def user_login(login: LoginObject, db: Session = Depends(get_db)):
+    user =  crud.get_user_by_username(db, login.username)
+    if not user:
+        raise HTTPException(status_code=404, detail="user with that username not found")
+
+    if not user.verify_password(login.password):
+        raise HTTPException(status_code=401, detail="invalid password")
+
+    return user
 
 @api.post("/qrlogin")
 def login_user_qr():
