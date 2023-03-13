@@ -1,45 +1,23 @@
-from flask import Blueprint, jsonify, make_response, request
-from flask_cors import cross_origin
-from data import Equipment
-from extensions import RESPONSE_CODES, db, logger
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+import services.equipservice as crud
+from database import get_db
+from models.equipment import Equipment, EquipmentCreate
 
-api = Blueprint("equipment", __name__)
+api = APIRouter(prefix="/equips")
 
-@cross_origin()
-@api.get("/")
-def get_rents():
-    return make_response("illegal endpoint", RESPONSE_CODES.UNAUTHORIZED)
+@api.get("/", response_model=list[Equipment])
+def get_equips(db : Session = Depends(get_db)):
+    return crud.get_equips(db)
 
-@cross_origin()
-@api.get("/<int:id>")
-def get_equips(id: int):
-    equip: Equipment = Equipment.query.filter(Equipment.id == id).first()
+@api.get("/<int:id>", response_model=Equipment)
+def get_equip(id: int, db : Session = Depends(get_db)):
+    equip = crud.get_org(db, id)
     if not equip:
-        return make_response("rent not found", RESPONSE_CODES.NOT_FOUND)
-    return jsonify(equip.serialize())
+        return HTTPException(status_code=404, detail="equip not found")
+    return equip
 
-@cross_origin()
-@api.post("/")
-def post_equips():
-    data = request.get_json()
-    equip = Equipment()
+@api.post("/", response_model=Equipment)
+def post_equip(org: EquipmentCreate, db : Session = Depends(get_db)):
+    return crud.create_equip(db, org)
 
-    if "active" not in data.keys():
-        equip.active = True
-
-    for key, val in data.items():
-        setattr(equip, key, val)
-
-    try:
-        db.session.add(equip)
-        db.session.commit()
-    except Exception as e:
-        return make_response(f"invalid data: {data}", RESPONSE_CODES.BAD_REQUEST)
-    return make_response("", RESPONSE_CODES.CREATED)
-
-
-@cross_origin()
-@api.get("/by_org/<int:orgid>")
-def get_by_org_id(orgid:int):
-    equips: list[Equipment] = Equipment.query.filter(Equipment.organizationid == orgid).all()
-    return jsonify(Equipment.serialize_list(equips))

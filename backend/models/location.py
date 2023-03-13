@@ -9,9 +9,9 @@ class LocationBase(BaseModel):
     class Config:
         orm_mode = True
 
-class Equipment(LocationBase):
+class Location(LocationBase):
     id: int
 
-class EquipmentCreate(LocationBase):
+class LocationCreate(LocationBase):
     pass
 
