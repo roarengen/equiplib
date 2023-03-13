@@ -8,7 +8,7 @@ root*
 | | requirements.txt 
 | | main.py				# the entry point for fastapi app / asgi application
 | | routes/
-| | | __int__.py        # contains all the different blueprints. Can behave as a "feature toggle"
+| | | __int__.py        
 | | | user.py
 | | | rent.py
 | | | etc...
