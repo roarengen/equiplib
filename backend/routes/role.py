@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi.logger import logger
 from database import get_db
 from models.role import Role, RoleCreate
 import services.roleservice as crud

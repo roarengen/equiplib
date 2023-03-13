@@ -1,7 +1,10 @@
 from enum import Enum, auto
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.logger import logger
 from routes import api
+from logger import handlers
+import logging
 import database
 import uvicorn
 
@@ -20,8 +23,11 @@ class LaunchArg(Enum):
 def create_app(arg : LaunchArg) -> FastAPI:
     if arg == LaunchArg.DEV or arg == LaunchArg.PRD:
         database.Base.metadata.create_all(bind=database.engine)
+        [logger.addHandler(handler) for handler in handlers]
+        logger.setLevel(logging.DEBUG)
     elif arg == LaunchArg.TEST:
         pass
+
     app = FastAPI(title="equiplib")
     app.include_router(api)
     app.add_middleware(

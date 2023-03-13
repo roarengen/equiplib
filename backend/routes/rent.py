@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.logger import logger
 from sqlalchemy.orm import Session
 from database import get_db
 from models.rent import Rent, RentCreate
@@ -21,6 +22,7 @@ def get_rents(db: Session = Depends(get_db)):
 def get_rent(id: int, db: Session = Depends(get_db)):
     rent = crud.get_rent(db, id)
     if not rent:
+        logger.debug(f"requested rent with id: {id} but no rents where found")
         return HTTPException(status_code=404, detail="rent not found")
     return rent
 
@@ -28,13 +30,15 @@ def get_rent(id: int, db: Session = Depends(get_db)):
 def get_rent_by_orgid(orgid: int, db: Session = Depends(get_db)):
     rents = crud.get_rents_by_orgid(db, orgid)
     if not rents:
+        logger.debug(f"requested rents for org: {orgid} but no rents where found")
         return HTTPException(status_code=404, detail="no rents not found for this org")
     return rents
 
-@api.get("/by_user/{orgid}", response_model=list[Rent])
-def get_rent_by_userid(orgid: int, db: Session = Depends(get_db)):
-    rents = crud.get_rents_by_userid(db, orgid)
+@api.get("/by_user/{userid}", response_model=list[Rent])
+def get_rent_by_userid(userid: int, db: Session = Depends(get_db)):
+    rents = crud.get_rents_by_userid(db, userid)
     if not rents:
+        logger.debug(f"requested rents for user: {userid} but no rents where found")
         return HTTPException(status_code=404, detail="no rents not found for this user")
     return rents
 

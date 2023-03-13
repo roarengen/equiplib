@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
+from fastapi.logger import logger
 from sqlalchemy.orm import Session
 import services.orgservice as crud
 from database import get_db
@@ -23,8 +24,12 @@ def get_org(id: int, db : Session = Depends(get_db)):
 @api.post("/", response_model=Organization)
 def post_org(org: OrganizationCreate, db : Session = Depends(get_db)):
     if crud.get_org_by_name(db, org.name):
+        logger.debug(f"tried to register org with data: {org}, but name already registered")
         return HTTPException(status_code=400, detail="org name already registered")
+
     if crud.get_org_by_org_number(db, org.number):
+        logger.debug(f"tried to register org with data: {org}, but orgnumber already registered")
         return HTTPException(status_code=400, detail="org number already registered")
 
+    logger.info(f"new organization registered: {org.name}")
     return crud.create_org(db, org)

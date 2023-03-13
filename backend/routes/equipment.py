@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
+from fastapi.logger import logger
 from sqlalchemy.orm import Session
 import services.equipservice as crud
 from database import get_db
@@ -17,10 +18,12 @@ def get_equips(db : Session = Depends(get_db)):
 def get_equip(id: int, db : Session = Depends(get_db)):
     equip = crud.get_equip(db, id)
     if not equip:
+        logger.debug(f"requested equipment with id: {equip.id} but was not found")
         return HTTPException(status_code=404, detail="equip not found")
     return equip
 
 @api.post("/", response_model=Equipment)
-def post_equip(org: EquipmentCreate, db : Session = Depends(get_db)):
-    return crud.create_equip(db, org)
+def post_equip(equipment: EquipmentCreate, db : Session = Depends(get_db)):
+    logger.info(f"new equipment created: {equipment.name}")
+    return crud.create_equip(db, equipment)
 
