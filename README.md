@@ -48,38 +48,17 @@ root*
 
 ## Backend Stack
 * Python
-* Flask
+* FastAPI
 * SQLalchemy
+* Pydantic
 
 ### Style guide
 Follow the [PEP-8](https://peps.python.org/pep-0008/) style guide.
 Always use type hints if possible.
 (if you're struggling with type hints: [annotations](https://docs.python.org/3/howto/annotations.html), [Protocols](https://peps.python.org/pep-0544/))
 
-### How to:
-
-To interact with the database while it is on disk;
-we can cd into backend directory and start python from shell
-```python
-import main
-from extensions import db
-
-db.create_all() #  creates all tables for models defined
-db.drop_all() # drops all tables
-# note that in order to update a table, we need to drop it and re-create it
-
-# to make an new user
-from data.user import User
-new_user = User(params=params)
-db.session.add(new_user)
-db.session.commit()
-```
-ref: [flask-sqlalchemy doc](https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/)
-
-----
-
 # Development
-To start the flask instance:
+To start the fastAPI dev instance:
 
 ## windows
 ```bash
@@ -100,9 +79,8 @@ python main.py
 ```
 
 # Deployment
-* NGINX reverse-proxy pointing to the Gunicorn WSGI instances.
-* systemd proccess
-* * 
+NGINX reverse-proxy pointing to the Uvicorn ASGI instances.
+systemd service
 
 ## Frontend Stack
 * Angular.js
