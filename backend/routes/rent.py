@@ -1,42 +1,40 @@
-from flask import Blueprint, jsonify, make_response, request
-from flask_cors import cross_origin
-from data import Rent, User
-from extensions import RESPONSE_CODES, db
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from database import get_db
+from models.rent import Rent, RentCreate
+import services.rentservice as crud
 
-api = Blueprint("rents", __name__)
+api = APIRouter(
+    prefix="/rents",
+    tags=['rents'],
+)
 
-@cross_origin()
-@api.get("/")
-def get_rents():
-    return make_response("illegal endpoint", RESPONSE_CODES.UNAUTHORIZED)
+@api.post("/", response_model=Rent)
+def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
+    return crud.create_rent(db, rent)
 
-@cross_origin()
-@api.get("/<int:id>")
-def get_rent(id: int):
-    rent: Rent = Rent.query.filter(Rent.id == id).first()
+@api.get("/", response_model=list[Rent])
+def get_rents(db: Session = Depends(get_db)):
+    return crud.get_rents(db)
+
+@api.get("/<int:id>", response_model=Rent)
+def get_rent(id: int, db: Session = Depends(get_db)):
+    rent = crud.get_rent(db, id)
     if not rent:
-        return make_response("rent not found", RESPONSE_CODES.NOT_FOUND)
-    return jsonify(rent.serialize())
+        return HTTPException(status_code=404, detail="rent not found")
+    return rent
 
-@cross_origin()
-@api.get("/by_org/<int:orgid>")
-def get_rent_by_orgid(orgid: int):
-    users: list[User] = User.query.filter(User.organizationid==orgid).all()
-    if not users:
-        print("no users found in org")
-        return make_response("no users with that orgid", RESPONSE_CODES.NOT_FOUND)
-
-    userids = [user.id for user in users]
-    rents: list[Rent] = Rent.query.filter(Rent.userid.in_((userids))).all()
+@api.get("/by_org/<int:orgid>", response_model=list[Rent])
+def get_rent_by_orgid(orgid: int, db: Session = Depends(get_db)):
+    rents = crud.get_rents_by_orgid(db, orgid)
     if not rents:
-        print("no rents found in org")
-        return make_response("no rents for this orgid", RESPONSE_CODES.NOT_FOUND)
+        return HTTPException(status_code=404, detail="no rents not found for this org")
+    return rents
 
-    return jsonify(Rent.serialize_list(rents))
-
-@cross_origin()
-@api.get("/by_user/<int:userid>")
-def get_rent_by_userid(userid: int):
-    rents: list[Rent] = Rent.query.filter(Rent.userid == userid).all()
-    return jsonify(Rent.serialize_list(rents))
+@api.get("/by_user/<int:userid>", response_model=list[Rent])
+def get_rent_by_userid(orgid: int, db: Session = Depends(get_db)):
+    rents = crud.get_rents_by_userid(db, orgid)
+    if not rents:
+        return HTTPException(status_code=404, detail="no rents not found for this user")
+    return rents
 
