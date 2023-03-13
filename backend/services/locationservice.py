@@ -2,19 +2,19 @@ from sqlalchemy.orm import Session
 from models.location import LocationCreate
 from schemas import Location
 
-def get_location(db: Session, id: int):
+def get_location(db: Session, id: int) -> Location | None:
     return db.query(Location).filter(Location.id == id).first()
 
-def get_locations(db: Session, skip: int = 0, limit: int = 100):
+def get_locations(db: Session, skip: int = 0, limit: int = 100) -> list[Location]: 
     return db.query(Location).offset(skip).limit(limit).all()
 
-def get_location_by_name(db: Session, name: str):
+def get_location_by_name(db: Session, name: str) -> Location | None:
     return db.query(Location).filter(Location.name == name).first()
 
-def get_locations_by_orgid(db: Session, orgid: int):
+def get_locations_by_orgid(db: Session, orgid: int) -> list[Location]:
     return db.query(Location).filter(Location.organizationid == orgid).all()
 
-def disable_location(db: Session, id: int):
+def disable_location(db: Session, id: int) -> Location:
     loc = db.query(Location).filter(Location.id==id).first()
     loc.active = False
     db.commit()
