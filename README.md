@@ -6,13 +6,17 @@ system structure
 root*
 | backend
 | | requirements.txt 
-| | main.py				# the entry point for flask app / wsgi application
-| | blueprints/
+| | main.py				# the entry point for fastapi app / asgi application
+| | routes/
 | | | __int__.py        # contains all the different blueprints. Can behave as a "feature toggle"
 | | | user.py
 | | | rent.py
 | | | etc...
-| | data/				# stores the datamodels
+| | schemas/			# stores the datamodels for DB interaction
+| | | user.py
+| | | rent.py
+| | | etc...
+| | models/			    # models for interacting, and transfering data through api (dto's)
 | | | user.py
 | | | rent.py
 | | | etc...
@@ -22,6 +26,11 @@ root*
 | | | rent.py
 | | | etc...
 | | extensions.py		# global instances like database instance
+| | equiplib.py		    # production asgi app instance
+| | database.py		    # database interaction
+| | main.py		        # dev asgi app instance
+| | log.log             # log file
+| | nginx.conf          
 | frontend
 | | client 
 | | app.routing.module.ts # Sets Urls for the different types of components. Note that components can have nested children components.
