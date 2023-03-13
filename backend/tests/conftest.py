@@ -1,11 +1,20 @@
-import database
 import pytest
 
 from main import create_app, LaunchArg
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+from database import Base, get_db
 
-from database import TestingSessionLocal
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
+
+TEST_SQLALCHEMY_DATABASE_URL ='sqlite://'
+testengine = create_engine(
+    TEST_SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}, poolclass=StaticPool
+)
+
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=testengine)
 
 def override_get_db():
     db = TestingSessionLocal()
@@ -16,13 +25,13 @@ def override_get_db():
 
 @pytest.fixture()
 def app():
-    database.Base.metadata.create_all(bind=database.testengine)
+    Base.metadata.create_all(bind=testengine)
 
     app = create_app(LaunchArg.TEST)
-    app.dependency_overrides[database.get_db] = override_get_db
+    app.dependency_overrides[get_db] = override_get_db
     yield app
 
-    database.Base.metadata.drop_all(database.testengine)
+    Base.metadata.drop_all(bind=testengine)
 
 
 @pytest.fixture()
