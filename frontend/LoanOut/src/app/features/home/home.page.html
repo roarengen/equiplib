@@ -4,14 +4,14 @@
       <ion-row>
         <ion-grid>
     <ion-text class="homescreen-title">
-      {{organization.name}}
+      {{accountService.organization?.name|| "-"}}
     </ion-text>
   </ion-grid>
   <ion-grid>
     <ion-button item-end><ion-icon src="../../../assets/icons/icon _settings.svg"></ion-icon></ion-button>
   </ion-grid>
   </ion-row>
-<ion-row>    <ion-text>{{organization.number}}</ion-text>
+<ion-row>    <ion-text >{{accountService.organization?.number || "-"}}</ion-text>
 </ion-row>
 
 </ion-grid>
@@ -22,8 +22,8 @@
 
   <ion-accordion-group>
     <ion-accordion value="first">
-      <ion-item slot="header" color="secondary">
-        <ion-label>First Accordion</ion-label>
+      <ion-item *ngFor="let equipment of equipmentService.equipments;"slot="header" color="secondary">
+        <ion-label>{{equipment.name}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         First Content
