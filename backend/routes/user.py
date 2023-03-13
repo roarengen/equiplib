@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from database import get_db
 from models.user import UserCreate, User
 import services.userservice as crud
 from pydantic import BaseModel
@@ -11,12 +11,6 @@ class LoginObject(BaseModel):
     password: str
     username: str
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @api.post("/", response_model=User)
 def post_user(user: UserCreate, db: Session = Depends(get_db)):

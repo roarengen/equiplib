@@ -20,5 +20,3 @@ class Organization(Base, Serializable):
     other2 = Column(String(80))
     templateid = Column(Integer, ForeignKey(Template.id), nullable=False)
 
-    def __repr__(self):
-        return '<Organization %r>' % self.organizationName

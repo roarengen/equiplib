@@ -1,7 +1,7 @@
 from enum import Enum, auto
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from blueprints import api
+from routes import api
 import database
 
 origins = [

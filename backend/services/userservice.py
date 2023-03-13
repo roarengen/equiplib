@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 from extensions import encrypt
-import bcrypt
 
 import models.user
 import schemas.user

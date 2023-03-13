@@ -1,22 +1,24 @@
-from sqlalchemy import Column, String, Integer, ForeignKey
-from database import Base
-from data.serializer import Serializable
-from data.template import Template
+from pydantic import BaseModel
 
-class Organization(Base, Serializable):
-    id = Column(Integer, primary_key=True)
-    number = Column(String(80), unique=True, nullable=False)
-    name = Column(String(80), unique=True, nullable=False)
-    email = Column(String(120))
-    phone = Column(String(20))
-    street = Column(String(80))
-    city = Column(String(80))
-    postalcode = Column(String(80))
-    comment = Column(String(80))
-    otherId = Column(String(80))
-    other1 = Column(String(80))
-    other2 = Column(String(80))
-    templateid = Column(Integer, ForeignKey(Template.id), nullable=False)
+class OrganizationBase(BaseModel):
+    number: str
+    name: str
+    email: str | None = None
+    phone: str | None = None
+    city : str | None = None
+    postalcode : str | None = None
+    comment : str | None = None
+    otherId : str | None = None
+    other1 : str | None = None
+    other2 : str | None = None
+    templateid :int
 
-    def __repr__(self):
-        return '<Organization %r>' % self.organizationName
+    class Config:
+        orm_mode = True
+
+
+class Organization(OrganizationBase):
+    id : int
+
+class CreateOrganization(OrganizationBase):
+    pass
