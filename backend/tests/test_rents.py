@@ -1,8 +1,6 @@
-from datetime import datetime
+from dateutil import parser
 from fastapi.testclient import TestClient
 from models.equipment import EquipmentCreate
-
-from extensions import datetime_from_string
 
 eq = EquipmentCreate(organizationid=0, name="tacokrus", locationid=0)
 rent = {
@@ -24,7 +22,7 @@ def test_rent(client: TestClient) -> None:
 
     data = response.json()
     assert response.status_code == 200
-    assert datetime.fromisoformat(data['rentedFromDate']).date() == datetime.fromisoformat(rent['rentedFromDate']).date()
+    assert parser.parse(data['rentedFromDate']).date() == parser.parse(rent['rentedFromDate']).date()
 
 def test_rents(client: TestClient) -> None:
     response = client.get("api/rents/")
