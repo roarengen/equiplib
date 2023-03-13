@@ -12,7 +12,7 @@ def get_equips(db : Session = Depends(get_db)):
 
 @api.get("/<int:id>", response_model=Equipment)
 def get_equip(id: int, db : Session = Depends(get_db)):
-    equip = crud.get_org(db, id)
+    equip = crud.get_equip(db, id)
     if not equip:
         return HTTPException(status_code=404, detail="equip not found")
     return equip
