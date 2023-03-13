@@ -1,26 +1,49 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-grid class="ion-no-padding">
-      <ion-row>
-        <ion-grid>
-    <ion-text class="homescreen-title">
-      {{organization.name}}
-    </ion-text>
-  </ion-grid>
-  <ion-grid>
-    <ion-button item-end><ion-icon src="../../../assets/icons/icon _settings.svg"></ion-icon></ion-button>
-  </ion-grid>
-  </ion-row>
-<ion-row>    <ion-text>{{organization.number}}</ion-text>
-</ion-row>
 
-</ion-grid>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
 
-<ion-content [fullscreen]="true">
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-menu-toggle>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-menu-toggle>
+        <ion-title></ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-menu contentId="main-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Innstillinger</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+          <ion-item *ngIf="this.user.roleid > 2">
+            <ion-button size="large">
+              <ion-icon slot="start" name="star"></ion-icon>
+              Endre brukere
+            </ion-button>
+          </ion-item>
+          <ion-item  *ngIf="this.user.roleid > 2">
+            <ion-button size="large">
+              <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+              Ny QR kode
+            </ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-button size="large" class="clickable ion-activatable" (click)="logout()">
+              <ion-icon slot="start" name="log-out-outline"></ion-icon>
+              Logg ut
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-content class="ion-padding">
 
-  <ion-accordion-group>
+  <ion-accordion-group *ngIf="this.user.roleid < 1">
     <ion-accordion value="first">
       <ion-item slot="header" color="secondary">
         <ion-label>First Accordion</ion-label>
@@ -47,12 +70,15 @@
     </ion-accordion>
   </ion-accordion-group>
 
+    </ion-content>
+  </div>
+
   <ion-item-group>
     <ion-item *ngIf="this.openQrCode">
-    <zxing-scanner
+      <zxing-scanner
     (scanSuccess) = "scanSuccessHandler($event)"
     (scanError)= "scanErrorHandler($event)"
-    ></zxing-scanner>
+></zxing-scanner>
   </ion-item>
   </ion-item-group>
 
@@ -67,7 +93,7 @@
         <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
         skanner
       </ion-tab-button>
-      <ion-tab-button tab="login">
+      <ion-tab-button (click)="logout()" tab="login">
         <ion-icon color="secondary-contrast" name="person-outline"></ion-icon>
         Brukere
       </ion-tab-button>
@@ -81,4 +107,3 @@
   </ion-fab>
 
 </ion-content>
-
