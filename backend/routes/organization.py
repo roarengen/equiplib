@@ -13,7 +13,7 @@ api = APIRouter(
 def get_orgs(db : Session = Depends(get_db)):
     return crud.get_orgs(db)
 
-@api.get("/<int:id>", response_model=Organization)
+@api.get("/{id}", response_model=Organization)
 def get_org(id: int, db : Session = Depends(get_db)):
     org = crud.get_org(db, id)
     if not org:

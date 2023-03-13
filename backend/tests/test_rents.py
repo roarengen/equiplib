@@ -1,10 +1,8 @@
 from datetime import datetime
-from flask.testing import FlaskClient
-from extensions import db, datetime_from_string
-from data import *
+from fastapi.testclient import TestClient
 import json
 
-def test_rent(client: FlaskClient) -> None:
+def test_rent(client: TestClient) -> None:
     test_id = 1
     orgid = 1
     new_equip = Equipment(
@@ -27,12 +25,12 @@ def test_rent(client: FlaskClient) -> None:
     assert response.status_code == 200
     assert datetime_from_string(rent['rentedFromDate']).date() == Rent.query.filter(Rent.id == test_id).first().rentedFromDate
 
-def test_rents(client: FlaskClient) -> None:
+def test_rents(client: TestClient) -> None:
     response = client.get("api/rents/")
     assert response.status_code == 403
     assert response.data == b"illegal endpoint"
 
-def test_rents_by_org(client: FlaskClient) -> None:
+def test_rents_by_org(client: TestClient) -> None:
     orgid = 1
     new_equip = Equipment(
         organizationid = orgid,

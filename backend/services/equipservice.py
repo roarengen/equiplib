@@ -15,7 +15,7 @@ def get_equips_by_org_number(db: Session, orgid: str):
     return db.query(Equipment).filter(Equipment.organizationid == orgid).first()
 
 def create_equip(db: Session, equip: EquipmentCreate):
-    new_equip = Equipment(**equip.dict())
+    new_equip = Equipment(**equip.dict(), active=True)
     db.add(new_equip)
     db.commit()
     db.refresh(new_equip)

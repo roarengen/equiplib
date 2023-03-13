@@ -14,7 +14,7 @@ def get_locs(db: Session = Depends(get_db)):
     crud.get_locations(db)
     return crud
 
-@api.get("/<int:id>", response_model=Location)
+@api.get("/{id}", response_model=Location)
 def get_loc(id: int, db: Session = Depends(get_db)):
     loc = crud.get_location(db, id)
     if not loc:
@@ -22,7 +22,7 @@ def get_loc(id: int, db: Session = Depends(get_db)):
     return loc
 
 
-@api.get("/by_org/<int:orgid>", response_model=list[Location])
+@api.get("/by_org/{orgid}", response_model=list[Location])
 def get_loc_by_org_id(orgid: int, db: Session = Depends(get_db)):
     locs = crud.get_locations_by_orgid(db, orgid)
     if not locs:
@@ -33,6 +33,6 @@ def get_loc_by_org_id(orgid: int, db: Session = Depends(get_db)):
 def post_location(location: LocationCreate, db: Session = Depends(get_db)):
     return crud.create_location(db, location)
 
-@api.get("/<int:id>/disable", response_model=list[Location])
+@api.get("/{orgid}/disable", response_model=list[Location])
 def disable(id: int, db: Session = Depends(get_db)):
     return crud.disable_location(db, id)

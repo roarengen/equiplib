@@ -17,21 +17,21 @@ def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
 def get_rents(db: Session = Depends(get_db)):
     return crud.get_rents(db)
 
-@api.get("/<int:id>", response_model=Rent)
+@api.get("/{orgid}", response_model=Rent)
 def get_rent(id: int, db: Session = Depends(get_db)):
     rent = crud.get_rent(db, id)
     if not rent:
         return HTTPException(status_code=404, detail="rent not found")
     return rent
 
-@api.get("/by_org/<int:orgid>", response_model=list[Rent])
+@api.get("/by_org/{orgid}", response_model=list[Rent])
 def get_rent_by_orgid(orgid: int, db: Session = Depends(get_db)):
     rents = crud.get_rents_by_orgid(db, orgid)
     if not rents:
         return HTTPException(status_code=404, detail="no rents not found for this org")
     return rents
 
-@api.get("/by_user/<int:userid>", response_model=list[Rent])
+@api.get("/by_user/{orgid}", response_model=list[Rent])
 def get_rent_by_userid(orgid: int, db: Session = Depends(get_db)):
     rents = crud.get_rents_by_userid(db, orgid)
     if not rents:

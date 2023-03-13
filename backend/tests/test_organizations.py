@@ -1,17 +1,15 @@
-from flask.testing import FlaskClient
-from extensions import db
-from data import *
+from fastapi.testclient import TestClient
 import json
 
-def test_org(client: FlaskClient) -> None:
+def test_org(client: TestClient) -> None:
     response = client.get("api/orgs/1")
     assert response.status_code == 200
 
-def test_orgs(client: FlaskClient) -> None:
+def test_orgs(client: TestClient) -> None:
     response = client.get("api/orgs/")
     assert response.status_code == 200
 
-def test_org_registration(client: FlaskClient) -> None:
+def test_org_registration(client: TestClient) -> None:
     response = client.post("api/orgs/",
                            json={
                                     "number" : "231312131",
@@ -23,7 +21,7 @@ def test_org_registration(client: FlaskClient) -> None:
     assert test_org
     assert response.status_code == 201
 
-def test_org_registration_not_sufficient_fields(client: FlaskClient) -> None:
+def test_org_registration_not_sufficient_fields(client: TestClient) -> None:
     response = client.post("api/orgs/",
                            json={
                                     "number" : "231312131",

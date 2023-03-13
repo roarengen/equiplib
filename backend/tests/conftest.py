@@ -1,27 +1,31 @@
+import database
 import pytest
-from main import create_app, LaunchArg, seed_database, Flask
-from flask.testing import FlaskClient, FlaskCliRunner
+
+from main import create_app, LaunchArg
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+
+from database import TestingSessionLocal
+
+def override_get_db():
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @pytest.fixture()
 def app():
+    database.Base.metadata.create_all(bind=database.testengine)
+
     app = create_app(LaunchArg.TEST)
-    app.config.update({
-        "TESTING": True,
-    })
-
-    # other setup can go here
-    with app.app_context():
-        seed_database(app)
-
+    app.dependency_overrides[database.get_db] = override_get_db
     yield app
 
-    # clean up / reset resources here
-
-@pytest.fixture()
-def client(app: Flask) -> FlaskClient:
-    return app.test_client()
+    database.Base.metadata.drop_all(database.testengine)
 
 
 @pytest.fixture()
-def runner(app: Flask) -> FlaskCliRunner:
-    return app.test_cli_runner()
+def client(app: FastAPI) -> TestClient:
+    return TestClient(app)
+

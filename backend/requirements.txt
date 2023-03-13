@@ -3,3 +3,4 @@ fastapi
 SQLAlchemy
 pytest
 uvicorn
+httpx

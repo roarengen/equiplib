@@ -17,8 +17,11 @@ class LaunchArg(Enum):
     DEV = auto()
     PRD = auto()
 
-def create_app() -> FastAPI:
-    database.Base.metadata.create_all(bind=database.engine)
+def create_app(arg : LaunchArg) -> FastAPI:
+    if arg == LaunchArg.DEV or LaunchArg.PRD:
+        database.Base.metadata.create_all(bind=database.engine)
+    elif arg == LaunchArg.TEST:
+        pass
     app = FastAPI(title="equiplib")
     app.include_router(api)
     app.add_middleware(
@@ -32,6 +35,5 @@ def create_app() -> FastAPI:
 
 
 if __name__ == "__main__":
-    app = create_app()
+    app = create_app(LaunchArg.DEV)
     uvicorn.run(app)
-    

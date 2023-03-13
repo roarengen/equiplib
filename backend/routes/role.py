@@ -1,4 +1,3 @@
-from data.role import Role
 from flask import jsonify, Blueprint, make_response
 from flask_cors import cross_origin
 from extensions import RESPONSE_CODES
@@ -17,7 +16,7 @@ def post_roles():
     return make_response("", RESPONSE_CODES.NOT_FOUND)
 
 @cross_origin()
-@api.get("/<int:id>")
+@api.get("/{orgid}")
 def get_role(id):
     roles = Role.query.filter(Role.id==id).first()
     if not roles:

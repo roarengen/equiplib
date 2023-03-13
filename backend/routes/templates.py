@@ -1,7 +1,5 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_cors import cross_origin
-from data import Template
-from extensions import RESPONSE_CODES, db, logger
 
 api = Blueprint("template", __name__)
 

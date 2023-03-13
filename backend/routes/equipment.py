@@ -13,7 +13,7 @@ api = APIRouter(
 def get_equips(db : Session = Depends(get_db)):
     return crud.get_equips(db)
 
-@api.get("/<int:id>", response_model=Equipment)
+@api.get("/{id}", response_model=Equipment)
 def get_equip(id: int, db : Session = Depends(get_db)):
     equip = crud.get_equip(db, id)
     if not equip:

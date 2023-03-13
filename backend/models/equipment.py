@@ -13,13 +13,13 @@ class EquipmentBase(BaseModel):
     other2: str| None = None
     comment: str| None = None
     locationid: int
-    active : bool
 
     class Config:
         orm_mode = True
 
 class Equipment(EquipmentBase):
     id: int
+    active : bool = True
 
 class EquipmentCreate(EquipmentBase):
     pass
