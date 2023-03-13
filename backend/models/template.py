@@ -1,29 +1,33 @@
-from sqlalchemy import Column, Integer, String, Text
-from database import Base
-from data.serializer import Serializable
+from pydantic import BaseModel
 
-class Template(Base, Serializable):
-    id = Column(Integer, primary_key=True)
-    name = Column(String(25), unique=True, nullable=False)
-    equipName = Column(String(15))
-    equipModel = Column(String(15))
-    equipDescription = Column(String(15))
-    equipType = Column(String(15))
-    equipSerialnumber = Column(String(15))
-    equipBrand = Column(String(15))
-    equipOther1 = Column(String(15))
-    equipOther2 = Column(String(15))
-    equipOther3 = Column(String(15))
-    equipComment = Column(String(15))
-    userComment = Column(String(15))
-    userOtherid = Column(String(15))
-    userOther1 = Column(String(15))
-    userOther2 = Column(String(15))
-    orgOtherid = Column(String(15))
-    orgOther1 = Column(String(15))
-    orgOther2 = Column(String(15))
-    rentPurpose = Column(String(15))
-    rentComment = Column(Text)
+class TemplateBase(BaseModel):
+    name : str | None = None
+    equipName : str | None = None
+    equipModel : str | None = None
+    equipDescription : str | None = None
+    equipType : str | None = None
+    equipSerialnumber : str | None = None
+    equipBrand : str | None = None
+    equipOther1 : str | None = None
+    equipOther2 : str | None = None
+    equipOther3 : str | None = None
+    equipComment: str | None = None
+    userComment : str | None = None
+    userOtherid : str | None = None
+    userOther1 : str | None = None
+    userOther2 : str | None = None
+    orgOtherid : str | None = None
+    orgOther1 : str | None = None
+    orgOther2 : str | None = None
+    rentPurpose : str | None = None
+    rentComment : str | None = None
 
-    def __repr__(self):
-        return '<Template>'
+    class Config:
+        orm_mode = True
+
+class Template(TemplateBase):
+    id: int
+
+class TemplateCreate(TemplateBase):
+    pass
+

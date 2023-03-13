@@ -1,15 +1,17 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
-#from sqlalchemy.orm import relationship
-from database import Base
-from data.organization import Organization
-from data.serializer import Serializable
+from pydantic import BaseModel
 
-class Location(Base, Serializable):
-    id = Column(Integer, primary_key=True)
-    organizationid = Column(Integer, ForeignKey(Organization.id), nullable=False)
-    name = Column(String(80), nullable=False)
-    description = Column(String(80))
-    active = Column(Boolean, nullable=False)
+class LocationBase(BaseModel):
+    organizationid: int
+    name: str
+    description: str| None = None
+    active : bool
 
-    def __repr__(self):
-        return '<Location %r>' % self.name
+    class Config:
+        orm_mode = True
+
+class Equipment(LocationBase):
+    id: int
+
+class EquipmentCreate(LocationBase):
+    pass
+

@@ -1,27 +1,16 @@
-from sqlalchemy import Column, Integer, String, Boolean
-from database import Base
-from __future__ import annotations
-from schemas.serializer import Serializable
-from enum import Enum
+from pydantic import BaseModel
 
-class Role(Base, Serializable):
-    id = Column(Integer, primary_key=True)
-    name = Column(String(120), nullable=False)
-    active = Column(Boolean, nullable=False)
+class RoleBase(BaseModel):
+    comment: str
+    name: str
+    active: bool
 
-    def __repr__(self):
-        return '<Role %r>' % self.name
+    class Config:
+        orm_mode = True
 
-class ROLES(Enum):
-    USER = "bruker"
-    LENDER = "utstyrsansvarlig"
-    ADMIN = "administrator"
-    LEADER = "leder"
+class Role(RoleBase):
+    id: int
 
-    @staticmethod
-    def get_role_by_name(name : ROLES | str) -> Role | None:
-        return Role.query.filter(Role.name == name).first()
+class RoleCreate(RoleBase):
+    pass
 
-    @staticmethod
-    def get_role_by_id(id: int)-> Role | None:
-        return Role.query.filter(Role.id == id).first()
