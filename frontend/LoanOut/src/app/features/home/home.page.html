@@ -22,7 +22,7 @@
 
   <ion-accordion-group>
     <ion-accordion value="first">
-      <ion-item *ngFor="let equipment of equipmentService.equipments;"slot="header" color="secondary">
+      <ion-item *ngFor="let equipment of equipments | async;"slot="header" color="secondary">
         <ion-label>{{equipment.name}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
