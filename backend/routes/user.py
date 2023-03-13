@@ -33,7 +33,7 @@ def get_users(db: Session = Depends(get_db)):
     return users
 
 
-@api.post("/login", response_model=User|None)
+@api.post("/login", response_model=User)
 def user_login(login: LoginObject, db: Session = Depends(get_db)):
     user =  crud.get_user_by_username(db, login.username)
     if not user:

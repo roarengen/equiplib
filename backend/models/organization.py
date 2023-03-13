@@ -20,5 +20,5 @@ class OrganizationBase(BaseModel):
 class Organization(OrganizationBase):
     id : int
 
-class CreateOrganization(OrganizationBase):
+class OrganizationCreate(OrganizationBase):
     pass

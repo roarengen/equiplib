@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 import services.orgservice as crud
 from database import get_db
-from models.organization import Organization, CreateOrganization
+from models.organization import Organization, OrganizationCreate
 
 api = APIRouter(prefix="/orgs")
 
@@ -18,7 +18,7 @@ def get_org(id: int, db : Session = Depends(get_db)):
     return org
 
 @api.post("/", response_model=Organization)
-def post_org(org: CreateOrganization, db : Session = Depends(get_db)):
+def post_org(org: OrganizationCreate, db : Session = Depends(get_db)):
     if crud.get_org_by_name(db, org.name):
         return HTTPException(status_code=400, detail="org name already registered")
     if crud.get_org_by_org_number(db, org.number):

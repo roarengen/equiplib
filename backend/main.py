@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import api
 import database
+import uvicorn
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -31,7 +32,6 @@ def create_app() -> FastAPI:
 
 
 if __name__ == "__main__":
-    pass
-    #app = create_app(LaunchArg.DEV)
-    #seed_database(app)  # UNCOMMENT THIS TO RESERVE STATE
-    #app.run("localhost", 8888, True)
+    app = create_app()
+    uvicorn.run(app)
+    

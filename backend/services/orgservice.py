@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.organization import CreateOrganization
+from models.organization import OrganizationCreate
 from schemas import Organization
 
 def get_org(db: Session, id: int):
@@ -14,7 +14,7 @@ def get_org_by_name(db: Session, name: str):
 def get_org_by_org_number(db: Session, number: str):
     return db.query(Organization).filter(Organization.number == number).first()
 
-def create_org(db: Session, org: CreateOrganization):
+def create_org(db: Session, org: OrganizationCreate):
     new_org = Organization(**org.dict())
     db.add(new_org)
     db.commit()
