@@ -11,8 +11,8 @@ def get_templates(db: Session, skip:int=0, limit:int=100):
 def get_template_by_name(db: Session, name: str):
     return db.query(Template).filter(Template.name == name).first()
 
-def create_template(db: Session, location: TemplateCreate):
-    new_template = Template(**location.dict())
+def create_template(db: Session, template: TemplateCreate):
+    new_template = Template(**template.dict())
     db.add(new_template)
     db.commit()
     db.refresh(new_template)

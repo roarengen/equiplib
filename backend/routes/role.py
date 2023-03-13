@@ -1,24 +1,25 @@
-from flask import jsonify, Blueprint, make_response
-from flask_cors import cross_origin
-from extensions import RESPONSE_CODES
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from database import get_db
+from models.role import Role, RoleCreate
+import services.roleservice as crud
 
-api = Blueprint("roles", __name__)
+api = APIRouter(
+    prefix="/roles",
+    tags=['roles'],
+)
 
-@cross_origin()
-@api.get("/")
-def get_roles():
-    roles = Role.query.all()
-    return jsonify(Role.serialize_list(roles))
+@api.get("/", response_model=list[Role])
+def get_roles(db: Session = Depends(get_db)):
+    return crud.get_roles(db)
 
-@cross_origin()
-@api.post("/")
-def post_roles():
-    return make_response("", RESPONSE_CODES.NOT_FOUND)
+@api.post("/", response_model=Role)
+def post_roles(role: RoleCreate, db: Session = Depends(get_db)):
+    return crud.create_role(db, role)
 
-@cross_origin()
-@api.get("/{orgid}")
-def get_role(id):
-    roles = Role.query.filter(Role.id==id).first()
-    if not roles:
-        return make_response(f"role with id: {id} not found", RESPONSE_CODES.BAD_REQUEST)
-    return jsonify(roles.serialize())
+@api.get("/{id}", response_model=Role)
+def get_role(id, db: Session = Depends(get_db)):
+    role = crud.get_role(db, id)
+    if not role:
+        return HTTPException(404, f"role not found with id: {id}")
+    return role

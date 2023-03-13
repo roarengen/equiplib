@@ -1,11 +1,11 @@
 from fastapi import APIRouter
-#from routes.role import api as roleapi
+from routes.role import api as roleapi
 from routes.user import api as userapi
 from routes.organization import api as orgapi
 from routes.location import api as locationapi
 from routes.rent import api as rentapi
 from routes.equipment import api as equipmentapi
-#from routes.templates import api as templateapi
+from routes.templates import api as templateapi
 
 api = APIRouter(prefix="/api")
 
@@ -14,3 +14,5 @@ api.include_router(orgapi)
 api.include_router(equipmentapi)
 api.include_router(locationapi)
 api.include_router(rentapi)
+api.include_router(templateapi)
+api.include_router(roleapi)

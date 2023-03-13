@@ -1,71 +1,24 @@
-from flask import Blueprint, jsonify, make_response, request
-from flask_cors import cross_origin
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from database import get_db
+from models.template import Template, TemplateCreate
+import services.templateservice as crud
 
-api = Blueprint("template", __name__)
+api = APIRouter(
+    prefix="/temps",
+    tags=['temps'],
+)
+@api.get("/", response_model=list[Template])
+def get_temps(db: Session = Depends(get_db)):
+    return crud.get_templates(db)
 
-
-@cross_origin()
-@api.get("/")
-def get_temps():
-    temps: list[Template] = Template.query.all()
-    return jsonify(Template.serialize_list(temps))
-
-
-@cross_origin()
-@api.get("/<int:id>")
-def get_temp(id: int):
-    temp = Template.query.filter(Template.id == id).first()
-    if temp:
-        return jsonify(temp.serialize())
-    return make_response("", RESPONSE_CODES.NOT_FOUND)
-
-
-@api.put("/<int:id>")
-@cross_origin()
-def put_template(id: int):
-    data = request.get_json()
-    temp = Template.query.filter_by(id=id).first()
+@api.get("/{id}", response_model=Template)
+def get_temp(id: int, db: Session = Depends(get_db)):
+    temp = crud.get_template(db, id)
     if not temp:
-        make_response("", RESPONSE_CODES.NOT_FOUND)
+        return HTTPException(404, f"template not found with id: {id}")
+    return temp
 
-    for key, val in data.items():
-        setattr(temp, key, val)
-
-    try:
-        db.session.add(temp)
-        db.session.commit()
-    except:
-        logger.debug(f"failed modification template with data: {data}")
-        return make_response(f"failed modification of template with data: {data}", RESPONSE_CODES.BAD_REQUEST)
-
-    return make_response("", RESPONSE_CODES.SUCCESS)
-
-
-@api.post("/")
-@cross_origin()
-def post_template():
-    data = request.get_json()
-    new_temp = Template()
-
-    for key, val in data.items():
-        setattr(new_temp, key, val)
-
-    try:
-        db.session.add(new_temp)
-        db.session.commit()
-    except:
-        logger.debug(f"failed creation of template with data: {data}")
-        return make_response(f"failed creation of template with data: {data}", RESPONSE_CODES.BAD_REQUEST)
-
-    return make_response("", RESPONSE_CODES.CREATED)
-
-
-@api.get("/<int:id>/disable")
-@cross_origin()
-def disable(id: int):
-    temp = Template.query.filter(id == id).first()
-    if not temp:
-        return make_response(f"template not found with id {id}", RESPONSE_CODES.NOT_FOUND)
-    temp.active = False
-    db.session.commit()
-    return make_response(f"disabled template with id {id}", RESPONSE_CODES.SUCCESS)
+@api.post("/", response_model=Template)
+def post_template(template: TemplateCreate, db: Session = Depends(get_db)):
+    return crud.create_template(db, template)
