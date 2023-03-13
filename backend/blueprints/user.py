@@ -40,6 +40,8 @@ def post_user():
         db.session.add(new_user)
         db.session.commit()
     except IntegrityError:
+        logger.info("rolling back as error was encountered")
+        db.session.rollback()
         return make_response("user with that username already exists", RESPONSE_CODES.BAD_REQUEST)
 
     logger.info(f"new user created with name {new_user.username}")
