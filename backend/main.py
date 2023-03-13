@@ -1,48 +1,37 @@
-from blueprints import api
 from enum import Enum, auto
-from flask import Flask
-from extensions import db, docs, cors, seed_database
-from extensions import sys_log_handler, file_handler
-import logging
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from blueprints import api
+import database
 
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
 
 class LaunchArg(Enum):
     TEST = auto()
     DEV = auto()
     PRD = auto()
 
-# intializing app
-
-
-def create_app(launch_arg: LaunchArg) -> Flask:
-    app = Flask("equiplib")
-    cors.init_app(app)
-    # registering blueprint
-    app.register_blueprint(api, url_prefix='/api/')
-
-    # setting configs
-    if launch_arg == LaunchArg.DEV or launch_arg == LaunchArg.PRD:
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-        app.logger.handlers.clear()
-        if sys_log_handler:
-            app.logger.addHandler(sys_log_handler)
-        app.logger.addHandler(file_handler)
-        app.logger.setLevel(logging.DEBUG)
-    elif launch_arg == LaunchArg.TEST:
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
-
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['CORS_HEADER'] = 'Content-Type'
-
-    # initing extensions
-    db.init_app(app)
-    docs.init_app(app)
-    app.app_context().push()
-
+def create_app() -> FastAPI:
+    database.Base.metadata.create_all(bind=database.engine)
+    app = FastAPI(title="equiplib")
+    app.include_router(api)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     return app
 
 
 if __name__ == "__main__":
-    app = create_app(LaunchArg.DEV)
-    seed_database(app)  # UNCOMMENT THIS TO RESERVE STATE
-    app.run("localhost", 8888, True)
+    pass
+    #app = create_app(LaunchArg.DEV)
+    #seed_database(app)  # UNCOMMENT THIS TO RESERVE STATE
+    #app.run("localhost", 8888, True)

@@ -1,5 +1,5 @@
-from main import LaunchArg, create_app
+from main import create_app
 
 
-app = create_app(LaunchArg.PRD)
+app = create_app()
 
