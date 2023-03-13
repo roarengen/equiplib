@@ -18,7 +18,7 @@ class LaunchArg(Enum):
     PRD = auto()
 
 def create_app(arg : LaunchArg) -> FastAPI:
-    if arg == LaunchArg.DEV or LaunchArg.PRD:
+    if arg == LaunchArg.DEV or arg == LaunchArg.PRD:
         database.Base.metadata.create_all(bind=database.engine)
     elif arg == LaunchArg.TEST:
         pass
