@@ -4,7 +4,10 @@ import services.orgservice as crud
 from database import get_db
 from models.organization import Organization, OrganizationCreate
 
-api = APIRouter(prefix="/orgs")
+api = APIRouter(
+    prefix="/orgs",
+    tags=["orgs"]
+)
 
 @api.get("/", response_model=list[Organization])
 def get_orgs(db : Session = Depends(get_db)):

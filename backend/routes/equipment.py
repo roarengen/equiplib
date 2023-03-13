@@ -4,7 +4,10 @@ import services.equipservice as crud
 from database import get_db
 from models.equipment import Equipment, EquipmentCreate
 
-api = APIRouter(prefix="/equips")
+api = APIRouter(
+    prefix="/equips",
+    tags=["equips"]
+)
 
 @api.get("/", response_model=list[Equipment])
 def get_equips(db : Session = Depends(get_db)):

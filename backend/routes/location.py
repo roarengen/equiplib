@@ -1,75 +1,38 @@
-from flask import Blueprint, jsonify, make_response, request
-from flask_cors import cross_origin
-from data import Location, Organization
-from extensions import RESPONSE_CODES, db, logger
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from database import get_db
+from models.location import Location, LocationCreate
+import services.locationservice as crud
 
-api = Blueprint("location", __name__)
+api = APIRouter(
+    prefix="/location",
+    tags=["location"],
+)
 
+@api.get("/", response_model=list[Location])
+def get_locs(db: Session = Depends(get_db)):
+    crud.get_locations(db)
+    return crud
 
-@cross_origin()
-@api.get("/")
-def get_locs():
-    locs: list[Location] = Location.query.all()
-    return jsonify(Location.serialize_list(locs))
-
-
-@cross_origin()
-@api.get("/<int:id>")
-def get_loc(id: int):
-    loc = Location.query.filter(Location.id == id).first()
-    if loc:
-        return jsonify(loc.serialize())
-    return make_response("", RESPONSE_CODES.NOT_FOUND)
-
-
-@cross_origin()
-@api.get("/by_org/<int:orgid>")
-def get_loc_by_org_id(orgid: int):
-    locs = Location.query.filter(Location.organizationid == orgid).all()
-    if locs:
-        return jsonify(locs.serialize())
-    return make_response("", RESPONSE_CODES.NOT_FOUND)
-
-
-@api.post("/")
-@cross_origin()
-def post_location():
-    data = request.get_json()
-    try:
-        new_loc = Location(
-            organizationid=data['organizationid'],
-            name=data['name'],
-            active=True
-        )
-    except KeyError:
-        logger.info(f"failed location creation request with data: {data}")
-        return make_response("invalid request", RESPONSE_CODES.BAD_REQUEST)
-
-    db.session.add(new_loc)
-    db.session.commit()
-
-    return make_response("", RESPONSE_CODES.SUCCESS)
-
-
-@api.put("/<int:id>")
-@cross_origin()
-def put_location(id: int):
-    loc = Location.query.filter(id == id).first()
+@api.get("/<int:id>", response_model=Location)
+def get_loc(id: int, db: Session = Depends(get_db)):
+    loc = crud.get_location(db, id)
     if not loc:
-        return make_response(f"location not found with id {id}", RESPONSE_CODES.NOT_FOUND)
-    for key, value in request.get_json().items():
-        setattr(loc, key, value)
-
-    db.session.commit()
-    return make_response(f"disabled location with id {id}", RESPONSE_CODES.SUCCESS)
+        HTTPException(status_code=404, detail="location not found")
+    return loc
 
 
-@api.get("/<int:id>/disable")
-@cross_origin()
-def disable(id: int):
-    loc = Location.query.filter(id == id).first()
-    if not loc:
-        return make_response(f"location not found with id {id}", RESPONSE_CODES.NOT_FOUND)
-    loc.active = False
-    db.session.commit()
-    return make_response(f"disabled location with id {id}", RESPONSE_CODES.SUCCESS)
+@api.get("/by_org/<int:orgid>", response_model=list[Location])
+def get_loc_by_org_id(orgid: int, db: Session = Depends(get_db)):
+    locs = crud.get_locations_by_orgid(db, orgid)
+    if not locs:
+        HTTPException(status_code=404, detail=f"no locations found on org with id: {orgid}")
+    return locs
+
+@api.post("/", response_model=list[Location])
+def post_location(location: LocationCreate, db: Session = Depends(get_db)):
+    return crud.create_location(db, location)
+
+@api.get("/<int:id>/disable", response_model=list[Location])
+def disable(id: int, db: Session = Depends(get_db)):
+    return crud.disable_location(db, id)

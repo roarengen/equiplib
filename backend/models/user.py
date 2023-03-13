@@ -1,6 +1,9 @@
 from pydantic import BaseModel
-from typing import Union, Optional
 from datetime import datetime
+
+class LoginObject(BaseModel):
+    password: str
+    username: str
 
 class UserBase(BaseModel):
     roleid : int
@@ -8,13 +11,13 @@ class UserBase(BaseModel):
     lastname : str
     firstname : str
     email : str
-    phone : Union[str, None] = None
-    membershipid: Union[str, None] = None
-    city: Union[str, None] = None
+    phone : str| None = None
+    membershipid: str| None = None
+    city: str| None = None
     dateOfBirth: datetime | None = None
-    otherid : Union[str, None] = None
-    other1 : Union[str, None] = None
-    other2 : Union[str, None] = None
+    otherid : str| None = None
+    other1 : str| None = None
+    other2 : str| None = None
     activeFromDate : datetime | None = None
     activeToDate : datetime | None = None
     organizationid: int

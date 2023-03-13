@@ -14,6 +14,14 @@ def get_location_by_name(db: Session, name: str):
 def get_locations_by_orgid(db: Session, orgid: int):
     return db.query(Location).filter(Location.organizationid == orgid).all()
 
+def disable_location(db: Session, id: int):
+    loc = db.query(Location).filter(Location.id==id).first()
+    loc.active = False
+    db.commit()
+    db.refresh(loc)
+    return loc
+
+
 def create_location(db: Session, location: LocationCreate):
     new_location = Location(**location.dict())
     db.add(new_location)
