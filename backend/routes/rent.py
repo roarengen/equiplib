@@ -17,7 +17,7 @@ def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
 def get_rents(db: Session = Depends(get_db)):
     return crud.get_rents(db)
 
-@api.get("/{orgid}", response_model=Rent)
+@api.get("/{id}", response_model=Rent)
 def get_rent(id: int, db: Session = Depends(get_db)):
     rent = crud.get_rent(db, id)
     if not rent:

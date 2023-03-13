@@ -1,53 +1,31 @@
 from datetime import datetime
 from fastapi.testclient import TestClient
-import json
+from models.equipment import EquipmentCreate
 
+from extensions import datetime_from_string
+
+eq = EquipmentCreate(organizationid=0, name="tacokrus", locationid=0)
+rent = {
+    "userid": 1,
+    "equipmentid": 1,
+    "rentedFromDate": "2023-03-13T21:16:14.416Z",
+}
 def test_rent(client: TestClient) -> None:
-    test_id = 1
-    orgid = 1
-    new_equip = Equipment(
-        organizationid = orgid,
-        name="fishing rod",
-        locationid=1,
-        active=True
-    )
-    new_rent = Rent(
-        userid=1,
-        equipmentid=1,
-        rentedFromDate=datetime.now(),
-        comment="lost his while fishing, sadge"
-    )
-    db.session.add(new_equip)
-    db.session.add(new_rent)
-    db.session.commit()
-    response = client.get(f"api/rents/{test_id}")
-    rent = json.loads(response.data)
+    response = client.post("/api/equips",
+                           json=eq.dict())
     assert response.status_code == 200
-    assert datetime_from_string(rent['rentedFromDate']).date() == Rent.query.filter(Rent.id == test_id).first().rentedFromDate
+
+    response = client.post("/api/rents",
+                           json=rent)
+    assert response.status_code == 200
+
+    response = client.get("/api/rents/1")
+    assert response.status_code == 200
+
+    data = response.json()
+    assert response.status_code == 200
+    assert datetime.fromisoformat(data['rentedFromDate']).date() == datetime.fromisoformat(rent['rentedFromDate']).date()
 
 def test_rents(client: TestClient) -> None:
     response = client.get("api/rents/")
-    assert response.status_code == 403
-    assert response.data == b"illegal endpoint"
-
-def test_rents_by_org(client: TestClient) -> None:
-    orgid = 1
-    new_equip = Equipment(
-        organizationid = orgid,
-        name="fishing rod",
-        locationid=1,
-        active=True
-    )
-    new_rent = Rent(
-        userid=1,
-        equipmentid=1,
-        rentedFromDate=datetime.now(),
-        comment="lost his while fishing, sadge"
-    )
-    db.session.add(new_equip)
-    db.session.add(new_rent)
-    db.session.commit()
-
-    response = client.get(f"api/rents/by_org/{orgid}")
-
     assert response.status_code == 200

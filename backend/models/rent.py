@@ -5,12 +5,12 @@ class RentBase(BaseModel):
     userid: int
     equipmentid: int
     rentedFromDate: datetime
-    rentedValidToDate: datetime
-    rentedToDate: datetime
+    rentedValidToDate: datetime | None = None
+    rentedToDate: datetime | None = None
     purpose: str| None = None
     comment: str| None = None
     rentedFromLocation: int | None = None
-    rentedToLocation: int | None = None
+    deliveredToLocation : int | None = None
 
     class Config:
         orm_mode = True

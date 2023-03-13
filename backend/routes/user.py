@@ -18,7 +18,7 @@ def post_user(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
 
-@api.get("/<int:id>", response_model=User)
+@api.get("/{id}", response_model=User)
 def get_user(id: int, db: Session = Depends(get_db)):
     user = crud.get_user(db, id)
     if not user:
