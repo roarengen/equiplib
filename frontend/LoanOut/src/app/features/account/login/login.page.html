@@ -25,11 +25,12 @@
 </ion-text>
 
 <ion-item-group>
-  <ion-button *ngIf="!this.openQrCode"(click)="onOpenQrScanner()"size="large" color="secondary">
+  <ion-button icon-only	*ngIf="!this.openQrCode"(click)="onOpenQrScanner()"size="large" color="secondary">
     <ion-icon src="../../../../assets/icons/qr-icon.svg"></ion-icon>
   </ion-button>
   <ion-item *ngIf="this.openQrCode">
   <zxing-scanner
+  previewFitMode="cover"
   (scanSuccess) = "scanSuccessHandler($event)"
   (scanError)= "scanErrorHandler($event)"
   ></zxing-scanner>
