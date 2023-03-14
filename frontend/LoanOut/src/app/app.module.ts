@@ -1,4 +1,4 @@
-import { AuthGuard } from './helpers/auth.guard';
+import { AuthGuard } from './helpers/auth/auth.guard';
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';

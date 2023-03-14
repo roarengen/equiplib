@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate } from '@angular/router';
 
-import { AccountService } from '../services/user.service';
+import { AccountService } from '../../services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -13,12 +13,10 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const user = this.accountService.user;
         if (user !== undefined && user.id) {
-            // authorised so return true
             return true;
         }
 
-        // not logged in so redirect to login page with the return url
-        this.router.navigate(['/account/login'], { queryParams: { returnUrl: state.url }});
+        this.router.navigate(['login'], { queryParams: { returnUrl: state.url }});
         return false;
     }
 }

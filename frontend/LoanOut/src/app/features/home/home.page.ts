@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit} from '@angular/core';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { RentService } from 'src/app/services/rent.service';
@@ -23,6 +24,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+
     this.equipmentService.fetchEquipments(this.accountService.user?.organizationid || 0)
 
     this.rentService.fetchRentsByOrg(this.accountService.user?.organizationid || 0)
@@ -43,6 +45,7 @@ export class HomePage implements OnInit {
   scanErrorHandler(scanError: any) {
     console.log(scanError)
   }
+
 
 }
 

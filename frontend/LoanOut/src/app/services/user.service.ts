@@ -10,12 +10,14 @@ import { Router } from '@angular/router';
 @Injectable({ providedIn: 'root' })
 export class AccountService {
     singleEvent$: BehaviorSubject<Event> | undefined;
-    public user?: User;
+    public user!: User;
     public organization?: Organization;
 
     constructor(
+
         private router: Router,
         private http: HttpClient
+
     ) {
     }
 
@@ -24,8 +26,8 @@ export class AccountService {
     }
 
     logout() {
+        console.log("Logged out!")
         localStorage.clear();
-        this.router.navigate(['/login']);
     }
 
     register(user: User) {
