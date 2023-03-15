@@ -3,6 +3,7 @@ from fastapi.logger import logger
 from sqlalchemy.orm import Session
 from database import get_db
 from models.user import UserCreate, User, LoginResponse, LoginRequest
+from models.organization import OrganizationHeader
 import services.userservice as crud
 import services.orgservice as orgservice
 
@@ -52,7 +53,7 @@ def user_login(login: LoginRequest, db: Session = Depends(get_db)):
 
     return LoginResponse(
         user=user,
-        org=org,
+        org=OrganizationHeader(**org.__dict__),
         token=make_token(login.username, str(user.password))
         # user.password is the hashed version
     )
