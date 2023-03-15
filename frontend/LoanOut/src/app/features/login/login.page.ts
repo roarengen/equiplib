@@ -40,6 +40,7 @@ export class LoginPage implements OnInit {
 			.subscribe(
 				login => {
 					this.accountService.user = login.user
+          this.accountService.token = login.token
 					this.accountService.getOrganization(login.user.organizationid).subscribe(
 						organization => this.accountService.organization = organization
 					)
