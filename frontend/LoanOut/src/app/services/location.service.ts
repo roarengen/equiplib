@@ -14,5 +14,4 @@ export class LocationService {
     {
         return this.http.get<Location[]>(`${environment.apiUrl}/location/by_org/${orgid}`)
     }
-
 }
