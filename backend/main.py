@@ -42,4 +42,4 @@ def create_app(arg : LaunchArg) -> FastAPI:
 
 if __name__ == "__main__":
     app = create_app(LaunchArg.DEV)
-    uvicorn.run(app)
+    uvicorn.run(app, use_colors=True)
