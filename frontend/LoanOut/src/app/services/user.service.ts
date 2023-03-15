@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user'
 import { Router } from '@angular/router';
+import { LoginResponse } from '../models/loginresponse';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -22,7 +23,7 @@ export class AccountService {
     }
 
     login(username: any, password:any) {
-        return this.http.post<User>(`${environment.apiUrl}/users/login`, { username, password })
+        return this.http.post<LoginResponse>(`${environment.apiUrl}/users/login`, { username, password })
     }
 
     logout() {

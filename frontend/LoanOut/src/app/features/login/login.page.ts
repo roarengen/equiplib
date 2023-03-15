@@ -38,9 +38,9 @@ export class LoginPage implements OnInit {
 		this.submitted = true;
 		this.accountService.login(username, password)
 			.subscribe(
-				user => {
-					this.accountService.user = user
-					this.accountService.getOrganization(user.id).subscribe(
+				login => {
+					this.accountService.user = login.user
+					this.accountService.getOrganization(login.user.organizationid).subscribe(
 						organization => this.accountService.organization = organization
 					)
 					this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl' || '/'])
