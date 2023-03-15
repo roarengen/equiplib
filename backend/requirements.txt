@@ -1,7 +1,7 @@
 bcrypt
-Flask
-flask-apispec
-Flask-Cors
-Flask-SQLAlchemy
+fastapi
 SQLAlchemy
 pytest
+uvicorn
+httpx
+python-dateutil
