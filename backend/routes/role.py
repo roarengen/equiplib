@@ -4,6 +4,7 @@ from fastapi.logger import logger
 from database import get_db
 from models.role import Role, RoleCreate
 import services.roleservice as crud
+from auth import require_leader
 
 api = APIRouter(
     prefix="/roles",
@@ -14,7 +15,7 @@ api = APIRouter(
 def get_roles(db: Session = Depends(get_db)):
     return crud.get_roles(db)
 
-@api.post("/", response_model=Role)
+@api.post("/", response_model=Role, dependencies=[Depends(require_leader)])
 def post_roles(role: RoleCreate, db: Session = Depends(get_db)):
     return crud.create_role(db, role)
 

@@ -4,22 +4,21 @@ from sqlalchemy.orm import Session
 import services.equipservice as crud
 from database import get_db
 from models.equipment import Equipment, EquipmentCreate
-from extensions import require_admin, require_leader, require_user, require_lender
-from fastapi.security import HTTPBearer
+from auth import require_admin, require_leader, require_user, require_lender, require_user_to_be_in_org
 
 api = APIRouter(
     prefix="/equips",
     tags=["equips"],
-    dependencies=[Depends(HTTPBearer)]
+    dependencies=[Depends(require_leader)]
 )
 
 
-@api.get("/", response_model=list[Equipment], dependencies=[Depends(require_user)])
+@api.get("/", response_model=list[Equipment], dependencies=[Depends(require_admin)])
 def get_equips(db : Session = Depends(get_db)):
     return crud.get_equips(db)
 
-@api.get("/by_org/{orgid}", response_model=list[Equipment])
-def get_equips_by_org(orgid: int, db : Session = Depends(get_db)):
+@api.get("/by_org/{orgid}", response_model=list[Equipment], dependencies=[Depends(require_admin)])
+def get_equips_by_org(orgid: int = Depends(require_user_to_be_in_org), db : Session = Depends(get_db)):
     return crud.get_equips_by_org_id(db, orgid)
 
 @api.get("/{id}", response_model=Equipment)
@@ -30,7 +29,7 @@ def get_equip(id: int, db : Session = Depends(get_db)):
         return HTTPException(status_code=404, detail="equip not found")
     return equip
 
-@api.post("/", response_model=Equipment, dependencies=[Depends(require_user)])
+@api.post("/", response_model=Equipment, dependencies=[Depends(require_admin)])
 def post_equip(equipment: EquipmentCreate, db : Session = Depends(get_db)):
     logger.info(f"new equipment created: {equipment.name}")
     return crud.create_equip(db, equipment)

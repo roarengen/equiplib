@@ -35,5 +35,5 @@ class LoginRequest(BaseModel):
 
 class LoginResponse(BaseModel):
     user: User
-    org: organization.OrganizationHeader
+    org: organization.OrganizationHeader | None = None
     token: str

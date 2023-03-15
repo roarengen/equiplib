@@ -4,21 +4,24 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models.rent import Rent, RentCreate
 import services.rentservice as crud
+from extensions import ROLES
+from auth import require_user_to_be_in_org, require_user, require_lender, require_admin
 
 api = APIRouter(
     prefix="/rents",
     tags=['rents'],
+    dependencies=[Depends(require_user)]
 )
 
-@api.post("/", response_model=Rent)
+@api.post("/", response_model=Rent, dependencies=[Depends(require_lender)])
 def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
     return crud.create_rent(db, rent)
 
-@api.get("/", response_model=list[Rent])
+@api.get("/", response_model=list[Rent], dependencies=[Depends(require_admin)])
 def get_rents(db: Session = Depends(get_db)):
     return crud.get_rents(db)
 
-@api.get("/{id}", response_model=Rent)
+@api.get("/{id}", response_model=Rent, dependencies=[Depends(require_user)])
 def get_rent(id: int, db: Session = Depends(get_db)):
     rent = crud.get_rent(db, id)
     if not rent:
@@ -26,8 +29,8 @@ def get_rent(id: int, db: Session = Depends(get_db)):
         return HTTPException(status_code=404, detail="rent not found")
     return rent
 
-@api.get("/by_org/{orgid}", response_model=list[Rent])
-def get_rent_by_orgid(orgid: int, db: Session = Depends(get_db)):
+@api.get("/by_org/{orgid}", response_model=list[Rent], dependencies = [Depends(require_lender)])
+def get_rent_by_orgid(orgid: int = Depends(require_user_to_be_in_org), db: Session = Depends(get_db)):
     rents = crud.get_rents_by_orgid(db, orgid)
     if not rents:
         logger.debug(f"requested rents for org: {orgid} but no rents where found")
@@ -35,10 +38,13 @@ def get_rent_by_orgid(orgid: int, db: Session = Depends(get_db)):
     return rents
 
 @api.get("/by_user/{userid}", response_model=list[Rent])
-def get_rent_by_userid(userid: int, db: Session = Depends(get_db)):
+def get_rents_by_userid(userid: int, db: Session = Depends(get_db), user = Depends(require_user)):
     rents = crud.get_rents_by_userid(db, userid)
     if not rents:
         logger.debug(f"requested rents for user: {userid} but no rents where found")
         return HTTPException(status_code=404, detail="no rents not found for this user")
+    if user.roleid < ROLES.ADMIN:
+        if user.id != userid:
+            return HTTPException(status_code=401, detail="no rents not found for this user")
     return rents
 

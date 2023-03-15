@@ -7,14 +7,14 @@ from models.organization import OrganizationHeader
 import services.userservice as crud
 import services.orgservice as orgservice
 
-from extensions import make_token, require_admin, require_user
+from auth import make_token, require_admin, require_user
 
 api = APIRouter(
     prefix="/users",
     tags=['users'],
 )
 
-@api.post("/", response_model=User)
+@api.post("/", response_model=User, dependencies=[Depends(require_admin)]) # perhapas lender should be able to rent out
 def post_user(user: UserCreate, db: Session = Depends(get_db)):
     if crud.get_user_by_email(db, email=user.email):
         logger.debug(f"new user tried to create with email duplicate: {user.email}")
@@ -27,7 +27,7 @@ def post_user(user: UserCreate, db: Session = Depends(get_db)):
     logger.info(f"new user made: {user.username}")
     return crud.create_user(db=db, user=user)
 
-@api.get("/{id}", response_model=User)
+@api.get("/{id}", response_model=User, dependencies=[Depends(require_user)])
 def get_user(id: int, db: Session = Depends(get_db)):
     user = crud.get_user(db, id)
     if not user:
@@ -35,7 +35,7 @@ def get_user(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="user not found")
     return user
 
-@api.get("/", response_model=list[User])
+@api.get("/", response_model=list[User], dependencies=[Depends(require_admin)])
 def get_users(db: Session = Depends(get_db)):
     users = crud.get_users(db)
     return users
