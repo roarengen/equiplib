@@ -14,6 +14,10 @@ api = APIRouter(
 def get_equips(db : Session = Depends(get_db)):
     return crud.get_equips(db)
 
+@api.get("/by_org/{orgid}", response_model=list[Equipment])
+def get_equips_by_org(orgid: int, db : Session = Depends(get_db)):
+    return crud.get_equips_by_org_number(db, orgid)
+
 @api.get("/{id}", response_model=Equipment)
 def get_equip(id: int, db : Session = Depends(get_db)):
     equip = crud.get_equip(db, id)
