@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from fastapi.security import HTTPBearer
 from routes.role import api as roleapi
 from routes.user import api as userapi
 from routes.organization import api as orgapi
@@ -7,7 +8,10 @@ from routes.rent import api as rentapi
 from routes.equipment import api as equipmentapi
 from routes.templates import api as templateapi
 
-api = APIRouter(prefix="/api")
+api = APIRouter(
+    prefix="/api",
+    dependencies=[Depends(HTTPBearer)]
+    )
 
 api.include_router(userapi)
 api.include_router(orgapi)

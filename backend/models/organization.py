@@ -1,8 +1,10 @@
 from pydantic import BaseModel
 
-class OrganizationBase(BaseModel):
+class OrganizationHeader(BaseModel):
     number: str
     name: str
+
+class OrganizationBase(OrganizationHeader):
     email: str | None = None
     phone: str | None = None
     city : str | None = None

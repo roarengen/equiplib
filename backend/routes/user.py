@@ -2,12 +2,15 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.logger import logger
 from sqlalchemy.orm import Session
 from database import get_db
-from models.user import UserCreate, User, LoginObject
+from models.user import UserCreate, User, LoginResponse, LoginRequest
 import services.userservice as crud
+import services.orgservice as orgservice
+
+from extensions import make_token, require_admin, require_user
 
 api = APIRouter(
     prefix="/users",
-    tags=['users']
+    tags=['users'],
 )
 
 @api.post("/", response_model=User)
@@ -36,9 +39,10 @@ def get_users(db: Session = Depends(get_db)):
     users = crud.get_users(db)
     return users
 
-@api.post("/login", response_model=User)
-def user_login(login: LoginObject, db: Session = Depends(get_db)):
-    user =  crud.get_user_by_username(db, login.username)
+@api.post("/login", response_model=LoginResponse, dependencies=[])
+def user_login(login: LoginRequest, db: Session = Depends(get_db)):
+    user = crud.get_user_by_username(db, login.username)
+    org = orgservice.get_org(db, user.organizationid)
     if not user:
         raise HTTPException(status_code=404, detail="user with that username not found")
 
@@ -46,7 +50,12 @@ def user_login(login: LoginObject, db: Session = Depends(get_db)):
         logger.debug(f"{login.username} tried to login but entered the wrong password")
         raise HTTPException(status_code=401, detail="invalid password")
 
-    return user
+    return LoginResponse(
+        user=user,
+        org=org,
+        token=make_token(login.username, str(user.password))
+        # user.password is the hashed version
+    )
 
 @api.post("/qrlogin")
 def login_user_qr():

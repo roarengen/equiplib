@@ -1,9 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-class LoginObject(BaseModel):
-    password: str
-    username: str
+from models import organization
 
 class UserBase(BaseModel):
     roleid : int
@@ -30,3 +28,12 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+class LoginRequest(BaseModel):
+    password: str
+    username: str
+
+class LoginResponse(BaseModel):
+    user: User
+    org: organization.OrganizationHeader
+    token: str

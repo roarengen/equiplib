@@ -2,7 +2,6 @@ from __future__ import annotations
 from sqlalchemy import Column, Integer, String, Boolean
 from database import Base
 from schemas.serializer import Serializable
-from enum import Enum
 
 class Role(Base, Serializable):
     __tablename__ = "role"
@@ -12,17 +11,3 @@ class Role(Base, Serializable):
 
     def __repr__(self):
         return '<Role %r>' % self.name
-
-class ROLES(Enum):
-    USER = "bruker"
-    LENDER = "utstyrsansvarlig"
-    ADMIN = "administrator"
-    LEADER = "leder"
-
-    @staticmethod
-    def get_role_by_name(name : ROLES | str) -> Role | None:
-        return Role.query.filter(Role.name == name).first()
-
-    @staticmethod
-    def get_role_by_id(id: int)-> Role | None:
-        return Role.query.filter(Role.id == id).first()

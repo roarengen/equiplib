@@ -4,13 +4,17 @@ from sqlalchemy.orm import Session
 import services.equipservice as crud
 from database import get_db
 from models.equipment import Equipment, EquipmentCreate
+from extensions import require_admin, require_leader, require_user, require_lender
+from fastapi.security import HTTPBearer
 
 api = APIRouter(
     prefix="/equips",
-    tags=["equips"]
+    tags=["equips"],
+    dependencies=[Depends(HTTPBearer)]
 )
 
-@api.get("/", response_model=list[Equipment])
+
+@api.get("/", response_model=list[Equipment], dependencies=[Depends(require_user)])
 def get_equips(db : Session = Depends(get_db)):
     return crud.get_equips(db)
 
@@ -26,7 +30,7 @@ def get_equip(id: int, db : Session = Depends(get_db)):
         return HTTPException(status_code=404, detail="equip not found")
     return equip
 
-@api.post("/", response_model=Equipment)
+@api.post("/", response_model=Equipment, dependencies=[Depends(require_user)])
 def post_equip(equipment: EquipmentCreate, db : Session = Depends(get_db)):
     logger.info(f"new equipment created: {equipment.name}")
     return crud.create_equip(db, equipment)
