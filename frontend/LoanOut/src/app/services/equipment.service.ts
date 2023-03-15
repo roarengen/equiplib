@@ -2,14 +2,13 @@ import { Location } from './../models/location';
 import { Equipment } from './../models/equipment';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient} from '@angular/common/http';
-import { Organization } from '../models/organization';
+import { CustomHttpClient } from '../helpers/auth/http-client';
 
 @Injectable({ providedIn: 'root' })
 export class EquipmentService {
 
     constructor(
-        private http: HttpClient
+        private http: CustomHttpClient
     ) {
     }
     getAllEquipment(orgid: number)

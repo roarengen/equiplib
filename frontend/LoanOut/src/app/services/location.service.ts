@@ -2,13 +2,12 @@ import { Location } from './../models/location';
 import { Rent } from './../models/rent';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient} from '@angular/common/http';
-import { map } from 'rxjs';
+import { CustomHttpClient } from '../helpers/auth/http-client';
 
 @Injectable({ providedIn: 'root' })
 export class LocationService {
     constructor(
-        private http: HttpClient
+        private http: CustomHttpClient
     ) {
     }
     getAllLocations(orgid: number)
