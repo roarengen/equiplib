@@ -1,8 +1,8 @@
-import { AccountService } from '../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { AccountService } from 'src/app/services/user.service';
 
 @Component({
 	templateUrl: './login.page.html',
@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
 					this.accountService.getOrganization(login.user.organizationid).subscribe(
 						organization => this.accountService.organization = organization
 					)
-					this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl' || '/'])
+					this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl' || '/home'])
 				})
 
 		this.loading = true;

@@ -1,5 +1,4 @@
 export class User {
-  id!: number;
   roleid!: number;
   username!: string;
   // password!: string;
@@ -15,4 +14,6 @@ export class User {
   activeFromDate!: Date; //Set to datetime?
   activeToDate!: Date;
   organizationid!: number;
+  id!: number;
+
 }

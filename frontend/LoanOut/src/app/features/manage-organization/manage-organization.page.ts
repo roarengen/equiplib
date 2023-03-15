@@ -1,3 +1,4 @@
+import { AccountService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageOrganizationPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private accountService: AccountService,
+
+  ) { }
 
   ngOnInit() {
+    this.accountService.getAll()
+    this.accountService.getOrganization(this.accountService.user?.organizationid || 0)
   }
 
 }

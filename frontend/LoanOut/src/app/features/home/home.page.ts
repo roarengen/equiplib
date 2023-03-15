@@ -1,3 +1,5 @@
+import { Equipment } from 'src/app/models/equipment';
+import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit} from '@angular/core';
 import { EquipmentService } from 'src/app/services/equipment.service';
@@ -15,19 +17,17 @@ export class HomePage implements OnInit {
 	openQrCode: boolean = false;
 	enterPinCode: boolean = false;
 	QrCode!: string;
-	pin!: string;
+  equipments: Observable<Equipment[]>
 	constructor(
 		public accountService: AccountService,
     public equipmentService: EquipmentService,
     public rentService: RentService,
   ) {
+    this.equipments = equipmentService.getAllEquipment(this.accountService.user.organizationid)
+
   }
 
   ngOnInit() {
-
-    this.equipmentService.fetchEquipments(this.accountService.user?.organizationid || 0)
-
-    this.rentService.fetchRentsByOrg(this.accountService.user?.organizationid || 0)
   }
 
   onOpenQrScanner() {

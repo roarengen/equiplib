@@ -5,7 +5,7 @@ import { ManageEquipmentPage } from './manage-equipment.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'manageequipment',
     component: ManageEquipmentPage
   }
 ];
