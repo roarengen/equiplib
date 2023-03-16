@@ -2,12 +2,12 @@
 <div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar>
+      <ion-title>{{(organization | async)?.name}}</ion-title>
       <ion-menu-toggle>
         <button ion-button menuToggle end>
-          <ion-icon name="menu" color="primary"></ion-icon>
+          <ion-icon name="menu"></ion-icon>
       </button>
     </ion-menu-toggle>
-      <ion-title></ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-menu contentId="main-content">

@@ -1,21 +1,26 @@
+import { Organization } from './../../models/organization';
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.page.html',
   styleUrls: ['./layout.page.scss'],
 })
-export class LayoutPage implements OnInit {
+export class LayoutPage{
   loading: boolean = false;
 	submitted: boolean = false;
 	openQrCode: boolean = false;
 	enterPinCode: boolean = false;
 	QrCode!: string;
-  constructor(public accountService: AccountService) { }
+  public organization?: Observable<Organization>;
 
-  ngOnInit() {
-    this.accountService.getOrganization(this.accountService.user?.organizationid)
+  constructor(public accountService: AccountService) {
+
+
+    this.organization = this.accountService.getOrganization(this.accountService.user?.organizationid)
+
   }
 
   onOpenQrScanner() {

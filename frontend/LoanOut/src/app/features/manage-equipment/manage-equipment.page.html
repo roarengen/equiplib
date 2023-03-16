@@ -1,63 +1,66 @@
 
 <ion-item-group>
 
-<ion-item>
-  <ion-label>Navn:</ion-label>
-  <ion-input>[clearInput]="true"></ion-input>
-</ion-item>
 
-<ion-item>
-  <ion-label>Modell:</ion-label>
-  <ion-input  [clearInput]="true"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-label>Beskrivelse:</ion-label>
-  <ion-input [clearInput]="true"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-label>Type:</ion-label>
-  <ion-input  [clearInput]="true"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-label>Serienummer:</ion-label>
-  <ion-input type="number" [clearInput]="true"> </ion-input>
-</ion-item>
-
-<ion-list>
+<form>
   <ion-item>
-    <ion-select placeholder="Velg lokasjon">
-      <ng-container *ngFor="let location of locations | async">
-        <ion-select-option value="{{ location.name }}"> {{location.name }}</ion-select-option>
-      </ng-container>
-    </ion-select>
+    <ion-label>Navn:</ion-label>
+    <ion-input [clearInput]="true" ngModel required></ion-input>
   </ion-item>
-</ion-list>
 
-<ion-button (click)="onSubmitNewEquipment(true)"></ion-button>
-</ion-item-group>
-<ion-item-group>
-<ion-modal [isOpen]="onSubmitNewEquipment(true)">
+  <ion-item>
+    <ion-label>Modell:</ion-label>
+    <ion-input [clearInput]="true" ngModel required></ion-input>
+  </ion-item>
 
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Oppsummering av nytt utstyr</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="onSubmitNewEquipment(false)">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos
-        reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui. Eaque,
-        dicta.
-      </p>
-    </ion-content>
-  </ng-template>
+  <ion-item>
+    <ion-label>Beskrivelse:</ion-label>
+    <ion-input [clearInput]="true" ngModel required></ion-input>
+  </ion-item>
 
-</ion-modal>
-</ion-item-group>
+  <ion-item>
+    <ion-label>Type:</ion-label>
+    <ion-input  [clearInput]="true" ngModel required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Serienummer:</ion-label>
+    <ion-input type="number" [clearInput]="true" ngModel required> </ion-input>
+  </ion-item>
+
+  <ion-list>
+    <ion-item>
+      <ion-select placeholder="Velg lokasjon">
+        <ng-container *ngFor="let location of locations | async">
+          <ion-select-option value="{{ location.name }}"> {{location.name }}</ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-button (click)="onSubmitNewEquipment(true)"></ion-button>
+</form>
+  <ion-item-group>
+  <ion-modal [isOpen]="onSubmitNewEquipment(true)">
+
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Oppsummering av nytt utstyr</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="onSubmitNewEquipment(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+
+      </ion-content>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="onSubmitNewEquipment(false)">Close</ion-button>
+      </ion-buttons>
+
+    </ng-template>
+
+  </ion-modal>
+
