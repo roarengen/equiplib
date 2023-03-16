@@ -9,7 +9,7 @@ from auth import require_admin, require_leader, require_user, require_lender, re
 api = APIRouter(
     prefix="/equips",
     tags=["equips"],
-    dependencies=[Depends(require_leader)]
+    dependencies=[Depends(require_user)]
 )
 
 
