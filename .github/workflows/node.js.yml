@@ -15,9 +15,13 @@ on:
   workflow_dispatch:
   
 jobs:
-  build:
-
+  build:       
     runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: frontend/LoanOut
+
+
 
     steps:
     - uses: actions/checkout@v3
@@ -27,7 +31,6 @@ jobs:
         node-version: 18.15
         cache: 'npm'
     - run: |
-        cd frontend/LoanOut
         npm install -i
         npm run build
 
