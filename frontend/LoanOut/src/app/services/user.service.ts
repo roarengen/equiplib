@@ -27,7 +27,7 @@ export class AccountService {
 
     logout() {
         localStorage.clear();
-        this.router.navigate(['/account/login']);
+        this.router.navigate(['/login']);
     }
 
     register(user: User) {

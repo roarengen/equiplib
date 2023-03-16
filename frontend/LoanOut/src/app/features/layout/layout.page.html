@@ -4,8 +4,8 @@
     <ion-toolbar>
       <ion-title>{{(organization | async)?.name}}</ion-title>
       <ion-menu-toggle>
-        <button ion-button menuToggle end>
-          <ion-icon name="menu"></ion-icon>
+        <button ion-button menuToggle end class="menu-button">
+          <ion-icon class="menu-icon"src="../../../assets/icons/menu.svg"></ion-icon>
       </button>
     </ion-menu-toggle>
     </ion-toolbar>
@@ -18,24 +18,18 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list>
-        <ion-item>
-          <ion-button size="large">
-            <ion-icon slot="start" name="briefcase-outline"></ion-icon>
-            Organisasjon
-          </ion-button>
-        </ion-item>
-        <ion-item>
-          <button size="large" [routerLink]="['/manageequipment']" class="clickable ion-activatable">
-            <ion-icon slot="start" name="qr-code-outline"></ion-icon>
-            Endre / Registrer utstyr
+        <ion-item class="clickable ion-activatable">
+          <button color="primary" ion-button size="large" [routerLink]="['/manageusers']"class="clickable ion-activatable">
+            <ion-icon slot="start" name="person-add-outline"></ion-icon>
+            Legg til bruker
           </button>
         </ion-item>
-        <ion-item>
-          <ion-button size="large">
-            <ion-icon slot="start" name="person-add-outline"></ion-icon>
-            Registrer ny bruker
-          </ion-button>
-        </ion-item>
+          <ion-item class="clickable ion-activatable">
+            <button color="primary" ion-button size="large" [routerLink]="['/manageorganization']"class="clickable ion-activatable">
+              <ion-icon slot="start" name="briefcase-outline"></ion-icon>
+              Organisasjon
+            </button>
+          </ion-item>
         <ion-item class="clickable ion-activatable">
           <button color="primary" ion-button size="large" [routerLink]="['/login']"class="clickable ion-activatable" (click)="this.accountService.logout()">
             <ion-icon slot="start" name="log-out-outline"></ion-icon>

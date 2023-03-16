@@ -24,7 +24,6 @@ export class HomePage implements OnInit {
     public rentService: RentService,
   ) {
     this.equipments = equipmentService.getAllEquipment(this.accountService.user.organizationid)
-
   }
 
   ngOnInit() {

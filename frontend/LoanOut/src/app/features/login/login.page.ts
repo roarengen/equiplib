@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ActivationStart, Router, RouterOutlet } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { AccountService } from 'src/app/services/user.service';
@@ -17,6 +17,9 @@ export class LoginPage implements OnInit {
 	enterPinCode: boolean = false;
 	QrCode!: string;
 	pin!: string;
+
+  @ViewChild(RouterOutlet) outlet!: RouterOutlet;
+
 	constructor(
 		private alertController: AlertController,
 		private formBuilder: FormBuilder,
@@ -26,11 +29,15 @@ export class LoginPage implements OnInit {
 		private http: CustomHttpClient
 	) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.form = this.formBuilder.group({
 			username: [''],
 			password: ['', Validators.required]
 		});
+      this.router.events.subscribe(e => {
+        if (e instanceof ActivationStart && e.snapshot.outlet === "login")
+          this.outlet.deactivate();
+      })
 	}
 
 	get f() { return this.form.controls; }
@@ -42,9 +49,10 @@ export class LoginPage implements OnInit {
 			.subscribe(
 				login => {
 					this.accountService.user = login.user
-          			this.http.token = login.token
+          this.http.token = login.token
 					this.accountService.getOrganization(login.user.organizationid).subscribe(
-						organization => this.accountService.organization = organization
+						organization =>{ this.accountService.organization = organization
+            }
 					)
 					this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl' || '/home'])
 				})

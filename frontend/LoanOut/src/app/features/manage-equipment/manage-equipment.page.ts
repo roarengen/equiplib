@@ -15,7 +15,7 @@ import { User } from 'src/app/models/user';
   templateUrl: './manage-equipment.page.html',
   styleUrls: ['./manage-equipment.page.scss'],
 })
-export class ManageEquipmentPage{
+export class ManageEquipmentPage implements OnInit{
   public locations: Observable<Location[]>;
   form!: FormGroup;
   confirmationPopup: boolean = false;
@@ -28,6 +28,10 @@ export class ManageEquipmentPage{
 
     ) {
       this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
+    }
+
+    ngOnInit() {
+
     }
 
 
