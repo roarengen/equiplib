@@ -28,6 +28,7 @@ jobs:
         cache: 'npm'
     - run: |
         cd frontend/LoanOut
+        npm install -i
         npm run build
 
     - name: Upload a Build Artifact
