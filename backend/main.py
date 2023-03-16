@@ -31,7 +31,7 @@ def create_app(arg : LaunchArg) -> FastAPI:
     elif arg == LaunchArg.TEST:
         pass
 
-    app = FastAPI(title="equiplib", redoc_url="/api/redoc", docs_url="/api/docs")
+    app = FastAPI(title="equiplib", redoc_url="/api/redoc", docs_url="/api/docs", openapi_url="/api/openapi.json")
     app.include_router(api)
     app.add_middleware(
         CORSMiddleware,
