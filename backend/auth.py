@@ -36,11 +36,13 @@ def require_admin(cred: HTTPBasicCredentials = Depends(HTTPBasic()), db: Session
     user = get_user_from_token(db, cred.username, cred.password)
     if user.roleid < ROLES.ADMIN:
         raise HTTPException(403)
+    return user
 
 def require_leader(cred: HTTPBasicCredentials = Depends(HTTPBasic()), db: Session = Depends(get_db)) -> User:
     user = get_user_from_token(db, cred.username, cred.password)
     if user.roleid < ROLES.LEADER:
         raise HTTPException(403)
+    return user
 
 def make_token(username: str, password: str):
     return base64.b64encode((username + ":" + password).encode("ascii")).decode("ascii")

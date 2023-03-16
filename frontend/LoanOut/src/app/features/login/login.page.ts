@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { AccountService } from 'src/app/services/user.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class LoginPage implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private accountService: AccountService,
+		private http: CustomHttpClient
 	) {}
 
 	ngOnInit() {
@@ -40,7 +42,7 @@ export class LoginPage implements OnInit {
 			.subscribe(
 				login => {
 					this.accountService.user = login.user
-          this.accountService.token = login.token
+          			this.http.token = login.token
 					this.accountService.getOrganization(login.user.organizationid).subscribe(
 						organization => this.accountService.organization = organization
 					)

@@ -8,17 +8,16 @@ from auth import require_admin, require_user_to_be_in_org, require_leader
 
 api = APIRouter(
     prefix="/orgs",
-    tags=["orgs"],
-    dependencies=[Depends(require_admin)]
+    tags=["orgs"]
 )
 
 @api.get("/", response_model=list[Organization])
 def get_orgs(db : Session = Depends(get_db)):
     return crud.get_orgs(db)
 
-@api.get("/{id}", response_model=Organization)
-def get_org(id: int = Depends(require_user_to_be_in_org), db : Session = Depends(get_db)):
-    org = crud.get_org(db, id)
+@api.get("/{orgid}", response_model=Organization)
+def get_org(orgid: int = Depends(require_user_to_be_in_org), db : Session = Depends(get_db)):
+    org = crud.get_org(db, orgid)
     if not org:
         return HTTPException(status_code=404, detail="org not found")
     return org

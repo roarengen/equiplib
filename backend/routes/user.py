@@ -43,10 +43,10 @@ def get_users(db: Session = Depends(get_db)):
 @api.post("/login", response_model=LoginResponse, dependencies=[])
 def user_login(login: LoginRequest, db: Session = Depends(get_db)):
     user = crud.get_user_by_username(db, login.username)
-    org = orgservice.get_org(db, user.organizationid)
     if not user:
         raise HTTPException(status_code=404, detail="user with that username not found")
 
+    org = orgservice.get_org(db, user.organizationid)
     if not user.verify_password(login.password):
         logger.debug(f"{login.username} tried to login but entered the wrong password")
         raise HTTPException(status_code=401, detail="invalid password")
@@ -54,8 +54,7 @@ def user_login(login: LoginRequest, db: Session = Depends(get_db)):
     return LoginResponse(
         user=user,
         org=OrganizationHeader(**org.__dict__),
-        token=make_token(login.username, str(user.password))
-        # user.password is the hashed version
+        token=make_token(login.username, str(login.password))
     )
 
 @api.post("/qrlogin")
