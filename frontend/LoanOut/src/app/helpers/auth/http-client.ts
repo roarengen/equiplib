@@ -11,27 +11,22 @@ export class CustomHttpClient {
     {
     }
 
-  createAuthorizationHeader(headers: HttpHeaders) {
-    console.log(headers.append('Authorization', 'Basic ' +
-      this.token));
+  createAuthorizationHeader() {
+    return new HttpHeaders().append('Authorization', 'Basic ' +
+      this.token);
   }
 
   get<T>(url: string) {
     if (this.token === undefined) return this.http.get<T>(url)
-    let headers = new HttpHeaders();
-    this.createAuthorizationHeader(headers);
-    console.log(headers)
     return this.http.get<T>(url, {
-      headers: headers, withCredentials: true
+      headers: this.createAuthorizationHeader()
     });
   }
 
   post<T>(url: string, data: any) {
     if (this.token == undefined) return this.http.post<T>(url, data)
-    let headers = new HttpHeaders();
-    this.createAuthorizationHeader(headers);
     return this.http.post<T>(url, data, {
-        headers: headers, withCredentials: true
+        headers:     this.createAuthorizationHeader()
     });
   }
 }

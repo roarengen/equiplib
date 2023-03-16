@@ -13,7 +13,6 @@ export class AccountService {
     singleEvent$: BehaviorSubject<Event> | undefined;
     public user!: User;
     public organization?: Organization;
-    public token: string = ""
 
     constructor(
         private router: Router,
