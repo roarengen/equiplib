@@ -17,7 +17,9 @@ class Rent(Base, Serializable):
     purpose = Column(String(80))
     comment = Column(Text)
     rentedFromLocation = Column(Integer, ForeignKey(Location.id))
+    rentedFromUserid = Column(Integer, ForeignKey(User.id))
     deliveredToLocation = Column(Integer, ForeignKey(Location.id))
+    deliveredToUserid = Column(Integer, ForeignKey(User.id))
 
     def __repr__(self):
         return '<Rent %r>' % self.equipmentid

@@ -11,6 +11,8 @@ class RentBase(BaseModel):
     comment: str| None = None
     rentedFromLocation: int | None = None
     deliveredToLocation : int | None = None
+    rentedFromUserid: int | None = None
+    deliveredToUserid : int | None = None
 
     class Config:
         orm_mode = True
