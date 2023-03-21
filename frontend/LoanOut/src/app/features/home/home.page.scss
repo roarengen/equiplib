@@ -13,3 +13,39 @@ ion-tab-button {
 button {
   background-color: #1E2124;
 }
+
+ion-card {
+  background-color: #272B2F;
+}
+
+
+
+
+ion-card-header { position: relative }
+.center-right{
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
+}
+
+
+.card {
+  color: white;
+
+  .card-title {
+    text-align: center;
+    color: white;
+  }
+
+  .card-description {
+    text-align: left;
+
+  }
+
+
+
+
+}
+
+

@@ -7,7 +7,7 @@ import { AccountService } from 'src/app/services/user.service';
 import { LocationService } from 'src/app/services/location.service';
 import { Component, OnInit } from '@angular/core';
 import { Equipment } from 'src/app/models/equipment';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -19,6 +19,14 @@ export class ManageEquipmentPage implements OnInit{
   public locations: Observable<Location[]>;
   form!: FormGroup;
   confirmationPopup: boolean = false;
+  public name: string;
+  public model: string;
+  public description: string;
+  public type: string;
+  public serialnumber: string;
+  public setlocation: number;
+  public active: boolean = true;
+  public newEquipment: Equipment;
 
   constructor(
     public locationService: LocationService,
@@ -34,8 +42,21 @@ export class ManageEquipmentPage implements OnInit{
 
     }
 
+  onSubmitNewEquipment() {
+    this.newEquipment.name = this.name
+    this.newEquipment.model = this.model
+    this.newEquipment.description = this.description
+    this.newEquipment.type = this.type
+    this.newEquipment.serialnumber = this.serialnumber
+    this.newEquipment.locationid = this.setlocation
+    this.newEquipment.active = this.active
 
-  onSubmitNewEquipment(isOpen: boolean) {
-    this.confirmationPopup = isOpen;
+    console.log(this.newEquipment)
+  }
+
+
+
+  testloc(loc: any) {
+    console.log(loc)
   }
 }

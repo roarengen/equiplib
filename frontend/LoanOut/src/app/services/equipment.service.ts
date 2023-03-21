@@ -15,19 +15,13 @@ export class EquipmentService {
     {
         return this.http.get<Equipment[]>(`${environment.apiUrl}/equips/by_org/${orgid}`)
     }
-
-    getAllLocations(orgid: number)
-    {
-        return this.http.get<Location[]>(`${environment.apiUrl}/locations/${orgid}`)
-    }
-
     getEquipment(equipid: number)
     {
-        return this.http.get<Equipment>(`${environment.apiUrl}/equip/${equipid}`)
+        return this.http.get<Equipment>(`${environment.apiUrl}/equips/${equipid}`)
     }
 
     addEquipment(equipment: Equipment)
     {
-      return this.http.post(`${environment.apiUrl}/equip`, equipment);
+      return this.http.post(`${environment.apiUrl}/equips`, equipment);
     }
 }

@@ -4,9 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
-import { ErrorInterceptor, fakeBackendProvider, JwtInterceptor } from './helpers';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { ErrorInterceptor, JwtInterceptor } from './helpers';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 
@@ -15,6 +15,7 @@ import { IonicModule } from '@ionic/angular';
     AppComponent,
   ],
   imports: [
+    FormsModule,
     HttpClientModule,
     RouterModule,
     ReactiveFormsModule,

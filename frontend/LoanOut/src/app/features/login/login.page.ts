@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
 						organization =>{ this.accountService.organization = organization
             }
 					)
-					this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl' || '/home'])
+					this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl' || 'home'])
 				})
 
 		this.loading = true;
@@ -99,7 +99,7 @@ export class LoginPage implements OnInit {
 			inputs: [
 				{
 					name: 'inputField',
-					type: 'number',
+					type: 'textarea',
 					placeholder: 'PIN',
 					min: 1,
 					max: 4,

@@ -21,6 +21,32 @@
 
 
 :root {
+    --ion-background-color: #1C1C1C;
+    --ion-background-color-rgb: 28,28,28;
+
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255,255,255;
+
+    --ion-color-step-50: #272727;
+    --ion-color-step-100: #333333;
+    --ion-color-step-150: #3e3e3e;
+    --ion-color-step-200: #494949;
+    --ion-color-step-250: #555555;
+    --ion-color-step-300: #606060;
+    --ion-color-step-350: #6b6b6b;
+    --ion-color-step-400: #777777;
+    --ion-color-step-450: #828282;
+    --ion-color-step-500: #8e8e8e;
+    --ion-color-step-550: #999999;
+    --ion-color-step-600: #a4a4a4;
+    --ion-color-step-650: #b0b0b0;
+    --ion-color-step-700: #bbbbbb;
+    --ion-color-step-750: #c6c6c6;
+    --ion-color-step-800: #d2d2d2;
+    --ion-color-step-850: #dddddd;
+    --ion-color-step-900: #e8e8e8;
+    --ion-color-step-950: #f4f4f4;
+
   --ion-font-family: 'OpenSans';
 
 	--ion-color-primary: #1E2124;
@@ -30,7 +56,7 @@
 	--ion-color-primary-shade: #1a1d20;
 	--ion-color-primary-tint: #35373a;
 
-	--ion-color-secondary: #1C1C1C;
+	--ion-color-secondary: #272B2F;
 	--ion-color-secondary-rgb: 28,28,28;
 	--ion-color-secondary-contrast: #ffffff;
 	--ion-color-secondary-contrast-rgb: 255,255,255;

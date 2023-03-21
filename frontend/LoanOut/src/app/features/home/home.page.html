@@ -1,6 +1,35 @@
-<ion-item-group>
-    <ion-card *ngFor="let equipment of equipments | async">
-      <ion-card-title class="class-title">{{equipment.name}}</ion-card-title>
-      <ion-card-subtitle class="class-subtitle">{{equipment.description}}</ion-card-subtitle>
+<ion-content calss="ion-padding">
+<ion-item-group
+    *ngIf="{
+      equipments: equipments | async,
+      locations: locations | async
+    } as observables"
+>
+<ion-list>
+    <ion-card class="card" *ngFor="let equipment of (observables.equipments || [])">
+      <ion-icon class="card-icon" src="../../../assets/icons/is-available.svg"></ion-icon>
+      <ion-card-title class="card card-title">{{equipment.name}}</ion-card-title>
+      <ion-card-subtitle class="card" *ngIf="observables.locations">
+        Lokasjon: {{getLocationForEquipment(equipment.locationid, observables.locations)?.name || "Ingen satt lokasjon"}}
+      </ion-card-subtitle>
+
+      <ion-card-subtitle class="card">
+        Status:<span>
+          <p *ngIf="equipment.active">Aktiv</p>
+          <p *ngIf="!equipment.active">Inaktiv</p>
+        </span>
+
+      </ion-card-subtitle>
+
+      <ion-card-subtitle class="card" *ngIf="equipment.model != 'string'">
+        Model: {{equipment.model}}
+      </ion-card-subtitle>
+
+      <ion-card-subtitle class="card" *ngIf="equipment.serialnumber != 'string'">
+        Serienummer: {{equipment.serialnumber}}
+      </ion-card-subtitle>
+
     </ion-card>
+  </ion-list>
   </ion-item-group>
+</ion-content>

@@ -16,10 +16,10 @@ const routes: Routes = [
     children: [
       { path: 'manageequipment', component: ManageEquipmentPage},
       { path: 'manageusers', component: ManageUsersPage},
-      { path: 'home', component: HomePage, },
+      { path: 'home', component: HomePage},
     ]
   },
-  { path: 'login', component: LoginPage,  },
+  { path: 'login', component: LoginPage},
 
 ];
 

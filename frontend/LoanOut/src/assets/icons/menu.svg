@@ -1,17 +1,6 @@
-<svg width="1133" height="1133" viewBox="0 0 1133 1133" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_82_4)">
-<path d="M801.952 0H330.716C126.027 0 4 122.027 4 326.716V797.39C4 1002.64 126.027 1124.67 330.716 1124.67H801.39C1006.08 1124.67 1128.11 1002.64 1128.11 797.952V326.716C1128.67 122.027 1006.64 0 801.952 0ZM847.501 857.56H285.167C262.111 857.56 242.992 838.44 242.992 815.385C242.992 792.329 262.111 773.21 285.167 773.21H847.501C870.557 773.21 889.677 792.329 889.677 815.385C889.677 838.44 870.557 857.56 847.501 857.56ZM847.501 604.509H285.167C262.111 604.509 242.992 585.39 242.992 562.334C242.992 539.279 262.111 520.159 285.167 520.159H847.501C870.557 520.159 889.677 539.279 889.677 562.334C889.677 585.39 870.557 604.509 847.501 604.509ZM847.501 351.459H285.167C262.111 351.459 242.992 332.34 242.992 309.284C242.992 286.228 262.111 267.109 285.167 267.109H847.501C870.557 267.109 889.677 286.228 889.677 309.284C889.677 332.34 870.557 351.459 847.501 351.459Z" fill="white"/>
-</g>
-<defs>
-<filter id="filter0_d_82_4" x="0" y="0" width="1132.11" height="1132.67" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_82_4"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_82_4" result="shape"/>
-</filter>
-</defs>
+<svg width="1188" height="658" viewBox="0 0 1188 658" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M46 46H1141.46" stroke="white" stroke-width="91.2883" stroke-linecap="round"/>
+<path d="M440.988 329.141H1141.47" stroke="white" stroke-width="91.2883" stroke-linecap="round"/>
+<path d="M46 329.141H227.968" stroke="white" stroke-width="91.2883" stroke-linecap="round"/>
+<path d="M46 612.282H1141.46" stroke="white" stroke-width="91.2883" stroke-linecap="round"/>
 </svg>
