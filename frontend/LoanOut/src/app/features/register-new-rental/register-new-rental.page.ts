@@ -12,21 +12,28 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 export class RegisterNewRentalPage implements OnInit {
 
   loading: boolean = false;
+  dateExample = '';
+  name = '';
+  rentaldate = '';
+  deliverydate = '';
+  utsyrsansvarlig = '';
 
   constructor(
     public accountService: AccountService,
     public equipmentService: EquipmentService,
-    public rentService: RentService,
-
   ) { }
 
   ngOnInit() {
-    this.rentService.fetchRentsByOrg(this.accountService.user?.organizationid || 0)
   }
 
 
   addNewRental() {
 
+  }
+  onSubmit() {
+    console.log('Submit button clicked');
+
+    // Rest of the code here
   }
 
 }

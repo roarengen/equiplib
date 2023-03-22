@@ -1,46 +1,69 @@
 <ion-content class="ion-padding">
-<form (ngSubmit)="onSubmitNewEquipment()">
-  <h2 class="form-title">Legg til nytt utstyr</h2>
-  <ion-item class="form-item">
-    <ion-label position="floating">Navn:</ion-label>
-    <ion-input [(ngModel)]="name" [clearInput]="true" ngModel required></ion-input>
-  </ion-item>
+  <form #f="ngForm" (ngSubmit)="onSubmitNewEquipment()">
 
-  <ion-item class="form-item">
-    <ion-label position="floating">Modell:</ion-label>
-    <ion-input [(ngModel)]="model" [clearInput]="true" ngModel required></ion-input>
-  </ion-item>
+    <div class="form-title-block">
+      <h2 class="form-title">Legg til nytt utstyr</h2>
+    </div>
 
-  <ion-item class="form-item">
-    <ion-label position="floating">Beskrivelse:</ion-label>
-    <ion-input [(ngModel)]="description" [clearInput]="true" ngModel required></ion-input>
-  </ion-item>
+    <div class="form-input-block">
+      <ion-item class="form-item" color="my-custom-color">
+        <ion-label position="floating">Navn:</ion-label>
+        <ion-input [(ngModel)]="name" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
 
-  <ion-item class="form-item">
-    <ion-label position="floating">Type:</ion-label>
-    <ion-input  [(ngModel)]="type" [clearInput]="true" ngModel required></ion-input>
-  </ion-item>
+      <ion-item class="form-item" color="my-custom-color">
+        <ion-label position="floating">Modell:</ion-label>
+        <ion-input [(ngModel)]="model" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
 
-  <ion-item class="form-item">
-    <ion-label position="floating">Serienummer:</ion-label>
-    <ion-input [(ngModel)]="serialnumber" type="number" [clearInput]="true" ngModel required> </ion-input>
-  </ion-item>
 
-    <ion-item class="form-item">
-      <ion-select interface="popover" placeholder="Velg lokasjon" [(ngModel)]="setlocation">
-        <ng-container>
-          <ion-select-option *ngFor="let location of locations | async" [value]="location.id"> {{location.name }}</ion-select-option>
-        </ng-container>
-      </ion-select>
-    </ion-item>
 
-    <ion-item class="form-item">
-    <ion-label>Set aktiv</ion-label>
-    <ion-toggle color="success" slot="end"></ion-toggle>
-  </ion-item>
+      <ion-item class="form-item" color="my-custom-color">
+        <ion-label position="floating">Type:</ion-label>
+        <ion-input  [(ngModel)]="type" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
 
-  <ion-button type="submit">
-    Registrer
-  </ion-button>
-</form>
+      <ion-item class="form-item" color="my-custom-color">
+        <ion-label position="floating">Serienummer:</ion-label>
+        <ion-input [(ngModel)]="serialnumber" type="number" [clearInput]="true" ngModel required> </ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="my-custom-color">
+        <ion-textarea placeholder="Kommentar/beskrivelse" [autoGrow]="true" value="">
+        </ion-textarea>
+      </ion-item>
+    </div>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="form-item" class="grid-item" color="my-custom-color">
+            <ion-select interface="popover" placeholder="Velg lokasjon">
+              <ng-container>
+                <ion-select-option [(ngModel)]="setlocation" *ngFor="let location of locations | async" [value]="location.id">{{location.name }}</ion-select-option>
+              </ng-container>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item class="form-item" class="grid-item" color="my-custom-color">
+            <ion-label>Aktiv</ion-label>
+            <ion-toggle color="success" slot="end"></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <div style="height: 15px;"></div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="form-button-container">
+      <ion-button class="form-button" color="register" type="submit">
+        Registrer
+      </ion-button>
+    </div>
+
+  </form>
 </ion-content>

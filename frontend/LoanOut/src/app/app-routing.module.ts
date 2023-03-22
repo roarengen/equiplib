@@ -7,6 +7,7 @@ import { AdminGuard } from './helpers/auth/admin.guard';
 import { ManageEquipmentPage } from './features/manage-equipment/manage-equipment.page';
 import { ManageUsersPage } from './features/manage-users/manage-users.page';
 import { LayoutPage } from './features/layout/layout.page';
+import { RegisterNewRentalPage } from './features/register-new-rental/register-new-rental.page';
 
 const routes: Routes = [
 
@@ -16,7 +17,8 @@ const routes: Routes = [
     children: [
       { path: 'manageequipment', component: ManageEquipmentPage},
       { path: 'manageusers', component: ManageUsersPage},
-      { path: 'home', component: HomePage},
+      { path: 'home', component: HomePage, },
+      { path: 'registerrental', component: RegisterNewRentalPage, },
     ]
   },
   { path: 'login', component: LoginPage},
