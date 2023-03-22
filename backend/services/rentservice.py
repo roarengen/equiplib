@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy.orm import Session
 from models.rent import RentCreate
 from schemas import Rent
@@ -11,6 +12,14 @@ def get_rents(db: Session, skip:int=0, limit:int=100) -> list[Rent]:
 
 def get_rents_by_userid(db: Session, userid: int) -> list[Rent]:
     return db.query(Rent).filter(Rent.userid == userid).all()
+
+def deliver_to_location(db: Session, rentid: int, locationid: int, time: datetime) -> Rent:
+    rent = db.query(Rent).filter(Rent.id == rentid).first()
+    rent.deliveredToLocation = locationid
+    rent.rentedToDate = time
+    db.commit()
+    db.refresh(rent)
+    return rent
 
 def get_rents_by_orgid(db: Session, orgid: int) -> list[Rent]:
     users: list[User] = db.query(Rent).filter(User.organizationid==orgid).all()

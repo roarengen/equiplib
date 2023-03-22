@@ -21,6 +21,13 @@ def disable_location(db: Session, id: int) -> Location:
     db.refresh(loc)
     return loc
 
+def enable_location(db: Session, id: int) -> Location:
+    loc = db.query(Location).filter(Location.id==id).first()
+    loc.active = True
+    db.commit()
+    db.refresh(loc)
+    return loc
+
 
 def create_location(db: Session, location: LocationCreate):
     new_location = Location(**location.dict())

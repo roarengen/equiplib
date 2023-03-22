@@ -21,3 +21,9 @@ def create_org(db: Session, org: OrganizationCreate) -> Organization:
     db.refresh(new_org)
     return new_org
 
+def delete_org(db: Session, orgid : int) -> None:
+    org = db.query(Organization).filter(Organization.id == orgid).first()
+    db.delete(org)
+    db.commit()
+
+
