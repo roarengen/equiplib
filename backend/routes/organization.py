@@ -24,7 +24,7 @@ def get_org(orgid: int = Depends(require_user_to_be_in_org), db : Session = Depe
     return org
 
 @api.get("/me", response_model=Organization)
-def get_users(db: Session = Depends(get_db), user : User = Depends(require_user)):
+def get_my_org(db: Session = Depends(get_db), user : User = Depends(require_user)):
     return crud.get_org(db, user.organizationid)
 
 @api.post("/", response_model=Organization, dependencies=[Depends(require_leader)])

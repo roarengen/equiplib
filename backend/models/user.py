@@ -1,8 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-from models import organization
-
 class UserBase(BaseModel):
     roleid : int
     username : str
@@ -35,5 +33,4 @@ class LoginRequest(BaseModel):
 
 class LoginResponse(BaseModel):
     user: User
-    org: organization.OrganizationHeader | None = None
     token: str
