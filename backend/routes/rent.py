@@ -11,7 +11,6 @@ from auth import require_user_to_be_in_org, require_user, require_lender, requir
 api = APIRouter(
     prefix="/rents",
     tags=['rents'],
-    dependencies=[Depends(require_user)]
 )
 
 @api.post("/", response_model=Rent, dependencies=[Depends(require_lender)])
