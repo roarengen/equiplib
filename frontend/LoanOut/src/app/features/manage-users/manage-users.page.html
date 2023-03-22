@@ -1,9 +1,58 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>manage-users</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
+  <form (ngSubmit)="onSubmitNewUser()">
+    <h2 class="form-title">Legg til ny bruker</h2>
+    <ion-item class="form-item">
+      <ion-label position="floating">Brukernavn:</ion-label>
+      <ion-input [(ngModel)]="username" [clearInput]="true" ngModel required></ion-input>
+    </ion-item>
 
-<ion-content>
+    <ion-item class="form-item">
+      <ion-label position="floating">Fornavn:</ion-label>
+      <ion-input [(ngModel)]="firstname" [clearInput]="true" ngModel required></ion-input>
+    </ion-item>
 
-</ion-content>
+    <ion-item class="form-item">
+      <ion-label position="floating">Etternavn:</ion-label>
+      <ion-input [(ngModel)]="lastname" [clearInput]="true" ngModel required></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="floating">Type:</ion-label>
+      <ion-input  [(ngModel)]="email" [clearInput]="true" ngModel required></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="floating">Telefon nummer:</ion-label>
+      <ion-input [(ngModel)]="phone" type="number" [clearInput]="true" ngModel required> </ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="floating">By:</ion-label>
+      <ion-input [(ngModel)]="city" [clearInput]="true" ngModel required> </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Fødselsdato:</ion-label>
+      <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
+      <ion-popover [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime  [(ngModel)]="birthdate" id="datetime"></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Aktiv til:</ion-label>
+      <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
+      <ion-popover [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime  [(ngModel)]="validthrudate" id="datetime2"></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+
+    <ion-button type="submit">
+      Registrer
+    </ion-button>
+  </form>
+  </ion-content>
