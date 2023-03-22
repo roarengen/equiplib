@@ -3,6 +3,7 @@ from fastapi.logger import logger
 from sqlalchemy.orm import Session
 from database import get_db
 from models.rent import Rent, RentCreate
+from models.user import User
 import services.rentservice as crud
 from extensions import ROLES
 from auth import require_user_to_be_in_org, require_user, require_lender, require_admin
@@ -36,6 +37,10 @@ def get_rent_by_orgid(orgid: int = Depends(require_user_to_be_in_org), db: Sessi
         logger.debug(f"requested rents for org: {orgid} but no rents where found")
         return HTTPException(status_code=404, detail="no rents not found for this org")
     return rents
+
+@api.get("/me", response_model=list[Rent])
+def get_users(db: Session = Depends(get_db), user : User = Depends(require_user)):
+    return crud.get_rents_by_userid(db, user.id)
 
 @api.get("/by_user/{userid}", response_model=list[Rent])
 def get_rents_by_userid(userid: int, db: Session = Depends(get_db), user = Depends(require_user)):
