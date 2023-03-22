@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 import services.orgservice as crud
 from database import get_db
 from models.organization import Organization, OrganizationCreate
-from auth import require_admin, require_user_to_be_in_org, require_leader
+from models.user import User
+from auth import require_admin, require_user_to_be_in_org, require_leader, require_user
 
 api = APIRouter(
     prefix="/orgs",
@@ -21,6 +22,10 @@ def get_org(orgid: int = Depends(require_user_to_be_in_org), db : Session = Depe
     if not org:
         return HTTPException(status_code=404, detail="org not found")
     return org
+
+@api.get("/me", response_model=Organization)
+def get_users(db: Session = Depends(get_db), user : User = Depends(require_user)):
+    return crud.get_org(db, user.organizationid)
 
 @api.post("/", response_model=Organization, dependencies=[Depends(require_leader)])
 def post_org(org: OrganizationCreate, db : Session = Depends(get_db)):

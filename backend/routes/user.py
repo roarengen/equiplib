@@ -40,6 +40,10 @@ def get_users(db: Session = Depends(get_db)):
     users = crud.get_users(db)
     return users
 
+@api.get("/me", response_model=list[User])
+def get_users(user : User =Depends(require_user)):
+    return user
+
 @api.post("/login", response_model=LoginResponse, dependencies=[])
 def user_login(login: LoginRequest, db: Session = Depends(get_db)):
     user = crud.get_user_by_username(db, login.username)
