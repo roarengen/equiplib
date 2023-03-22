@@ -58,7 +58,7 @@ export class ManageEquipmentPage implements OnInit{
       active: this.active,
       description: this.description,
     }
-      this.http.post(`${environment.apiUrl}/equips`, data).subscribe(response => {
+      this.http.post(`${environment.apiUrl}/equips/`, data).subscribe(response => {
         console.log(response)
       })
   }
