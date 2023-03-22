@@ -7,6 +7,11 @@
     </ion-item>
 
     <ion-item class="form-item">
+      <ion-label position="floating">Passord:</ion-label>
+      <ion-input [(ngModel)]="password" [clearInput]="true" type="password" ngModel required></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
       <ion-label position="floating">Fornavn:</ion-label>
       <ion-input [(ngModel)]="firstname" [clearInput]="true" ngModel required></ion-input>
     </ion-item>

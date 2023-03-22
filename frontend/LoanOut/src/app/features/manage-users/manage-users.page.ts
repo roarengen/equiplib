@@ -14,6 +14,7 @@ export class ManageUsersPage implements OnInit {
   public username: string;
   public firstname: string;
   public lastname: string;
+  public password: string;
   public email: string;
   public phone: string;
   public city: string;
@@ -32,17 +33,19 @@ export class ManageUsersPage implements OnInit {
   onSubmitNewUser() {
     const data = {
       organizationid: this.accountService.user.organizationid,
+      roleid: 1,
       username: this.username,
       firstname: this.firstname,
       lastname: this.lastname,
+      password: this.password,
       email: this.email,
-      phone: this.phone,
+      phone: this.phone.toString(),
       city: this.city,
       dateOfBirth: this.birthdate,
       activeFromDate: new Date(),
       activeToDate: this.validthrudate,
     }
-      this.http.post(`${environment.apiUrl}/users`, data).subscribe(response => {
+      this.http.post(`${environment.apiUrl}/users/`, data).subscribe(response => {
         console.log(response)
       })
     }
