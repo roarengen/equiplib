@@ -3,37 +3,37 @@
     <h2 class="form-title">Legg til ny bruker</h2>
     <ion-item class="form-item">
       <ion-label position="floating">Brukernavn:</ion-label>
-      <ion-input [(ngModel)]="username" [clearInput]="true" ngModel required></ion-input>
+      <ion-input [(ngModel)]="newUser.username" [clearInput]="true" ngModel required></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="floating">Passord:</ion-label>
-      <ion-input [(ngModel)]="password" [clearInput]="true" type="password" ngModel required></ion-input>
+      <ion-input [(ngModel)]="newUser.password" [clearInput]="true" type="password" ngModel required></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="floating">Fornavn:</ion-label>
-      <ion-input [(ngModel)]="firstname" [clearInput]="true" ngModel required></ion-input>
+      <ion-input [(ngModel)]="newUser.firstname" [clearInput]="true" ngModel required></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="floating">Etternavn:</ion-label>
-      <ion-input [(ngModel)]="lastname" [clearInput]="true" ngModel required></ion-input>
+      <ion-input [(ngModel)]="newUser.lastname" [clearInput]="true" ngModel required></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
-      <ion-label position="floating">Type:</ion-label>
-      <ion-input  [(ngModel)]="email" [clearInput]="true" ngModel required></ion-input>
+      <ion-label position="floating">Email:</ion-label>
+      <ion-input  [(ngModel)]="newUser.email" type="email" [clearInput]="true" ngModel required></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="floating">Telefon nummer:</ion-label>
-      <ion-input [(ngModel)]="phone" type="number" [clearInput]="true" ngModel required> </ion-input>
+      <ion-input [(ngModel)]="newUser.phone" type="number" [clearInput]="true" ngModel required> </ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="floating">By:</ion-label>
-      <ion-input [(ngModel)]="city" [clearInput]="true" ngModel required> </ion-input>
+      <ion-input [(ngModel)]="newUser.city" [clearInput]="true" ngModel required> </ion-input>
     </ion-item>
 
     <ion-item>
@@ -41,17 +41,18 @@
       <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
       <ion-popover [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime  [(ngModel)]="birthdate" id="datetime"></ion-datetime>
+          <ion-datetime [(ngModel)]="newUser.dateOfBirth" id="datetime"></ion-datetime>
         </ng-template>
       </ion-popover>
     </ion-item>
 
+    <!-- this particular form input appears to be redundant -->
     <ion-item>
       <ion-label>Aktiv til:</ion-label>
       <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
       <ion-popover [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime  [(ngModel)]="validthrudate" id="datetime2"></ion-datetime>
+          <ion-datetime  [(ngModel)]="newUser.activeToDate" id="datetime2"></ion-datetime>
         </ng-template>
       </ion-popover>
     </ion-item>

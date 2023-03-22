@@ -1,9 +1,8 @@
 export class User {
   roleid!: number;
   username!: string;
-  // password!: string;
   firstname!: string;
-  lastame!: string;
+  lastname!: string;
   token!: string;
   email!: string;
   phone!: string;
@@ -11,9 +10,12 @@ export class User {
   city!: string;
   postalcode!: string;
   dateOfBirth!: string;
-  activeFromDate!: Date; //Set to datetime?
+  activeFromDate!: Date;
   activeToDate!: Date;
   organizationid!: number;
   id!: number;
+}
 
+export class createUser extends User {
+  password!: string;
 }

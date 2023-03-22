@@ -3,6 +3,7 @@ import { CustomHttpClient } from './../../helpers/auth/http-client';
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { createUser} from 'src/app/models/user';
 
 @Component({
   selector: 'app-manage-users',
@@ -11,15 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ManageUsersPage implements OnInit {
 
-  public username: string;
-  public firstname: string;
-  public lastname: string;
-  public password: string;
-  public email: string;
-  public phone: string;
-  public city: string;
-  public birthdate: Date;
-  public validthrudate: Date;
+  public newUser: createUser = new createUser();
 
   constructor(
     private http: CustomHttpClient,
@@ -31,22 +24,9 @@ export class ManageUsersPage implements OnInit {
   }
 
   onSubmitNewUser() {
-    const data = {
-      organizationid: this.accountService.user.organizationid,
-      roleid: 1,
-      username: this.username,
-      firstname: this.firstname,
-      lastname: this.lastname,
-      password: this.password,
-      email: this.email,
-      phone: this.phone.toString(),
-      city: this.city,
-      dateOfBirth: this.birthdate,
-      activeFromDate: new Date(),
-      activeToDate: this.validthrudate,
-    }
-      this.http.post(`${environment.apiUrl}/users/`, data).subscribe(response => {
-        console.log(response)
-      })
-    }
+    this.newUser.organizationid = this.accountService.user.organizationid
+    this.newUser.roleid = 1
+
+    this.http.post(`${environment.apiUrl}/users/`, this.newUser).subscribe()
   }
+}
