@@ -41,7 +41,7 @@ def get_users(db: Session = Depends(get_db)):
     return users
 
 @api.get("/me", response_model=list[User])
-def get_users(user : User =Depends(require_user)):
+def get_my_user(user : User =Depends(require_user)):
     return user
 
 @api.post("/login", response_model=LoginResponse, dependencies=[])
@@ -50,14 +50,12 @@ def user_login(login: LoginRequest, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="user with that username not found")
 
-    org = orgservice.get_org(db, user.organizationid)
     if not user.verify_password(login.password):
         logger.debug(f"{login.username} tried to login but entered the wrong password")
         raise HTTPException(status_code=401, detail="invalid password")
 
     return LoginResponse(
         user=user,
-        org=OrganizationHeader(**org.__dict__),
         token=make_token(login.username, str(login.password))
     )
 

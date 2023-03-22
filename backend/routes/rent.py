@@ -38,7 +38,7 @@ def get_rent_by_orgid(orgid: int = Depends(require_user_to_be_in_org), db: Sessi
     return rents
 
 @api.get("/me", response_model=list[Rent])
-def get_users(db: Session = Depends(get_db), user : User = Depends(require_user)):
+def get_my_rents(db: Session = Depends(get_db), user : User = Depends(require_user)):
     return crud.get_rents_by_userid(db, user.id)
 
 @api.get("/by_user/{userid}", response_model=list[Rent])
