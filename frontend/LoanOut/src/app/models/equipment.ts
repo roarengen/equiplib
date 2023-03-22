@@ -1,4 +1,3 @@
-import { Organization } from './organization';
 export class Equipment {
   id!: number;
   organizationid!: number;

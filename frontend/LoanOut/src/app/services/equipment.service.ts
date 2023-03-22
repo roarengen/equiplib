@@ -19,9 +19,4 @@ export class EquipmentService {
     {
         return this.http.get<Equipment>(`${environment.apiUrl}/equips/${equipid}`)
     }
-
-    addEquipment(equipment: Equipment)
-    {
-      return this.http.post(`${environment.apiUrl}/equips`, equipment);
-    }
 }

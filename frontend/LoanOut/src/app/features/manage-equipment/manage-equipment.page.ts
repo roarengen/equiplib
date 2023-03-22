@@ -9,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 import { Equipment } from 'src/app/models/equipment';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { User } from 'src/app/models/user';
+import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-manage-equipment',
@@ -30,6 +33,7 @@ export class ManageEquipmentPage implements OnInit{
 
   constructor(
     public locationService: LocationService,
+    private http: CustomHttpClient,
     public accountService: AccountService,
     public equipmentService: EquipmentService,
     private formBuilder: FormBuilder,
@@ -43,20 +47,19 @@ export class ManageEquipmentPage implements OnInit{
     }
 
   onSubmitNewEquipment() {
-    this.newEquipment.name = this.name
-    this.newEquipment.model = this.model
-    this.newEquipment.description = this.description
-    this.newEquipment.type = this.type
-    this.newEquipment.serialnumber = this.serialnumber
-    this.newEquipment.locationid = this.setlocation
-    this.newEquipment.active = this.active
-
-    console.log(this.newEquipment)
-  }
-
-
-
-  testloc(loc: any) {
-    console.log(loc)
+    const data = {
+      locationid: this.setlocation,
+      organizationid: this.accountService.user.organizationid,
+      name: this.name,
+      type: this.type,
+      model: this.model,
+      serialnumber: this.serialnumber,
+      location: this.setlocation,
+      active: this.active,
+      description: this.description,
+    }
+      this.http.post(`${environment.apiUrl}/equips`, data).subscribe(response => {
+        console.log(response)
+      })
   }
 }

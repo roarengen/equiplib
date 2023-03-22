@@ -1,5 +1,5 @@
 <ion-content class="ion-padding">
-<form #f="ngForm" (ngSubmit)="onSubmitNewEquipment()">
+<form (ngSubmit)="onSubmitNewEquipment()">
   <h2 class="form-title">Legg til nytt utstyr</h2>
   <ion-item class="form-item">
     <ion-label position="floating">Navn:</ion-label>
@@ -27,9 +27,9 @@
   </ion-item>
 
     <ion-item class="form-item">
-      <ion-select interface="popover" placeholder="Velg lokasjon">
+      <ion-select interface="popover" placeholder="Velg lokasjon" [(ngModel)]="setlocation">
         <ng-container>
-          <ion-select-option [(ngModel)]="setlocation" *ngFor="let location of locations | async" [value]="location.id"> {{location.name }}</ion-select-option>
+          <ion-select-option *ngFor="let location of locations | async" [value]="location.id"> {{location.name }}</ion-select-option>
         </ng-container>
       </ion-select>
     </ion-item>
@@ -39,7 +39,7 @@
     <ion-toggle color="success" slot="end"></ion-toggle>
   </ion-item>
 
-  <ion-button>
+  <ion-button type="submit">
     Registrer
   </ion-button>
 </form>
