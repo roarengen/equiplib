@@ -22,7 +22,7 @@ def deliver_to_location(db: Session, rentid: int, locationid: int, time: datetim
     return rent
 
 def get_rents_by_orgid(db: Session, orgid: int) -> list[Rent]:
-    users: list[User] = db.query(Rent).filter(User.organizationid==orgid).all()
+    users: list[User] = db.query(User).filter(User.organizationid==orgid).all()
     if not users:
         return []
     userids = [user.id for user in users]
