@@ -22,14 +22,7 @@ export class ManageEquipmentPage implements OnInit{
   public locations: Observable<Location[]>;
   form!: FormGroup;
   confirmationPopup: boolean = false;
-  public name: string;
-  public model: string;
-  public description: string;
-  public type: string;
-  public serialnumber: string;
-  public setlocation: number;
-  public active: boolean = true;
-  public newEquipment: Equipment;
+  public newEquipment: Equipment = new Equipment();
 
   constructor(
     public locationService: LocationService,
@@ -37,28 +30,16 @@ export class ManageEquipmentPage implements OnInit{
     public accountService: AccountService,
     public equipmentService: EquipmentService,
     private formBuilder: FormBuilder,
-
     ) {
       this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
     }
 
     ngOnInit() {
-
     }
 
   onSubmitNewEquipment() {
-    const data = {
-      locationid: this.setlocation,
-      organizationid: this.accountService.user.organizationid,
-      name: this.name,
-      type: this.type,
-      model: this.model,
-      serialnumber: this.serialnumber,
-      location: this.setlocation,
-      active: this.active,
-      description: this.description,
-    }
-      this.http.post(`${environment.apiUrl}/equips/`, data).subscribe(response => {
+      this.newEquipment.organizationid = this.accountService.user.organizationid
+      this.http.post(`${environment.apiUrl}/equips/`, this.newEquipment).subscribe(response => {
         console.log(response)
       })
   }
