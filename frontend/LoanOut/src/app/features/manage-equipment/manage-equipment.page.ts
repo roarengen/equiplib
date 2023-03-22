@@ -38,9 +38,7 @@ export class ManageEquipmentPage implements OnInit{
     }
 
   onSubmitNewEquipment() {
-      this.newEquipment.organizationid = this.accountService.user.organizationid
-      this.http.post(`${environment.apiUrl}/equips/`, this.newEquipment).subscribe(response => {
-        console.log(response)
-      })
+    this.newEquipment.organizationid = this.accountService.organization.id
+    this.equipmentService.createEquipment(this.newEquipment).subscribe()
   }
 }
