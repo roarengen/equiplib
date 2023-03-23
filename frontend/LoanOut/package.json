@@ -30,6 +30,7 @@
     "@zxing/browser": "^0.1.1",
     "@zxing/library": "^0.19.2",
     "@zxing/ngx-scanner": "^3.8.1",
+    "angularx-qrcode": "^15.0.1",
     "ionicons": "^6.0.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

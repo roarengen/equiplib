@@ -36,37 +36,26 @@
         <ion-input [(ngModel)]="newUser.phone" type="number" [clearInput]="true" ngModel required> </ion-input>
       </ion-item>
 
-      <ion-item class="form-item" color="input-background">
-        <ion-label position="floating">By:</ion-label>
-        <ion-input [(ngModel)]="newUser.city" [clearInput]="true" ngModel required> </ion-input>
-      </ion-item>
-
-      <ion-item color="input-background">
-        <ion-label>Fødselsdato:</ion-label>
-        <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
-        <ion-popover [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime  [(ngModel)]="newUser.dateOfBirth" id="datetime"></ion-datetime>
-          </ng-template>
-        </ion-popover>
-      </ion-item>
-
-      <ion-item color="input-background">
-        <ion-label>Aktiv til:</ion-label>
-        <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
-        <ion-popover [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime  [(ngModel)]="newUser.activeToDate" id="datetime2"></ion-datetime>
-          </ng-template>
-        </ion-popover>
-      </ion-item>
-    </div>
-
-    <div class="form-button-container">
-      <ion-button class="form-button" color="register" (click)="validateInformation()">
-        Registrer
-      </ion-button>
-    </div>
-
+    <!-- this particular form input appears to be redundant -->
+    <ion-item>
+      <ion-label>Aktiv til:</ion-label>
+      <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
+      <ion-popover [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime  [(ngModel)]="newUser.activeToDate" id="datetime2"></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+    <ion-button type="submit">
+      Registrer
+    </ion-button>
   </form>
-</ion-content>
+  <a *ngIf="this.hasSubmittedNewUser"[href]="qrCodeDownloadLink" download= "qr-{{newUser.username}}"><ion-button class="btn btn-block" (click)="dlDataUrlBin()">Last ned QR kode</ion-button></a>
+
+
+  <qrcode  class="hidden-qr-code" #qrcode (qrCodeURL)="onChangeUrl($event)"
+   [qrdata]="qrCodeUsername"
+   [errorCorrectionLevel]="'M'"
+   [elementType]="'canvas'">
+  </qrcode>
+  </ion-content>

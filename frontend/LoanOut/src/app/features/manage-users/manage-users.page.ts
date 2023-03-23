@@ -1,9 +1,9 @@
 import { AccountService } from './../../services/user.service';
 import { CustomHttpClient } from './../../helpers/auth/http-client';
-import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { createUser} from 'src/app/models/user';
+import { SafeUrl } from '@angular/platform-browser';
 import { ActionSheetController } from '@ionic/angular';
 
 @Component({
@@ -12,12 +12,29 @@ import { ActionSheetController } from '@ionic/angular';
   styleUrls: ['./manage-users.page.scss'],
 })
 export class ManageUsersPage implements OnInit {
-
+  public hasSubmittedNewUser: boolean = false;
   public newUser: createUser = new createUser();
-
+  public qrCodeUsername: string = "";
+  public qrCodeDownloadLink: SafeUrl;
+  public link: string;
+  qrcElement: any;
   constructor(
     private http: CustomHttpClient,
     private accountService: AccountService,
+  ) {
+    this.qrCodeUsername = '';
+  }
+
+  @ViewChild("qrcode", {static : true}) qrcode: ManageUsersPage;
+
+
+  onChangeUrl(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
+  }
+
+  dlDataUrlBin(){
+    this.link = this.qrcode.qrcElement.nativeElement.firstChild.src
+  }
     private actionSheetCtrl: ActionSheetController
   ) { }
 
@@ -48,9 +65,10 @@ export class ManageUsersPage implements OnInit {
     await actionSheet.present();
   }
   onSubmitNewUser() {
+    this.hasSubmittedNewUser = true;
+    this.qrCodeUsername = this.newUser.username
     this.newUser.organizationid = this.accountService.user.organizationid
-    this.newUser.roleid = 1
-
+    this.newUser.roleid = 1 // We need to solve security around role selection.
     this.http.post(`${environment.apiUrl}/users/`, this.newUser).subscribe()
   }
 }
