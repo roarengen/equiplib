@@ -1,16 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Location } from './../../models/location';
 import { Observable } from 'rxjs';
 import { EquipmentService } from 'src/app/services/equipment.service';
-import { Organization } from './../../models/organization';
 import { AccountService } from 'src/app/services/user.service';
 import { LocationService } from 'src/app/services/location.service';
 import { Component, OnInit } from '@angular/core';
 import { Equipment } from 'src/app/models/equipment';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { User } from 'src/app/models/user';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
-import { environment } from 'src/environments/environment';
 import { ActionSheetController } from '@ionic/angular';
 
 

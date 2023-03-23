@@ -1,7 +1,7 @@
 
 
 <ion-content class="ion-text-center">
-  <ion-text class="login-title" color="tertiary" size="large">GearStorage</ion-text>
+  <ion-text class="login-title" color="tertiary" size="large">EquipLib</ion-text>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <ion-list class="form-group">
     <ion-item color="secondary">
@@ -11,7 +11,7 @@
 
     <ion-item color="secondary">
       <ion-label position="floating">Passord</ion-label>
-      <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" inputmode="numeric" type="password"></ion-input>
+      <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password"></ion-input>
     </ion-item>
   </ion-list>
 

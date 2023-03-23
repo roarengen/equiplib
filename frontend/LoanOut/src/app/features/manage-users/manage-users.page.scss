@@ -1,3 +1,7 @@
+ion-select {
+  color: white;
+  background-color: #272B2F;
+}
 
 .form-title {
   color: #ffffff;
@@ -7,9 +11,15 @@
   font-weight: bold;
   border-radius: 10px;
 }
+
 form {
   margin-top: 45px;
 }
+
+ion-item {
+  --border-color: var(--ion-text-color);
+}
+
 .form-title-block {
   border-radius: 10px;
   background-color: #272B2F;
@@ -19,12 +29,11 @@ form {
   background-color: #272B2F;
   padding: 10px 0 10px 0;
 }
+
 ion-input {
-  --ion-color-input-background: #272B2F;
+  --ion-color-my-custom-color: #272B2F;
 }
-ion-item {
-  --border-color: var(--ion-text-color);
-}
+
 .form-button {
   font-weight: bold;
   padding: 0 15px;
@@ -36,7 +45,6 @@ ion-item {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
 }
 ion-button {
   --background: #5865F2;
@@ -74,3 +82,26 @@ ion-button {
   --backdrop-opacity: 0;
 }
 
+
+.grid-item
+{
+  border-radius: 10px;
+  background-color: #272B2F;
+  padding: 10px -5px 10px -5px;
+  --ion-color-my-custom-color: #272B2F;
+}
+
+/* Put this code in your CSS file */
+
+/* The div container */
+.qrcodeImage {
+  display: flex;
+  flex: 1;
+}
+
+/* Add custom styles here */
+.center {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
