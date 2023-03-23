@@ -2,7 +2,7 @@
 <ion-app>
   <ion-header>
     <ion-toolbar>
-      <ion-title>{{accountService.organization.name}}</ion-title>
+      <ion-title >{{accountService.organization?.name || ""}}</ion-title>
       <ion-menu-toggle>
         <button ion-button menuToggle end class="menu-button">
           <ion-icon class="menu-icon"src="../../../assets/icons/menu.svg"></ion-icon>
