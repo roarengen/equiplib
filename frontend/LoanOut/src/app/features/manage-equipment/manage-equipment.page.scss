@@ -32,7 +32,7 @@ ion-item {
 }
 
 ion-input {
-  --ion-color-my-custom-color: #272B2F;
+  --ion-color-input-background: #272B2F;
 }
 
 .form-button {
@@ -84,5 +84,5 @@ ion-button {
   border-radius: 10px;
   background-color: #272B2F;
   padding: 10px -5px 10px -5px;
-  --ion-color-my-custom-color: #272B2F;
+  --ion-color-input-background: #272B2F;
 }

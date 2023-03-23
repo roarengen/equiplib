@@ -1,0 +1,71 @@
+
+.form-title {
+  color: #ffffff;
+  background-color: #272B2F;
+  text-align: center;
+  padding: 20px 0 20px 0;
+  font-weight: bold;
+  border-radius: 10px;
+}
+form {
+  margin-top: 45px;
+}
+.form-title-block {
+  border-radius: 10px;
+  background-color: #272B2F;
+}
+.form-input-block {
+  border-radius: 10px;
+  background-color: #272B2F;
+  padding: 10px 0 10px 0;
+}
+ion-input {
+  --ion-color-input-background: #272B2F;
+}
+ion-item {
+  --border-color: var(--ion-text-color);
+}
+.form-button {
+  font-weight: bold;
+  padding: 0 15px;
+  width: fit-content;
+  border-radius: 10px;
+}
+
+.form-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+ion-button {
+  --background: #5865F2;
+  --background-hover: #4E5AD9;
+  --background-activated: #5764F2;
+  --background-focused: #292F73;
+  --color: rgb(255, 255, 255);
+  --ripple-color: rgb(141, 138, 140);
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+
+  background-color: var(--background);
+  color: var(--color);
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
+
+  &:hover {
+    background-color: var(--background-hover);
+  }
+
+  &:active {
+    background-color: var(--background-activated);
+  }
+
+  &:focus {
+    background-color: var(--background-focused);
+  }
+
+  .button-effect {
+    background-color: var(--ripple-color);
+  }
+}

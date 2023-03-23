@@ -1,64 +1,72 @@
 <ion-content class="ion-padding">
   <form (ngSubmit)="onSubmitNewUser()">
-    <h2 class="form-title">Legg til ny bruker</h2>
-    <ion-item class="form-item">
-      <ion-label position="floating">Brukernavn:</ion-label>
-      <ion-input [(ngModel)]="newUser.username" [clearInput]="true" ngModel required></ion-input>
-    </ion-item>
 
-    <ion-item class="form-item">
-      <ion-label position="floating">Passord:</ion-label>
-      <ion-input [(ngModel)]="newUser.password" [clearInput]="true" type="password" ngModel required></ion-input>
-    </ion-item>
+    <div class="form-title-block">
+      <h2 class="form-title">Legg til ny bruker</h2>
+    </div>
 
-    <ion-item class="form-item">
-      <ion-label position="floating">Fornavn:</ion-label>
-      <ion-input [(ngModel)]="newUser.firstname" [clearInput]="true" ngModel required></ion-input>
-    </ion-item>
+    <div class="form-input-block">
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Brukernavn:</ion-label>
+        <ion-input [(ngModel)]="newUser.username" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
 
-    <ion-item class="form-item">
-      <ion-label position="floating">Etternavn:</ion-label>
-      <ion-input [(ngModel)]="newUser.lastname" [clearInput]="true" ngModel required></ion-input>
-    </ion-item>
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Passord:</ion-label>
+        <ion-input [(ngModel)]="newUser.password" [clearInput]="true" type="password" ngModel required></ion-input>
+      </ion-item>
 
-    <ion-item class="form-item">
-      <ion-label position="floating">Email:</ion-label>
-      <ion-input  [(ngModel)]="newUser.email" type="email" [clearInput]="true" ngModel required></ion-input>
-    </ion-item>
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Fornavn:</ion-label>
+        <ion-input [(ngModel)]="newUser.firstname" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
 
-    <ion-item class="form-item">
-      <ion-label position="floating">Telefon nummer:</ion-label>
-      <ion-input [(ngModel)]="newUser.phone" type="number" [clearInput]="true" ngModel required> </ion-input>
-    </ion-item>
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Etternavn:</ion-label>
+        <ion-input [(ngModel)]="newUser.lastname" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
 
-    <ion-item class="form-item">
-      <ion-label position="floating">By:</ion-label>
-      <ion-input [(ngModel)]="newUser.city" [clearInput]="true" ngModel required> </ion-input>
-    </ion-item>
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Email:</ion-label>
+        <ion-input  [(ngModel)]="newUser.email" type="email" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Fødselsdato:</ion-label>
-      <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
-      <ion-popover [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime [(ngModel)]="newUser.dateOfBirth" id="datetime"></ion-datetime>
-        </ng-template>
-      </ion-popover>
-    </ion-item>
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Telefon nummer:</ion-label>
+        <ion-input [(ngModel)]="newUser.phone" type="number" [clearInput]="true" ngModel required> </ion-input>
+      </ion-item>
 
-    <!-- this particular form input appears to be redundant -->
-    <ion-item>
-      <ion-label>Aktiv til:</ion-label>
-      <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
-      <ion-popover [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime  [(ngModel)]="newUser.activeToDate" id="datetime2"></ion-datetime>
-        </ng-template>
-      </ion-popover>
-    </ion-item>
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">By:</ion-label>
+        <ion-input [(ngModel)]="newUser.city" [clearInput]="true" ngModel required> </ion-input>
+      </ion-item>
 
-    <ion-button type="submit">
-      Registrer
-    </ion-button>
+      <ion-item color="input-background">
+        <ion-label>Fødselsdato:</ion-label>
+        <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
+        <ion-popover [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime  [(ngModel)]="newUser.dateOfBirth" id="datetime"></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+
+      <ion-item color="input-background">
+        <ion-label>Aktiv til:</ion-label>
+        <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
+        <ion-popover [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime  [(ngModel)]="newUser.activeToDate" id="datetime2"></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+    </div>
+
+    <div class="form-button-container">
+      <ion-button class="form-button" color="register" type="submit">
+        Registrer
+      </ion-button>
+    </div>
+
   </form>
-  </ion-content>
+</ion-content>
