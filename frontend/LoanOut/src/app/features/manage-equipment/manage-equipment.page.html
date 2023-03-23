@@ -50,15 +50,10 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" class="ion-text-center">
-          <div style="height: 15px;"></div>
-        </ion-col>
-      </ion-row>
     </ion-grid>
 
     <div class="form-button-container">
-      <ion-button class="form-button" color="register" type="submit">
+      <ion-button class="form-button" color="register" (click)="validateInformation()">
         Registrer
       </ion-button>
     </div>

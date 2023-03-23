@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { environment } from 'src/environments/environment';
+import { ActionSheetController } from '@ionic/angular';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class ManageEquipmentPage implements OnInit{
     public accountService: AccountService,
     public equipmentService: EquipmentService,
     private formBuilder: FormBuilder,
+    private actionSheetCtrl: ActionSheetController
     ) {
       this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
     }
@@ -37,8 +39,31 @@ export class ManageEquipmentPage implements OnInit{
     ngOnInit() {
     }
 
-  onSubmitNewEquipment() {
-    this.newEquipment.organizationid = this.accountService.organization.id
-    this.equipmentService.createEquipment(this.newEquipment).subscribe()
-  }
+    onSubmitNewEquipment() {
+      this.newEquipment.organizationid = this.accountService.organization.id
+      this.equipmentService.createEquipment(this.newEquipment).subscribe()
+    }
+    async validateInformation(){
+      const actionSheet = await this.actionSheetCtrl.create({
+        cssClass: 'validateInformation',
+        header: 'Sjekk at feltene stemmer',
+        buttons: [
+          {
+            text: 'Riktig',
+            handler: () => {
+              this.onSubmitNewEquipment();
+              actionSheet.dismiss();
+            }
+          },
+          {
+            text: 'Gjør endringer',
+            role: 'cancel',
+            handler: () => {
+              actionSheet.dismiss();
+            }
+          }
+        ]
+      });
+      await actionSheet.present();
+    }
 }

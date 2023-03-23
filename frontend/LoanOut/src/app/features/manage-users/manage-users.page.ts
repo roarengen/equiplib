@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { createUser} from 'src/app/models/user';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-manage-users',
@@ -17,12 +18,35 @@ export class ManageUsersPage implements OnInit {
   constructor(
     private http: CustomHttpClient,
     private accountService: AccountService,
-    private popoverController: PopoverController
+    private actionSheetCtrl: ActionSheetController
   ) { }
 
   ngOnInit() {
   }
 
+  async validateInformation(){
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Sjekk at feltene stemmer',
+      cssClass: 'validateInformation',
+      buttons: [
+        {
+          text: 'Riktig',
+          handler: () => {
+            this.onSubmitNewUser();
+            actionSheet.dismiss();
+          }
+        },
+        {
+          text: 'Gjør endringer',
+          role: 'cancel',
+          handler: () => {
+            actionSheet.dismiss();
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
   onSubmitNewUser() {
     this.newUser.organizationid = this.accountService.user.organizationid
     this.newUser.roleid = 1
