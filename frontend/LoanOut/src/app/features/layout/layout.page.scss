@@ -8,7 +8,7 @@ ion-icon {
 }
 
 button {
-  background-color: #1E2124;
+  background-color: transparent;
 }
 
 .clickable {
@@ -20,12 +20,13 @@ button {
 
 .menu-button {
   background-color: #1E2124;
+  padding-top: 1.7em;
   width: 35px;
   height: 35px;
+  display: flex;
 }
 
 .menu-icon {
-  background-color: #1E2124;
   width: 35px;
   height: 35px;
 }
@@ -41,4 +42,8 @@ button {
   video {
     height: 100% !important;
   }
+}
+.organizationNumber{
+  font-size: 0.7em;
+  text-align: center;
 }
