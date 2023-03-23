@@ -3,8 +3,15 @@
   "index": "/index.html",
   "assetGroups": [
     {
-      "name": "equiplib",
+      "name": "api",
       "installMode": "prefetch",
+      "resources": {
+        "urls": ["https://172.105.74.176/api/*"]
+      }
+    },
+    {
+      "name": "app",
+      "installMode": "lazy",
       "resources": {
         "files": [
           "/favicon.ico",
