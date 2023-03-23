@@ -21,6 +21,8 @@ export class ManageUsersPage implements OnInit {
   constructor(
     private http: CustomHttpClient,
     private accountService: AccountService,
+    private actionSheetCtrl: ActionSheetController
+
   ) {
     this.qrCodeUsername = '';
   }
@@ -35,8 +37,6 @@ export class ManageUsersPage implements OnInit {
   dlDataUrlBin(){
     this.link = this.qrcode.qrcElement.nativeElement.firstChild.src
   }
-    private actionSheetCtrl: ActionSheetController
-  ) { }
 
   ngOnInit() {
   }
@@ -49,6 +49,7 @@ export class ManageUsersPage implements OnInit {
         {
           text: 'Riktig',
           handler: () => {
+            this.hasSubmittedNewUser = true;
             this.onSubmitNewUser();
             actionSheet.dismiss();
           }
@@ -65,7 +66,6 @@ export class ManageUsersPage implements OnInit {
     await actionSheet.present();
   }
   onSubmitNewUser() {
-    this.hasSubmittedNewUser = true;
     this.qrCodeUsername = this.newUser.username
     this.newUser.organizationid = this.accountService.user.organizationid
     this.newUser.roleid = 1 // We need to solve security around role selection.
