@@ -17,8 +17,6 @@ export class LayoutPage{
   public organization?: Observable<Organization>;
 
   constructor(public accountService: AccountService) {
-
-
     this.organization = this.accountService.getOrganization(this.accountService.user?.organizationid)
 
   }
@@ -38,6 +36,4 @@ export class LayoutPage{
   scanErrorHandler(scanError: any) {
     console.log(scanError)
   }
-
-
 }
