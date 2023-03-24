@@ -22,14 +22,17 @@ export class CustomHttpClient {
   get<T>(url: string) {
     if (this.token === undefined) return this.http.get<T>(url)
     return this.http.get<T>(url, {
-      headers: this.addBypass(this.createAuthorizationHeader())
+        headers:this.createAuthorizationHeader()
     });
   }
 
   post<T>(url: string, data: any) {
-    if (this.token == undefined) return this.http.post<T>(url, data)
+    if (this.token == undefined) return this.http.post<T>(url, data, {
+        headers:this.addBypass(new HttpHeaders())
+    })
+
     return this.http.post<T>(url, data, {
-        headers:     this.createAuthorizationHeader()
+      headers: this.addBypass(this.createAuthorizationHeader())
     });
   }
 }
