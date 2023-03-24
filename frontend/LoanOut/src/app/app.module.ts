@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { ErrorInterceptor, JwtInterceptor } from './helpers';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,13 @@ import { IonicModule } from '@ionic/angular';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    IonicModule.forRoot()
+    IonicModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,43 +1,44 @@
-
-
 <ion-content class="ion-text-center">
-  <ion-text class="login-title" color="tertiary" size="large">EquipLib</ion-text>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <ion-list class="form-group">
-    <ion-item color="secondary">
-      <ion-label position="floating">Brukernavn</ion-label>
-      <ion-input formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [clearInput]="true" ></ion-input>
-    </ion-item>
+  <ion-item-group class="login-main">
+    <ion-text class="login-title" color="tertiary" size="large">EquipLib</ion-text>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-list class="form-group">
+      <ion-item color="secondary">
+        <ion-label position="floating">Brukernavn</ion-label>
+        <ion-input formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [clearInput]="true" ></ion-input>
+      </ion-item>
 
-    <ion-item color="secondary">
-      <ion-label position="floating">Passord</ion-label>
-      <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password"></ion-input>
-    </ion-item>
-  </ion-list>
+      <ion-item color="secondary">
+        <ion-label position="floating">Passord</ion-label>
+        <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password"></ion-input>
+      </ion-item>
+    </ion-list>
 
-  <ion-button class="form-group-button" type="submit">
-    <ion-icon slot="end" size="small" src="../../../../assets/icons/icon_login.svg"></ion-icon>
-  Logg inn
-  </ion-button>
-</form>
-<ion-text>
-  <p>Eller skann din QR kode</p>
-</ion-text>
+    <ion-button class="form-group-button" type="submit">
+      <ion-icon slot="end" size="small" src="../../../../assets/icons/icon_login.svg"></ion-icon>
+    Logg inn
+    </ion-button>
+  </form>
 
-<ion-item-group>
-  <ion-button *ngIf="!this.openQrCode"(click)="onOpenQrScanner()"size="large" color="secondary">
-    <ion-icon src="../../../../assets/icons/qr-icon.svg"></ion-icon>
-  </ion-button>
-  <ion-item *ngIf="this.openQrCode">
-  <zxing-scanner
-  (scanSuccess) = "scanSuccessHandler($event)"
-  (scanError)= "scanErrorHandler($event)"
-  ></zxing-scanner>
-</ion-item>
+  <ion-text>
+    <p>Eller skann din QR kode</p>
+  </ion-text>
 
-<ion-item *ngIf="this.enterPinCode">
-  <ion-button (click)="presentAlert()">Click Me</ion-button>
+    <ion-item-group>
+      <ion-button *ngIf="!this.openQrCode"(click)="onOpenQrScanner()"size="large" color="secondary">
+        <ion-icon src="../../../../assets/icons/qr-icon.svg"></ion-icon>
+      </ion-button>
 
-</ion-item>
-</ion-item-group>
+      <ion-item *ngIf="this.openQrCode">
+        <zxing-scanner
+        (scanSuccess) = "scanSuccessHandler($event)"
+        (scanError)= "scanErrorHandler($event)"
+        ></zxing-scanner>
+      </ion-item>
 
+      <ion-item *ngIf="this.enterPinCode">
+        <ion-button (click)="presentAlert()">Click Me</ion-button>
+      </ion-item>
+    </ion-item-group>
+  </ion-item-group>
+</ion-content>

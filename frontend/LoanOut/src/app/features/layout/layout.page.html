@@ -2,12 +2,13 @@
 <ion-app>
   <ion-header>
     <ion-toolbar>
-      <ion-title>{{(organization | async)?.name}}</ion-title>
+      <ion-title >{{accountService.organization?.name || ""}}</ion-title>
       <ion-menu-toggle>
         <button ion-button menuToggle end class="menu-button">
           <ion-icon class="menu-icon"src="../../../assets/icons/menu.svg"></ion-icon>
-      </button>
-    </ion-menu-toggle>
+        </button>
+      </ion-menu-toggle>
+      <p class="organizationNumber">OrganisasjonNR: {{accountService.organization?.number || ""}}</p>
     </ion-toolbar>
   </ion-header>
   <ion-menu contentId="main-content">

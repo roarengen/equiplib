@@ -12,21 +12,27 @@ export class CustomHttpClient {
     }
 
   createAuthorizationHeader() {
-    return new HttpHeaders().append('Authorization', 'Basic ' +
-      this.token);
+    return new HttpHeaders({'Authorization': 'Basic ' +
+      this.token});
+  }
+  addBypass(headers: HttpHeaders) {
+    return headers.append('ngsw-bypass', "true");
   }
 
   get<T>(url: string) {
     if (this.token === undefined) return this.http.get<T>(url)
     return this.http.get<T>(url, {
-      headers: this.createAuthorizationHeader()
+        headers:this.createAuthorizationHeader()
     });
   }
 
   post<T>(url: string, data: any) {
-    if (this.token == undefined) return this.http.post<T>(url, data)
+    if (this.token == undefined) return this.http.post<T>(url, data, {
+        headers:this.addBypass(new HttpHeaders())
+    })
+
     return this.http.post<T>(url, data, {
-        headers:     this.createAuthorizationHeader()
+      headers: this.addBypass(this.createAuthorizationHeader())
     });
   }
 }

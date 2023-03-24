@@ -18,6 +18,15 @@ class UserBase(BaseModel):
     activeToDate : datetime | None = None
     organizationid: int
 
+class UserPatch(UserBase):
+    roleid : int | None = None
+    username : str | None = None
+    lastname : str | None = None
+    firstname : str | None = None
+    email : str | None = None
+    organizationid: int | None = None
+
+
 class UserCreate(UserBase):
     password : str
 
