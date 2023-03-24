@@ -19,6 +19,15 @@ def get_users(db: Session, skip: int=0, limit: int= 100) -> list[User]:
 def get_users_with_role(db: Session, roleid: int) -> list[User]:
     return db.query(User).filter(User.roleid == roleid).all()
 
+def update_user(db: Session, id: int, **kwargs):
+    user = db.query(User).filter(User.id == id).first()
+    for key, value in kwargs.items():
+        if value != None:
+            setattr(user, key, value)
+    db.commit()
+    db.refresh(user)
+    return user
+
 def create_user(db: Session, user: UserCreate):
     user.password = encrypt(user.password)
     new_user = User(**user.dict())
