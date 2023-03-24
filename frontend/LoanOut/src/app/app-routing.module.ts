@@ -15,7 +15,7 @@ const routes: Routes = [
     component: LayoutPage,
     path:'',
     children: [
-      { path: 'manageequipment', component: ManageEquipmentPage},
+      { path: 'manageequipment', component: ManageEquipmentPage, canActivate: [AdminGuard]},
       { path: 'manageusers', component: ManageUsersPage},
       { path: 'home', component: HomePage, },
       { path: 'registerrental', component: RegisterNewRentalPage, },

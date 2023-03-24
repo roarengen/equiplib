@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { ManageEquipmentPageRoutingModule } from './manage-equipment-routing.module';
 
 import { ManageEquipmentPage } from './manage-equipment.page';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   imports: [
+    QRCodeModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,

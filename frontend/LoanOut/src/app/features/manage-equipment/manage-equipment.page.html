@@ -46,7 +46,7 @@
         <ion-col size="6">
           <ion-item class="form-item" class="grid-item" color="input-background">
             <ion-label>Aktiv</ion-label>
-            <ion-toggle [(ngModel)]="newEquipment.active" color="success" slot="end"></ion-toggle>
+            <ion-toggle [enableOnOffLabels]="true" [checked]="true" [(ngModel)]="newEquipment.active" color="success" slot="end"></ion-toggle>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -57,6 +57,16 @@
         Registrer
       </ion-button>
     </div>
-
   </form>
+
+  <div class="qr-code-wrapper">
+    <qrcode
+    class="qr-code"
+    #qrcode
+    [qrdata]="this.qrCodeId"
+    [errorCorrectionLevel]="'M'"
+    [elementType]="'canvas'"
+    [allowEmptyString]="true">
+    </qrcode>
+  </div>
 </ion-content>
