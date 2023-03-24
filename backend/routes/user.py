@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.logger import logger
 from sqlalchemy.orm import Session
+from models.user import UserPatch
 from database import get_db
 from models.user import UserCreate, User, LoginResponse, LoginRequest
 from models.organization import OrganizationHeader
@@ -26,6 +27,16 @@ def post_user(user: UserCreate, db: Session = Depends(get_db)):
 
     logger.info(f"new user made: {user.username}")
     return crud.create_user(db=db, user=user)
+
+@api.put("/{id}", response_model=User, dependencies=[Depends(require_user)])
+def put_user(id: int, user_info: User, db: Session = Depends(get_db)):
+    user = crud.update_user(db, id, **user_info.dict())
+    return user
+
+@api.patch("/{id}", response_model=User, dependencies=[Depends(require_user)])
+def patch_user(id: int, user_info: UserPatch, db: Session = Depends(get_db)):
+    user = crud.update_user(db, id, **user_info.dict())
+    return user
 
 @api.get("/{id}", response_model=User, dependencies=[Depends(require_user)])
 def get_user(id: int, db: Session = Depends(get_db)):
