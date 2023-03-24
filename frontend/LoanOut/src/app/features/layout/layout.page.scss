@@ -2,9 +2,11 @@ ion-fab-button {
   margin-bottom: 65px;
 }
 
-
+ion-title {
+  padding-bottom: 1rem;
+}
 ion-icon {
-  background-color: #1E2124;
+  background-color: transparent;
 }
 
 button {
@@ -19,11 +21,12 @@ button {
 
 
 .menu-button {
-  background-color: #1E2124;
+  background-color: transparent;
   padding-top: 1.7em;
   width: 35px;
   height: 35px;
   display: flex;
+  margin-left: 1rem;
 }
 
 .menu-icon {
