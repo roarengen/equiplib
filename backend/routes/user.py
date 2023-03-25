@@ -51,8 +51,8 @@ def get_users(db: Session = Depends(get_db)):
     users = crud.get_users(db)
     return users
 
-@api.get("/me", response_model=list[User])
-def get_my_user(user : User =Depends(require_user)):
+@api.get("/me", response_model=User)
+def get_my_user(user : User = Depends(require_user)):
     return user
 
 @api.post("/login", response_model=LoginResponse, dependencies=[])
