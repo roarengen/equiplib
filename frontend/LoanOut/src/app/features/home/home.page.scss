@@ -14,12 +14,9 @@ button {
   background-color: #1E2124;
 }
 
-ion-card {
+ion-accordion {
   background-color: #272B2F;
 }
-
-
-
 
 ion-card-header { position: relative }
 .center-right{
@@ -29,23 +26,24 @@ ion-card-header { position: relative }
     transform: translateY(-50%);
 }
 
-
-.card {
+.accordion-description {
   color: white;
-
-  .card-title {
-    text-align: center;
-    color: white;
-  }
-
-  .card-description {
-    text-align: left;
-
-  }
-
-
-
-
 }
 
+.accordion-active-equipment {
+  color: #75FF45;
+}
 
+.accordion-inactive-equipment {
+  color: #FF5722;
+}
+
+ion-accordion.accordion-expanding ion-item[slot='header'],
+ion-accordion.accordion-expanded ion-item[slot='header'] {
+  --background: #272B2F;
+}
+
+ion-accordion.accordion-collapsing ion-item[slot="header"],
+ion-accordion.accordion-collapsed ion-item[slot="header"] {
+  --background: #272B2F;
+}

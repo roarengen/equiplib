@@ -2,13 +2,13 @@
 <ion-app>
   <ion-header>
     <ion-toolbar>
-      <ion-title >{{accountService.organization?.name || ""}}</ion-title>
+      <ion-title>{{accountService.organization?.name || ""}}</ion-title>
       <ion-menu-toggle>
         <button ion-button menuToggle end class="menu-button">
           <ion-icon class="menu-icon"src="../../../assets/icons/menu.svg"></ion-icon>
         </button>
       </ion-menu-toggle>
-      <p class="organizationNumber">OrganisasjonNR: {{accountService.organization?.number || ""}}</p>
+      <p class="organizationNumber">OrganisasjonsNr: {{accountService.organization?.number || ""}}</p>
     </ion-toolbar>
   </ion-header>
   <ion-menu contentId="main-content">
@@ -20,22 +20,28 @@
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
           <button color="primary" ion-button size="large" [routerLink]="['/manageusers']"class="clickable ion-activatable">
             <ion-icon slot="start" name="person-add-outline"></ion-icon>
             Legg til bruker
           </button>
+        </ion-menu-toggle>
         </ion-item>
           <ion-item class="clickable ion-activatable">
+            <ion-menu-toggle>
             <button color="primary" ion-button size="large" [routerLink]="['/manageorganization']"class="clickable ion-activatable">
               <ion-icon slot="start" name="briefcase-outline"></ion-icon>
               Organisasjon
             </button>
+          </ion-menu-toggle>
           </ion-item>
         <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
           <button color="primary" ion-button size="large" [routerLink]="['/login']"class="clickable ion-activatable" (click)="this.accountService.logout()">
             <ion-icon slot="start" name="log-out-outline"></ion-icon>
             Logg ut
           </button>
+        </ion-menu-toggle>
         </ion-item>
       </ion-list>
     </ion-content>

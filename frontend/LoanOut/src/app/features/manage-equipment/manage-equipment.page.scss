@@ -1,3 +1,7 @@
+ion-content {
+  margin-top: 2rem;
+}
+
 ion-select {
   color: white;
   background-color: #272B2F;
@@ -21,6 +25,7 @@ ion-item {
 }
 
 .form-title-block {
+  margin-top: 120px;
   border-radius: 10px;
   background-color: #272B2F;
 }
@@ -89,4 +94,10 @@ ion-button {
 .validateInformation {
   --background: transparent;
   --backdrop-opacity: 0;
+}
+
+.qr-code-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

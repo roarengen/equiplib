@@ -2,9 +2,10 @@ ion-fab-button {
   margin-bottom: 65px;
 }
 
-ion-title {
-  padding-bottom: 1rem;
+ion-tab-button {
+  --color-selected: #FFFF;
 }
+
 ion-icon {
   background-color: transparent;
 }
@@ -13,25 +14,8 @@ button {
   background-color: transparent;
 }
 
-.clickable {
-  pointer-events: auto !important;
-  color: white;
-  font-size:x-large;
-  }
-
-
-.menu-button {
-  background-color: transparent;
-  padding-top: 1.7em;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  margin-left: 1rem;
-}
-
-.menu-icon {
-  width: 35px;
-  height: 35px;
+ion-title {
+  text-align: center;
 }
 
 ::ng-deep {
@@ -46,7 +30,32 @@ button {
     height: 100% !important;
   }
 }
+
+.clickable {
+  pointer-events: auto !important;
+  color: white;
+  font-size:x-large;
+  }
+
+.menu-button {
+  background-color: transparent;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  margin-left: 1rem;
+  margin-top: 10px;
+}
+
+.menu-icon {
+  width: 35px;
+  height: 35px;
+}
+
 .organizationNumber{
   font-size: 0.7em;
   text-align: center;
+}
+
+.main-content {
+  margin-top: 90px;
 }

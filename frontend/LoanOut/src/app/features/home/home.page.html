@@ -1,35 +1,27 @@
-<ion-content calss="ion-padding">
+<ion-content class="ion-padding">
 <ion-item-group
     *ngIf="{
       equipments: equipments | async,
       locations: locations | async
     } as observables"
 >
-<ion-list>
-    <ion-card class="card" *ngFor="let equipment of (observables.equipments || [])">
-      <ion-icon class="card-icon" src="../../../assets/icons/is-available.svg"></ion-icon>
-      <ion-card-title class="card card-title">{{equipment.name}}</ion-card-title>
-      <ion-card-subtitle class="card" *ngIf="observables.locations">
-        Lokasjon: {{getLocationForEquipment(equipment.locationid, observables.locations)?.name || "Ingen satt lokasjon"}}
-      </ion-card-subtitle>
-
-      <ion-card-subtitle class="card">
-        Status:<span>
-          <p *ngIf="equipment.active">Aktiv</p>
-          <p *ngIf="!equipment.active">Inaktiv</p>
-        </span>
-
-      </ion-card-subtitle>
-
-      <ion-card-subtitle class="card" *ngIf="equipment.model != 'string'">
-        Model: {{equipment.model}}
-      </ion-card-subtitle>
-
-      <ion-card-subtitle class="card" *ngIf="equipment.serialnumber != 'string'">
-        Serienummer: {{equipment.serialnumber}}
-      </ion-card-subtitle>
-
-    </ion-card>
+  <ion-list>
+    <ion-accordion-group expand="inset" *ngFor="let equipment of observables.equipments">
+    <ion-accordion value="{{equipment.name}}">
+      <ion-item slot="header">
+      <ion-label class="accordion-title">{{equipment.name}}</ion-label>
+    </ion-item>
+      <div class="ion-padding accordion-description" slot="content">
+        <p>Lokasjon: {{getLocationForEquipment(equipment.locationid, observables.locations)?.name || "Ingen satt lokasjon"}}</p>
+        <div style="display: flex;">
+        <p>Status:  </p><p *ngIf="this.equipment.active" class="accordion-active-equipment">Aktiv</p>
+        <p *ngIf="!this.equipment.active" class="accordion-inactive-equipment">Inaktiv</p>
+        </div>
+        <p *ngIf="this.equipment.serialnumber != 'string'">Serienummer:{{equipment.serialnumber}}</p>
+        <p>Beskrivelse:</p><p>{{equipment.description}}</p>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
   </ion-list>
-  </ion-item-group>
+</ion-item-group>
 </ion-content>
