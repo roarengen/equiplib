@@ -29,7 +29,6 @@ export class ManageEquipmentPage implements OnInit{
     public equipmentService: EquipmentService,
     private formBuilder: FormBuilder,
     private actionSheetCtrl: ActionSheetController,
-    private cdRef: ChangeDetectorRef
     ) {
       this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
     }

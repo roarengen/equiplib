@@ -5,7 +5,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { filter, Observable, mergeMap, observable, map, switchMap } from 'rxjs';
+import { Location } from './../../models/location';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-manage-organization',
@@ -16,13 +18,18 @@ export class ManageOrganizationPage implements OnInit {
   public hasEditedOrganization: boolean = false;
   public changesOrganization =  new Organization();
   public allUsers: Observable<User[]>;
+  public locations: Observable<Location[]>;
+
 
   constructor(
+    public locationService: LocationService,
     private http: CustomHttpClient,
     public accountService: AccountService,
     private actionSheetCtrl: ActionSheetController,
   ) {
     this.allUsers = this.accountService.getAll()
+    this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
+
   }
 
   ngOnInit() {
@@ -35,6 +42,11 @@ export class ManageOrganizationPage implements OnInit {
       this.changesOrganization
       this.http.put(`${environment.apiUrl}/users/`, this.changesOrganization).subscribe()
     }
+  }
+
+  findAllUsersOnRoleId(id: number) {
+    console.log(this.allUsers.pipe(switchMap( data => data.filter(item => item.roleid == id))))
+    return this.allUsers.pipe(switchMap( data => data.filter(item => item.roleid == id)))
   }
 
   async validateInformation(){

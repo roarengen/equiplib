@@ -1,7 +1,7 @@
 <ion-content class="ion-padding">
   <ion-item-group>
     <div class="form-title-block">
-      <h2 class="form-title">Legg til ny bruker</h2>
+      <h2 class="form-title">Organisasjons innstillinger</h2>
     </div>
     <ion-list>
       <ion-accordion-group expand="inset">
@@ -24,28 +24,28 @@
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
-                <ion-label position="stacked">Email:</ion-label>
-                <ion-input  [(ngModel)]="changesOrganization.email" type="email" [clearInput]="true">{{this.accountService.organization?.email}}</ion-input>
+                <ion-label position="stacked">Epost:</ion-label>
+                <ion-input  [(ngModel)]="changesOrganization.email" type="email" [clearInput]="true" placeholder="Ingen epost satt">{{this.accountService.organization?.email}}</ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
                 <ion-label position="stacked">Telefonnummer:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.phone" type="number" [clearInput]="true">{{this.accountService.organization?.phone}}</ion-input>
+                <ion-input [(ngModel)]="changesOrganization.phone" type="number" [clearInput]="true" placeholder="Ingen telefonnummer satt">{{this.accountService.organization?.phone}}</ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
                 <ion-label position="stacked">Postnummer:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.postalcode" type="number" [clearInput]="true">{{this.accountService.organization?.postalcode}}</ion-input>
+                <ion-input [(ngModel)]="changesOrganization.postalcode" type="number" [clearInput]="true" placeholder="Ingen postnummer satt">{{this.accountService.organization?.postalcode}}</ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
                 <ion-label position="stacked">By:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.city" type="number" [clearInput]="true">{{this.accountService.organization?.city}} </ion-input>
+                <ion-input [(ngModel)]="changesOrganization.city" type="number" [clearInput]="true" placeholder="Ingen by satt">{{this.accountService.organization?.city}} </ion-input>
               </ion-item>
           </div>
           <div class="form-button-container">
             <ion-button class="form-button" color="register" (click)="validateInformation()">
-              Registrer
+              Lagre
             </ion-button>
           </div>
         </form>
@@ -57,22 +57,114 @@
           <ion-label class="accordion-title">Brukere</ion-label>
         </ion-item>
         <div slot="content">
-        <ion-list>
-          <ion-item-group>
-            <ion-text>Lånetakere</ion-text>
-          <ion-item  *ngFor="let user of allUsers | async">
-          <ion-card *ngIf="user.roleid === 1">
-            <ion-card-header><ion-card-title>{{user.firstname}} &nbsp; {{user.lastname}}</ion-card-title>
-              <ion-card-subtitle>Brukernavn: &nbsp; {{user.username}}</ion-card-subtitle>
+          <ion-accordion-group expand="inset">
+            <ion-accordion>
+              <ion-item slot="header">
+                <ion-label class="accordion-title">Lånetakere</ion-label>
+              </ion-item>
+                <div slot="content">
+                  <ion-list>
+                    <ng-container *ngIf="allUsers | async as users">
+                    <ng-container *ngFor="let user of users | filterOnRoleId: 1">
+                  <ion-card>
+                    <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
+                      <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
+                    </ion-card-header>
+                  </ion-card>
+                </ng-container>
+                </ng-container>
+                </ion-list>
+                </div>
+            </ion-accordion>
 
-            </ion-card-header>
-          </ion-card>
-        </ion-item>
-      </ion-item-group>
-        </ion-list>
+            <ion-accordion>
+              <ion-item slot="header">
+                <ion-label class="accordion-title">Utstyrsansvarlige</ion-label>
+              </ion-item>
+                <div slot="content">
+                  <ion-list>
+                    <ng-container *ngIf="allUsers | async as users">
+                    <ng-container *ngFor="let user of users | filterOnRoleId: 2">
+                  <ion-card>
+                    <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
+                      <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
+                    </ion-card-header>
+                  </ion-card>
+                </ng-container>
+                </ng-container>
+                </ion-list>
+                </div>
+            </ion-accordion>
+
+            <ion-accordion>
+              <ion-item slot="header">
+                <ion-label class="accordion-title">Administratorere</ion-label>
+              </ion-item>
+                <div slot="content">
+                  <ion-list>
+                    <ng-container *ngIf="allUsers | async as users">
+                    <ng-container *ngFor="let user of users | filterOnRoleId: 3">
+                  <ion-card>
+                    <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
+                      <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
+                    </ion-card-header>
+                  </ion-card>
+                </ng-container>
+                </ng-container>
+                </ion-list>
+                </div>
+            </ion-accordion>
+
+            <ion-accordion>
+              <ion-item slot="header">
+                <ion-label class="accordion-title">Leder</ion-label>
+              </ion-item>
+                <div slot="content">
+                  <ion-list>
+                    <ng-container *ngIf="allUsers | async as users">
+                    <ng-container *ngFor="let user of users | filterOnRoleId: 4">
+                  <ion-card>
+                    <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
+                      <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-button><ion-icon name="trash-outline"></ion-icon></ion-button>
+                    <ion-button><ion-icon name="create-outline"></ion-icon></ion-button>
+                  </ion-card>
+                </ng-container>
+                </ng-container>
+                </ion-list>
+                </div>
+            </ion-accordion>
+          </ion-accordion-group>
+          <ion-button expand="block" routerLink='/manageusers'>Legg til ny bruker<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
         </div>
+      </ion-accordion>
+      <ion-accordion>
+        <ion-item slot="header">
+        <ion-label class="accordion-title">Lokasjoner</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-list>
+          <ng-container *ngFor="let location of locations | async">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>{{location.name}}</ion-card-title>
+                <ion-card-subtitle>{{location.description}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-toggle color="success" justify="start" labelPlacement="start" [enableOnOffLabels]="true" [checked]="true">Set aktiv</ion-toggle>
+              </ion-card-content>
+            </ion-card>
+          </ng-container>
+
+          <ion-button expand="block">Legg til lokasjon<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
+
+        </ion-list>
+      </div>
       </ion-accordion>
     </ion-accordion-group>
     </ion-list>
+
+
   </ion-item-group>
   </ion-content>
