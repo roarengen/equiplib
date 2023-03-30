@@ -20,7 +20,8 @@ def remove_equip(db: Session, id: str) -> None:
 def update_equip(db: Session, id: str, **kwargs) -> Equipment:
     eq = db.query(Equipment).filter(Equipment.id == id).first()
     for key, val in kwargs.items():
-        setattr(eq, key, val)
+        if val != None:
+            setattr(eq, key, val)
     db.commit()
     db.refresh(eq)
     return eq
