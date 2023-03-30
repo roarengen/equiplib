@@ -30,8 +30,16 @@ export class CustomHttpClient {
     if (this.token == undefined) return this.http.post<T>(url, data, {
         headers:this.addBypass(new HttpHeaders())
     })
-
     return this.http.post<T>(url, data, {
+      headers: this.addBypass(this.createAuthorizationHeader())
+    });
+  }
+
+  put<T>(url: string, data: any) {
+    if (this.token == undefined) return this.http.put<T>(url, data, {
+        headers:this.addBypass(new HttpHeaders())
+    })
+    return this.http.put<T>(url, data, {
       headers: this.addBypass(this.createAuthorizationHeader())
     });
   }

@@ -1,3 +1,4 @@
+import { ManageOrganizationPage } from './features/manage-organization/manage-organization.page';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPage } from './features/login/login.page';
@@ -17,6 +18,7 @@ const routes: Routes = [
     children: [
       { path: 'manageequipment', component: ManageEquipmentPage, canActivate: [AdminGuard]},
       { path: 'manageusers', component: ManageUsersPage},
+      { path: 'manageorganization', component: ManageOrganizationPage},
       { path: 'home', component: HomePage, },
       { path: 'registerrental', component: RegisterNewRentalPage, },
     ]
