@@ -1,10 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.logger import logger
 from sqlalchemy.orm import Session
-from backend.models.equipment import EquipmentPatch
 import services.equipservice as crud
 from database import get_db
-from models.equipment import Equipment, EquipmentCreate
+from models.equipment import Equipment, EquipmentCreate, EquipmentPatch
 from auth import require_admin, require_leader, require_user, require_lender, require_user_to_be_in_org
 
 api = APIRouter(
