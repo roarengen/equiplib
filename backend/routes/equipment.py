@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.logger import logger
 from sqlalchemy.orm import Session
+from backend.models.equipment import EquipmentPatch
 import services.equipservice as crud
 from database import get_db
 from models.equipment import Equipment, EquipmentCreate
@@ -16,6 +17,16 @@ api = APIRouter(
 @api.get("/", response_model=list[Equipment], dependencies=[Depends(require_admin)])
 def get_equips(db : Session = Depends(get_db)):
     return crud.get_equips(db)
+
+@api.put("/{id}", response_model=Equipment, dependencies=[Depends(require_admin)])
+def put_equipment(id: int, equipment_info: Equipment, db: Session = Depends(get_db)):
+    equipment = crud.update_equip(db, id, **equipment_info.dict())
+    return equipment
+
+@api.patch("/{id}", response_model=Equipment, dependencies=[Depends(require_admin)])
+def patch_equipment(id: int, equipment_info: EquipmentPatch, db: Session = Depends(get_db)):
+    equipment = crud.update_equip(db, id, **equipment_info.dict())
+    return equipment
 
 @api.get("/by_org/{orgid}", response_model=list[Equipment], dependencies=[Depends(require_admin)])
 def get_equips_by_org(orgid: int = Depends(require_user_to_be_in_org), db : Session = Depends(get_db)):

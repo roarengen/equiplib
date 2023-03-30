@@ -17,6 +17,11 @@ class EquipmentBase(BaseModel):
     class Config:
         orm_mode = True
 
+class EquipmentPatch(EquipmentBase):
+    organizationid: int | None = None
+    name: str | None = None
+    locationid: int | None = None
+
 class Equipment(EquipmentBase):
     id: int
     active : bool = True
