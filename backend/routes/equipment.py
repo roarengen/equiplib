@@ -19,13 +19,11 @@ def get_equips(db : Session = Depends(get_db)):
 
 @api.put("/{id}", response_model=Equipment, dependencies=[Depends(require_admin)])
 def put_equipment(id: int, equipment_info: Equipment, db: Session = Depends(get_db)):
-    equipment = crud.update_equip(db, id, **equipment_info.dict())
-    return equipment
+    return crud.update_equip(db, id, **equipment_info.dict())
 
 @api.patch("/{id}", response_model=Equipment, dependencies=[Depends(require_admin)])
 def patch_equipment(id: int, equipment_info: EquipmentPatch, db: Session = Depends(get_db)):
-    equipment = crud.update_equip(db, id, **equipment_info.dict())
-    return equipment
+    return crud.update_equip(db, id, **equipment_info.dict())
 
 @api.get("/by_org/{orgid}", response_model=list[Equipment], dependencies=[Depends(require_admin)])
 def get_equips_by_org(orgid: int = Depends(require_user_to_be_in_org), db : Session = Depends(get_db)):
