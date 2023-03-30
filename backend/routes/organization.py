@@ -3,7 +3,7 @@ from fastapi.logger import logger
 from sqlalchemy.orm import Session
 import services.orgservice as crud
 from database import get_db
-from models.organization import Organization, OrganizationCreate
+from models.organization import Organization, OrganizationCreate, OrganizationPatch
 from models.user import User
 from auth import require_admin, require_user_to_be_in_org, require_leader, require_user
 
@@ -22,6 +22,14 @@ def get_org(orgid: int = Depends(require_user_to_be_in_org), db : Session = Depe
     if not org:
         return HTTPException(status_code=404, detail="org not found")
     return org
+
+@api.put("/{id}", response_model=Organization, dependencies=[Depends(require_admin)])
+def put_org(id: int, org_info: Organization, db: Session = Depends(get_db)):
+    return crud.update_org(db, id, **org_info.dict())
+
+@api.patch("/{id}", response_model=Organization, dependencies=[Depends(require_admin)])
+def patch_org(id: int, org_info: OrganizationPatch, db: Session = Depends(get_db)):
+    return crud.update_org(db, id, **org_info.dict())
 
 @api.get("/me", response_model=Organization)
 def get_my_org(db: Session = Depends(get_db), user : User = Depends(require_user)):

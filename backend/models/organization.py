@@ -18,6 +18,10 @@ class OrganizationBase(OrganizationHeader):
     class Config:
         orm_mode = True
 
+class OrganizationPatch(OrganizationBase):
+    name: str | None = None
+    number: str | None = None
+    templateid: int | None = None
 
 class Organization(OrganizationBase):
     id : int
