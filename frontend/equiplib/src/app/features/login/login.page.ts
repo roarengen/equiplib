@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ActivationStart, Router, RouterOutlet } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { AccountService } from 'src/app/services/user.service';
 
@@ -21,6 +21,7 @@ export class LoginPage implements OnInit {
   @ViewChild(RouterOutlet) outlet!: RouterOutlet;
 
 	constructor(
+    private actionSheetCtrl: ActionSheetController,
 		private alertController: AlertController,
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -74,40 +75,47 @@ export class LoginPage implements OnInit {
 	}
 
 	scanSuccessHandler(scanValue: string) {
-		console.log(scanValue)
-		this.enterPinCode = true;
-		this.QrCode = scanValue;
-		console.log(scanValue)
-		return this.scanSuccessHandler
+    this.QrCode = scanValue;
+    this.presentAlertPrompt()
 	}
 
 	scanErrorHandler(scanError: any) {
-		console.log(scanError)
+    console.log(scanError)
 	}
 
-	async presentAlert() {
-		const alert = await this.alertController.create({
-			header: 'Skriv inn din PIN kode',
-			buttons: [
-				{
-					text: 'Logg inn',
-					handler: (alertData) => {
-						this.pin = alertData.inputField
-						this.onSubmitQrCode()
-					}
-				}],
-			inputs: [
-				{
-					name: 'inputField',
-					type: 'textarea',
-					placeholder: 'PIN',
-					min: 1,
-					max: 4,
-				},
-			],
-		});
-		await alert.present();
-	}
+  async presentAlertPrompt() {
+    const alert = await this.alertController.create({
+      cssClass: 'pinLogin',
+      header: 'PIN',
+      inputs: [
+        {
+          name: 'pin',
+          type: 'text',
+          placeholder: 'Skriv inn din PIN-kode',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            this.openQrCode = false;
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            console.log(data)
+            console.log(data.pin)
+            this.pin = data.pin
+            this.login( this.QrCode, this.pin)
+            alert.dismiss();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 }
 

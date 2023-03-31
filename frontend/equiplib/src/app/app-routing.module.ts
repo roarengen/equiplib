@@ -1,3 +1,4 @@
+import { AddLocationPage } from './features/add-location/add-location.page';
 import { ManageOrganizationPage } from './features/manage-organization/manage-organization.page';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -18,12 +19,18 @@ const routes: Routes = [
     children: [
       { path: 'manageequipment', component: ManageEquipmentPage, canActivate: [AdminGuard]},
       { path: 'manageusers', component: ManageUsersPage},
+      { path: 'addlocation', component: AddLocationPage},
       { path: 'manageorganization', component: ManageOrganizationPage},
       { path: 'home', component: HomePage, },
       { path: 'registerrental', component: RegisterNewRentalPage, },
     ]
   },
   { path: 'login', component: LoginPage},
+  {
+    path: 'add-location',
+    loadChildren: () => import('./features/add-location/add-location.module').then( m => m.AddLocationPageModule)
+  },
+
 
 ];
 

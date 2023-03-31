@@ -17,4 +17,4 @@ import { LoginPage } from './login.page';
   ],
   declarations: [LoginPage]
 })
-export class HomePageModule {}
+export class LoginPageModule {}

@@ -10,7 +10,7 @@
         <ion-label class="accordion-title">Rediger organisasjon</ion-label>
       </ion-item>
         <div class="ion-padding accordion-description" slot="content">
-          <form (ngSubmit)="onSubmitOrganizationChanges()">
+          <form #f="ngForm" (ngSubmit)="onSubmitOrganizationChanges()">
             <div class="form-input-block">
 
               <ion-item class="form-item" color="input-background">
