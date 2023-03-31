@@ -25,6 +25,7 @@ class UserPatch(UserBase):
     firstname : str | None = None
     email : str | None = None
     organizationid: int | None = None
+    isactive: bool = False
 
 
 class UserCreate(UserBase):

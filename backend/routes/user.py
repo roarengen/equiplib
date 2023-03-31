@@ -46,10 +46,15 @@ def get_user(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="user not found")
     return user
 
-@api.get("/", response_model=list[User], dependencies=[Depends(require_admin)])
-def get_users(db: Session = Depends(get_db)):
-    users = crud.get_users(db)
-    return users
+@api.get("/", response_model=list[User])
+def get_users(onlyactive: bool = True, db: Session = Depends(get_db), user: User = Depends(require_admin)):
+    users: list[User] = crud.get_users_in_org(db, user.organizationid)
+    if users:
+        if onlyactive:
+            return list(filter(lambda x: x.isactive == onlyactive, [user for user in users]))
+        else:
+            return users
+    raise HTTPException(404, "no users found in your org")
 
 @api.get("/me", response_model=User)
 def get_my_user(user : User = Depends(require_user)):
