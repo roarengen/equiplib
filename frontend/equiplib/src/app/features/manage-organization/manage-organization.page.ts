@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { environment } from 'src/environments/environment';
-import { filter, Observable, mergeMap, observable, map, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Location } from './../../models/location';
 import { LocationService } from 'src/app/services/location.service';
 
@@ -42,11 +42,6 @@ export class ManageOrganizationPage implements OnInit {
       this.changesOrganization
       this.http.put(`${environment.apiUrl}/users/`, this.changesOrganization).subscribe()
     }
-  }
-
-  findAllUsersOnRoleId(id: number) {
-    console.log(this.allUsers.pipe(switchMap( data => data.filter(item => item.roleid == id))))
-    return this.allUsers.pipe(switchMap( data => data.filter(item => item.roleid == id)))
   }
 
   async validateInformation(){
