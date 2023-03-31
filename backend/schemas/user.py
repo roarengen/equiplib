@@ -28,6 +28,10 @@ class User(Base, Serializable):
     activeToDate = Column(DateTime)
     organizationid = Column(Integer, ForeignKey(Organization.id), nullable=False)
 
+    @property
+    def isactive(self):
+        return self.activeToDate != None
+
     def verify_password(self, password: str) -> bool:
         return str(self.password) == bcrypt.hashpw(password.encode("utf-8"), str(self.password).encode("utf-8")).decode("utf-8")
 

@@ -25,6 +25,7 @@ class UserPatch(UserBase):
     firstname : str | None = None
     email : str | None = None
     organizationid: int | None = None
+    isactive: bool = False
 
 
 class UserCreate(UserBase):
@@ -32,10 +33,6 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id : int
-
-    @property
-    def isactive(self):
-        return self.activeToDate != None
 
     class Config:
         orm_mode = True
