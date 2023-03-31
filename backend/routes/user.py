@@ -48,10 +48,10 @@ def get_user(id: int, db: Session = Depends(get_db)):
 
 @api.get("/", response_model=list[User])
 def get_users(onlyactive: bool = True, db: Session = Depends(get_db), user: User = Depends(require_admin)):
-    users = crud.get_users_in_org(db, user.organizationid)
+    users: list[User] = crud.get_users_in_org(db, user.organizationid)
     if users:
         if onlyactive:
-            return list(filter(lambda x: x.active == onlyactive, [user for user in users]))
+            return list(filter(lambda x: x.isactive == onlyactive, [user for user in users]))
         else:
             return users
     raise HTTPException(404, "no users found in your org")

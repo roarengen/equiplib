@@ -33,6 +33,10 @@ class UserCreate(UserBase):
 class User(UserBase):
     id : int
 
+    @property
+    def isactive(self):
+        return self.activeToDate != None
+
     class Config:
         orm_mode = True
 
