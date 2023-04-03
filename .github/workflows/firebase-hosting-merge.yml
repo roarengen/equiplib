@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: npm install --prefix frontend/equiplib --legacy-peer-deps && npm run build --prefix frontend/equiplib
+      - run: npm install --prefix frontend/equiplib --legacy-peer-deps && npm run build --prefix frontend\equiplib
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_EQUIPLIB_E81F2 }}'
           channelId: live
           projectId: equiplib-e81f2
-          entryPoint: "./frontend/LoanOut/"
+          entryPoint: "./frontend/equiplib/"
