@@ -30,7 +30,7 @@ def create_app(arg : LaunchArg) -> FastAPI:
         logger.setLevel(logging.DEBUG)
 
     if arg == LaunchArg.PRD:
-        database.Base.metadata.create_all(bind=database.prd_engine)
+        database.Base.metadata.create_all(bind=database.engine)
 
     elif arg == LaunchArg.TEST:
         pass

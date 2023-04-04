@@ -11,12 +11,11 @@ engine = create_engine(
 
 try:
     import secret
-    prd_engine = create_engine(
+    engine = create_engine(
         secret.SQLALCHEMY_DATABASE_URL
 )
 except:
     print("secrets not found, running on local database...")
-    prd_engine = engine
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
