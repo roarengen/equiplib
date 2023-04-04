@@ -13,4 +13,3 @@ class Tag(TagBase):
 
 class TagCreate(TagBase):
     organizationid: int
-    pass

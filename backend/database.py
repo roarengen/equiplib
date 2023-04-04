@@ -14,8 +14,7 @@ try:
     engine = create_engine(
         secret.SQLALCHEMY_DATABASE_URL
 )
-except Exception as e:
-    raise e
+except:
     print("secrets not found, running on local database...")
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
