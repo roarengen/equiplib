@@ -12,4 +12,5 @@ class Tag(TagBase):
     id: int
 
 class TagCreate(TagBase):
+    organizationid: int
     pass

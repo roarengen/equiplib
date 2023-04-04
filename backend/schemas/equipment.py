@@ -41,6 +41,7 @@ class Tag(Base, Serializable):
     name = Column(String(80), nullable=False)
     color = Column(String(80))
     active = Column(Boolean, nullable=False, default=True)
+    organizationid = Column(Integer, ForeignKey(Organization.id), nullable=True)
     equipments: Mapped[list[Equipment]] = relationship(secondary="tag_equipment_relationship", back_populates="tags")
 
     def __repr__(self):
