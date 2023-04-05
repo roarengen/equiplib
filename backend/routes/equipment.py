@@ -47,6 +47,10 @@ def post_equip(equipment: EquipmentCreate, db : Session = Depends(get_db)):
 def post_tag(tag: TagCreate, db: Session = Depends(get_db)):
     return crud.create_tag(db, tag)
 
+@api.get("/tags/{orgid}", response_model=list[Tag], dependencies=[Depends(require_admin)])
+def get_tags_by_orgid(orgid: int, db: Session = Depends(get_db)):
+    return crud.get_tags_by_orgid(db, orgid)
+
 @api.post("/{equipid}/tag/{tagid}", response_model=Equipment, dependencies=[Depends(require_lender)])
 def add_tag_to_equip(equipid: int, tagid:int, db: Session = Depends(get_db)):
     return crud.add_tag_to_equip(db, equipid, tagid)

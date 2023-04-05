@@ -58,6 +58,9 @@ def create_tag(db: Session, tag: TagCreate) -> Tag:
     db.refresh(new_tag)
     return new_tag
 
+def get_tags_by_orgid(db: Session, orgid: int):
+    return db.query(Tag).where(Tag.organizationid == orgid).all()
+
 def add_tag_to_equip(db: Session, equipid: int, tagid: int) -> None | Equipment:
     equipment = db.query(Equipment).where(Equipment.id == equipid).first()
     tag = db.query(Tag).where(Tag.id == tagid).first()
