@@ -13,4 +13,12 @@ export class Equipment {
   comment!: string;
   locationid!: number;
   active!: boolean;
+  tags!: Tag[]
+}
+
+export class Tag {
+  name!: string;
+  color!: string;
+  active!: boolean;
+  id!: number;
 }
