@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Location } from './../../models/location';
 import { LocationService } from 'src/app/services/location.service';
+import {Tag} from 'src/app/models/equipment';
+import {EquipmentService} from 'src/app/services/equipment.service';
 
 @Component({
   selector: 'app-manage-organization',
@@ -19,16 +21,18 @@ export class ManageOrganizationPage implements OnInit {
   public changesOrganization =  new Organization();
   public allUsers: Observable<User[]>;
   public locations: Observable<Location[]>;
-
+  public tags: Observable<Tag[]>;
 
   constructor(
     public locationService: LocationService,
     private http: CustomHttpClient,
     public accountService: AccountService,
+    private equipmentService: EquipmentService,
     private actionSheetCtrl: ActionSheetController,
   ) {
     this.allUsers = this.accountService.getAll()
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
+    this.tags = this.equipmentService.getAllTags(this.accountService.user.organizationid)
 
   }
 

@@ -162,6 +162,23 @@
         </ion-list>
       </div>
       </ion-accordion>
+      <ion-accordion>
+        <ion-item slot="header">
+        <ion-label class="accordion-title">Tags</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-list>
+          <ng-container *ngFor="let tag of tags | async">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>{{tag.name}}</ion-card-title>
+              </ion-card-header>
+            </ion-card>
+          </ng-container>
+          <ion-button expand="block">Legg til tag<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
+        </ion-list>
+      </div>
+      </ion-accordion>
     </ion-accordion-group>
     </ion-list>
 
