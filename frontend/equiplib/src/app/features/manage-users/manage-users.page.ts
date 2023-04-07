@@ -1,9 +1,8 @@
 import { AccountService } from './../../services/user.service';
 import { CustomHttpClient } from './../../helpers/auth/http-client';
-import { AfterViewInit, Component, ElementRef, ViewChild, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, ViewChild, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { createUser} from 'src/app/models/user';
-import { SafeUrl } from '@angular/platform-browser';
 import { ActionSheetController } from '@ionic/angular';
 import { saveAs } from 'file-saver';
 
@@ -33,7 +32,7 @@ export class ManageUsersPage implements OnChanges {
       }
     }
 
-  dataURItoBlob(dataURI) {
+  dataURItoBlob(dataURI: string) {
     const byteString = atob(dataURI.split(',')[1]);
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
     const ab = new ArrayBuffer(byteString.length);
