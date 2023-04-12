@@ -5,7 +5,7 @@ import { ReturnRentalPage } from './return-rental.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'returnrental',
     component: ReturnRentalPage
   }
 ];

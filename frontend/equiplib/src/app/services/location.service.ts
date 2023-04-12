@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { CustomHttpClient } from '../helpers/auth/http-client';
 
 @Injectable({ providedIn: 'root' })
-export class LocationService {
+export class LocationService  {
     constructor(
         private http: CustomHttpClient
     ) {
@@ -18,5 +18,10 @@ export class LocationService {
     getLocation(locid: number)
     {
         return this.http.get<Location>(`${environment.apiUrl}/location/${locid}`)
+    }
+
+    addLocation(location: Location)
+    {
+        return this.http.post(`${environment.apiUrl}/location/`, location)
     }
 }

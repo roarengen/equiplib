@@ -1,4 +1,3 @@
-import { AddLocationPage } from './features/add-location/add-location.page';
 import { ManageOrganizationPage } from './features/manage-organization/manage-organization.page';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -10,6 +9,7 @@ import { ManageEquipmentPage } from './features/manage-equipment/manage-equipmen
 import { ManageUsersPage } from './features/manage-users/manage-users.page';
 import { LayoutPage } from './features/layout/layout.page';
 import { RegisterNewRentalPage } from './features/register-new-rental/register-new-rental.page';
+import { ReturnRentalPage } from './features/return-rental/return-rental.page';
 
 const routes: Routes = [
 
@@ -19,18 +19,13 @@ const routes: Routes = [
     children: [
       { path: 'manageequipment', component: ManageEquipmentPage, canActivate: [AdminGuard]},
       { path: 'manageusers', component: ManageUsersPage},
-      { path: 'addlocation', component: AddLocationPage},
       { path: 'manageorganization', component: ManageOrganizationPage},
       { path: 'home', component: HomePage, },
       { path: 'registerrental', component: RegisterNewRentalPage, },
+      { path: 'returnrental', component: ReturnRentalPage, },
     ]
   },
   { path: 'login', component: LoginPage},
-  {
-    path: 'add-location',
-    loadChildren: () => import('./features/add-location/add-location.module').then( m => m.AddLocationPageModule)
-  },
-
 
 ];
 

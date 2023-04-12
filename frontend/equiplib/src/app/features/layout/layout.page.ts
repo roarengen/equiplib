@@ -1,7 +1,11 @@
+import { AlertController } from '@ionic/angular';
 import { Organization } from './../../models/organization';
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/user.service';
 import { Observable } from 'rxjs';
+import { RentService } from 'src/app/services/rent.service';
+import { Rent } from 'src/app/models/rent';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -15,10 +19,17 @@ export class LayoutPage{
 	enterPinCode: boolean = false;
 	QrCode!: string;
   public organization?: Observable<Organization>;
+  public rentals: Observable<Rent[]>;
 
-  constructor(public accountService: AccountService) {
-    this.organization = this.accountService.getOrganization(this.accountService.user?.organizationid)
 
+  constructor(
+    public alertController: AlertController,
+    public accountService: AccountService,
+    public rentService: RentService,
+    private router: Router // Inject the Router service
+    ) {
+    this.organization = this.accountService.getOrganization(this.accountService.user.organizationid)
+    this.rentals = this.rentService.fetchRentsByOrg(this.accountService.user.organizationid)
   }
 
   dataURItoBlob(dataURI) {
@@ -36,11 +47,58 @@ export class LayoutPage{
     this.openQrCode = true;
   }
 
-  scanSuccessHandler(scanValue: string) {
-    console.log(scanValue)
-    this.enterPinCode = true;
-    this.QrCode = scanValue;
-    console.log(scanValue)
+ scanSuccessHandler(scanValue: string) {
+    this.rentals.subscribe(async rentals => {const foundRent = rentals.find(rent => rent.equipmentid === Number(scanValue))
+
+      if (foundRent) {
+        console.log(foundRent)
+        this.openQrCode = false;
+        const alert = await this.alertController.create({
+          cssClass: '',
+          header: 'Vil du returnere utleien eller endre lokasjonen på utstyret?',
+          buttons: [
+            {
+              text: 'Endre lokasjon',
+              handler: () => {
+                alert.dismiss();
+
+              }
+            }, {
+              text: 'Returner',
+              handler: () => {
+                this.router.navigate(['/returnrental', { state:  {foundRent} }]);
+                alert.dismiss();
+              }
+            }
+          ]
+        });
+        alert.present()
+      }
+
+      else {
+        this.openQrCode = false;
+        const alert = await this.alertController.create({
+          cssClass: '',
+          header: 'Vil du registrere ny utleie eller endre lokasjonen på utstyret?',
+          buttons: [
+            {
+              text: 'Endre lokasjon',
+              handler: () => {
+                alert.dismiss()
+              }
+            }, {
+              text: 'Registrer',
+              handler: (data) => {
+                this.router.navigate(['/registerrental'])
+                alert.dismiss();
+              }
+            }
+          ]
+        });
+        alert.present()
+
+      }
+    })
     return this.scanSuccessHandler
   }
 

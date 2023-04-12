@@ -11,12 +11,23 @@ export class RentService {
         private http: CustomHttpClient
     ) {
     }
+
     fetchRentsByOrg(orgid: number)
     {
-        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/by_org/${orgid}`).subscribe(rent => this.rents = rent)
+        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/by_org/${orgid}`)
     }
-    fetchRentsByUser(userid: number)
+
+    fetchRentsByUserId(userid: number)
     {
-        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/${userid}`).subscribe(rent => this.rents = rent)
+        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/${userid}`)
+    }
+
+    fetchCurrentUserRentals() {
+      return this.http.get<Rent[]>(`${environment.apiUrl}/rents/me`)
+    }
+
+    addRental(rental: Rent)
+    {
+        return this.http.post(`${environment.apiUrl}/rents/`, rental);
     }
 }

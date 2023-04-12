@@ -2,7 +2,7 @@ import { User } from './../../models/user';
 import { Organization } from './../../models/organization';
 import { AccountService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
@@ -19,9 +19,10 @@ export class ManageOrganizationPage implements OnInit {
   public changesOrganization =  new Organization();
   public allUsers: Observable<User[]>;
   public locations: Observable<Location[]>;
-
+  public location: Location = new Location();
 
   constructor(
+		private alertController: AlertController,
     public locationService: LocationService,
     private http: CustomHttpClient,
     public accountService: AccountService,
@@ -68,6 +69,50 @@ export class ManageOrganizationPage implements OnInit {
       ]
     });
     await actionSheet.present();
+  }
+
+  async onCreateNewLocation() {
+    if (this.accountService.user.roleid > 3) {
+      this.location.organizationid = this.accountService.user.organizationid;
+      this.location.active = true;
+      this.http.post(`${environment.apiUrl}/location/`, this.location).subscribe()
+    }
+  }
+
+  async presentAlertPrompt() {
+    const alert = await this.alertController.create({
+      cssClass: 'LocationRegistration ',
+      header: 'Legg til lokasjon',
+      inputs: [
+        {
+          name: 'locationName',
+          type: 'text',
+          placeholder: 'Navn på lokasjon',
+        },
+
+        {
+          name: 'description',
+          type: 'text',
+          placeholder: 'Beskrivelse',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }, {
+          text: 'Opprett',
+          handler: (data) => {
+            this.location.name = data.locationName;
+            this.location.description = data.description;
+            this.onCreateNewLocation();
+            alert.dismiss();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 
