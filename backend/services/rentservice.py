@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from models.rent import RentCreate
 from schemas import Rent
 from schemas import User
+from schemas import Equipment
 
 def get_rent(db: Session, id: int) -> Rent | None:
     return db.query(Rent).filter(Rent.id == id).first()
@@ -15,8 +16,10 @@ def get_rents_by_userid(db: Session, userid: int) -> list[Rent]:
 
 def return_rent(db: Session, rentid: int, locationid: int, userid: int) -> Rent | None:
     rent = db.query(Rent).filter(Rent.id == rentid).first()
+    equipment = db.query(Equipment).filter(Equipment.id == rent.equipmentid).first()
     now = datetime.now()
-    if rent:
+    if rent and equipment:
+        equipment.locationid = locationid
         rent.deliveredToLocation = locationid
         rent.rentedToDate = now.date()
         rent.deliveredToUserid = userid
