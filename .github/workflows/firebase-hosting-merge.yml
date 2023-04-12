@@ -18,4 +18,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_EQUIPLIB_E81F2 }}'
           channelId: live
           projectId: equiplib-e81f2
-          entryPoint: "./frontend/LoanOut/"
+          entryPoint: "./frontend/equiplib/"

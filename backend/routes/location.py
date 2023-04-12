@@ -39,7 +39,7 @@ def get_loc_by_org_id(orgid: int = Depends(require_user_to_be_in_org), db: Sessi
         HTTPException(status_code=404, detail=f"no locations found on org with id: {orgid}")
     return locs
 
-@api.post("/", response_model=list[Location])
+@api.post("/", response_model=Location)
 def post_location(location: LocationCreate, db: Session = Depends(get_db)):
     logger.info(f"{location} has been created")
     return crud.create_location(db, location)

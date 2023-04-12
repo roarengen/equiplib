@@ -28,6 +28,10 @@ def create_app(arg : LaunchArg) -> FastAPI:
         database.Base.metadata.create_all(bind=database.engine)
         [logger.addHandler(handler) for handler in handlers]
         logger.setLevel(logging.DEBUG)
+
+    if arg == LaunchArg.PRD:
+        database.Base.metadata.create_all(bind=database.engine)
+
     elif arg == LaunchArg.TEST:
         pass
 

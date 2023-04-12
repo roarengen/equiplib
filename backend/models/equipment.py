@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from models.tag import Tag
 
 class EquipmentBase(BaseModel):
     organizationid: int
@@ -25,6 +26,7 @@ class EquipmentPatch(EquipmentBase):
 class Equipment(EquipmentBase):
     id: int
     active : bool = True
+    tags: list[Tag] | None = None
 
 class EquipmentCreate(EquipmentBase):
     pass

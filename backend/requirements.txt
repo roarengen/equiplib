@@ -5,3 +5,4 @@ pytest
 uvicorn
 httpx
 python-dateutil
+psycopg2

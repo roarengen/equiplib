@@ -9,6 +9,7 @@ import { ManageEquipmentPage } from './features/manage-equipment/manage-equipmen
 import { ManageUsersPage } from './features/manage-users/manage-users.page';
 import { LayoutPage } from './features/layout/layout.page';
 import { RegisterNewRentalPage } from './features/register-new-rental/register-new-rental.page';
+import {AddTagComponent} from './features/add-tag/add-tag.component';
 import { ReturnRentalPage } from './features/return-rental/return-rental.page';
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
     children: [
       { path: 'manageequipment', component: ManageEquipmentPage, canActivate: [AdminGuard]},
       { path: 'manageusers', component: ManageUsersPage},
+      { path: 'addtag', component: AddTagComponent},
       { path: 'manageorganization', component: ManageOrganizationPage},
       { path: 'home', component: HomePage, },
       { path: 'registerrental', component: RegisterNewRentalPage, },

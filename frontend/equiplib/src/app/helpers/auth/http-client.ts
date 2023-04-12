@@ -11,7 +11,7 @@ export class CustomHttpClient {
     {
     }
 
-  createAuthorizationHeader() {
+  private createAuthorizationHeader() {
     return new HttpHeaders({'Authorization': 'Basic ' +
       this.token});
   }

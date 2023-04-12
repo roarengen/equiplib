@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.logger import logger
 from sqlalchemy.orm import Session
 from database import get_db
-from models.rent import Rent, RentCreate
+from models.rent import Rent, RentCreate, RentReturn
 from models.user import User
 import services.rentservice as crud
 from extensions import ROLES
@@ -51,4 +51,16 @@ def get_rents_by_userid(userid: int, db: Session = Depends(get_db), user = Depen
         if user.id != userid:
             return HTTPException(status_code=401, detail="no rents not found for this user")
     return rents
+
+@api.post("/return", response_model=list[Rent])
+def return_rent(return_rent: RentReturn, db: Session = Depends(get_db), user = Depends(require_user)):
+    rent = crud.return_rent(db,
+                     return_rent.id,
+                     return_rent.locationid,
+                     return_rent.userid,
+                     )
+    if not rent:
+        HTTPException(404, "rent not found")
+
+    return rent
 

@@ -1,5 +1,5 @@
 import { Location } from './../models/location';
-import { Equipment } from './../models/equipment';
+import { Equipment, Tag } from './../models/equipment';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { CustomHttpClient } from '../helpers/auth/http-client';
@@ -19,9 +19,13 @@ export class EquipmentService {
     {
         return this.http.get<Equipment>(`${environment.apiUrl}/equips/${equipid}`)
     }
-    createEquipment(equipment: Equipment) 
+    createEquipment(equipment: Equipment)
     {
         return this.http.post(`${environment.apiUrl}/equips/`, equipment)
+    }
+    getAllTags(orgid: number)
+    {
+        return this.http.get<Tag[]>(`${environment.apiUrl}/equips/tags/`+ orgid)
     }
 
 }

@@ -23,3 +23,8 @@ class Rent(RentBase):
 class RentCreate(RentBase):
     pass
 
+class RentReturn(BaseModel):
+    id: int
+    locationid: int
+    userid: int
+

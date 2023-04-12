@@ -13,13 +13,25 @@ def get_rents(db: Session, skip:int=0, limit:int=100) -> list[Rent]:
 def get_rents_by_userid(db: Session, userid: int) -> list[Rent]:
     return db.query(Rent).filter(Rent.userid == userid).all()
 
-def deliver_to_location(db: Session, rentid: int, locationid: int, time: datetime) -> Rent:
+def return_rent(db: Session, rentid: int, locationid: int, userid: int) -> Rent | None:
     rent = db.query(Rent).filter(Rent.id == rentid).first()
-    rent.deliveredToLocation = locationid
-    rent.rentedToDate = time
-    db.commit()
-    db.refresh(rent)
-    return rent
+    now = datetime.now()
+    if rent:
+        rent.deliveredToLocation = locationid
+        rent.rentedToDate = now.date()
+        rent.deliveredToUserid = userid
+        db.commit()
+        db.refresh(rent)
+        return rent
+
+def deliver_to_location(db: Session, rentid: int, locationid: int, time: datetime) -> Rent | None:
+    rent = db.query(Rent).filter(Rent.id == rentid).first()
+    if rent:
+        rent.deliveredToLocation = locationid
+        rent.rentedToDate = time
+        db.commit()
+        db.refresh(rent)
+        return rent
 
 def get_rents_by_orgid(db: Session, orgid: int) -> list[Rent]:
     users: list[User] = db.query(User).filter(User.organizationid==orgid).all()
