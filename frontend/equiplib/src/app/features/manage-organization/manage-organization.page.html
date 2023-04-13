@@ -171,7 +171,7 @@
           <ng-container *ngFor="let tag of tags | async">
             <ion-card>
               <ion-card-header>
-                <ion-card-title>{{tag.name}}</ion-card-title>
+                <ion-card-title ><ion-icon style="color: {{tag.color}}" name="bookmarks-outline"></ion-icon> {{tag.name}} </ion-card-title>
               </ion-card-header>
             </ion-card>
           </ng-container>
