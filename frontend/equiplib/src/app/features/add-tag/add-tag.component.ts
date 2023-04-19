@@ -26,12 +26,17 @@ export class AddTagComponent  implements OnInit {
         organizationid: this.accountService.organization.id,
         name: this.newTag.name,
         color: this.newTag.color,
-        active: this.newTag.active,
+        active: true,
       }).subscribe()
   }
 
   submit()
   {
+    console.log(this.newTag.color)
+    if (this.newTag.color == undefined)
+    {
+      return;
+    }
     this.onSubmitNewTag()
   }
 }

@@ -10,6 +10,7 @@ import { ErrorInterceptor, JwtInterceptor } from './helpers';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   ],
   imports: [
     FormsModule,
+    ColorPickerModule,
     HttpClientModule,
     RouterModule,
     ReactiveFormsModule,

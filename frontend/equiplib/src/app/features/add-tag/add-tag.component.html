@@ -10,10 +10,17 @@
         <ion-input [(ngModel)]="newTag.name" [clearInput]="true" ngModel required></ion-input>
       </ion-item>
 
-      <ion-item class="form-item" color="input-background">
-        <ion-label position="floating">farge:</ion-label>
-        <ion-input [(ngModel)]="newTag.color" [clearInput]="true" ngModel required></ion-input>
-      </ion-item>
+      <div style="display:flex; align-items:center;padding:12px">
+        <ion-chip
+        [style.background]="newTag.color"
+          >{{newTag.name?? newTag.name || "tag navn"}}
+        </ion-chip>
+        <ion-icon
+          name="color-filter-outline"
+          [(colorPicker)]="newTag.color"
+          [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']"
+          />
+      </div>
     </div>
 </form>
   <div class="form-button-container">
