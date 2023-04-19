@@ -11,8 +11,10 @@
       </ion-item>
 
       <div style="display:flex; align-items:center;padding:12px">
-        <ion-chip
-        [style.background]="newTag.color + '7D'"
+        <ion-chip style="font-weight: bold;"
+        [style.background]="newTag.color + '7a'"
+        [style.border]="'1px solid '+ newTag.color + 'ff'"
+        [style.color]="newTag.color + 'ff'"
           >{{newTag.name?? newTag.name || "tag navn"}}
         </ion-chip>
         <ion-icon
