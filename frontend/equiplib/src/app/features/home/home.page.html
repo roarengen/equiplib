@@ -1,10 +1,24 @@
 <ion-content class="ion-padding">
-<ion-item-group
+<ion-item-group style="margin-top: 75px"
     *ngIf="{
       equipments: equipments | async,
       locations: locations | async
     } as observables"
 >
+  <ion-list>
+  <ion-item>
+    <ion-select
+      aria-label="tag filter"
+      (ionChange)="handleTagFilterChange($event)"
+      placeholder="Velg tag" [multiple]="true">
+      <ion-select-option
+        *ngFor="let tag of tags | async"
+        value="tag">
+        {{tag.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
   <ion-list>
     <ion-accordion-group expand="inset" *ngFor="let equipment of observables.equipments">
     <ion-accordion value="{{equipment.name}}">
