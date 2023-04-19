@@ -12,13 +12,14 @@
 
       <div style="display:flex; align-items:center;padding:12px">
         <ion-chip
-        [style.background]="newTag.color"
+        [style.background]="newTag.color + '7D'"
           >{{newTag.name?? newTag.name || "tag navn"}}
         </ion-chip>
         <ion-icon
           name="color-filter-outline"
           [(colorPicker)]="newTag.color"
-          [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']"
+          [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']" 
+          [cpAlphaChannel]="'disabled'"
           />
       </div>
     </div>
