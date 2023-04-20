@@ -11,12 +11,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { TagComponent } from './tag/tag.component';
 
 @NgModule({
   declarations: [
     AppComponent, 
-    TagComponent
   ],
   imports: [
     FormsModule,

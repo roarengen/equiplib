@@ -11,12 +11,7 @@
       </ion-item>
 
       <div style="display:flex; align-items:center;padding:12px">
-        <ion-chip style="font-weight: bold;"
-        [style.background]="newTag.color + '7a'"
-        [style.border]="'1px solid '+ newTag.color + 'ff'"
-        [style.color]="newTag.color + 'ff'"
-          >{{newTag.name?? newTag.name || "tag navn"}}
-        </ion-chip>
+        <app-tag name="{{newTag.name ?? newTag.name || 'ny tag'}}" color="{{newTag.color}}"></app-tag>
         <ion-icon
           name="color-filter-outline"
           [(colorPicker)]="newTag.color"
