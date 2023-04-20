@@ -17,6 +17,12 @@ api = APIRouter(
 def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
     return crud.create_rent(db, rent)
 
+@api.get("/current/{orgid}", response_model=list[Rent], dependencies=[Depends(require_admin)])
+def get_currently_rented(orgid: int, db: Session = Depends(get_db)):
+    rents = crud.get_rents_by_orgid(db, orgid)
+    if rents:
+        return list(filter(lambda x: x.rentedToDate == None,rents))
+
 @api.get("/", response_model=list[Rent], dependencies=[Depends(require_admin)])
 def get_rents(db: Session = Depends(get_db)):
     return crud.get_rents(db)

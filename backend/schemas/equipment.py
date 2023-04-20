@@ -13,7 +13,7 @@ class TagEquipmentRelationship(Base):
     tag_id = Column(ForeignKey("tag.id"), primary_key=True)
 
 class Equipment(Base, Serializable):
-    __tablename__ = "equpiment"
+    __tablename__ = "equipment"
 
     id = mapped_column(Integer, primary_key=True)
     organizationid = Column(Integer, ForeignKey(Organization.id), nullable=False)
