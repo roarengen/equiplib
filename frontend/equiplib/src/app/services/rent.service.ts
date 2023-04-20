@@ -30,4 +30,8 @@ export class RentService {
     {
         return this.http.post(`${environment.apiUrl}/rents/`, rental);
     }
+    getCurrentActiveRentals(orgid: number)
+    {
+      return this.http.get<Rent[]>(`${environment.apiUrl}/rents/current/${orgid}`)
+    }
 }

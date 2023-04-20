@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
 			.subscribe(
 				login => {
 					this.accountService.user = login.user
-          this.http.token = login.token
+          			this.http.token = login.token
 					this.accountService.getOrganization(login.user.organizationid).subscribe(
 						organization =>{ this.accountService.organization = organization
             }
@@ -104,8 +104,6 @@ export class LoginPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (data) => {
-            console.log(data)
-            console.log(data.pin)
             this.pin = data.pin
             this.login( this.QrCode, this.pin)
             alert.dismiss();

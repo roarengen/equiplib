@@ -1,7 +1,7 @@
 <ion-content class="ion-padding">
 <ion-item-group style="margin-top: 75px"
     *ngIf="{
-      equipments: equipments | async,
+      listedequipments: filteredEquipments | async,
       locations: locations | async
     } as observables"
 >
@@ -10,17 +10,31 @@
     <ion-select
       aria-label="tag filter"
       (ionChange)="handleTagFilterChange($event)"
+      color="success"
       placeholder="Velg tag" [multiple]="true">
       <ion-select-option
+        color="success"
         *ngFor="let tag of tags | async"
-        value="tag">
+        value="{{tag.id}}">
         {{tag.name}}
       </ion-select-option>
     </ion-select>
+
+    <ion-searchbar 
+    (ionInput)= "handleSearchFilterChange($event)"
+    value="" 
+    animated="true" 
+    placeholder="Søk"
+    show-clear-button="always" 
+    clear-icon="trash-bin">
+    </ion-searchbar>
+    <ion-button (click)= "openFilter()">
+      <ion-icon slot="icon-only" src="../../../../assets/icons/filter.svg"></ion-icon>
+    </ion-button>
   </ion-item>
 </ion-list>
   <ion-list>
-    <ion-accordion-group expand="inset" *ngFor="let equipment of observables.equipments">
+    <ion-accordion-group expand="inset" *ngFor="let equipment of observables.listedequipments">
     <ion-accordion value="{{equipment.name}}">
       <ion-item slot="header">
       <ion-label class="accordion-title">{{equipment.name}}</ion-label>
@@ -29,11 +43,13 @@
         <app-tag *ngFor="let tag of equipment.tags" name="{{tag.name}}" color="{{tag.color}}"></app-tag>
         <p>Lokasjon: {{getLocationForEquipment(equipment.locationid, observables.locations)?.name || "Ingen satt lokasjon"}}</p>
         <div style="display: flex;">
-        <p>Status:  </p><p *ngIf="this.equipment.active" class="accordion-active-equipment">Aktiv</p>
-        <p *ngIf="!this.equipment.active" class="accordion-inactive-equipment">Inaktiv</p>
+        <p>Status:  </p><p *ngIf="equipment.active" class="accordion-active-equipment">Aktiv</p>
+        <p *ngIf="!equipment.active" class="accordion-inactive-equipment">Inaktiv</p>
         </div>
-        <p *ngIf="this.equipment.serialnumber != 'string'">Serienummer:{{equipment.serialnumber}}</p>
+        <p *ngIf="equipment.serialnumber != 'string'">Serienummer:{{equipment.serialnumber}}</p>
+        <p style="color:red" *ngIf="rentedEquipmentIds.includes(equipment.id)">rented</p>
         <p>Beskrivelse:</p><p>{{equipment.description}}</p>
+
       </div>
     </ion-accordion>
   </ion-accordion-group>
