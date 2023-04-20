@@ -26,7 +26,7 @@
       <ion-label class="accordion-title">{{equipment.name}}</ion-label>
     </ion-item>
       <div class="ion-padding accordion-description" slot="content">
-        <ion-chip *ngFor="let tag of equipment.tags" style="--background: {{tag.color}};" >{{tag.name}}</ion-chip>
+        <app-tag *ngFor="let tag of equipment.tags" name="{{tag.name}}" color="{{tag.color}}"></app-tag>
         <p>Lokasjon: {{getLocationForEquipment(equipment.locationid, observables.locations)?.name || "Ingen satt lokasjon"}}</p>
         <div style="display: flex;">
         <p>Status:  </p><p *ngIf="this.equipment.active" class="accordion-active-equipment">Aktiv</p>
