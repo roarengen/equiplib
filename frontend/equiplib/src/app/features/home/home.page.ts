@@ -8,6 +8,12 @@ import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
 import { AlertController } from '@ionic/angular';
 
+class Filter {
+  tagids: number[] = [];
+  name: string = "";
+  onlyRented: boolean = false;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -25,9 +31,7 @@ export class HomePage implements OnInit {
   tags!: Observable<Tag[]>
   rentedEquipmentIds: number[] = [];
 
-  filterTagids: number[] = [];
-  filtername: string;
-  filterOnlyRented: boolean = false;
+  filter: Filter = new Filter();
 
 	constructor(
     private alertController: AlertController,
@@ -46,25 +50,25 @@ export class HomePage implements OnInit {
     this.rentService.getCurrentActiveRentals(this.accountService.user.organizationid).subscribe(rents=>rents.map(rent => this.rentedEquipmentIds.push(rent.id)))
   }
 
-  getFilteredEquipment(tagids: number[], name: string = "", only_rented: boolean = false): Observable<Equipment[]>
+  getFilteredEquipment(filter: Filter): Observable<Equipment[]>
   {
     let filteredEquipments = new Observable<Equipment[]>
-    filteredEquipments = tagids.length > 0 ? this.equipments.pipe(
+    filteredEquipments = filter.tagids.length > 0 ? this.equipments.pipe(
       map(
         equipments => equipments.filter(
-          eq => tagids.some(
+          eq => filter.tagids.some(
             tagid => eq.tags.some(
               eqtag => eqtag.id == tagid))))): this.equipments
-    
-    filteredEquipments = name != "" ? filteredEquipments.pipe(
+
+    filteredEquipments = filter.name != "" ? filteredEquipments.pipe(
       map(
         equipments => equipments.filter(
-          equipment => equipment.name.toLocaleLowerCase().includes(name.toLowerCase())
+          equipment => equipment.name.toLocaleLowerCase().includes(filter.name.toLowerCase())
         )
       )
     ): filteredEquipments
 
-    only_rented ? filteredEquipments.pipe(
+    filter.onlyRented ? filteredEquipments.pipe(
       map(
         equipments => equipments.filter(
           equipment => this.rentedEquipmentIds.includes(equipment.id)
@@ -98,22 +102,18 @@ export class HomePage implements OnInit {
   }
   handleTagFilterChange(event: any)
   {
-      this.filterTagids = event.target.value
+      this.filter.tagids = event.target.value
       this.onFilterChanged()
   }
   handleSearchFilterChange(event: any)
   {
-      this.filtername = event.target.value
+      this.filter.name = event.target.value
       this.onFilterChanged()
   }
-  
+
   onFilterChanged()
   {
-    this.filteredEquipments = this.getFilteredEquipment(
-      this.filterTagids,
-      this.filtername,
-      this.filterOnlyRented
-      )
+    this.filteredEquipments = this.getFilteredEquipment(this.filter)
   }
 
   openFilter() {
@@ -138,14 +138,11 @@ export class HomePage implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
-            
+
           }
         }, {
           text: 'Ok',
           handler: (data) => {
-            console.log(data.filterRents)
-            console.log(data)
-            this.filterOnlyRented = data[0]
             alert.dismiss();
           }
         }
