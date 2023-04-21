@@ -47,21 +47,13 @@
     </ion-content>
   </ion-menu>
 <ion-router-outlet id="main-content"></ion-router-outlet>
-<ion-item-group>
-  <ion-item *ngIf="this.openQrCode">
-  <zxing-scanner
-  (scanSuccess) = "scanSuccessHandler($event)"
-  (scanError)= "scanErrorHandler($event)"
-  ></zxing-scanner>
-</ion-item>
-</ion-item-group>
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="home">
       <ion-icon src="../../../assets/icons/box-search.svg"></ion-icon>
       Hjem
     </ion-tab-button>
-    <ion-tab-button (click)="onOpenQrScanner()"color="secondary-contrast" tab="radio">
+    <ion-tab-button tab="qrscanner" color="secondary-contrast">
       <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
       Skanner
     </ion-tab-button>

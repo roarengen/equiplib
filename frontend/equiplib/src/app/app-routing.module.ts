@@ -11,6 +11,7 @@ import { LayoutPage } from './features/layout/layout.page';
 import { RegisterNewRentalPage } from './features/register-new-rental/register-new-rental.page';
 import {AddTagComponent} from './features/add-tag/add-tag.component';
 import { ReturnRentalPage } from './features/return-rental/return-rental.page';
+import { QrScannerPage } from './features/qr-scanner/qr-scanner.page';
 
 const routes: Routes = [
 
@@ -27,6 +28,7 @@ const routes: Routes = [
       { path: 'returnrental', component: ReturnRentalPage, },
     ]
   },
+  { path: 'qrscanner', component: QrScannerPage},
   { path: 'login', component: LoginPage},
 
 ];

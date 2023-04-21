@@ -1,47 +1,50 @@
-import { AlertController } from '@ionic/angular';
-import { Organization } from './../../models/organization';
+import { AccountService } from './../../services/user.service';
+import { RentService } from './../../services/rent.service';
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from 'src/app/services/user.service';
-import { Observable } from 'rxjs';
-import { RentService } from 'src/app/services/rent.service';
 import { Rent } from 'src/app/models/rent';
+import { Observable } from 'rxjs';
+import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.page.html',
-  styleUrls: ['./layout.page.scss'],
+  selector: 'app-qr-scanner',
+  templateUrl: './qr-scanner.page.html',
+  styleUrls: ['./qr-scanner.page.scss'],
 })
-export class LayoutPage{
-  loading: boolean = false;
-	submitted: boolean = false;
-	openQrCode: boolean = false;
-	enterPinCode: boolean = false;
-	QrCode!: string;
-  public organization?: Observable<Organization>;
+export class QrScannerPage implements OnInit {
   public rentals: Observable<Rent[]>;
-
-
+  public notCompatibleFlashlight: boolean = true;
+  public torch: boolean = false
   constructor(
-    public alertController: AlertController,
-    public accountService: AccountService,
-    public rentService: RentService,
-    private router: Router // Inject the Router service
-    ) {
-    this.organization = this.accountService.getOrganization(this.accountService.user.organizationid)
+  public alertController: AlertController,
+  private rentService: RentService,
+  private accountService: AccountService,
+  private router: Router
+  )
+  {
     this.rentals = this.rentService.fetchRentsByOrg(this.accountService.user.organizationid)
   }
 
-  onOpenQrScanner() {
-    this.openQrCode = true;
+  ngOnInit() {
+  }
+
+  onTorchCompatible(torchCompatability: boolean) {
+    if (torchCompatability) {
+      this.notCompatibleFlashlight = false;
+    }
+  }
+
+  activateTorch(event: any) {
+    if (event.checked) {
+      this.torch = true;
+    }
+    else{this.torch = false}
   }
 
   scanSuccessHandler(scanValue: string) {
     this.rentals.subscribe(async rentals => {const foundRent = rentals.find(rent => rent.equipmentid === Number(scanValue))
-
+      console.log(foundRent)
       if (foundRent) {
-        console.log(foundRent)
-        this.openQrCode = false;
         const alert = await this.alertController.create({
           cssClass: '',
           header: 'Vil du returnere utleien eller endre lokasjonen på utstyret?',
@@ -65,7 +68,6 @@ export class LayoutPage{
       }
 
       else {
-        this.openQrCode = false;
         const alert = await this.alertController.create({
           cssClass: '',
           header: 'Vil du registrere ny utleie eller endre lokasjonen på utstyret?',
@@ -77,7 +79,7 @@ export class LayoutPage{
               }
             }, {
               text: 'Registrer',
-              handler: (data) => {
+              handler: () => {
                 this.router.navigate(['/registerrental'])
                 alert.dismiss();
               }
@@ -88,10 +90,10 @@ export class LayoutPage{
 
       }
     })
-    return this.scanSuccessHandler
   }
 
   scanErrorHandler(scanError: any) {
     console.log(scanError)
   }
+
 }
