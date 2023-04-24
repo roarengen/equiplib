@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 })
 export class QrScannerPage implements OnInit {
   public rentals: Observable<Rent[]>;
-  public notCompatibleFlashlight: boolean = true;
-  public torch: boolean = false
+  public notCompatibleFlashlight: boolean = false;
+  public torch: boolean = false;
   constructor(
   public alertController: AlertController,
   private rentService: RentService,
@@ -43,7 +43,6 @@ export class QrScannerPage implements OnInit {
 
   scanSuccessHandler(scanValue: string) {
     this.rentals.subscribe(async rentals => {const foundRent = rentals.find(rent => rent.equipmentid === Number(scanValue))
-      console.log(foundRent)
       if (foundRent) {
         const alert = await this.alertController.create({
           cssClass: '',
