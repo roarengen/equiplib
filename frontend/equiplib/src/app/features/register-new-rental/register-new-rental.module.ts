@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterNewRentalPageRoutingModule } from './register-new-rental-routing.module';
 import { RegisterNewRentalPage } from './register-new-rental.page';
+import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
 
 @NgModule({
   imports: [
@@ -15,6 +16,8 @@ import { RegisterNewRentalPage } from './register-new-rental.page';
     RegisterNewRentalPageRoutingModule,
     ZXingScannerModule
   ],
-  declarations: [RegisterNewRentalPage]
+  declarations: [RegisterNewRentalPage],
+  providers: [FilterEquipmentService]
+
 })
 export class RegisterNewRentalPageModule {}

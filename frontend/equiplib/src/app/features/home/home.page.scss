@@ -47,3 +47,9 @@ ion-accordion.accordion-collapsing ion-item[slot="header"],
 ion-accordion.accordion-collapsed ion-item[slot="header"] {
   --background: #272B2F;
 }
+
+.accordion-text {
+  background-color: #1E2124;
+  padding: 5px;
+  border-radius: 9px;
+}

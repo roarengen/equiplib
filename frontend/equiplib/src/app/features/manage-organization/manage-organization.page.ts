@@ -45,7 +45,6 @@ export class ManageOrganizationPage implements OnInit {
 
   onSubmitOrganizationChanges() {
     if (this.accountService.user.roleid = 4) {
-      this.changesOrganization
       this.http.put(`${environment.apiUrl}/users/`, this.changesOrganization).subscribe()
     }
   }
