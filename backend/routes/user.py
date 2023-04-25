@@ -28,6 +28,10 @@ def post_user(user: UserCreate, db: Session = Depends(get_db)):
     logger.info(f"new user made: {user.username}")
     return crud.create_user(db=db, user=user)
 
+@api.post("/") # perhapas lender should be able to rent out
+def forgot_password(email: str, db: Session = Depends(get_db)):
+    ...
+
 @api.put("/{id}", response_model=User, dependencies=[Depends(require_user)])
 def put_user(id: int, user_info: User, db: Session = Depends(get_db)):
     user = crud.update_user(db, id, **user_info.dict())
