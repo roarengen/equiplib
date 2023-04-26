@@ -12,6 +12,7 @@ import {environment} from 'src/environments/environment';
 export class AddTagComponent  implements OnInit {
 
   public newTag: Tag = new Tag();
+  presetcolors = ['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)'] //TODO find high-quality colors
   constructor(
     private http: CustomHttpClient,
     private accountService: AccountService,
