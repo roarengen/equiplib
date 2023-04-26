@@ -5,9 +5,7 @@ from extensions import encrypt
 from models.user import UserPatch
 from database import get_db
 from models.user import UserCreate, User, LoginResponse, LoginRequest
-from models.organization import OrganizationHeader
 import services.userservice as crud
-import services.orgservice as orgservice
 from services import emailservice
 import jwt
 
