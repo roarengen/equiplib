@@ -29,6 +29,7 @@ def post_user(user: UserCreate, db: Session = Depends(get_db)):
     logger.info(f"new user made: {user.username}")
     return crud.create_user(db=db, user=user)
 
+
 @api.post("/forgot_password")
 def forgot_password(
         email: str | None = None,
@@ -59,6 +60,7 @@ def reset_password(token: str, new_password: str, db: Session = Depends(get_db))
     if user:
         if user.password == credentials['password']:
             crud.update_user(db, credentials['id'], password=encrypt(new_password))
+
 
 @api.put("/{id}", response_model=User, dependencies=[Depends(require_user)])
 def put_user(id: int, user_info: User, db: Session = Depends(get_db)):

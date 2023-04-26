@@ -2,7 +2,7 @@
 
 <ion-content>
   <zxing-scanner
-  (scanSuccess)= "scanSuccessHandler($event)"
+  (scanSuccess)= "1"
   (scanError)= "scanErrorHandler($event)"
   (torchCompatible)= "onTorchCompatible($event)"
   (torch)= "torch"
@@ -14,7 +14,7 @@
         <ion-icon name="arrow-back-circle-outline"></ion-icon>
         Tilbake
       </ion-tab-button>
-      <ion-tab-button (click)="activateTorch($event)" [disabled]="notCompatibleFlashlight">
+      <ion-tab-button (click)="scanSuccessHandler('1')" [disabled]="notCompatibleFlashlight">
         <ion-icon color="tertiary" name="flashlight-outline"></ion-icon>
         Lykt
       </ion-tab-button>

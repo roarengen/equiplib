@@ -7,6 +7,7 @@
 >
   <ion-list>
   <ion-item>
+
     <ion-select
       aria-label="tag filter"
       (ionChange)="handleTagFilterChange($event)"
@@ -20,12 +21,12 @@
       </ion-select-option>
     </ion-select>
 
-    <ion-searchbar 
+    <ion-searchbar
     (ionInput)= "handleSearchFilterChange($event)"
-    value="" 
-    animated="true" 
+    value=""
+    animated="true"
     placeholder="Søk"
-    show-clear-button="always" 
+    show-clear-button="always"
     clear-icon="trash-bin">
     </ion-searchbar>
     <ion-button (click)= "openFilter()">
@@ -37,19 +38,13 @@
     <ion-accordion-group expand="inset" *ngFor="let equipment of observables.listedequipments">
     <ion-accordion value="{{equipment.name}}">
       <ion-item slot="header">
-      <ion-label class="accordion-title">{{equipment.name}}</ion-label>
+      <ion-label class="accordion-title">{{equipment.name}}<p style="color:#FF5722" *ngIf="rentedEquipmentIds.includes(equipment.id)">Utleid</p></ion-label>
     </ion-item>
-      <div class="ion-padding accordion-description" slot="content">
+    <div class="ion-padding accordion-description" slot="content">
         <app-tag *ngFor="let tag of equipment.tags" name="{{tag.name}}" color="{{tag.color}}"></app-tag>
-        <p>Lokasjon: {{getLocationForEquipment(equipment.locationid, observables.locations)?.name || "Ingen satt lokasjon"}}</p>
-        <div style="display: flex;">
-        <p>Status:  </p><p *ngIf="equipment.active" class="accordion-active-equipment">Aktiv</p>
-        <p *ngIf="!equipment.active" class="accordion-inactive-equipment">Inaktiv</p>
-        </div>
         <p *ngIf="equipment.serialnumber != 'string'">Serienummer:{{equipment.serialnumber}}</p>
-        <p style="color:red" *ngIf="rentedEquipmentIds.includes(equipment.id)">rented</p>
-        <p>Beskrivelse:</p><p>{{equipment.description}}</p>
-
+        <p *ngIf="equipment.description != ''">Beskrivelse:</p><p>{{equipment.description}}</p>
+        <p class="accordion-text">Lokasjon: {{getLocationForEquipment(equipment.locationid, observables.locations)?.name || "Ingen satt lokasjon"}}</p>
       </div>
     </ion-accordion>
   </ion-accordion-group>

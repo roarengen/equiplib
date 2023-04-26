@@ -1,33 +1,12 @@
-<form class="my-form">
-  <ion-item>
-    <ion-label position="floating">Name</ion-label>
-    <ion-input type="text" [(ngModel)]="name" name="name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Utlånsdato</ion-label>
-    <ion-datetime display-format="DD/MM/YYYY HH:mm" name="rental"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label>innleveringsdato</ion-label>
-    <ion-datetime display-format="DD/MM/YYYY HH:mm" name="delivery"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Utlånsansvarlig</ion-label>
-    <ion-input type="text" [(ngModel)]="utsyrsansvarlig" name="Utstyrsansvarlig"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-textarea placeholder="Komentar" [autoGrow]="true"
-      value="">
-    </ion-textarea>
-  </ion-item>
+<form class="register-rental-form">
   <ion-list>
-    <ion-item>
-      <ion-select interface="popover" placeholder="velg lokasjon">
-        <ion-select-option value="apples">Lokasjon 1</ion-select-option>
-        <ion-select-option value="oranges">Lokasjon 2</ion-select-option>
-        <ion-select-option value="bananas">Lokasjon 3</ion-select-option>
+    <ion-item class="form-item" class="grid-item" color="input-background">
+      <ion-select interface="popover" placeholder="Hvilken bruker skal du registrere utstyret på?" [(ngModel)]="newRental.userid">
+        <ng-container>
+          <ion-select-option *ngFor="let user of selectUser | async" [value]="user.id">{{user.firstname}} {{user.lastname}} <br> {{user.email}} <br> +47{{user.phone}} </ion-select-option>
+        </ng-container>
       </ion-select>
     </ion-item>
   </ion-list>
-  <button (click)="onSubmit()">Submit</button>
+  <button>Submit</button>
 </form>
