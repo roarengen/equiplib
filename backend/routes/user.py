@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.logger import logger
 from sqlalchemy.orm import Session
+from extensions import encrypt
 from models.user import UserPatch
 from database import get_db
 from models.user import UserCreate, User, LoginResponse, LoginRequest
-from models.organization import OrganizationHeader
 import services.userservice as crud
-import services.orgservice as orgservice
+from services import emailservice
+import jwt
 
 from auth import make_token, require_admin, require_user
 
@@ -15,7 +16,7 @@ api = APIRouter(
     tags=['users'],
 )
 
-@api.post("/", response_model=User, dependencies=[Depends(require_admin)]) # perhapas lender should be able to rent out
+@api.post("/", response_model=User, dependencies=[Depends(require_admin)]) # perhaps lender should be able to rent out
 def post_user(user: UserCreate, db: Session = Depends(get_db)):
     if crud.get_user_by_email(db, email=user.email):
         logger.debug(f"new user tried to create with email duplicate: {user.email}")
@@ -28,9 +29,38 @@ def post_user(user: UserCreate, db: Session = Depends(get_db)):
     logger.info(f"new user made: {user.username}")
     return crud.create_user(db=db, user=user)
 
-@api.post("/") # perhapas lender should be able to rent out
-def forgot_password(email: str, db: Session = Depends(get_db)):
-    ...
+
+@api.post("/forgot_password")
+def forgot_password(
+        email: str | None = None,
+        username: str | None = None
+        , db: Session = Depends(get_db)):
+
+    user = None
+    if email or username:
+        if email:
+            user = crud.get_user_by_email(db, email)
+        elif username:
+            user = crud.get_user_by_username(db, username)
+    else:
+        return HTTPException(400, "no email or username provided")
+
+    if user:
+        emailservice.send_email(str(user.email), "") #TODO JWT token goes here
+        return HTTPException(404, "no user with the email was found")
+
+@api.get("/reset_password")
+def reset_password(token: str, new_password: str, db: Session = Depends(get_db)):
+    user = None
+    credentials = jwt.decode(token)
+
+    if credentials['id']:
+        user = crud.get_user(db, credentials['id'])
+
+    if user:
+        if user.password == credentials['password']:
+            crud.update_user(db, credentials['id'], password=encrypt(new_password))
+
 
 @api.put("/{id}", response_model=User, dependencies=[Depends(require_user)])
 def put_user(id: int, user_info: User, db: Session = Depends(get_db)):
@@ -52,7 +82,7 @@ def get_user(id: int, db: Session = Depends(get_db)):
 
 @api.get("/", response_model=list[User])
 def get_users(onlyactive: bool = True, db: Session = Depends(get_db), user: User = Depends(require_admin)):
-    users: list[User] = crud.get_users_in_org(db, user.organizationid)
+    users = crud.get_users_in_org(db, user.organizationid)
     if users:
         if onlyactive:
             return list(filter(lambda x: x.isactive == onlyactive, [user for user in users]))
