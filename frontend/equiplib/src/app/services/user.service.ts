@@ -24,7 +24,7 @@ export class AccountService {
     }
     getTemplate(organizationid: number)
     {
-        return this.http.get<Template>(`${environment.apiUrl}/users/temps/by_org/` + organizationid)
+        return this.http.get<Template>(`${environment.apiUrl}/temps/by_org/` + organizationid)
     }
 
     login(username: any, password:any) {

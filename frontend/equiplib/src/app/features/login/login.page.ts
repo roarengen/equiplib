@@ -55,6 +55,9 @@ export class LoginPage implements OnInit {
 						organization =>{ this.accountService.organization = organization
             }
 					)
+					this.accountService.getTemplate(login.user.organizationid).subscribe(
+						template => { this.accountService.template = template}
+					)
 					this.router.navigateByUrl('home')
 				})
 
