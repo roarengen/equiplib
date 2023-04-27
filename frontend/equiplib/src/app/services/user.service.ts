@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { User } from '../models/user'
 import { LoginResponse } from '../models/loginresponse';
 import { CustomHttpClient } from '../helpers/auth/http-client';
+import { Template } from '../models/template';
 
 
 @Injectable({ providedIn: 'root' })
@@ -13,12 +14,17 @@ export class AccountService {
     singleEvent$: BehaviorSubject<Event> | undefined;
     public user!: User;
     public organization?: Organization;
+    public template?: Template;
 
     constructor(
         private router: Router,
         private http: CustomHttpClient
     ) {
 
+    }
+    getTemplate(organizationid: number)
+    {
+        return this.http.get<Template>(`${environment.apiUrl}/users/temps/by_org/` + organizationid)
     }
 
     login(username: any, password:any) {
