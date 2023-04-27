@@ -23,6 +23,8 @@ def get_currently_rented(orgid: int, db: Session = Depends(get_db)):
     if rents:
         return list(filter(lambda x: x.rentedToDate == None,rents))
 
+    else: return []
+
 @api.get("/", response_model=list[Rent], dependencies=[Depends(require_admin)])
 def get_rents(db: Session = Depends(get_db)):
     return crud.get_rents(db)
