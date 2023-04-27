@@ -7,7 +7,7 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { TagModule } from 'src/app/components/tag/tag.module';
-
+import { EquipmentModule } from 'src/app/components/equipment/equipment.module';
 
 @NgModule({
   imports: [
@@ -16,7 +16,8 @@ import { TagModule } from 'src/app/components/tag/tag.module';
     IonicModule,
     HomePageRoutingModule,
     ZXingScannerModule,
-    TagModule
+    TagModule,
+    EquipmentModule
   ],
   declarations: [HomePage]
 })

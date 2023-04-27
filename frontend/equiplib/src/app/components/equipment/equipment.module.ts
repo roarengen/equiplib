@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { EquipmentComponent } from './equipment.component';
+import { TagModule } from '../tag/tag.module';
 
 @NgModule({
   declarations: [ EquipmentComponent ],
@@ -11,6 +12,7 @@ import { EquipmentComponent } from './equipment.component';
     CommonModule,
     FormsModule,
     IonicModule,
+    TagModule,
   ],
   exports: [EquipmentComponent]
 })

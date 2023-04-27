@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Equipment, Tag } from 'src/app/models/equipment';
+import { Location} from 'src/app/models/location';
 
 @Component({
   selector: 'app-equipment',
@@ -7,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EquipmentComponent  implements OnInit {
 
+  @Input() public equipment: Equipment;
+  @Input() public location?: Location;
+  @Input() public isCurrentlyAvailable: boolean;
   constructor() { }
 
   ngOnInit() {}

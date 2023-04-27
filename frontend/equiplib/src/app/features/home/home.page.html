@@ -36,17 +36,11 @@
 </ion-list>
   <ion-list>
     <ion-accordion-group expand="inset" *ngFor="let equipment of observables.listedequipments">
-    <ion-accordion value="{{equipment.name}}">
-      <ion-item slot="header">
-      <ion-label class="accordion-title">{{equipment.name}}<p style="color:#FF5722" *ngIf="rentedEquipmentIds.includes(equipment.id)">Utleid</p></ion-label>
-    </ion-item>
-    <div class="ion-padding accordion-description" slot="content">
-        <app-tag *ngFor="let tag of equipment.tags" name="{{tag.name}}" color="{{tag.color}}"></app-tag>
-        <p *ngIf="equipment.serialnumber != 'string'">Serienummer:{{equipment.serialnumber}}</p>
-        <p *ngIf="equipment.description != ''">Beskrivelse:</p><p>{{equipment.description}}</p>
-        <p class="accordion-text">Lokasjon: {{getLocationForEquipment(equipment.locationid, observables.locations)?.name || "Ingen satt lokasjon"}}</p>
-      </div>
-    </ion-accordion>
+      <app-equipment 
+      [equipment]="equipment"
+      [isCurrentlyAvailable]=!rentedEquipmentIds.includes(equipment.id)
+      [location]=getLocationForEquipment(equipment.locationid,observables.locations)
+      ></app-equipment>
   </ion-accordion-group>
   </ion-list>
 </ion-item-group>

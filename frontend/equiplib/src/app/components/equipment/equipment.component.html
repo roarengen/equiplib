@@ -1,3 +1,13 @@
-<p>
-  equipment works!
-</p>
+<ion-accordion value="{{equipment.name}}">
+  <ion-item slot="header">
+    <ion-label class="accordion-title">{{equipment.name}}<p style="color:#FF5722"
+        *ngIf="!isCurrentlyAvailable">Utleid</p></ion-label>
+  </ion-item>
+  <div class="ion-padding accordion-description" slot="content">
+    <app-tag *ngFor="let tag of equipment.tags" name="{{tag.name}}" color="{{tag.color}}"></app-tag>
+    <p *ngIf="equipment.serialnumber != 'string'">Serienummer:{{equipment.serialnumber}}</p>
+    <p *ngIf="equipment.description != ''">Beskrivelse:</p>
+    <p>{{equipment.description}}</p>
+    <p class="accordion-text">Lokasjon: {{location?.name || "Ingen satt lokasjon"}}</p>
+  </div>
+</ion-accordion>
