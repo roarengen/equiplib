@@ -9,8 +9,8 @@
     <p *ngIf="equipment.description">Beskrivelse:</p>
     <p>{{equipment.description}}</p>
     <p class="accordion-text">Lokasjon: {{location?.name || "Ingen satt lokasjon"}}</p>
+    <p *ngIf="equipment.other1 && other1name">{{other1name}}: {{equipment.other1}}</p>
+    <p *ngIf="equipment.other2 && other2name">{{other2name}}: {{equipment.other2}}</p>
+    <p *ngIf="equipment.other3 && other3name">{{other3name}}: {{equipment.other3}}</p>
   </div>
-  <p *ngIf="equipment.other1 && other1name">{{other1name}}:{{equipment.other1}}</p>
-  <p *ngIf="equipment.other2 && other2name">{{other2name}}:{{equipment.other2}}</p>
-  <p *ngIf="equipment.other3 && other3name">{{other3name}}:{{equipment.other3}}</p>
 </ion-accordion>
