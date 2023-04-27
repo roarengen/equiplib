@@ -9,6 +9,7 @@ import services.userservice as crud
 from services import emailservice
 import jwt
 
+JWT_TOKEN_KEY = "makesomeshitup"
 from auth import make_token, require_admin, require_user
 
 api = APIRouter(
@@ -33,8 +34,8 @@ def post_user(user: UserCreate, db: Session = Depends(get_db)):
 @api.post("/forgot_password")
 def forgot_password(
         email: str | None = None,
-        username: str | None = None
-        , db: Session = Depends(get_db)):
+        username: str | None = None,
+        db: Session = Depends(get_db)):
 
     user = None
     if email or username:
@@ -43,16 +44,21 @@ def forgot_password(
         elif username:
             user = crud.get_user_by_username(db, username)
     else:
-        return HTTPException(400, "no email or username provided")
+        raise HTTPException(400, "no email or username provided")
 
+    token = jwt.encode({'password' : user.password, 'id' : user.id}, JWT_TOKEN_KEY)
     if user:
-        emailservice.send_email(str(user.email), "") #TODO JWT token goes here
-        return HTTPException(404, "no user with the email was found")
+        emailservice.send_email(
+            email=str(user.email), 
+            subject="forgot password", 
+            content=f"https://manageyour.equipment/reset_password?token={token}") 
+
+    raise HTTPException(404, "no user with the email was found")
 
 @api.get("/reset_password")
 def reset_password(token: str, new_password: str, db: Session = Depends(get_db)):
     user = None
-    credentials = jwt.decode(token)
+    credentials = jwt.decode(token, JWT_TOKEN_KEY)
 
     if credentials['id']:
         user = crud.get_user(db, credentials['id'])
