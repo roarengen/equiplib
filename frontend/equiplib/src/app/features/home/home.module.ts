@@ -6,7 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { TagModule } from 'src/app/tag/tag.module';
+import { TagModule } from 'src/app/components/tag/tag.module';
 
 
 @NgModule({
