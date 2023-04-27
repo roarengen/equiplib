@@ -18,7 +18,32 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
+      <div class="flex-wrapper">
       <ion-list>
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/home']"class="clickable ion-activatable">
+            <ion-icon src="../../../assets/icons/box-search.svg"></ion-icon>
+            Hjem
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/qrscanner']"class="clickable ion-activatable">
+            <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
+            Scanner
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/manageequipment']"class="clickable ion-activatable">
+            <ion-icon src="../../../assets/icons/add_equipment.svg"></ion-icon>
+            Legg til utstyr
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
         <ion-item class="clickable ion-activatable">
           <ion-menu-toggle>
           <button color="primary" ion-button size="large" [routerLink]="['/manageusers']"class="clickable ion-activatable">
@@ -35,7 +60,8 @@
             </button>
           </ion-menu-toggle>
           </ion-item>
-        <ion-item class="clickable ion-activatable">
+      </ion-list>
+      <ion-item lines="none" class="clickable ion-activatable">
           <ion-menu-toggle>
           <button color="primary" ion-button size="large" [routerLink]="['/login']"class="clickable ion-activatable" (click)="this.accountService.logout()">
             <ion-icon slot="start" name="log-out-outline"></ion-icon>
@@ -43,7 +69,7 @@
           </button>
         </ion-menu-toggle>
         </ion-item>
-      </ion-list>
+        </div>
     </ion-content>
   </ion-menu>
 <ion-router-outlet id="main-content"></ion-router-outlet>
