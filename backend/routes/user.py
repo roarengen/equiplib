@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from extensions import encrypt
 from models.user import UserPatch
 from database import get_db
-from models.user import UserCreate, User, LoginResponse, LoginRequest
+from models.user import UserCreate, User, LoginResponse, LoginRequest, ResetPassword
 import services.userservice as crud
 from services import emailservice
 import jwt
@@ -46,26 +46,32 @@ def forgot_password(
     else:
         raise HTTPException(400, "no email or username provided")
 
-    token = jwt.encode({'password' : user.password, 'id' : user.id}, JWT_TOKEN_KEY)
     if user:
+        token = jwt.encode({'password' : user.password, 'id' : user.id}, JWT_TOKEN_KEY, algorithm="HS256")
         emailservice.send_email(
-            email=str(user.email), 
-            subject="forgot password", 
-            content=f"https://manageyour.equipment/reset_password?token={token}") 
+            email=str(user.email),
+            subject="forgot password",
+            content=f"https://manageyour.equipment/reset_password?token={token}")
 
     raise HTTPException(404, "no user with the email was found")
 
-@api.get("/reset_password")
-def reset_password(token: str, new_password: str, db: Session = Depends(get_db)):
+@api.post("/reset_password")
+def reset_password(reset_password: ResetPassword, db: Session = Depends(get_db)):
     user = None
-    credentials = jwt.decode(token, JWT_TOKEN_KEY)
+    credentials = jwt.decode(reset_password.token, JWT_TOKEN_KEY, algorithms=["HS256"])
 
     if credentials['id']:
         user = crud.get_user(db, credentials['id'])
 
     if user:
         if user.password == credentials['password']:
-            crud.update_user(db, credentials['id'], password=encrypt(new_password))
+            crud.update_user(db, credentials['id'], password=encrypt(reset_password.new_password))
+
+            return
+        else:
+            raise HTTPException(403, "password missmatch")
+
+    raise HTTPException(400, "invalid token")
 
 
 @api.put("/{id}", response_model=User, dependencies=[Depends(require_user)])

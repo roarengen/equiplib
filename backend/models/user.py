@@ -44,3 +44,7 @@ class LoginRequest(BaseModel):
 class LoginResponse(BaseModel):
     user: User
     token: str
+
+class ResetPassword(BaseModel):
+    token: str
+    new_password: str
