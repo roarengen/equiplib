@@ -12,6 +12,8 @@ import { RegisterNewRentalPage } from './features/register-new-rental/register-n
 import {AddTagComponent} from './features/add-tag/add-tag.component';
 import { ReturnRentalPage } from './features/return-rental/return-rental.page';
 import { QrScannerPage } from './features/qr-scanner/qr-scanner.page';
+import {ResetPasswordComponent} from './features/reset-password/reset-password.component';
+
 
 const routes: Routes = [
 
@@ -30,6 +32,7 @@ const routes: Routes = [
   },
   { path: 'qrscanner', component: QrScannerPage},
   { path: 'login', component: LoginPage},
+  { path: 'reset-password', component: ResetPasswordComponent},
 
 ];
 

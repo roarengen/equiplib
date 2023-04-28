@@ -48,6 +48,22 @@ export class AccountService {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
     }
 
+    changePassword(new_password: string, token: string)
+    {
+        this.http.post(
+            `${environment.apiUrl}/users/reset_password`,
+            {
+                'new_password': new_password,
+                'token': token
+            })
+            .subscribe();
+    }
+    forgotPassword(email: string)
+    {
+        this.http.get(`${environment.apiUrl}/users/reset_password?email=${email}`)
+        .subscribe()
+    }
+
     getOrganization(orgid: number) {
       return this.http.get<Organization>(`${environment.apiUrl}/orgs/${orgid}`);
   }
