@@ -58,6 +58,11 @@ export class AccountService {
             })
             .subscribe();
     }
+    forgotPassword(email: string)
+    {
+        this.http.get(`${environment.apiUrl}/users/reset_password?email=${email}`)
+        .subscribe()
+    }
 
     forgotPassword(email: string) {
         this.http.get(`${environment.apiUrl}/users/reset_password?email=${email}`)
