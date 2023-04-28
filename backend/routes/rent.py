@@ -5,6 +5,7 @@ from database import get_db
 from models.rent import Rent, RentCreate, RentReturn
 from models.user import User
 import services.rentservice as crud
+from services import locationservice, userservice
 from extensions import ROLES
 from auth import require_user_to_be_in_org, require_user, require_lender, require_admin
 
@@ -15,6 +16,27 @@ api = APIRouter(
 
 @api.post("/", response_model=Rent, dependencies=[Depends(require_lender)])
 def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
+
+    if rent.userid:
+        if not userservice.get_user(db, rent.userid):
+            raise HTTPException(400, "no user found with that id")
+
+    if rent.rentedFromUserid:
+        if not userservice.get_user(db, rent.rentedFromUserid):
+            raise HTTPException(400, "no user to rent from found with that id")
+
+    if rent.deliveredToUserid:
+        if not userservice.get_user(db, rent.deliveredToUserid):
+            raise HTTPException(400, "no user to deliver to found with that id")
+
+    if rent.rentedFromLocation:
+        if not locationservice.get_location(db, rent.rentedFromLocation):
+            raise HTTPException(400, "no location found with that id")
+
+    if rent.deliveredToLocation:
+        if not locationservice.get_location(db, rent.deliveredToLocation):
+            raise HTTPException(400, "no location to deliver to found with that id")
+    
     return crud.create_rent(db, rent)
 
 @api.get("/current/{orgid}", response_model=list[Rent], dependencies=[Depends(require_admin)])
