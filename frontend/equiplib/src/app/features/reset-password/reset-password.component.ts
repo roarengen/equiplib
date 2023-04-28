@@ -10,10 +10,9 @@ export class ResetPasswordComponent  implements OnInit {
 
   public token?: string;
   constructor(private route: ActivatedRoute) {
-    this.token = this.route.snapshot.paramMap.get('token');
   }
 
   ngOnInit() {
-    this.token = this.route.snapshot.paramMap.get('token');
+    this.route.queryParams.subscribe(params => this.token = params['token'])
   }
 }
