@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {AccountService} from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -9,10 +10,18 @@ import { ActivatedRoute } from '@angular/router';
 export class ResetPasswordComponent  implements OnInit {
 
   public token?: string;
-  constructor(private route: ActivatedRoute) {
+  public new_password?: string;
+  constructor(
+    private route: ActivatedRoute,
+    private accountService: AccountService
+  ) {
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => this.token = params['token'])
+  }
+
+  submitNewPassword() {
+    this.accountService.changePassword(this.new_password, this.token)
   }
 }
