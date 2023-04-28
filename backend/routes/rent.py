@@ -17,23 +17,22 @@ api = APIRouter(
 @api.post("/", response_model=Rent, dependencies=[Depends(require_lender)])
 def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
 
-    if rent.userid:
-        if not userservice.get_user(db, rent.userid):
-            raise HTTPException(400, "no user found with that id")
+    if not userservice.get_user(db, rent.userid):
+        raise HTTPException(400, "no user found with that id")
 
-    if rent.rentedFromUserid:
+    if rent.rentedFromUserid != None:
         if not userservice.get_user(db, rent.rentedFromUserid):
             raise HTTPException(400, "no user to rent from found with that id")
 
-    if rent.deliveredToUserid:
+    if rent.deliveredToUserid != None:
         if not userservice.get_user(db, rent.deliveredToUserid):
             raise HTTPException(400, "no user to deliver to found with that id")
 
-    if rent.rentedFromLocation:
+    if rent.rentedFromLocation != None:
         if not locationservice.get_location(db, rent.rentedFromLocation):
             raise HTTPException(400, "no location found with that id")
 
-    if rent.deliveredToLocation:
+    if rent.deliveredToLocation != None:
         if not locationservice.get_location(db, rent.deliveredToLocation):
             raise HTTPException(400, "no location to deliver to found with that id")
     
