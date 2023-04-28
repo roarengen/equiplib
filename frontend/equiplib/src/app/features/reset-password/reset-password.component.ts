@@ -11,10 +11,16 @@ export class ResetPasswordComponent  implements OnInit {
 
   public token?: string;
   public new_password?: string;
+  public new_password2?: string;
+  public email?: string;
   constructor(
     private route: ActivatedRoute,
     private accountService: AccountService
   ) {
+  }
+
+  submitForgotPassword() {
+    this.accountService.forgotPassword(this.email)
   }
 
   ngOnInit() {
