@@ -58,7 +58,11 @@ def forgot_password(
 @api.post("/reset_password")
 def reset_password(reset_password: ResetPassword, db: Session = Depends(get_db)):
     user = None
-    credentials = jwt.decode(reset_password.token, JWT_TOKEN_KEY, algorithms=["HS256"])
+    try:
+        credentials = jwt.decode(reset_password.token, JWT_TOKEN_KEY, algorithms=["HS256"])
+
+    except jwt.exceptions.DecodeError:
+        raise HTTPException(400, "unparseable token")
 
     if credentials['id']:
         user = crud.get_user(db, credentials['id'])
