@@ -48,35 +48,8 @@ ion-input {
   align-items: center;
 }
 ion-button {
-  --background: #5865F2;
-  --background-hover: #4E5AD9;
-  --background-activated: #5764F2;
-  --background-focused: #292F73;
-  --color: rgb(255, 255, 255);
-  --ripple-color: rgb(141, 138, 140);
-  --padding-top: 10px;
-  --padding-bottom: 10px;
-
-  background-color: var(--background);
-  color: var(--color);
-  padding-top: var(--padding-top);
-  padding-bottom: var(--padding-bottom);
-
-  &:hover {
-    background-color: var(--background-hover);
-  }
-
-  &:active {
-    background-color: var(--background-activated);
-  }
-
-  &:focus {
-    background-color: var(--background-focused);
-  }
-
-  .button-effect {
-    background-color: var(--ripple-color);
-  }
+  background-color: var( --ion-color-tertiary);
+  --box-shadow: none;
 }
 .validateInformation {
   --background: transparent;
