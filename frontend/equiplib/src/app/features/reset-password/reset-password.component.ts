@@ -28,6 +28,7 @@ export class ResetPasswordComponent  implements OnInit {
   }
 
   submitNewPassword() {
+    console.log(this.new_password)
     this.accountService.changePassword(this.new_password, this.token)
   }
 }
