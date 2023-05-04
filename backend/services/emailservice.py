@@ -2,10 +2,15 @@ import smtplib, ssl
 
 tls_port = 587
 port = 465
-password = ""
-email_address = ""
-smtp_server = "smtp.gmail.com"
-
+try: 
+    import secret
+    password = secret.email_password
+    email_address = secret.email_address
+    smtp_server = secret.smtp_server
+except ImportError:
+    password = ""
+    email_address = ""
+    smtp_server = ""
 context = ssl.create_default_context()
 
 

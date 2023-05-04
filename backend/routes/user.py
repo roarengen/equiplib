@@ -34,15 +34,11 @@ def post_user(user: UserCreate, db: Session = Depends(get_db)):
 @api.post("/forgot_password")
 def forgot_password(
         email: str | None = None,
-        username: str | None = None,
         db: Session = Depends(get_db)):
 
     user = None
-    if email or username:
-        if email:
-            user = crud.get_user_by_email(db, email)
-        elif username:
-            user = crud.get_user_by_username(db, username)
+    if email:
+        user = crud.get_user_by_email(db, email)
     else:
         raise HTTPException(400, "no email or username provided")
 
@@ -51,7 +47,13 @@ def forgot_password(
         emailservice.send_email(
             email=str(user.email),
             subject="forgot password",
-            content=f"https://manageyour.equipment/reset_password?token={token}")
+            content=f"""
+            click the below link to reset your password! \n
+            https://manageyour.equipment/reset_password?token={token} \n
+            (don't share this link with anyone, please)
+            """)
+
+        return
 
     raise HTTPException(404, "no user with the email was found")
 
