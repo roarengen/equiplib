@@ -85,7 +85,7 @@ export class ManageOrganizationPage implements OnInit {
 
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
-      cssClass: 'LocationRegistration ',
+      cssClass: 'LocationRegistration',
       header: 'Legg til lokasjon',
       inputs: [
         {

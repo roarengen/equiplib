@@ -1,9 +1,13 @@
 <ion-content class="ion-text-center">
   <ion-item-group class="login-main">
+    <ion-item-group class="logo-group">
+    <ion-icon size="large" src="../../../../assets/icons/EquiplibLogo.svg"></ion-icon>
     <ion-text class="login-title" color="tertiary" size="large">EquipLib</ion-text>
     <ion-item>
     <ion-text class="login-subtitle" color="primary-contrast" size="small">En enkel oversikt, for alt av utstyr.</ion-text>
-  </ion-item>
+    </ion-item>
+    </ion-item-group>
+    
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ion-list class="form-group">
       <ion-item color="secondary">
@@ -16,24 +20,25 @@
         <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password"></ion-input>
       </ion-item>
     </ion-list>
+    <ion-text>
+    <a class="link" [routerLink]="['/reset-password']">glemt passord?</a>
+  </ion-text>
 
     <ion-button class="form-group-button" type="submit">
       <ion-icon slot="end" size="small" src="../../../../assets/icons/icon_login.svg"></ion-icon>
     Logg inn
     </ion-button>
   </form>
-  <ion-text>
-    <a class="link" [routerLink]="['/reset-password']">glemt passord?</a>
-  </ion-text>
+  
 
   <ion-text>
     <p>Eller skann din QR kode</p>
   </ion-text>
 
     <ion-item-group>
-      <ion-button *ngIf="!this.openQrCode"(click)="onOpenQrScanner()"size="large" color="secondary">
-        <ion-icon src="../../../../assets/icons/qr-icon.svg"></ion-icon>
-      </ion-button>
+      <button *ngIf="!this.openQrCode"(click)="onOpenQrScanner()"size="large" color="secondary" class="button-qr">
+        <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
+      </button>
 
       <ion-item *ngIf="this.openQrCode">
         <zxing-scanner

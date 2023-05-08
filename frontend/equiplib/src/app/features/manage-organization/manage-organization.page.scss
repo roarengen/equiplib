@@ -3,7 +3,7 @@
   background-color: #272B2F;
   text-align: center;
   padding: 20px 0 20px 0;
-  font-weight: bold;
+  font-weight: 500;
   border-radius: 10px;
 }
 
@@ -13,6 +13,15 @@
   background-color: #272B2F;
 }
 
-ion-button {
---background: var( --ion-color-tertiary);
+.manage-location {
+  font-weight: 400;
 }
+
+.tag-name {
+  font-weight: 400;
+}
+
+ion-button {
+  --background: var( --ion-color-tertiary);
+}
+

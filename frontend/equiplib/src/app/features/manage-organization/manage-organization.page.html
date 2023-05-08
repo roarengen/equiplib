@@ -148,7 +148,7 @@
           <ng-container *ngFor="let location of locations | async">
             <ion-card>
               <ion-card-header>
-                <ion-card-title>{{location.name}}</ion-card-title>
+                <ion-card-title class="location-name">{{location.name}}</ion-card-title>
                 <ion-card-subtitle>{{location.description}}</ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
@@ -171,7 +171,7 @@
           <ng-container *ngFor="let tag of tags | async">
             <ion-card>
               <ion-card-header>
-                <ion-card-title ><ion-icon style="color: {{tag.color}}" name="bookmarks-outline"></ion-icon> {{tag.name}} </ion-card-title>
+                <ion-card-title class="tag-name"><ion-icon style="color: {{tag.color}}" name="bookmarks-outline"></ion-icon> {{tag.name}} </ion-card-title>
               </ion-card-header>
             </ion-card>
           </ng-container>
