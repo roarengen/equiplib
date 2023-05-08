@@ -8,6 +8,9 @@ from schemas import Equipment
 def get_rent(db: Session, id: int) -> Rent | None:
     return db.query(Rent).filter(Rent.id == id).first()
 
+def get_rent_by_equipid(db: Session, id: int) -> Rent | None:
+    return db.query(Rent).filter(Rent.equipmentid == id).first()
+
 def get_rents(db: Session, skip:int=0, limit:int=100) -> list[Rent]:
     return db.query(Rent).offset(skip).limit(limit).all()
 
