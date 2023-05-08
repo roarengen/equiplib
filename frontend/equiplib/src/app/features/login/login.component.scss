@@ -1,7 +1,14 @@
 
+.logo-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .login-title {
   text-align: center;
   font-size: xx-large;
+  font-weight:  500;
   margin-top: 30px;
   margin-bottom: 20px;
 }
@@ -10,22 +17,39 @@
   text-align: center;
   font-size: large;
   margin: auto;
-}
-a {
-  color: blue;
+  font-weight: 400;
 }
 
-ion-icon { zoom: 2.5 }
+ion-icon { 
+  zoom: 2.5;
+  font-size: 50px; 
+}
+
+button.button-qr {
+  height: 80px;
+  background-color: transparent;
+}
 
 ion-button {
   padding-top: 15px;
   height: 75px;
   width:auto;
-}
+  font-weight: 500;
+  box-shadow: none;
 
+  
+}
 
 ion-input {
   border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+a.link {
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 1rem;
+  padding-top: 0.3rem;
 }
 
 .login-body {
@@ -45,5 +69,5 @@ zxing-scanner {
   position: fixed;
 }
 .login-main {
-  margin-top: 10rem;
+  margin-top: 5rem;
 }

@@ -1,0 +1,17 @@
+.form-button {
+    font-weight: 500;
+    padding: 0 15px;
+    width: fit-content;
+    border-radius: 10px;
+  }
+
+.form-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  ion-button {
+    background-color: var( --ion-color-tertiary);
+    --box-shadow: none;
+  }
