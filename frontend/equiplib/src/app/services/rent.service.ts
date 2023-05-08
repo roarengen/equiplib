@@ -22,6 +22,11 @@ export class RentService {
         return this.http.get<Rent[]>(`${environment.apiUrl}/rents/${userid}`)
     }
 
+    fetchRentByEquipmentId(equipid: number)
+    {
+        return this.http.get<Rent>(`${environment.apiUrl}/rents/by_equip/${equipid}`)
+    }
+
     fetchCurrentUserRentals() {
       return this.http.get<Rent[]>(`${environment.apiUrl}/rents/me`)
     }
@@ -29,6 +34,11 @@ export class RentService {
     addRental(rental: Rent)
     {
         return this.http.post(`${environment.apiUrl}/rents/`, rental);
+    }
+
+    returnRental(rental: Rent)
+    {
+        return this.http.post(`${environment.apiUrl}/rents/return`, rental);
     }
     getCurrentActiveRentals(orgid: number)
     {

@@ -1,0 +1,21 @@
+.register-rental {
+  padding-top: 60px;
+}
+
+.form-button {
+  font-weight: bold;
+  padding: 0 15px;
+  width: fit-content;
+  border-radius: 10px;
+}
+
+.form-button-container {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ion-button {
+  background-color: var( --ion-color-tertiary);
+  --box-shadow: none;
+}

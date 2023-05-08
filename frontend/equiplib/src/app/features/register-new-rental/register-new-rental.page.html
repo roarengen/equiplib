@@ -1,12 +1,54 @@
-<form class="register-rental-form">
-  <ion-list>
-    <ion-item class="form-item" class="grid-item" color="input-background">
-      <ion-select interface="popover" placeholder="Hvilken bruker skal du registrere utstyret på?" [(ngModel)]="newRental.userid">
-        <ng-container>
-          <ion-select-option *ngFor="let user of selectUser | async" [value]="user.id">{{user.firstname}} {{user.lastname}} <br> {{user.email}} <br> +47{{user.phone}} </ion-select-option>
-        </ng-container>
+<ion-content >
+  <form class="register-rental" #f="ngForm" (ngSubmit)="onSubmitNewRental()">
+
+    <ion-card>
+      <ion-card-header>
+      <ion-card-subtitle>Utleie av</ion-card-subtitle>
+        <ion-card-title>{{this.equipmentName}}</ion-card-title>
+      <ion-text>{{this.equipmentDescription}}</ion-text></ion-card-header>
+      <ion-card-content>
+      <app-tag
+      *ngFor="let tag of this.equipmentTags" name="{{tag.name}}" color="{{tag.color}}">
+      </app-tag>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-item>
+      <ion-label>Hvem skal låne utstyret?</ion-label>
+      <ion-select justify="space-between" label-placement="fixed" fill="outline" placeholder="Velg bruker" [(ngModel)]="newRental.userid">
+          <ion-select-option *ngFor="let user of selectUser | async" [value]="user.id">{{user.firstname}} {{user.lastname}}</ion-select-option>
       </ion-select>
     </ion-item>
-  </ion-list>
-  <button>Submit</button>
+
+  <ion-item color="input-background">
+    <ion-label>Innleveringsfrist:</ion-label>
+    <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
+    <ion-popover [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime
+        locale="nb" [showDefaultTitle]="true" min="2023" max="2100" presentation="date" displayFormat="YYYY-MM-DD"[(ngModel)]="newRental.rentedValidToDate" id="datetime2">
+        <span slot="title">Velg Dato</span>
+      </ion-datetime>
+      </ng-template>
+    </ion-popover>
+  </ion-item>
+
+  <ion-item class="form-item" color="input-background">
+    <ion-textarea label-placement="floating" [(ngModel)]="newRental.purpose" [autoGrow]="true" value="">
+      <ion-label>Grunnen til utleie</ion-label>
+    </ion-textarea>
+  </ion-item>
+
+  <ion-item class="form-item" color="input-background">
+    <ion-textarea label="Velg bruker som skal låne utstyret" label-placement="floating"  [(ngModel)]="newRental.comment" placeholder="Kommentar/beskrivelse" [autoGrow]="true" value="">
+      <ion-label>Beskrivelse</ion-label>
+    </ion-textarea>
+  </ion-item>
+
+  <div class="form-button-container">
+    <ion-button [routerLink]="['/home']" class="form-button" color="register" (click)="onSubmitNewRental()">
+      Registrer ny utleie
+    </ion-button>
+  </div>
 </form>
+</ion-content>

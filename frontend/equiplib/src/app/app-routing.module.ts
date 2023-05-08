@@ -16,11 +16,16 @@ import {ResetPasswordComponent} from './features/reset-password/reset-password.c
 
 
 const routes: Routes = [
-
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: LayoutPage,
-    path:'',
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'home' }, // add this default child route
       { path: 'manageequipment', component: ManageEquipmentPage, canActivate: [AdminGuard]},
       { path: 'manageusers', component: ManageUsersPage},
       { path: 'addtag', component: AddTagComponent},
@@ -33,7 +38,6 @@ const routes: Routes = [
   { path: 'qrscanner', component: QrScannerPage},
   { path: 'login', component: LoginPage},
   { path: 'reset-password', component: ResetPasswordComponent},
-
 ];
 
 @NgModule({

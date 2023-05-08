@@ -68,7 +68,7 @@ export class QrScannerPage implements OnInit {
               cssClass: '--ion-color-primary-contrast',
               text: 'Returner',
               handler: () => {
-                this.router.navigate(['/registerrental']);
+                this.router.navigate(['/returnrental']);
                 alert.dismiss();
               }
             }

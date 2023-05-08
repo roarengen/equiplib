@@ -35,12 +35,16 @@ export class ManageOrganizationPage implements OnInit {
     this.allUsers = this.accountService.getAll()
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
     this.tags = this.equipmentService.getAllTags(this.accountService.user.organizationid)
-
   }
 
   ngOnInit() {
     this.accountService.getAll()
     this.accountService.getOrganization(this.accountService.user?.organizationid || 0)
+  }
+
+  ionViewWillEnter() {
+    this.tags = this.equipmentService.getAllTags(this.accountService.user.organizationid)
+    this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
   }
 
   onSubmitOrganizationChanges() {

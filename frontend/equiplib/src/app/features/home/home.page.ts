@@ -1,13 +1,12 @@
 import { LocationService } from 'src/app/services/location.service';
 import { Equipment, Tag } from 'src/app/models/equipment';
 import { Observable, filter, map } from 'rxjs';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { RentService } from 'src/app/services/rent.service';
 import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
-import { AlertController } from '@ionic/angular';
-
+import { AlertController } from '@ionic/angular'
 class Filter {
   tagids: number[] = [];
   name: string = "";
@@ -34,13 +33,14 @@ export class HomePage implements OnInit {
   filter: Filter = new Filter();
 
 	constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private alertController: AlertController,
     public locationService: LocationService,
 		public accountService: AccountService,
     public equipmentService: EquipmentService,
     public rentService: RentService,
   ) {
-    this.equipments = equipmentService.getAllEquipment(this.accountService.user.organizationid)
+    this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid)
     this.locations = locationService.getAllLocations(this.accountService.user.organizationid)
     this.tags = equipmentService.getAllTags(this.accountService.user.organizationid)
     this.filteredEquipments = this.equipments
@@ -48,6 +48,15 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.rentService.getCurrentActiveRentals(this.accountService.user.organizationid).subscribe(rents=>rents.map(rent => this.rentedEquipmentIds.push(rent.id)))
+  }
+
+  ionViewWillEnter() {
+    this.loadEquipments()
+  }
+
+  loadEquipments() {
+    this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid)
+    this.filteredEquipments = this.equipments
   }
 
   getFilteredEquipment(filter: Filter): Observable<Equipment[]>

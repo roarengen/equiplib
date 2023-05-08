@@ -7,7 +7,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { Equipment } from 'src/app/models/equipment';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -23,11 +23,10 @@ export class ManageEquipmentPage implements OnInit{
   public qrCodeId: string = "";
 
   constructor(
+    private toastController: ToastController,
     public locationService: LocationService,
-    private http: CustomHttpClient,
     public accountService: AccountService,
     public equipmentService: EquipmentService,
-    private formBuilder: FormBuilder,
     private actionSheetCtrl: ActionSheetController,
     ) {
       this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
@@ -54,7 +53,17 @@ export class ManageEquipmentPage implements OnInit{
       const canvas = this.qrcode.nativeElement.querySelector('canvas');
       const dataUrl = canvas.toDataURL('image/png');
       const blob = this.dataURItoBlob(dataUrl);
-      saveAs(blob, this.newEquipment.name + '-qrcode.png');
+      saveAs(blob, this.newEquipment.name + '-qrcode');
+    }
+
+    async presentToast() {
+      const toast = await this.toastController.create({
+        message: 'Nytt utstyr registrert!',
+        duration: 4000,
+        position: 'bottom'
+      });
+
+      await toast.present();
     }
 
     async onSubmitNewEquipment() {
@@ -66,6 +75,7 @@ export class ManageEquipmentPage implements OnInit{
         .subscribe((equipment: Equipment) => this.qrCodeId = equipment.id.toString())
       }
     }
+
     async validateInformation(){
       const actionSheet = await this.actionSheetCtrl.create({
         cssClass: 'validateInformation',
@@ -74,7 +84,6 @@ export class ManageEquipmentPage implements OnInit{
           {
             text: 'Riktig',
             handler: () => {
-              this.onSubmitNewEquipment();
               actionSheet.dismiss();
               this.downloadQRCodeOption()
             }
@@ -100,12 +109,21 @@ export class ManageEquipmentPage implements OnInit{
             text: 'Ja',
             handler: () => {
               this.makeQrBlob();
+              this.onSubmitNewEquipment();
+              this.presentToast();
               actionSheet.dismiss();
             }
           },
           {
             text: 'Nei',
-            role: 'cancel',
+            handler: () => {
+              this.onSubmitNewEquipment();
+              this.presentToast();
+              actionSheet.dismiss();
+            }
+          },
+          {
+            text: 'Kanseller registrering',
             handler: () => {
               actionSheet.dismiss();
             }

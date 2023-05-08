@@ -8,6 +8,7 @@ import { ManageEquipmentPageRoutingModule } from './manage-equipment-routing.mod
 
 import { ManageEquipmentPage } from './manage-equipment.page';
 import { QRCodeModule } from 'angularx-qrcode';
+import { TagModule } from 'src/app/components/tag/tag.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     ReactiveFormsModule,
     FormsModule,
     IonicModule,
-    ManageEquipmentPageRoutingModule
+    ManageEquipmentPageRoutingModule,
+    TagModule
   ],
   declarations: [ManageEquipmentPage]
 })

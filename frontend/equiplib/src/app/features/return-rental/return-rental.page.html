@@ -1,9 +1,57 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>return-rental</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content >
+  <form class="register-rental" #f="ngForm" (ngSubmit)="onReturnRental()">
 
-<ion-content>
+    <ion-card>
+      <ion-card-header>
+      <ion-card-subtitle>Retur av:</ion-card-subtitle>
+        <ion-card-title>{{this.equipmentName}}</ion-card-title>
+      <ion-text>{{this.equipmentDescription}}</ion-text></ion-card-header>
+      <ion-card-content>
+      <app-tag
+      *ngFor="let tag of this.equipmentTags" name="{{tag.name}}" color="{{tag.color}}">
+      </app-tag>
+      </ion-card-content>
+    </ion-card>
 
+    <ion-card>
+      <ion-card-header>
+      <ion-card-subtitle>Lånetaker:</ion-card-subtitle>
+        <ion-card-title>{{this.selectUser.firstname}} {{this.selectUser.lastname}}</ion-card-title>
+        <ion-card-title>{{this.selectUser.phone}}</ion-card-title>
+        <ion-card-title>{{this.selectUser.email}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+      </ion-card-content>
+    </ion-card>
+
+  <ion-item color="input-background">
+    <ion-label>Innleveringsdato</ion-label>
+    <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
+    <ion-popover [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime
+        locale="nb" [showDefaultTitle]="true" min="2023" max="2100" presentation="date" dayShortNames="Søn,Man,Tir,Ons,Tor,Fre,Lør" displayFormat="YYYY-MM-DD"[(ngModel)]="selectedRental.rentedValidToDate" id="datetime2">
+        <span slot="title">Velg Dato</span>
+      </ion-datetime>
+      </ng-template>
+    </ion-popover>
+  </ion-item>
+
+  <ion-item class="form-item" class="grid-item" color="input-background">
+    <ion-label>Velg retur lokasjon</ion-label>
+    <ion-select label-placement="floating" placeholder="Lokasjon">
+      <ion-label>Velg retur lokasjon</ion-label>
+      <ng-container>
+        <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
+      </ng-container>
+    </ion-select>
+  </ion-item>
+
+  <div class="form-button-container">
+    <ion-button [routerLink]="['/home']" class="form-button" color="register" (click)="onReturnRental()">
+      Returner
+    </ion-button>
+  </div>
+</form>
 </ion-content>

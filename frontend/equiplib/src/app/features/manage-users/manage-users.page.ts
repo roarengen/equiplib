@@ -1,9 +1,9 @@
 import { AccountService } from './../../services/user.service';
 import { CustomHttpClient } from './../../helpers/auth/http-client';
-import { Component, ElementRef, ViewChild, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, ViewChild, ChangeDetectorRef, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { createUser} from 'src/app/models/user';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -11,13 +11,14 @@ import { saveAs } from 'file-saver';
   templateUrl: './manage-users.page.html',
   styleUrls: ['./manage-users.page.scss'],
 })
-export class ManageUsersPage implements OnChanges {
+export class ManageUsersPage implements OnInit {
   public setDownloadQR: boolean = true;
   public hasSubmittedNewUser: boolean = false;
   public newUser: createUser = new createUser();
   public qrCodeUsername: string = "";
 
   constructor(
+    private toastController: ToastController,
     private cdRef: ChangeDetectorRef,
     private http: CustomHttpClient,
     private accountService: AccountService,
@@ -26,10 +27,17 @@ export class ManageUsersPage implements OnChanges {
 
   @ViewChild("qrcode", {read: ElementRef}) qrcode: ElementRef;
 
-    ngOnChanges(changes: SimpleChanges) {
-      if (changes.qrcode) {
-        console.log(this.qrcode.nativeElement.focus())
-      }
+    ngOnInit(): void {
+    }
+
+    async presentToast() {
+      const toast = await this.toastController.create({
+        message: 'Ny bruker er registrert',
+        duration: 4000,
+        position: 'bottom'
+      });
+
+      await toast.present();
     }
 
   dataURItoBlob(dataURI: string) {
@@ -58,6 +66,7 @@ export class ManageUsersPage implements OnChanges {
           handler: () => {
             this.hasSubmittedNewUser = true;
             this.onSubmitNewUser();
+            this.presentToast();
             actionSheet.dismiss();
           }
         },
@@ -84,7 +93,7 @@ export class ManageUsersPage implements OnChanges {
     saveAs(blob, this.newUser.firstname + 'qrcode.png');
 
     this.newUser.organizationid = this.accountService.user.organizationid
-    this.newUser.roleid = 1 // We need to solve security around role selection.
+    this.newUser.roleid = 1;
     this.http.post(`${environment.apiUrl}/users/`, this.newUser).subscribe()
   }
   else {

@@ -58,6 +58,14 @@ def get_rent(id: int, db: Session = Depends(get_db)):
         return HTTPException(status_code=404, detail="rent not found")
     return rent
 
+@api.get("/by_equip/{id}", response_model=Rent, dependencies=[Depends(require_user)])
+def get_rent_by_equipid(id: int, db: Session = Depends(get_db)):
+    rent = crud.get_rent_by_equipid(db, id)
+    if not rent:
+        logger.debug(f"requested rent with id: {id} but no rents where found")
+        return HTTPException(status_code=404, detail="rent not found")
+    return rent
+
 @api.get("/by_org/{orgid}", response_model=list[Rent], dependencies = [Depends(require_lender)])
 def get_rent_by_orgid(orgid: int = Depends(require_user_to_be_in_org), db: Session = Depends(get_db)):
     rents = crud.get_rents_by_orgid(db, orgid)
