@@ -106,12 +106,15 @@
    button.alert-button.sc-ion-alert-md {
     color: var(--ion-color-light);
     background-color: var(--ion-color-tertiary);
-
-   button .alert-button-role-cancel {
-      background-color: var(--ion-color-danger);
     }
-    }
+  }
 
+  [aria-checked=true].sc-ion-alert-md .alert-radio-icon.sc-ion-alert-md {
+    border-color: var(--ion-color-tertiary);
+  }
+
+  [aria-checked=true].sc-ion-alert-md .alert-radio-inner.sc-ion-alert-md {
+    background-color: var(--ion-color-tertiary);
   }
 
 }
