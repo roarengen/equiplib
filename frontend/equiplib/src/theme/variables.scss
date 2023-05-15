@@ -114,6 +114,10 @@
 
   }
 
+  ion-loading.home-loading {
+    --spinner-color: #FF5722;
+  }
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -195,7 +199,7 @@
 
     --ion-card-background: #1e1e1e;
 
-    
+
 
   }
 

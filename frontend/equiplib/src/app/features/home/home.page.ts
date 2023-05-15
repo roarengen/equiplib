@@ -7,6 +7,8 @@ import { RentService } from 'src/app/services/rent.service';
 import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
 import { AlertController } from '@ionic/angular'
+import { LoadingController } from '@ionic/angular';
+
 class Filter {
   tagids: number[] = [];
   name: string = "";
@@ -33,7 +35,7 @@ export class HomePage implements OnInit {
   filter: Filter = new Filter();
 
 	constructor(
-    private changeDetectorRef: ChangeDetectorRef,
+    private loadingController: LoadingController,
     private alertController: AlertController,
     public locationService: LocationService,
 		public accountService: AccountService,
@@ -51,12 +53,25 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.loading = false;
     this.loadEquipments()
   }
 
-  loadEquipments() {
-    this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid)
-    this.filteredEquipments = this.equipments
+  async loadEquipments() {
+    const loading = await this.loadingController.create({
+      cssClass: 'home-loading',
+      message: 'Laster..',
+      spinner: 'crescent',
+      translucent: true
+    });
+
+    try {
+      await loading.present();
+      this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid);
+      this.filteredEquipments = this.equipments;
+    } finally {
+      loading.dismiss();
+    }
   }
 
   getFilteredEquipment(filter: Filter): Observable<Equipment[]>

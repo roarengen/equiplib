@@ -53,3 +53,16 @@ ion-accordion.accordion-collapsed ion-item[slot="header"] {
   padding: 5px;
   border-radius: 9px;
 }
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #FF5722;
+  z-index: 9999;
+}

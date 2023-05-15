@@ -1,12 +1,17 @@
-<ion-content >
-  <form class="register-rental" #f="ngForm" (ngSubmit)="onReturnRental()">
+<ion-content class="ion-padding">
+  <div class="form-title-block">
+    <h2 class="form-title">Retur av utleie</h2>
+  </div>
+
+  <form #f="ngForm" class="register-rental" (ngSubmit)="onReturnRental()">
 
     <ion-card>
       <ion-card-header>
       <ion-card-subtitle>Retur av:</ion-card-subtitle>
         <ion-card-title>{{this.equipmentName}}</ion-card-title>
-      <ion-text>{{this.equipmentDescription}}</ion-text></ion-card-header>
+      </ion-card-header>
       <ion-card-content>
+      <ion-text>{{this.equipmentDescription}}</ion-text>
       <app-tag
       *ngFor="let tag of this.equipmentTags" name="{{tag.name}}" color="{{tag.color}}">
       </app-tag>
@@ -17,12 +22,13 @@
       <ion-card-header>
       <ion-card-subtitle>Lånetaker:</ion-card-subtitle>
         <ion-card-title>{{this.selectUser.firstname}} {{this.selectUser.lastname}}</ion-card-title>
-        <ion-card-title>{{this.selectUser.phone}}</ion-card-title>
-        <ion-card-title>{{this.selectUser.email}}</ion-card-title>
+        <ion-card-content>
+          <ion-avatar>
+            <ion-icon color="tertiary" name="person-circle-outline"></ion-icon>
+            <ion-label>Test</ion-label>
+          </ion-avatar>
+        </ion-card-content>
       </ion-card-header>
-      <ion-card-content>
-
-      </ion-card-content>
     </ion-card>
 
   <ion-item color="input-background">
@@ -40,8 +46,8 @@
 
   <ion-item class="form-item" class="grid-item" color="input-background">
     <ion-label>Velg retur lokasjon</ion-label>
-    <ion-select label-placement="floating" placeholder="Lokasjon">
-      <ion-label>Velg retur lokasjon</ion-label>
+    <ion-select label-placement="floating" placeholder="Lokasjon" [(ngModel)]="setLocationId" >
+      <ion-label>Til lokasjon</ion-label>
       <ng-container>
         <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
       </ng-container>
@@ -49,7 +55,7 @@
   </ion-item>
 
   <div class="form-button-container">
-    <ion-button [routerLink]="['/home']" class="form-button" color="register" (click)="onReturnRental()">
+    <ion-button class="form-button" color="register" (click)="onReturnRental()">
       Returner
     </ion-button>
   </div>

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { Rent } from 'src/app/models/rent';
-import { Equipment, Tag } from '../../models/equipment';
+import { Rent, returnRent } from 'src/app/models/rent';
+import { Equipment } from '../../models/equipment';
 import { AccountService } from 'src/app/services/user.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
@@ -11,6 +11,8 @@ import { RentService } from 'src/app/services/rent.service';
 import { ToastController } from '@ionic/angular';
 import { LocationService } from 'src/app/services/location.service';
 import { Location } from './../../models/location';
+import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-return-rental',
@@ -22,6 +24,7 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   equipmentName: string;
   equipmentDescription: string;
   equipmentTags: any;
+  setLocationId: number;
   public locations: Observable<Location[]>;
   public selectedEquipment?: Observable<Equipment>;
   public selectUser: User = new User();
@@ -31,6 +34,7 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
 
   constructor(
     public locationService: LocationService,
+    private http: CustomHttpClient,
     private toastController: ToastController,
     public getEquipmentIdService: FilterEquipmentService,
     public accountService: AccountService,
@@ -53,23 +57,42 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
     this.equipmentName = equipment.name;
     this.equipmentDescription = equipment.description;
     this.equipmentTags = equipment.tags;
-    console.log(this.selectedRental)
     });
   }
 
   onReturnRental() {
     if (this.accountService.user.roleid > 1) {
-      this.selectedRental.rentedToDate = new Date();
-      this.rentalService.returnRental(this.selectedRental)
-      this.presentToast()
+      this.http.post(environment.apiUrl + "/rents/return",
+      {
+        id: this.accountService.user.id,
+        locationid: this.setLocationId,
+        userid: this.selectUser.id
+      }).subscribe((response: number) => {
+        if (response === 200) {
+          this.presentToast()
+        }
+        else {
+          this.presentErrorToast()
+        }
+      })
     }
   }
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Utstyret er returnert',
-      duration: 5000,
+      message: '<span><img src="../../../assets/icons/return-rental.svg"></img> <p>Utstyret er returnert!</p></span>',
+      duration: 3000,
       position: 'top'
+    });
+
+    await toast.present();
+  }
+
+  async presentErrorToast() {
+    const toast = await this.toastController.create({
+      message: ' <span><img src="../../../assets/icons/warning-icon.svg"> <p>Noe gikk galt! Utstyr ikke returnert.</p>',
+      duration: 5000,
+      position: 'top',
     });
 
     await toast.present();
@@ -77,4 +100,6 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+
 }

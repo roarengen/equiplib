@@ -17,14 +17,14 @@ def get_rents(db: Session, skip:int=0, limit:int=100) -> list[Rent]:
 def get_rents_by_userid(db: Session, userid: int) -> list[Rent]:
     return db.query(Rent).filter(Rent.userid == userid).all()
 
-def return_rent(db: Session, rentid: int, locationid: int, userid: int) -> Rent | None:
+def return_rent(db: Session, rentid: int, locationid: int, userid: int, returndate: datetime) -> Rent | None:
     rent = db.query(Rent).filter(Rent.id == rentid).first()
     equipment = db.query(Equipment).filter(Equipment.id == rent.equipmentid).first()
     now = datetime.now()
     if rent and equipment:
         equipment.locationid = locationid
         rent.deliveredToLocation = locationid
-        rent.rentedToDate = now.date()
+        rent.rentedToDate = returndate
         rent.deliveredToUserid = userid
         db.commit()
         db.refresh(rent)

@@ -1,11 +1,8 @@
-
-
 <ion-content>
   <zxing-scanner
-  (scanSuccess)= "1"
+  (scanSuccess)= "scannerIsEnabled && scanSuccessHandler($event)"
   (scanError)= "scanErrorHandler($event)"
-  (torchCompatible)= "onTorchCompatible($event)"
-  (torch)= "torch"
+  (scannerEnabled)="scannerIsEnabled"
   ></zxing-scanner>
 
   <ion-tabs fullscreen>
@@ -14,11 +11,10 @@
         <ion-icon name="arrow-back-circle-outline"></ion-icon>
         Tilbake
       </ion-tab-button>
-      <ion-tab-button (click)="scanSuccessHandler('1')" [disabled]="notCompatibleFlashlight">
+      <ion-tab-button (click)="toggleFlashlight()">
         <ion-icon color="tertiary" name="flashlight-outline"></ion-icon>
         Lykt
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
-
 </ion-content>
