@@ -2,13 +2,14 @@
 <ion-app>
   <ion-header>
     <ion-toolbar>
-      <ion-title>{{accountService.organization?.name || ""}}</ion-title>
+      <div class="menu-toolbar">
       <ion-menu-toggle>
         <button ion-button menuToggle end class="menu-button">
           <ion-icon class="menu-icon"src="../../../assets/icons/menu.svg"></ion-icon>
         </button>
       </ion-menu-toggle>
-      <p class="organizationNumber">OrganisasjonsNr: {{accountService.organization?.number || ""}}</p>
+      <ion-title class="menu-title">{{accountService.organization?.name || ""}}</ion-title>
+    </div>
     </ion-toolbar>
   </ion-header>
   <ion-menu contentId="main-content">
@@ -72,7 +73,9 @@
         </div>
     </ion-content>
   </ion-menu>
-<ion-router-outlet id="main-content"></ion-router-outlet>
+<div class="main-router-content">
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</div>
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="home">
