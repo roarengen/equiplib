@@ -8,6 +8,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { LayoutPageRoutingModule } from '../layout/layout-routing.module';
 import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
 
+
 @NgModule({
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import { Rent } from './../models/rent';
+import { Rent, returnRent } from './../models/rent';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { CustomHttpClient } from '../helpers/auth/http-client';
@@ -36,9 +36,9 @@ export class RentService {
         return this.http.post(`${environment.apiUrl}/rents/`, rental);
     }
 
-    returnRental(rental: Rent)
+    returnRental(returnRental: returnRent)
     {
-        return this.http.post(`${environment.apiUrl}/rents/return`, rental);
+        return this.http.post(`${environment.apiUrl}/rents/return/`, returnRental);
     }
     getCurrentActiveRentals(orgid: number)
     {

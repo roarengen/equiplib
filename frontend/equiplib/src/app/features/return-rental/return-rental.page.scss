@@ -1,9 +1,4 @@
-.register-rental {
-  padding-top: 60px;
-}
-
 .form-button {
-  font-weight: bold;
   padding: 0 15px;
   width: fit-content;
   border-radius: 10px;
@@ -18,4 +13,19 @@
 ion-button {
   background-color: var( --ion-color-tertiary);
   --box-shadow: none;
+}
+
+.form-title-block {
+  padding-top: 40px;
+  border-radius: 10px;
+  background-color: #272B2F;
+}
+
+.form-title {
+  color: #ffffff;
+  background-color: #272B2F;
+  text-align: center;
+  padding: 20px 0 20px 0;
+  font-weight: 500;
+  border-radius: 10px;
 }

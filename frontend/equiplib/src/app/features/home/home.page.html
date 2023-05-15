@@ -1,4 +1,7 @@
 <ion-content class="ion-padding">
+  <div *ngIf="loading" class="home-loading">
+    <ion-spinner></ion-spinner>
+  </div>
 <ion-item-group style="margin-top: 3rem"
     *ngIf="{
       listedequipments: filteredEquipments | async,
@@ -36,7 +39,7 @@
 </ion-list>
   <ion-list>
     <ion-accordion-group expand="inset" *ngFor="let equipment of observables.listedequipments">
-      <app-equipment 
+      <app-equipment
       [equipment]="equipment"
       [isCurrentlyAvailable]=!rentedEquipmentIds.includes(equipment.id)
       [location]=getLocationForEquipment(equipment.locationid,observables.locations)

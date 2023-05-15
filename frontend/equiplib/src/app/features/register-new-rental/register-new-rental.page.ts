@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Rent } from 'src/app/models/rent';
-import { Equipment, Tag } from './../../models/equipment';
+import { Equipment } from './../../models/equipment';
 import { AccountService } from 'src/app/services/user.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
@@ -56,13 +56,14 @@ export class RegisterNewRentalPage implements OnInit, OnDestroy {
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Utleie registrert!',
-      duration: 2000,
+      message: '<span><img src="../../../assets/icons/register-rental.svg"></img> <p>Utleie er registrert!</p></span>',
+      duration: 3000,
       position: 'top'
     });
 
     await toast.present();
   }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

@@ -27,4 +27,5 @@ class RentReturn(BaseModel):
     id: int
     locationid: int
     userid: int
+    returndate: datetime 
 
