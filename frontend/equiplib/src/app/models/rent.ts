@@ -10,3 +10,9 @@ export class Rent {
   rentedFromLocation!: number;
   DeliveredToLocation!: number;
 }
+
+export class returnRent {
+  id!: number;
+  locationid!: number;
+  userid!: number;
+}

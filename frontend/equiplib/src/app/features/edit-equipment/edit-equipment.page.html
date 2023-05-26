@@ -1,0 +1,83 @@
+<ion-content class="ion-padding">
+      <form #f="ngForm" *ngIf="editEquipment">
+    <div class="form-title-block">
+      <h2 class="form-title">Redigering av {{editEquipment.name}}</h2>
+    </div>
+
+    <div class="form-input-block">
+      <div slot="content">
+      <app-tag *ngFor="let tag of this.equiptags ; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag(tag, i)" [hidden]="!tag.visible"></app-tag>
+      <button class="button-add" size="medium" (click)="addTag()">
+        <ion-icon slot="icon-only" name="add-circle-outline" color="success"></ion-icon>
+      </button>
+
+      <ion-select
+      aria-label="select tags"
+      (ionChange)="selectedNewTag()"
+      color="success"
+      placeholder="Velg tags" [multiple]="true">
+      <ion-select-option
+        color="success"
+        *ngFor="let tag of tags | async"
+        value="{{tag.id}}">
+        {{tag.name}}
+      </ion-select-option>
+    </ion-select>
+    </div>
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Navn:</ion-label>
+        <ion-input
+        ngModel required
+        [(ngModel)]="editEquipment.name"
+        name="name"
+        [clearInput]="true"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Type:</ion-label>
+        <ion-input  placeholder="Ingen type satt" [(ngModel)]="editEquipment.type" [clearInput]="true" ngModel required name="type"></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Serienummer:</ion-label>
+        <ion-input placeholder="Ingen serienummer satt" [(ngModel)]="editEquipment.serialnumber" [clearInput]="true" ngModel required name="serialnumber"> </ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.other1name" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.other1name}}:</ion-label>
+        <ion-input  placeholder="Ingen {{templateService.other1name}} satt"[(ngModel)]="editEquipment.other1" [clearInput]="true" ngModel required name="other1"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.other2name" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.other2name}}:</ion-label>
+        <ion-input  placeholder="Ingen {{templateService.other2name}} satt" [(ngModel)]="editEquipment.other2" [clearInput]="true" ngModel required name="other2"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.other3name" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.other3name}}:</ion-label>
+        <ion-input  placeholder="Ingen {{templateService.other3name}} satt" [(ngModel)]="editEquipment.other3" [clearInput]="true" ngModel required name="other3"></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-textarea [(ngModel)]="editEquipment.comment" placeholder="Ingen kommentar satt" [autoGrow]="true" name="comment">
+        </ion-textarea>
+      </ion-item>
+
+          <ion-item class="form-item" class="grid-item" color="input-background">
+            <ion-select label="Lokasjon" interface="action-sheet" placeholder="Velg lokasjon" [(ngModel)]="editEquipment.locationid">
+              <ng-container>
+                <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
+              </ng-container>
+            </ion-select>
+          </ion-item>
+
+        </div>
+    <div class="form-button-container">
+      <ion-button class="form-button" color="register" (click)="editEquips()">
+        Bekreft endringer
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
+

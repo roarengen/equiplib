@@ -13,7 +13,7 @@ import {AddTagComponent} from './features/add-tag/add-tag.component';
 import { ReturnRentalPage } from './features/return-rental/return-rental.page';
 import { QrScannerPage } from './features/qr-scanner/qr-scanner.page';
 import {ResetPasswordComponent} from './features/reset-password/reset-password.component';
-
+import { EditEquipmentPage } from './features/edit-equipment/edit-equipment.page';
 
 const routes: Routes = [
   {
@@ -25,9 +25,10 @@ const routes: Routes = [
     path: '',
     component: LayoutPage,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'home' }, // add this default child route
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'manageequipment', component: ManageEquipmentPage, canActivate: [AdminGuard]},
       { path: 'manageusers', component: ManageUsersPage},
+      { path: 'editequipment', component: EditEquipmentPage},
       { path: 'addtag', component: AddTagComponent},
       { path: 'manageorganization', component: ManageOrganizationPage},
       { path: 'home', component: HomePage, },

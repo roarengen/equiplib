@@ -1,8 +1,20 @@
-<ion-chip 
+<ion-chip
+*ngIf="!editable"
 style="font-weight: 500;"
 [style.background]="color + alpha"
 [style.border]="'1px solid '+ color + 'ff'"
 [style.color]="color + 'ff'"
 >
 {{name}}
+</ion-chip>
+
+<ion-chip
+*ngIf="editable"
+style="font-weight: 500;"
+[style.background]="color + alpha"
+[style.border]="'1px solid '+ color + 'ff'"
+[style.color]="color + 'ff'"
+>
+{{name}}
+<ion-icon name="close-circle"></ion-icon>
 </ion-chip>

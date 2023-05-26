@@ -21,7 +21,7 @@ export class EquipmentComponent  implements OnInit {
     this.other1name = accountService.template?.equipOther1 || null
     this.other2name = accountService.template?.equipOther2 || null
     this.other3name = accountService.template?.equipOther3 || null
-   }
+  }
 
   ngOnInit() {}
 
