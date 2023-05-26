@@ -7,7 +7,7 @@ import { AccountService } from './services/user.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'LoanOut';
+  title = 'Equiplib';
 
   constructor(private accountService: AccountService) {
 }

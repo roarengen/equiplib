@@ -96,6 +96,7 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
     });
 
     await toast.present();
+
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

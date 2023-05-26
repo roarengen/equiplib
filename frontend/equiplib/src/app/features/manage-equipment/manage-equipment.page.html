@@ -1,4 +1,5 @@
 <ion-content class="ion-padding">
+
   <form #f="ngForm" (ngSubmit)="onSubmitNewEquipment()">
 
     <div class="form-title-block">
@@ -8,7 +9,14 @@
     <div class="form-input-block">
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Navn:</ion-label>
-        <ion-input [(ngModel)]="newEquipment.name" [clearInput]="true" ngModel required></ion-input>
+        <ion-input
+        [clearInput]="true"
+        counter="true"
+        counterFormatter="customCounterFormatter"
+        [maxlength]="20"
+        ngModel required
+        [(ngModel)]="newEquipment.name"
+        ></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
@@ -23,35 +31,38 @@
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Serienummer:</ion-label>
-        <ion-input [(ngModel)]="newEquipment.serialnumber" type="number" [clearInput]="true" ngModel required> </ion-input>
+        <ion-input [(ngModel)]="newEquipment.serialnumber" [clearInput]="true" ngModel required> </ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.other1name" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.other1name}}:</ion-label>
+        <ion-input  [(ngModel)]="newEquipment.other1" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.other2name" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.other2name}}:</ion-label>
+        <ion-input  [(ngModel)]="newEquipment.other2" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.other3name" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.other3name}}:</ion-label>
+        <ion-input  [(ngModel)]="newEquipment.other3" [clearInput]="true" ngModel required></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-textarea [(ngModel)]="newEquipment.comment" placeholder="Kommentar/beskrivelse" [autoGrow]="true" value="">
         </ion-textarea>
       </ion-item>
-    </div>
 
-    <ion-grid>
-      <ion-row>
-        <ion-col size="6">
           <ion-item class="form-item" class="grid-item" color="input-background">
-            <ion-select interface="popover" placeholder="Velg lokasjon" [(ngModel)]="newEquipment.locationid">
+            <ion-select interface="action-sheet" placeholder="Velg lokasjon" [(ngModel)]="newEquipment.locationid">
               <ng-container>
                 <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
               </ng-container>
             </ion-select>
           </ion-item>
-        </ion-col>
-        <ion-col size="6">
-          <ion-item class="form-item" class="grid-item" color="input-background">
-            <ion-label>Aktiv</ion-label>
-            <ion-toggle [enableOnOffLabels]="true" [checked]="true" [(ngModel)]="newEquipment.active" color="success" slot="end"></ion-toggle>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
 
+        </div>
     <div class="form-button-container">
       <ion-button class="form-button" color="register" (click)="validateInformation()">
         Registrer

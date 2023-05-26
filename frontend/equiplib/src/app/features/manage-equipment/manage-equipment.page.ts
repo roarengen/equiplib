@@ -1,21 +1,21 @@
 import { Location } from './../../models/location';
-import { interval, observable, Observable, delay, take } from 'rxjs';
+import { Observable} from 'rxjs';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { AccountService } from 'src/app/services/user.service';
 import { LocationService } from 'src/app/services/location.service';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Equipment } from 'src/app/models/equipment';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { ActionSheetController, ToastController } from '@ionic/angular';
 import { saveAs } from 'file-saver';
+import { TemplateService } from 'src/app/services/template.service';
 
 @Component({
   selector: 'app-manage-equipment',
   templateUrl: './manage-equipment.page.html',
   styleUrls: ['./manage-equipment.page.scss'],
 })
-export class ManageEquipmentPage implements OnInit{
+export class ManageEquipmentPage{
   public locations: Observable<Location[]>;
   form!: FormGroup;
   confirmationPopup: boolean = false;
@@ -28,14 +28,12 @@ export class ManageEquipmentPage implements OnInit{
     public accountService: AccountService,
     public equipmentService: EquipmentService,
     private actionSheetCtrl: ActionSheetController,
+    public templateService: TemplateService
     ) {
-      this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
+      this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid);
     }
 
     @ViewChild("qrcode", {read: ElementRef}) qrcode: ElementRef;
-
-    ngOnInit() {
-    }
 
     dataURItoBlob(dataURI) {
       const byteString = atob(dataURI.split(',')[1]);
@@ -98,6 +96,10 @@ export class ManageEquipmentPage implements OnInit{
         ]
       });
       await actionSheet.present();
+    }
+
+    customCounterFormatter(inputLength: number, maxLength: number) {
+      return `${maxLength - inputLength} Karakterer igjen`;
     }
 
     async downloadQRCodeOption(){
