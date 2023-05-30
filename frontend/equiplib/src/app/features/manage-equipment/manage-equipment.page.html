@@ -16,22 +16,38 @@
         [maxlength]="20"
         ngModel required
         [(ngModel)]="newEquipment.name"
+        [placeholder]="templateService.template.equipName"
         ></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Modell:</ion-label>
-        <ion-input [(ngModel)]="newEquipment.model" [clearInput]="true" ngModel required></ion-input>
+        <ion-input
+          [(ngModel)]="newEquipment.model"
+          [clearInput]="true"
+          ngModel required
+          [placeholder]="templateService.template.equipModel"
+          ></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Type:</ion-label>
-        <ion-input  [(ngModel)]="newEquipment.type" [clearInput]="true" ngModel required></ion-input>
+        <ion-input
+          [(ngModel)]="newEquipment.type"
+          [clearInput]="true"
+          ngModel required
+          [placeholder]="templateService.template.equipType"
+          ></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Serienummer:</ion-label>
-        <ion-input [(ngModel)]="newEquipment.serialnumber" [clearInput]="true" ngModel required> </ion-input>
+        <ion-input
+          [(ngModel)]="newEquipment.serialnumber"
+          [clearInput]="true"
+          ngModel required
+          [placeholder]="templateService.template.equipSerialnumber"
+          > </ion-input>
       </ion-item>
 
       <ion-item *ngIf="templateService.other1name" class="form-item" color="input-background">
