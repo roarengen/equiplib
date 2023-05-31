@@ -19,10 +19,10 @@ def get_equips_by_org_id(db: Session, orgid: int) -> list[Equipment] | None:
 def remove_equip(db: Session, id: int) -> None:
     db.delete(db.query(Equipment).filter(Equipment.id == id).first())
 
-def update_equip(db: Session, id: int, **kwargs) -> Equipment:
-    eq = db.query(Equipment).filter(Equipment.id == id).first()
+def update_equip(db: Session, eq_id: int, **kwargs) -> Equipment:
+    eq = db.query(Equipment).filter(Equipment.id == eq_id).first()
     for key, val in kwargs.items():
-        if val != None:
+        if val != None and hasattr(eq, key):
             setattr(eq, key, val)
     db.commit()
     db.refresh(eq)
@@ -60,6 +60,18 @@ def create_tag(db: Session, tag: TagCreate) -> Tag:
 
 def get_tags_by_orgid(db: Session, orgid: int):
     return db.query(Tag).where(Tag.organizationid == orgid).all()
+
+def remove_tag_from_equip(db: Session, equipid: int, tagid: int) -> None | Tag:
+    equipment = db.query(Equipment).where(Equipment.id == equipid).first()
+    if equipment:
+        for tag in equipment.tags:
+            if tag.id == tagid:
+                equipment.tags.remove(tagid)
+                db.commit()
+                db.refresh(equipment)
+                return Tag
+
+    return None
 
 def add_tag_to_equip(db: Session, equipid: int, tagid: int) -> None | Equipment:
     equipment = db.query(Equipment).where(Equipment.id == equipid).first()
