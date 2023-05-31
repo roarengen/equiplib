@@ -60,3 +60,7 @@ def get_tags_by_orgid(orgid: int, db: Session = Depends(get_db)):
 def add_tag_to_equip(equipid: int, tagid:int, db: Session = Depends(get_db)):
     return crud.add_tag_to_equip(db, equipid, tagid)
 
+@api.post("/{equipid}/tag/{tagid}", response_model=Equipment, dependencies=[Depends(require_lender)])
+def remove_tag_from_equip(equipid: int, tagid:int, db: Session = Depends(get_db)):
+    return crud.remove_tag_from_equip(db, equipid, tagid)
+

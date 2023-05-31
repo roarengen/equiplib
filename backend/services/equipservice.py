@@ -61,6 +61,18 @@ def create_tag(db: Session, tag: TagCreate) -> Tag:
 def get_tags_by_orgid(db: Session, orgid: int):
     return db.query(Tag).where(Tag.organizationid == orgid).all()
 
+def remove_tag_from_equip(db: Session, equipid: int, tagid: int) -> None | Tag:
+    equipment = db.query(Equipment).where(Equipment.id == equipid).first()
+    if equipment:
+        for tag in equipment.tags:
+            if tag.id == tagid:
+                equipment.tags.remove(tagid)
+                db.commit()
+                db.refresh(equipment)
+                return Tag
+
+    return None
+
 def add_tag_to_equip(db: Session, equipid: int, tagid: int) -> None | Equipment:
     equipment = db.query(Equipment).where(Equipment.id == equipid).first()
     tag = db.query(Tag).where(Tag.id == tagid).first()
