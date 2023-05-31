@@ -2,15 +2,20 @@ from pydantic import BaseModel
 
 class TemplateBase(BaseModel):
     name : str | None = None
-    equipName : str | None = None
-    equipModel : str | None = None
-    equipDescription : str | None = None
-    equipType : str | None = None
-    equipSerialnumber : str | None = None
-    equipBrand : str | None = None
-    equipOther1 : str | None = None
-    equipOther2 : str | None = None
-    equipOther3 : str | None = None
+    equipField1: str | None = None
+    equipField2: str | None = None
+    equipField3: str | None = None
+    equipField4: str | None = None
+    equipField5: str | None = None
+    equipField6: str | None = None
+    equipField7: str | None = None
+    equipHint1: str | None = None
+    equipHint2: str | None = None
+    equipHint3: str | None = None
+    equipHint4: str | None = None
+    equipHint5: str | None = None
+    equipHint6: str | None = None
+    equipHint7: str | None = None
     equipComment: str | None = None
     userComment : str | None = None
     userOtherid : str | None = None
