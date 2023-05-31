@@ -27,5 +27,9 @@ export class EquipmentService {
     {
         return this.http.get<Tag[]>(`${environment.apiUrl}/equips/tags/`+ orgid)
     }
+    updateEquip(equips: Equipment)
+    {
+        return this.http.put<Equipment>(`${environment.apiUrl}/equips/${equips.id}`, equips).subscribe()
+    }
 
 }

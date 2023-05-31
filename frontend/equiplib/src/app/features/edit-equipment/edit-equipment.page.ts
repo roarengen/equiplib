@@ -3,11 +3,10 @@ import { EquipmentService } from './../../services/equipment.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Equipment, Tag } from 'src/app/models/equipment';
-import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
 import { TemplateService } from 'src/app/services/template.service';
 import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
-import { ActionSheetController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit-equipment',
@@ -28,6 +27,7 @@ export class EditEquipmentPage implements OnInit {
   public locationService: LocationService,
   public equipmentService?: EquipmentService,
   public templateService?: TemplateService,
+  public popoverController?: PopoverController,
   ) {
 
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid);
@@ -43,16 +43,19 @@ export class EditEquipmentPage implements OnInit {
   })
   }
 
-  editEquips() {
-  }
-
-  removeTag(tag: any, index: number) {
-    console.log(tag)
-    this.equiptags.splice(index, 1)
+  async removeTag(tag: any, index: number) {
+    this.equiptags.splice(index, 1);
     tag.visible = false;
   }
 
-  async addTag(){
+  async addTag(tag: any){
+    this.equiptags.push({ ...tag, visible: true });
+    await this.popoverController.dismiss();
+  }
+
+  async editEquips() {
+    this.editEquipment.tags = this.equiptags;
+    this.equipmentService.updateEquip(this.editEquipment)
   }
 
   selectedNewTag() {}

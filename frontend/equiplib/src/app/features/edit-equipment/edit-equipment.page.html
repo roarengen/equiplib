@@ -4,25 +4,24 @@
       <h2 class="form-title">Redigering av {{editEquipment.name}}</h2>
     </div>
 
+    <ion-text>Tags</ion-text>
     <div class="form-input-block">
       <div slot="content">
-      <app-tag *ngFor="let tag of this.equiptags ; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag(tag, i)" [hidden]="!tag.visible"></app-tag>
-      <button class="button-add" size="medium" (click)="addTag()">
+        <app-tag *ngFor="let tag of equiptags; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag(tag, i)"></app-tag>
+        <button class="button-add" size="medium" id="add-tag">
         <ion-icon slot="icon-only" name="add-circle-outline" color="success"></ion-icon>
       </button>
 
-      <ion-select
-      aria-label="select tags"
-      (ionChange)="selectedNewTag()"
-      color="success"
-      placeholder="Velg tags" [multiple]="true">
-      <ion-select-option
-        color="success"
-        *ngFor="let tag of tags | async"
-        value="{{tag.id}}">
-        {{tag.name}}
-      </ion-select-option>
-    </ion-select>
+      <ion-popover trigger="add-tag" triggerAction="click">
+        <ng-template class="tag-popover-content">
+          <div class="tag-list">
+            <div class="tag-row">
+              <app-tag *ngFor="let tag of tags | async; let i = index" name="{{tag.name}}" color="{{tag.color}}" (click)="addTag(tag)"></app-tag>
+            </div>
+          </div>
+        </ng-template>
+      </ion-popover>
+
     </div>
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Navn:</ion-label>

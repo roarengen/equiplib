@@ -74,35 +74,34 @@ export class HomePage implements OnInit {
     }
   }
 
-  getFilteredEquipment(filter: Filter): Observable<Equipment[]>
-  {
-    let filteredEquipments = new Observable<Equipment[]>
-    filteredEquipments = filter.tagids.length > 0 ? this.equipments.pipe(
-      map(
-        equipments => equipments.filter(
-          eq => filter.tagids.some(
-            tagid => eq.tags.some(
-              eqtag => eqtag.id == tagid))))): this.equipments
+  getFilteredEquipment(filter: Filter): Observable<Equipment[]> {
+    let filteredEquipments = this.equipments;
 
-    filteredEquipments = filter.name != "" ? filteredEquipments.pipe(
-      map(
-        equipments => equipments.filter(
-          equipment => equipment.name.toLocaleLowerCase().includes(filter.name.toLowerCase())
-        )
-      )
-    ): filteredEquipments
+    if (filter.tagids.length > 0) {
+      filteredEquipments = filteredEquipments.pipe(
+        map(equipments => equipments.filter(eq => {
+          return eq.tags.some(eqtag => filter.tagids.includes(eqtag.id));
+        }))
+      );
+    }
 
-    filter.onlyRented ? filteredEquipments.pipe(
-      map(
-        equipments => equipments.filter(
-          equipment => this.rentedEquipmentIds.includes(equipment.id)
-        )
-      )
-    ): filteredEquipments
+    if (filter.name !== "") {
+      filteredEquipments = filteredEquipments.pipe(
+        map(equipments => equipments.filter(equipment => {
+          return equipment.name.toLowerCase().includes(filter.name.toLowerCase());
+        }))
+      );
+    }
 
+    if (filter.onlyRented) {
+      filteredEquipments = filteredEquipments.pipe(
+        map(equipments => equipments.filter(equipment => {
+          return this.rentedEquipmentIds.includes(equipment.id);
+        }))
+      );
+    }
 
-    return filteredEquipments
-
+    return filteredEquipments;
   }
 
   getLocationForEquipment(equipid: number, locations: Location[]): Location {
@@ -124,6 +123,7 @@ export class HomePage implements OnInit {
   scanErrorHandler(scanError: any) {
     console.log(scanError)
   }
+
   handleTagFilterChange(event: any)
   {
       this.filter.tagids = event.target.value
@@ -135,6 +135,16 @@ export class HomePage implements OnInit {
       this.onFilterChanged()
   }
 
+  filterOnTags(tag: Tag): void {
+    const tagIndex = this.filter.tagids.indexOf(tag.id);
+    if (tagIndex > -1) {
+      this.filter.tagids.splice(tagIndex, 1); // Remove tag from the filter
+    } else {
+      this.filter.tagids.push(tag.id); // Add tag to the filter
+    }
+    this.onFilterChanged();
+  }
+
   onFilterChanged()
   {
     this.filteredEquipments = this.getFilteredEquipment(this.filter)
@@ -142,6 +152,10 @@ export class HomePage implements OnInit {
 
   openFilter() {
     this.openFilterAlert()
+  }
+
+  openTagFilter() {
+
   }
 
   async openFilterAlert() {

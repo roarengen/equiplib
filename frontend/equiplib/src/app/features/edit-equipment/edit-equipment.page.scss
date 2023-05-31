@@ -1,7 +1,3 @@
-// ion-content {
-//   margin-top: 2rem;
-// }
-
 ion-select {
   color: white;
   background-color: #272B2F;
@@ -53,11 +49,6 @@ ion-button {
   --box-shadow: none;
 }
 
-ion-icon {
-  padding-top: 10px;
-  font-size: 25px;
-}
-
 .grid-item
 {
   border-radius: 10px;
@@ -70,7 +61,27 @@ ion-icon {
   --backdrop-opacity: 0;
 }
 
-button.button-add {
-  height: 80px;
-  background-color: transparent;
+.button-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+}
+
+.button-add ion-icon {
+  font-size: 24px; /* Adjust as needed */
+  margin: 0;
+  padding: 0;
+}
+
+.tag-popover-content {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.tag-list {
+  padding: 8px;
 }

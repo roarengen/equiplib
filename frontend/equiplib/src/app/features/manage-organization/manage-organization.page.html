@@ -167,16 +167,10 @@
         <ion-label class="accordion-title">Tags</ion-label>
       </ion-item>
       <div slot="content">
-        <ion-list>
-          <ng-container *ngFor="let tag of tags | async">
-            <ion-card>
-              <ion-card-header>
-                <app-tag name="{{tag.name}}" color="{{tag.color}}"></app-tag>
-              </ion-card-header>
-            </ion-card>
-          </ng-container>
-          <ion-button expand="block" routerLink='/addtag'>Legg til tag<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
-        </ion-list>
+        <div class="tag-container">
+          <app-tag *ngFor="let tag of tags | async ; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag( i )"></app-tag>
+        </div>
+          <ion-button class="add-tag-button"expand="block" routerLink='/addtag'>Legg til tag<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
       </div>
       </ion-accordion>
     </ion-accordion-group>
