@@ -19,8 +19,8 @@ def get_equips_by_org_id(db: Session, orgid: int) -> list[Equipment] | None:
 def remove_equip(db: Session, id: int) -> None:
     db.delete(db.query(Equipment).filter(Equipment.id == id).first())
 
-def update_equip(db: Session, id: int, **kwargs) -> Equipment:
-    eq = db.query(Equipment).filter(Equipment.id == id).first()
+def update_equip(db: Session, eq_id: int, **kwargs) -> Equipment:
+    eq = db.query(Equipment).filter(Equipment.id == eq_id).first()
     for key, val in kwargs.items():
         if val != None:
             setattr(eq, key, val)
