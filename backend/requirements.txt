@@ -6,3 +6,4 @@ uvicorn
 httpx
 python-dateutil
 psycopg2
+jwt
