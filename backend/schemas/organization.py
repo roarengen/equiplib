@@ -12,6 +12,7 @@ class Organization(Base, Serializable):
     email = Column(String(120))
     phone = Column(String(20))
     street = Column(String(80))
+    address = Column(String(80))
     city = Column(String(80))
     postalcode = Column(String(80))
     comment = Column(String(80))
