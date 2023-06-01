@@ -16,7 +16,7 @@ def get_temps(db: Session = Depends(get_db)):
     return crud.get_templates(db)
 
 @api.get("/by_org/{orgid}", response_model=Template)
-def get_temp(orgid: int = require_user_to_be_in_org, db: Session = Depends(get_db)):
+def get_temp(orgid: int, db: Session = Depends(get_db)):
     id = services.orgservice.get_org(db, orgid).id
     temp = crud.get_template(db, id)
     if not temp:
