@@ -89,11 +89,10 @@ def get_rents_by_userid(userid: int, db: Session = Depends(get_db), user = Depen
             return HTTPException(status_code=401, detail="no rents not found for this user")
     return rents
 
-@api.post("/return", response_model=list[Rent])
+@api.post("/return", response_model=Rent)
 def return_rent(return_rent: RentReturn, db: Session = Depends(get_db), user = Depends(require_user)):
     rent = crud.return_rent(db, return_rent, user)
     if not rent:
         HTTPException(404, "rent not found")
-
     return rent
 
