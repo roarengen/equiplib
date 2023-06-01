@@ -35,7 +35,7 @@ def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
     if rent.deliveredToLocation != None:
         if not locationservice.get_location(db, rent.deliveredToLocation):
             raise HTTPException(400, "no location to deliver to found with that id")
-    
+
     return crud.create_rent(db, rent)
 
 @api.get("/current/{orgid}", response_model=list[Rent], dependencies=[Depends(require_admin)])

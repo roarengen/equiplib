@@ -19,8 +19,7 @@ def get_rents_by_userid(db: Session, userid: int) -> list[Rent]:
 
 def return_rent(db: Session, rentid: int, locationid: int, userid: int, returndate: datetime) -> Rent | None:
     rent = db.query(Rent).filter(Rent.id == rentid).first()
-    equipment = db.query(Equipment).filter(Equipment.id == rent.equipmentid).first()
-    now = datetime.now()
+    equipment = db.query(Equipment).filter(Equipment.id == rentid).first()
     if rent and equipment:
         equipment.locationid = locationid
         rent.deliveredToLocation = locationid
@@ -29,6 +28,7 @@ def return_rent(db: Session, rentid: int, locationid: int, userid: int, returnda
         db.commit()
         db.refresh(rent)
         return rent
+    return None
 
 def deliver_to_location(db: Session, rentid: int, locationid: int, time: datetime) -> Rent | None:
     rent = db.query(Rent).filter(Rent.id == rentid).first()
