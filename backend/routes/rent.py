@@ -91,7 +91,7 @@ def get_rents_by_userid(userid: int, db: Session = Depends(get_db), user = Depen
 
 @api.post("/return", response_model=list[Rent])
 def return_rent(return_rent: RentReturn, db: Session = Depends(get_db), user = Depends(require_user)):
-    rent = crud.return_rent(db, return_rent)
+    rent = crud.return_rent(db, return_rent, user)
     if not rent:
         HTTPException(404, "rent not found")
 
