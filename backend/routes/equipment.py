@@ -34,7 +34,7 @@ def get_equips_by_org(orgid: int = Depends(require_user_to_be_in_org), db : Sess
 def get_equip(id: int, db : Session = Depends(get_db)):
     equip = crud.get_equip(db, id)
     if not equip:
-        logger.debug(f"requested equipment with id: {equip.id} but was not found")
+        logger.debug(f"requested equipment with id: {id} but was not found")
         return HTTPException(status_code=404, detail="equip not found")
     return equip
 
