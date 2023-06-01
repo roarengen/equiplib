@@ -67,6 +67,8 @@ def remove_tag_from_equip(equipid: int, tagid:int, db: Session = Depends(get_db)
 @api.patch("/{id}/addtags", response_model=Equipment, dependencies=[Depends(require_admin)])
 def add_tags_to_equip(id: int, tagids: list[int], db: Session = Depends(get_db)):
     equipment = crud.get_equip(db, id)
+    if not equipment:
+        return HTTPException(404)
     tags = crud.get_tags_by_orgid(db, equipment.organizationid)
     tags_to_add = []
     if tags and tagids:
@@ -75,8 +77,14 @@ def add_tags_to_equip(id: int, tagids: list[int], db: Session = Depends(get_db))
                 if tag.id == tagid:
                     tags_to_add.append(tag)
 
-    equipment = list(set(tags_to_add))
+
+    equipment.tags = []
     db.commit()
     db.refresh(equipment)
+    for tag in list(set(tags_to_add)):
+        equipment.tags.append(tag)
+        db.commit()
+        db.refresh(equipment)
+
     return equipment
 
