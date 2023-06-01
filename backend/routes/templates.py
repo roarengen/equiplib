@@ -17,17 +17,22 @@ def get_temps(db: Session = Depends(get_db)):
 
 @api.get("/by_org/{orgid}", response_model=Template)
 def get_temp(orgid: int, db: Session = Depends(get_db)):
-    id = services.orgservice.get_org(db, orgid).id
-    temp = crud.get_template(db, id)
+    temp = None
+    try:
+        id = services.orgservice.get_org(db, orgid).templateid
+        temp = crud.get_template(db, id)
+    except:
+        raise HTTPException(404, f"organization not found with id: {orgid}")
+
     if not temp:
-        return HTTPException(404, f"template not found with id: {id}")
+        raise HTTPException(404, f"template not found with id: {id}")
     return temp
 
 @api.get("/{id}", response_model=Template)
 def get_temp(id: int, db: Session = Depends(get_db)):
     temp = crud.get_template(db, id)
     if not temp:
-        return HTTPException(404, f"template not found with id: {id}")
+        raise HTTPException(404, f"template not found with id: {id}")
     return temp
 
 @api.post("/", response_model=Template, dependencies=[Depends(require_admin)])
