@@ -56,6 +56,7 @@ export class EditEquipmentPage implements OnInit {
   async editEquips() {
     this.editEquipment.tags = this.equiptags;
     this.equipmentService.updateEquip(this.editEquipment)
+    this.equipmentService.addTagsToEquip(this.editEquipment, this.equiptags.map((tag: any) => tag.id))
   }
 
   selectedNewTag() {}

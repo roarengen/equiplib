@@ -46,13 +46,12 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscribeRent = this.rentalService.fetchRentByEquipmentId(Number(this.getEquipmentIdService.data)).subscribe(selectedRental => {
-      this.accountService.getById(selectedRental.userid.toString()).subscribe(selectedUser =>
+    console.log(this.getEquipmentIdService.data)
+      this.accountService.getById(this.getEquipmentIdService.data.userid.toString()).subscribe(selectedUser =>
         this.selectUser = selectedUser
         )
-      this.selectedRental = selectedRental;
-    })
-    this.selectedEquipment = this.equipmentService.getEquipment(Number(this.getEquipmentIdService.data));
+    this.selectedRental = this.getEquipmentIdService.data;
+    this.selectedEquipment = this.equipmentService.getEquipment(Number(this.getEquipmentIdService.data.equipmentid));
     this.subscription = this.selectedEquipment.subscribe(equipment => {
     this.equipmentName = equipment.name;
     this.equipmentDescription = equipment.description;
@@ -64,14 +63,16 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
     if (this.accountService.user.roleid > 1) {
       this.http.post(environment.apiUrl + "/rents/return",
       {
-        id: this.accountService.user.id,
+        rentid: this.selectedRental.id,
         locationid: this.setLocationId,
-        userid: this.selectUser.id
+        userid: this.selectUser.id,
+        returndate: this.selectedRental.rentedValidToDate
       }).subscribe((response: number) => {
+        console.log(response)
         if (response === 200) {
           this.presentToast()
         }
-        else {
+        else if (response > 400) {
           this.presentErrorToast()
         }
       })
@@ -90,7 +91,7 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
 
   async presentErrorToast() {
     const toast = await this.toastController.create({
-      message: ' <span><img src="../../../assets/icons/warning-icon.svg"> <p>Noe gikk galt! Utstyr ikke returnert.</p>',
+      message: ' <span><img src="../../../assets/icons/warning-icon.svg"> <p>Noe gikk galt! Utstyr ble ikke returnert.</p>',
       duration: 5000,
       position: 'top',
     });

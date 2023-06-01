@@ -11,7 +11,6 @@
         <ion-card-title>{{this.equipmentName}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-      <ion-text>{{this.equipmentDescription}}</ion-text>
       <app-tag
       *ngFor="let tag of this.equipmentTags" name="{{tag.name}}" color="{{tag.color}}">
       </app-tag>
@@ -22,12 +21,6 @@
       <ion-card-header>
       <ion-card-subtitle>Lånetaker:</ion-card-subtitle>
         <ion-card-title>{{this.selectUser.firstname}} {{this.selectUser.lastname}}</ion-card-title>
-        <ion-card-content>
-          <ion-avatar>
-            <ion-icon color="tertiary" name="person-circle-outline"></ion-icon>
-            <ion-label>Test</ion-label>
-          </ion-avatar>
-        </ion-card-content>
       </ion-card-header>
     </ion-card>
 

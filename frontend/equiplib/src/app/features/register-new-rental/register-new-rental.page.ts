@@ -48,8 +48,10 @@ export class RegisterNewRentalPage implements OnInit, OnDestroy {
 
   onSubmitNewRental() {
     if (this.accountService.user.roleid > 1) {
+      this.newRental.rentedFromDate = new Date;
       this.newRental.userid = this.accountService.user.id;
-      this.rentalService.addRental(this.newRental)
+      console.log(this.newRental)
+      this.rentalService.addRental(this.newRental).subscribe()
       this.presentToast()
     }
   }
@@ -61,6 +63,16 @@ export class RegisterNewRentalPage implements OnInit, OnDestroy {
       position: 'top'
     });
 
+    await toast.present();
+  }
+
+
+  async presentErrorToast() {
+    const toast = await this.toastController.create({
+      message: '<span><img src="../../../assets/icons/register-rental.svg"></img> <p>Noe gikk galt!</p></span>',
+      duration: 3000,
+      position: 'top'
+    });
     await toast.present();
   }
 

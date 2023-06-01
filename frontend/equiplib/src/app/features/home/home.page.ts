@@ -6,7 +6,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { RentService } from 'src/app/services/rent.service';
 import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
-import { AlertController } from '@ionic/angular'
+import { AlertController, PopoverController } from '@ionic/angular'
 import { LoadingController } from '@ionic/angular';
 
 class Filter {
@@ -31,10 +31,12 @@ export class HomePage implements OnInit {
   locations!: Observable<Location[]>
   tags!: Observable<Tag[]>
   rentedEquipmentIds: number[] = [];
+  isSelectedTag: boolean[] = [];
 
   filter: Filter = new Filter();
 
 	constructor(
+    private popoverController: PopoverController,
     private loadingController: LoadingController,
     private alertController: AlertController,
     public locationService: LocationService,
@@ -74,6 +76,10 @@ export class HomePage implements OnInit {
     }
   }
 
+  trackByFn(index: number, equipment: Equipment): number {
+    return equipment.id;
+  }
+
   getFilteredEquipment(filter: Filter): Observable<Equipment[]> {
     let filteredEquipments = this.equipments;
 
@@ -108,22 +114,6 @@ export class HomePage implements OnInit {
     return locations.find(item => item.id === equipid);
   }
 
-  onOpenQrScanner() {
-    this.openQrCode = true;
-  }
-
-  scanSuccessHandler(scanValue: string) {
-    console.log(scanValue)
-    this.enterPinCode = true;
-    this.QrCode = scanValue;
-    console.log(scanValue)
-    return this.scanSuccessHandler
-  }
-
-  scanErrorHandler(scanError: any) {
-    console.log(scanError)
-  }
-
   handleTagFilterChange(event: any)
   {
       this.filter.tagids = event.target.value
@@ -135,13 +125,20 @@ export class HomePage implements OnInit {
       this.onFilterChanged()
   }
 
-  filterOnTags(tag: Tag): void {
+  async filterOnTags(tag: Tag): Promise<void> {
     const tagIndex = this.filter.tagids.indexOf(tag.id);
     if (tagIndex > -1) {
-      this.filter.tagids.splice(tagIndex, 1); // Remove tag from the filter
+      this.filter.tagids.splice(tagIndex, 1);
     } else {
-      this.filter.tagids.push(tag.id); // Add tag to the filter
+      this.filter.tagids.push(tag.id);
     }
+
+    const tags = await this.tags.toPromise(); // Extract the value from Observable
+
+    this.isSelectedTag = tags.map((tag: Tag) =>
+      this.filter.tagids.includes(tag.id)
+    );
+
     this.onFilterChanged();
   }
 
@@ -152,10 +149,6 @@ export class HomePage implements OnInit {
 
   openFilter() {
     this.openFilterAlert()
-  }
-
-  openTagFilter() {
-
   }
 
   async openFilterAlert() {

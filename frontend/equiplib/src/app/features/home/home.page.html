@@ -13,19 +13,11 @@
           <ng-template class="tag-popover-content">
             <div class="tag-list">
               <div class="tag-row">
-                <app-tag *ngFor="let tag of tags | async; let i = index" name="{{ tag.name }}" color="{{ tag.color }}" (click)="filterOnTags(tag)"></app-tag>
+                <app-tag *ngFor="let tag of tags | async; let i = index" name="{{ tag.name }}" color="{{ tag.color }}" [checked]="isSelectedTag[i]" (click)="filterOnTags(tag)"></app-tag>
               </div>
             </div>
           </ng-template>
         </ion-popover>
-
-        <ion-select aria-label="tag filter" (ionChange)="handleTagFilterChange($event)" color="success" placeholder="Tags" [multiple]="true">
-          <ion-select-option color="success" *ngFor="let tag of tags | async" [value]="tag.id">
-            <ion-item>
-              <app-tag name="{{ tag.name }}" color="{{ tag.color }}"></app-tag>
-            </ion-item>
-          </ion-select-option>
-        </ion-select>
 
         <ion-searchbar (ionInput)="handleSearchFilterChange($event)" value="" animated="true" placeholder="Søk" show-clear-button="always" clear-icon="trash-bin"></ion-searchbar>
         <ion-button (click)="openFilter()">
@@ -35,7 +27,7 @@
     </ion-list>
 
     <ion-list>
-      <ion-accordion-group expand="inset" *ngFor="let equipment of observables.filteredEquipments">
+      <ion-accordion-group expand="inset" *ngFor="let equipment of observables.filteredEquipments;trackBy: trackByFn">
         <app-equipment
           [equipment]="equipment"
           [isCurrentlyAvailable]="!rentedEquipmentIds.includes(equipment.id)"

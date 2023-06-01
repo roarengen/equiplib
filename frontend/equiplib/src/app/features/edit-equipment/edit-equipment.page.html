@@ -4,7 +4,10 @@
       <h2 class="form-title">Redigering av {{editEquipment.name}}</h2>
     </div>
 
-    <ion-text>Tags</ion-text>
+    <ion-item class="form-item">
+      <ion-text>Tags</ion-text>
+    </ion-item>
+
     <div class="form-input-block">
       <div slot="content">
         <app-tag *ngFor="let tag of equiptags; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag(tag, i)"></app-tag>
@@ -59,6 +62,7 @@
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.other3name}}:</ion-label>
         <ion-textarea [(ngModel)]="editEquipment.comment" placeholder="Ingen kommentar satt" [autoGrow]="true" name="comment">
         </ion-textarea>
       </ion-item>
