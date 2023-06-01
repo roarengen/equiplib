@@ -26,8 +26,8 @@ def delete_org(db: Session, orgid : int) -> None:
     db.delete(org)
     db.commit()
 
-def update_org(db: Session, id: int, **kwargs):
-    org = db.query(Organization).filter(Organization.id == id).first()
+def update_org(db: Session, orgid: int, **kwargs):
+    org = db.query(Organization).filter(Organization.id == orgid).first()
     for key, value in kwargs.items():
         if value != None:
             setattr(org, key, value)

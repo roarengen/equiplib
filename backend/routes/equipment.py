@@ -19,7 +19,7 @@ def get_equips(db : Session = Depends(get_db)):
     return crud.get_equips(db)
 
 @api.put("/{id}", response_model=Equipment, dependencies=[Depends(require_admin)])
-def put_equipment(id: int, equipment_info: Equipment, db: Session = Depends(get_db)):
+def put_equipment(id: int, equipment_info: EquipmentPatch, db: Session = Depends(get_db)):
     return crud.update_equip(db, id, **equipment_info.dict())
 
 @api.patch("/{id}", response_model=Equipment, dependencies=[Depends(require_admin)])
@@ -34,7 +34,7 @@ def get_equips_by_org(orgid: int = Depends(require_user_to_be_in_org), db : Sess
 def get_equip(id: int, db : Session = Depends(get_db)):
     equip = crud.get_equip(db, id)
     if not equip:
-        logger.debug(f"requested equipment with id: {equip.id} but was not found")
+        logger.debug(f"requested equipment with id: {id} but was not found")
         return HTTPException(status_code=404, detail="equip not found")
     return equip
 
@@ -63,4 +63,28 @@ def add_tag_to_equip(equipid: int, tagid:int, db: Session = Depends(get_db)):
 @api.post("/{equipid}/rmtag/{tagid} ", response_model=Equipment, dependencies=[Depends(require_lender)])
 def remove_tag_from_equip(equipid: int, tagid:int, db: Session = Depends(get_db)):
     return crud.remove_tag_from_equip(db, equipid, tagid)
+
+@api.patch("/{id}/addtags", response_model=Equipment, dependencies=[Depends(require_admin)])
+def add_tags_to_equip(id: int, tagids: list[int], db: Session = Depends(get_db)):
+    equipment = crud.get_equip(db, id)
+    if not equipment:
+        return HTTPException(404)
+    tags = crud.get_tags_by_orgid(db, equipment.organizationid)
+    tags_to_add = []
+    if tags and tagids:
+        for tagid in tagids:
+            for tag in tags:
+                if tag.id == tagid:
+                    tags_to_add.append(tag)
+
+
+    equipment.tags = []
+    db.commit()
+    db.refresh(equipment)
+    for tag in list(set(tags_to_add)):
+        equipment.tags.append(tag)
+        db.commit()
+        db.refresh(equipment)
+
+    return equipment
 

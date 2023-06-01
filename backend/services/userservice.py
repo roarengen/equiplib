@@ -22,10 +22,10 @@ def get_users(db: Session, skip: int=0, limit: int= 100) -> list[User]:
 def get_users_with_role(db: Session, roleid: int) -> list[User]:
     return db.query(User).filter(User.roleid == roleid).all()
 
-def update_user(db: Session, id: int, **kwargs):
-    user = db.query(User).filter(User.id == id).first()
+def update_user(db: Session, user_id: int, **kwargs):
+    user = db.query(User).filter(User.id == user_id).first()
     for key, value in kwargs.items():
-        if value != None:
+        if value != None and hasattr(user, key):
             setattr(user, key, value)
     db.commit()
     db.refresh(user)

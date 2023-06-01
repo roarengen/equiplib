@@ -9,6 +9,7 @@ class OrganizationBase(OrganizationHeader):
     phone: str | None = None
     city : str | None = None
     postalcode : str | None = None
+    address : str | None = None
     comment : str | None = None
     otherId : str | None = None
     other1 : str | None = None
