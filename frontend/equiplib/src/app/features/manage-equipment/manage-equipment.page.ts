@@ -85,10 +85,12 @@ export class ManageEquipmentPage implements OnInit {
 
     async validateInformation(){
       const actionSheet = await this.actionSheetCtrl.create({
-        cssClass: 'validateInformation',
+        cssClass: 'register-equipment',
         header: 'Sjekk at feltene stemmer',
         buttons: [
           {
+
+            cssClass: 'action-sheet-button proceed',
             text: 'Riktig',
             handler: () => {
               actionSheet.dismiss();
@@ -96,6 +98,7 @@ export class ManageEquipmentPage implements OnInit {
             }
           },
           {
+            cssClass: 'action-sheet-button dismiss',
             text: 'Gjør endringer',
             role: 'cancel',
             handler: () => {
@@ -109,10 +112,11 @@ export class ManageEquipmentPage implements OnInit {
 
     async downloadQRCodeOption(){
       const actionSheet = await this.actionSheetCtrl.create({
-        cssClass: 'validateInformation',
+        cssClass: 'register-equipment',
         header: 'Vil du laste ned QR-koden?',
         buttons: [
           {
+            cssClass: 'action-sheet-button proceed',
             text: 'Ja',
             handler: () => {
               this.makeQrBlob();
@@ -123,6 +127,7 @@ export class ManageEquipmentPage implements OnInit {
             }
           },
           {
+            cssClass: 'action-sheet-button dismiss',
             text: 'Nei',
             handler: () => {
               this.onSubmitNewEquipment();
@@ -132,6 +137,7 @@ export class ManageEquipmentPage implements OnInit {
             }
           },
           {
+            cssClass: 'action-sheet-button dismiss',
             text: 'Kanseller registrering',
             handler: () => {
               actionSheet.dismiss();
