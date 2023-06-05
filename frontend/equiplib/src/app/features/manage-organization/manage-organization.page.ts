@@ -60,6 +60,7 @@ export class ManageOrganizationPage implements OnInit {
       cssClass: 'register-equipment',
       buttons: [
         {
+          cssClass: 'action-sheet-button proceed',
           text: 'Utfør endringer',
           handler: () => {
             this.hasEditedOrganization = true;
@@ -69,6 +70,7 @@ export class ManageOrganizationPage implements OnInit {
         },
         {
           text: 'Rediger videre',
+          cssClass: 'action-sheet-button dismiss',
           role: 'cancel',
           handler: () => {
             actionSheet.dismiss();
