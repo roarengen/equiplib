@@ -57,7 +57,7 @@ export class ManageOrganizationPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Kontroller dine endringer',
-      cssClass: 'validateInformation',
+      cssClass: 'register-equipment',
       buttons: [
         {
           text: 'Utfør endringer',

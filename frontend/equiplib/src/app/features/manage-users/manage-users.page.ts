@@ -69,9 +69,10 @@ export class ManageUsersPage implements OnInit {
     }
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Sjekk at feltene stemmer',
-      cssClass: 'validateInformation',
+      cssClass: 'register-equipment',
       buttons: [
         {
+          cssClass: 'action-sheet-button proceed',
           text: 'Riktig, last ned QR',
           handler: () => {
             this.hasSubmittedNewUser = true;
@@ -80,6 +81,7 @@ export class ManageUsersPage implements OnInit {
           }
         },
         {
+          cssClass: 'action-sheet-button dismiss',
           text: 'Gjør endringer',
           role: 'cancel',
           handler: () => {
