@@ -80,12 +80,12 @@
 	--ion-color-warning-shade: #e0ac08;
 	--ion-color-warning-tint: #ffca22;
 
-	--ion-color-danger: #eb445a;
-	--ion-color-danger-rgb: 235,68,90;
-	--ion-color-danger-contrast: #ffffff;
-	--ion-color-danger-contrast-rgb: 255,255,255;
-	--ion-color-danger-shade: #cf3c4f;
-	--ion-color-danger-tint: #ed576b;
+	--ion-color-danger: #f85149;
+	--ion-color-danger-rgb: 248,81,73;
+	--ion-color-danger-contrast: #000000;
+	--ion-color-danger-contrast-rgb: 0,0,0;
+	--ion-color-danger-shade: #da4740;
+	--ion-color-danger-tint: #f9625b;
 
 	--ion-color-medium: #92949c;
 	--ion-color-medium-rgb: 146,148,156;
@@ -100,6 +100,20 @@
 	--ion-color-light-contrast-rgb: 0,0,0;
 	--ion-color-light-shade: #d7d8da;
 	--ion-color-light-tint: #f5f6f9;
+
+	--ion-color-edit-button: #454545;
+	--ion-color-edit-button-rgb: 69,69,69;
+	--ion-color-edit-button-contrast: #ffffff;
+	--ion-color-edit-button-contrast-rgb: 255,255,255;
+	--ion-color-edit-button-shade: #3d3d3d;
+	--ion-color-edit-button-tint: #585858;
+
+  --ion-color-edit-button-border: #631313;
+	--ion-color-edit-button-border-rgb: 99,19,19;
+	--ion-color-edit-button-border-contrast: #ffffff;
+	--ion-color-edit-button-border-contrast-rgb: 255,255,255;
+	--ion-color-edit-button-border-shade: #571111;
+	--ion-color-edit-button-border-tint: #732b2b;
 
   ion-alert {
 
@@ -202,8 +216,33 @@
 
     --ion-card-background: #1e1e1e;
 
+    --ion-color-edit-button: #696969;
+    --ion-color-edit-button-rgb: 105,105,105;
+    --ion-color-edit-button-contrast: #ffffff;
+    --ion-color-edit-button-contrast-rgb: 255,255,255;
+    --ion-color-edit-button-shade: #5c5c5c;
+    --ion-color-edit-button-tint: #787878;
 
 
   }
 
+}
+
+  
+.ion-color-edit-button {
+	--ion-color-base: var(--ion-color-edit-button);
+	--ion-color-base-rgb: var(--ion-color-edit-button-rgb);
+	--ion-color-contrast: var(--ion-color-edit-button-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-edit-button-contrast-rgb);
+	--ion-color-shade: var(--ion-color-edit-button-shade);
+	--ion-color-tint: var(--ion-color-edit-button-tint);
+}
+
+.ion-color-edit-button-border {
+	--ion-color-base: var(--ion-color-edit-button-border);
+	--ion-color-base-rgb: var(--ion-color-edit-button-border-rgb);
+	--ion-color-contrast: var(--ion-color-edit-button-border-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-edit-button-border-contrast-rgb);
+	--ion-color-shade: var(--ion-color-edit-button-border-shade);
+	--ion-color-tint: var(--ion-color-edit-button-border-tint);
 }

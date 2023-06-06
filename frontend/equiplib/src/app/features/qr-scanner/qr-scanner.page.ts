@@ -7,7 +7,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { Equipment } from 'src/app/models/equipment';
-import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { FlashlightService } from 'src/app/services/flashlight.service';
 
 
@@ -25,7 +25,7 @@ export class QrScannerPage implements OnInit {
 
   constructor(
   public flashlightService: FlashlightService,
-  public filterEquipmentService: FilterEquipmentService,
+  public FilterService: FilterService,
   public alertController: AlertController,
   private equipmentService: EquipmentService,
   private rentService: RentService,
@@ -64,8 +64,8 @@ export class QrScannerPage implements OnInit {
         const foundEquip = checkEquip.find(equip => equip.id === Number(scanValue));
 
         if (foundRent && !this.scannerIsEnabled) {
-          this.filterEquipmentService.data = foundRent;
-          console.log(this.filterEquipmentService.data)
+          this.FilterService.data = foundRent;
+          console.log(this.FilterService.data)
           const alert = await this.alertController.create({
             header: 'Vil du returnere utleien?',
             buttons: [
@@ -87,7 +87,7 @@ export class QrScannerPage implements OnInit {
           });
           alert.present();
         } else if (!foundRent && foundEquip) {
-          this.filterEquipmentService.data = scanValue;
+          this.FilterService.data = scanValue;
           const alert = await this.alertController.create({
             header: 'Vil du registrere ny utleie eller endre lokasjonen på utstyret?',
             buttons: [

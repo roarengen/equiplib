@@ -1,0 +1,87 @@
+ion-select {
+  color: white;
+  background-color: #272B2F;
+}
+
+.form-title {
+  color: #ffffff;
+  background-color: #272B2F;
+  text-align: center;
+  padding: 20px 0 20px 0;
+  font-weight: 500;
+  border-radius: 10px;
+}
+
+ion-item {
+  --border-color: var(--ion-text-color);
+}
+
+.form-title-block {
+  margin-top: 3rem;
+  border-radius: 10px;
+  background-color: #272B2F;
+}
+
+.form-input-block {
+  border-radius: 10px;
+  background-color: #272B2F;
+  padding: 10px 0 10px 0;
+}
+
+ion-input {
+  --ion-color-input-background: #272B2F;
+}
+
+.form-button {
+  font-weight: 500;
+  padding: 0 15px;
+  width: fit-content;
+  border-radius: 10px;
+}
+
+.form-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ion-button {
+  background-color: var(--ion-color-tertiary);
+  --box-shadow: none;
+}
+
+.grid-item
+{
+  border-radius: 10px;
+  background-color: #272B2F;
+  padding: 10px -5px 10px -5px;
+  --ion-color-input-background: #272B2F;
+}
+.validateInformation {
+  --background: transparent;
+  --backdrop-opacity: 0;
+}
+
+.button-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+}
+
+.button-add ion-icon {
+  font-size: 24px; /* Adjust as needed */
+  margin: 0;
+  padding: 0;
+}
+
+.tag-popover-content {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.tag-list {
+  padding: 8px;
+}

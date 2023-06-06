@@ -3,20 +3,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { EquipmentComponent } from './equipment.component';
+import { EditButtonComponent } from './edit-button.component';
 import { TagModule } from '../tag/tag.module';
-import { EditButtonModule } from '../edit-button/edit-button.module';
 
 @NgModule({
-  declarations: [ EquipmentComponent ],
+  declarations: [ EditButtonComponent ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     TagModule,
-    EditButtonModule,
   ],
-  exports: [EquipmentComponent]
+  exports: [EditButtonComponent]
 })
-export class EquipmentModule { }
+export class EditButtonModule { }
 

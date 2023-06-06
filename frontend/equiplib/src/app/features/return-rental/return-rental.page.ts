@@ -5,7 +5,7 @@ import { Rent, returnRent } from 'src/app/models/rent';
 import { Equipment } from '../../models/equipment';
 import { AccountService } from 'src/app/services/user.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
-import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { User } from 'src/app/models/user';
 import { RentService } from 'src/app/services/rent.service';
 import { ToastController } from '@ionic/angular';
@@ -36,7 +36,7 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
     public locationService: LocationService,
     private http: CustomHttpClient,
     private toastController: ToastController,
-    public getEquipmentIdService: FilterEquipmentService,
+    public getEquipmentIdService: FilterService,
     public accountService: AccountService,
     public equipmentService: EquipmentService,
     public rentalService: RentService
@@ -46,7 +46,6 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.getEquipmentIdService.data)
       this.accountService.getById(this.getEquipmentIdService.data.userid.toString()).subscribe(selectedUser =>
         this.selectUser = selectedUser
         )

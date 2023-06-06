@@ -1,3 +1,4 @@
+import { EditButtonModule } from './../../components/edit-button/edit-button.module';
 import { PipesModule } from './user-filter.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,7 +15,8 @@ import { TagModule } from 'src/app/components/tag/tag.module';
     FormsModule,
     IonicModule,
     ManageOrganizationPageRoutingModule,
-    TagModule
+    TagModule,
+    EditButtonModule
   ],
   declarations: [ManageOrganizationPage]
 })

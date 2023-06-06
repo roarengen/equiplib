@@ -5,7 +5,7 @@ import { Rent } from 'src/app/models/rent';
 import { Equipment } from './../../models/equipment';
 import { AccountService } from 'src/app/services/user.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
-import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { User } from 'src/app/models/user';
 import { RentService } from 'src/app/services/rent.service';
 import { ToastController } from '@ionic/angular';
@@ -28,7 +28,7 @@ export class RegisterNewRentalPage implements OnInit, OnDestroy {
 
   constructor(
     private toastController: ToastController,
-    public getEquipmentIdService: FilterEquipmentService,
+    public getEquipmentIdService: FilterService,
     public accountService: AccountService,
     public equipmentService: EquipmentService,
     public rentalService: RentService

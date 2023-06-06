@@ -6,7 +6,9 @@ import { Equipment, Tag } from 'src/app/models/equipment';
 import { TemplateService } from 'src/app/services/template.service';
 import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ToastController } from '@ionic/angular';
+import { FilterService } from 'src/app/services/filter.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-equipment',
@@ -23,6 +25,9 @@ export class EditEquipmentPage implements OnInit {
   public equiptags: any;
 
   constructor(
+  public router: Router,
+  public toastController: ToastController,
+  public filterService: FilterService,
   public accountService: AccountService,
   public locationService: LocationService,
   public equipmentService?: EquipmentService,
@@ -34,7 +39,7 @@ export class EditEquipmentPage implements OnInit {
     this.tags = equipmentService.getAllTags(this.accountService.user.organizationid);
   }
   ngOnInit() {
-    this.selectedEquipment = this.equipmentService.getEquipment(Number(1));
+    this.selectedEquipment = this.equipmentService.getEquipment(this.filterService.data);
     this.selectedEquipment.subscribe(equipment => {
     this.editEquipment = equipment;
     this.equiptags = equipment.tags.map((tag: any) => {
@@ -57,7 +62,16 @@ export class EditEquipmentPage implements OnInit {
     this.editEquipment.tags = this.equiptags;
     this.equipmentService.updateEquip(this.editEquipment)
     this.equipmentService.addTagsToEquip(this.editEquipment, this.equiptags.map((tag: any) => tag.id))
+    this.presentToast()
+    this.router.navigate(['/home']);
   }
 
-  selectedNewTag() {}
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: this.editEquipment.name + ' er redigert!',
+      duration: 3000,
+      position: 'top'
+    });
+    await toast.present();
+  }
 }

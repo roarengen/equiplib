@@ -39,12 +39,6 @@ export class ManageEquipmentPage implements OnInit {
     ngOnInit() {
       this.form = this.formBuilder.group({
         name: ['', Validators.required],
-        model: ['', Validators],
-        type: ['', Validators],
-        serialnumber: ['', Validators],
-        other1: ['', Validators],
-        other2: ['', Validators],
-        other3: ['', Validators],
       })
     }
 
@@ -125,6 +119,7 @@ export class ManageEquipmentPage implements OnInit {
               this.onSubmitNewEquipment();
               this.presentToast();
               actionSheet.dismiss();
+              this.router.navigate(['/home']);
             }
           },
           {

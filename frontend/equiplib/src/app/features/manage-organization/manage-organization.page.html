@@ -44,8 +44,10 @@
               </ion-item>
           </div>
           <div class="form-button-container">
-            <ion-button class="form-button" (click)="validateInformation()">
+            <ion-button color="tertiary" class="form-button" (click)="validateInformation()">
+              <div class="button-font">
               Lagre
+            </div>
             </ion-button>
           </div>
         </form>
@@ -70,6 +72,10 @@
                     <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
+                    <div class="button-content">
+                      <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+                      <app-edit-button [deleteButton]="true" ></app-edit-button>
+                  </div>
                   </ion-card>
                 </ng-container>
                 </ng-container>
@@ -89,6 +95,10 @@
                     <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
+                    <div class="button-content">
+                      <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+                      <app-edit-button [deleteButton]="true" ></app-edit-button>
+                  </div>
                   </ion-card>
                 </ng-container>
                 </ng-container>
@@ -108,6 +118,10 @@
                     <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
+                    <div class="button-content">
+                      <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+                      <app-edit-button [deleteButton]="true" ></app-edit-button>
+                  </div>
                   </ion-card>
                 </ng-container>
                 </ng-container>
@@ -127,8 +141,10 @@
                     <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
-                    <ion-button><ion-icon name="trash-outline"></ion-icon></ion-button>
-                    <ion-button><ion-icon name="create-outline"></ion-icon></ion-button>
+                    <div class="button-content">
+                      <app-edit-button [href]="'/edituser'" [editButton]="true" [setFilterServiceId]="user.id"></app-edit-button>
+                      <app-edit-button [deleteButton]="true" ></app-edit-button>
+                  </div>
                   </ion-card>
                 </ng-container>
                 </ng-container>
@@ -136,7 +152,7 @@
                 </div>
             </ion-accordion>
           </ion-accordion-group>
-          <ion-button expand="block" routerLink='/manageusers'>Legg til ny bruker<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
+          <ion-button color="tertiary" expand="block" routerLink='/manageusers'><div class="button-font">Legg til ny bruker<ion-icon slot="end" name="add-circle-outline"></ion-icon></div></ion-button>
         </div>
       </ion-accordion>
       <ion-accordion>
@@ -157,7 +173,7 @@
             </ion-card>
           </ng-container>
 
-          <ion-button expand="block" (click)="presentAlertPrompt()">Legg til lokasjon<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
+          <ion-button color="tertiary" expand="block" (click)="presentAlertPrompt()"><div class="button-font">Legg til Lokasjon<ion-icon slot="end" name="add-circle-outline"></ion-icon></div></ion-button>
 
         </ion-list>
       </div>
@@ -170,7 +186,7 @@
         <div class="tag-container">
           <app-tag *ngFor="let tag of tags | async ; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag( i )"></app-tag>
         </div>
-          <ion-button class="add-tag-button"expand="block" routerLink='/addtag'>Legg til tag<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
+          <ion-button color="tertiary" class="add-tag-button"expand="block" routerLink='/addtag'><div class="button-font">Legg til Tag<ion-icon slot="end" name="add-circle-outline"></ion-icon></div></ion-button>
       </div>
       </ion-accordion>
     </ion-accordion-group>
