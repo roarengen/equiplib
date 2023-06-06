@@ -2,49 +2,38 @@
   <div *ngIf="loading" class="home-loading">
     <ion-spinner></ion-spinner>
   </div>
-<ion-item-group style="margin-top: 3rem"
-    *ngIf="{
-      listedequipments: filteredEquipments | async,
-      locations: locations | async
-    } as observables"
->
-  <ion-list>
-  <ion-item>
 
-    <ion-select
-      aria-label="tag filter"
-      (ionChange)="handleTagFilterChange($event)"
-      color="success"
-      placeholder="Velg tag" [multiple]="true">
-      <ion-select-option
-        color="success"
-        *ngFor="let tag of tags | async"
-        value="{{tag.id}}">
-        {{tag.name}}
-      </ion-select-option>
-    </ion-select>
+  <ion-item-group style="margin-top: 3rem" *ngIf="{ filteredEquipments: filteredEquipments | async, locations: locations | async } as observables">
+    <ion-list>
+      <ion-item>
+        <ion-button id="filter-tag">
+          <ion-icon slot="icon-only" name="pricetags-outline"></ion-icon>
+        </ion-button>
+        <ion-popover trigger="filter-tag" triggerAction="click">
+          <ng-template class="tag-popover-content">
+            <div class="tag-list">
+              <div class="tag-row">
+                <app-tag *ngFor="let tag of tags | async; let i = index" name="{{ tag.name }}" color="{{ tag.color }}" [checked]="isSelectedTag[i]" (click)="filterOnTags(tag)"></app-tag>
+              </div>
+            </div>
+          </ng-template>
+        </ion-popover>
 
-    <ion-searchbar
-    (ionInput)= "handleSearchFilterChange($event)"
-    value=""
-    animated="true"
-    placeholder="Søk"
-    show-clear-button="always"
-    clear-icon="trash-bin">
-    </ion-searchbar>
-    <ion-button (click)= "openFilter()">
-      <ion-icon slot="icon-only" src="../../../../assets/icons/filter.svg"></ion-icon>
-    </ion-button>
-  </ion-item>
-</ion-list>
-  <ion-list>
-    <ion-accordion-group expand="inset" *ngFor="let equipment of observables.listedequipments">
-      <app-equipment
-      [equipment]="equipment"
-      [isCurrentlyAvailable]=!rentedEquipmentIds.includes(equipment.id)
-      [location]=getLocationForEquipment(equipment.locationid,observables.locations)
-      ></app-equipment>
-  </ion-accordion-group>
-  </ion-list>
-</ion-item-group>
+        <ion-searchbar (ionInput)="handleSearchFilterChange($event)" value="" animated="true" placeholder="Søk" show-clear-button="always" clear-icon="trash-bin"></ion-searchbar>
+        <ion-button (click)="openFilter()">
+          <ion-icon slot="icon-only" src="../../../../assets/icons/filter.svg"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-accordion-group expand="inset" *ngFor="let equipment of observables.filteredEquipments;trackBy: trackByFn">
+        <app-equipment
+          [equipment]="equipment"
+          [isCurrentlyAvailable]="!rentedEquipmentIds.includes(equipment.id)"
+          [location]="getLocationForEquipment(equipment.locationid, observables.locations)"
+        ></app-equipment>
+      </ion-accordion-group>
+    </ion-list>
+  </ion-item-group>
 </ion-content>

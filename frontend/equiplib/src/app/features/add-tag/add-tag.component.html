@@ -3,24 +3,35 @@
     <div class="form-title-block">
       <h2 class="form-title">Legg til ny tag</h2>
     </div>
-
     <div class="form-input-block">
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Navn:</ion-label>
         <ion-input [(ngModel)]="newTag.name" [clearInput]="true" ngModel required></ion-input>
       </ion-item>
 
-      <div style="display:flex; align-items:center;padding:12px">
+      <div class="form-body">
+        <div>
+          <ion-icon
+            name="color-palette-outline"
+            size="large"
+            [(colorPicker)]="newTag.color"
+            [cpPresetColors]="presetcolors"
+            [cpAlphaChannel]="'disabled'"
+            />
+        </div>
         <app-tag name="{{newTag.name ?? newTag.name || 'ny tag'}}" color="{{newTag.color}}"></app-tag>
-        <ion-icon
-          name="color-filter-outline"
-          [(colorPicker)]="newTag.color"
-          [cpPresetColors]="presetcolors" 
-          [cpAlphaChannel]="'disabled'"
-          />
+
+        <div>
+          <ion-icon
+            name="color-filter-outline"
+            [(colorPicker)]="newTag.color"
+            [cpPresetColors]="presetcolors"
+            [cpAlphaChannel]="'disabled'"
+            />
+        </div>
       </div>
     </div>
-</form>
+  </form>
   <div class="form-button-container">
     <ion-button class="form-button" color="register" (click)="submit()">
       Registrer

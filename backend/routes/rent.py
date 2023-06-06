@@ -35,14 +35,14 @@ def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
     if rent.deliveredToLocation != None:
         if not locationservice.get_location(db, rent.deliveredToLocation):
             raise HTTPException(400, "no location to deliver to found with that id")
-    
+
     return crud.create_rent(db, rent)
 
 @api.get("/current/{orgid}", response_model=list[Rent], dependencies=[Depends(require_admin)])
 def get_currently_rented(orgid: int, db: Session = Depends(get_db)):
     rents = crud.get_rents_by_orgid(db, orgid)
     if rents:
-        return list(filter(lambda x: x.rentedToDate == None,rents))
+        return list(filter(lambda x: x.rentedToDate == None, rents))
 
     else: return []
 
@@ -89,16 +89,10 @@ def get_rents_by_userid(userid: int, db: Session = Depends(get_db), user = Depen
             return HTTPException(status_code=401, detail="no rents not found for this user")
     return rents
 
-@api.post("/return", response_model=list[Rent])
+@api.post("/return", response_model=Rent)
 def return_rent(return_rent: RentReturn, db: Session = Depends(get_db), user = Depends(require_user)):
-    rent = crud.return_rent(db,
-                    return_rent.id,
-                    return_rent.locationid,
-                    return_rent.userid,
-                    return_rent.returndate,
-                    )
+    rent = crud.return_rent(db, return_rent, user)
     if not rent:
         HTTPException(404, "rent not found")
-
     return rent
 

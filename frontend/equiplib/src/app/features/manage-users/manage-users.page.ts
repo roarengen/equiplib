@@ -40,6 +40,16 @@ export class ManageUsersPage implements OnInit {
       await toast.present();
     }
 
+    async presentErrorToast() {
+      const toast = await this.toastController.create({
+        message: '<img src="../../../assets/icons/warning-icon.svg"> <p>Noe gikk galt med å registrere brukeren.</p>',
+        duration: 4000,
+        position: 'bottom'
+      });
+
+      await toast.present();
+    }
+
   dataURItoBlob(dataURI: string) {
     const byteString = atob(dataURI.split(',')[1]);
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
@@ -66,7 +76,6 @@ export class ManageUsersPage implements OnInit {
           handler: () => {
             this.hasSubmittedNewUser = true;
             this.onSubmitNewUser();
-            this.presentToast();
             actionSheet.dismiss();
           }
         },
@@ -94,10 +103,18 @@ export class ManageUsersPage implements OnInit {
 
     this.newUser.organizationid = this.accountService.user.organizationid
     this.newUser.roleid = 1;
-    this.http.post(`${environment.apiUrl}/users/`, this.newUser).subscribe()
+    this.http.post(`${environment.apiUrl}/users/`, this.newUser).subscribe((response: number) =>
+    {if (response === 200) {
+      this.presentToast();
+    }
+    }
+
+    )
   }
   else {
     console.log("Invalid role")
   }
   }
+
+
 }

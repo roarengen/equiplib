@@ -35,7 +35,6 @@ export class QrScannerPage implements OnInit {
   )
   {
 
-    this.rentals = this.rentService.fetchRentsByOrg(this.accountService.user.organizationid)
     this.equipmentList = this.equipmentService.getAllEquipment(this.accountService.user.organizationid)
   }
 
@@ -53,6 +52,10 @@ export class QrScannerPage implements OnInit {
     this.scannerIsEnabled = true;
   }
 
+  ionViewWillEnter() {
+    this.rentals = this.rentService.getCurrentActiveRentals(this.accountService.user.organizationid)
+  }
+
   async scanSuccessHandler(scanValue: string) {
     this.scannerIsEnabled = false;
     this.rentals.subscribe(async rentals => {
@@ -61,7 +64,8 @@ export class QrScannerPage implements OnInit {
         const foundEquip = checkEquip.find(equip => equip.id === Number(scanValue));
 
         if (foundRent && !this.scannerIsEnabled) {
-          this.filterEquipmentService.data = scanValue;
+          this.filterEquipmentService.data = foundRent;
+          console.log(this.filterEquipmentService.data)
           const alert = await this.alertController.create({
             header: 'Vil du returnere utleien?',
             buttons: [

@@ -6,7 +6,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { RentService } from 'src/app/services/rent.service';
 import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
-import { AlertController } from '@ionic/angular'
+import { AlertController, PopoverController } from '@ionic/angular'
 import { LoadingController } from '@ionic/angular';
 
 class Filter {
@@ -31,10 +31,12 @@ export class HomePage implements OnInit {
   locations!: Observable<Location[]>
   tags!: Observable<Tag[]>
   rentedEquipmentIds: number[] = [];
+  isSelectedTag: boolean[] = [];
 
   filter: Filter = new Filter();
 
 	constructor(
+    private popoverController: PopoverController,
     private loadingController: LoadingController,
     private alertController: AlertController,
     public locationService: LocationService,
@@ -74,56 +76,44 @@ export class HomePage implements OnInit {
     }
   }
 
-  getFilteredEquipment(filter: Filter): Observable<Equipment[]>
-  {
-    let filteredEquipments = new Observable<Equipment[]>
-    filteredEquipments = filter.tagids.length > 0 ? this.equipments.pipe(
-      map(
-        equipments => equipments.filter(
-          eq => filter.tagids.some(
-            tagid => eq.tags.some(
-              eqtag => eqtag.id == tagid))))): this.equipments
+  trackByFn(index: number, equipment: Equipment): number {
+    return equipment.id;
+  }
 
-    filteredEquipments = filter.name != "" ? filteredEquipments.pipe(
-      map(
-        equipments => equipments.filter(
-          equipment => equipment.name.toLocaleLowerCase().includes(filter.name.toLowerCase())
-        )
-      )
-    ): filteredEquipments
+  getFilteredEquipment(filter: Filter): Observable<Equipment[]> {
+    let filteredEquipments = this.equipments;
 
-    filter.onlyRented ? filteredEquipments.pipe(
-      map(
-        equipments => equipments.filter(
-          equipment => this.rentedEquipmentIds.includes(equipment.id)
-        )
-      )
-    ): filteredEquipments
+    if (filter.tagids.length > 0) {
+      filteredEquipments = filteredEquipments.pipe(
+        map(equipments => equipments.filter(eq => {
+          return eq.tags.some(eqtag => filter.tagids.includes(eqtag.id));
+        }))
+      );
+    }
 
+    if (filter.name !== "") {
+      filteredEquipments = filteredEquipments.pipe(
+        map(equipments => equipments.filter(equipment => {
+          return equipment.name.toLowerCase().includes(filter.name.toLowerCase());
+        }))
+      );
+    }
 
-    return filteredEquipments
+    if (filter.onlyRented) {
+      filteredEquipments = filteredEquipments.pipe(
+        map(equipments => equipments.filter(equipment => {
+          return this.rentedEquipmentIds.includes(equipment.id);
+        }))
+      );
+    }
 
+    return filteredEquipments;
   }
 
   getLocationForEquipment(equipid: number, locations: Location[]): Location {
     return locations.find(item => item.id === equipid);
   }
 
-  onOpenQrScanner() {
-    this.openQrCode = true;
-  }
-
-  scanSuccessHandler(scanValue: string) {
-    console.log(scanValue)
-    this.enterPinCode = true;
-    this.QrCode = scanValue;
-    console.log(scanValue)
-    return this.scanSuccessHandler
-  }
-
-  scanErrorHandler(scanError: any) {
-    console.log(scanError)
-  }
   handleTagFilterChange(event: any)
   {
       this.filter.tagids = event.target.value
@@ -133,6 +123,23 @@ export class HomePage implements OnInit {
   {
       this.filter.name = event.target.value
       this.onFilterChanged()
+  }
+
+  async filterOnTags(tag: Tag): Promise<void> {
+    const tagIndex = this.filter.tagids.indexOf(tag.id);
+    if (tagIndex > -1) {
+      this.filter.tagids.splice(tagIndex, 1);
+    } else {
+      this.filter.tagids.push(tag.id);
+    }
+
+    const tags = await this.tags.toPromise(); // Extract the value from Observable
+
+    this.isSelectedTag = tags.map((tag: Tag) =>
+      this.filter.tagids.includes(tag.id)
+    );
+
+    this.onFilterChanged();
   }
 
   onFilterChanged()

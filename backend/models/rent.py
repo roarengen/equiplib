@@ -24,8 +24,8 @@ class RentCreate(RentBase):
     pass
 
 class RentReturn(BaseModel):
-    id: int
+    rentid: int
     locationid: int
     userid: int
-    returndate: datetime 
+    returndate: datetime
 

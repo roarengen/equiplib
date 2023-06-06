@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, first, firstValueFrom } from 'rxjs';
 import { Location } from './../../models/location';
 import { LocationService } from 'src/app/services/location.service';
 import {Tag} from 'src/app/models/equipment';
@@ -84,6 +84,17 @@ export class ManageOrganizationPage implements OnInit {
       this.location.organizationid = this.accountService.user.organizationid;
       this.location.active = true;
       this.http.post(`${environment.apiUrl}/location/`, this.location).subscribe()
+    }
+  }
+
+  async removeTag(i) {
+    if (this.accountService.user.roleid > 3) {
+      const tagsArray = await firstValueFrom(this.tags);
+      tagsArray.splice(i, 1);
+      this.tags = new Observable<Tag[]>(subscriber => {
+        subscriber.next(tagsArray);
+        subscriber.complete()
+      })
     }
   }
 

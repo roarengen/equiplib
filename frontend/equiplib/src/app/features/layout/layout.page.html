@@ -47,9 +47,17 @@
         </ion-item>
         <ion-item class="clickable ion-activatable">
           <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/editequipment']"class="clickable ion-activatable">
+            <ion-icon src="../../../assets/icons/edit_equipment.svg"></ion-icon>
+              Rediger utstyr
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
           <button color="primary" ion-button size="large" [routerLink]="['/manageusers']"class="clickable ion-activatable">
             <ion-icon slot="start" name="person-add-outline"></ion-icon>
-            Legg til bruker
+              legg til bruker
           </button>
         </ion-menu-toggle>
         </ion-item>

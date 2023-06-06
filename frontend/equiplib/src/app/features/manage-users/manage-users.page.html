@@ -36,21 +36,11 @@
       </ion-item>
 
     <ion-item color="input-background">
-      <ion-label>Aktiv til:</ion-label>
-      <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
-      <ion-popover [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime  [(ngModel)]="newUser.activeToDate" id="datetime2"></ion-datetime>
-        </ng-template>
-      </ion-popover>
-    </ion-item>
-
-    <ion-item color="input-background">
       <ion-label>Fødselsdato:</ion-label>
       <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
       <ion-popover [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime [(ngModel)]="newUser.dateOfBirth" id="datetime"></ion-datetime>
+          <ion-datetime locale="nb" [showDefaultTitle]="true" max="2023" min="1900" presentation="date" dayShortNames="Søn,Man,Tir,Ons,Tor,Fre,Lør" displayFormat="YYYY-MM-DD"[(ngModel)]="newUser.dateOfBirth" id="datetime"></ion-datetime>
         </ng-template>
         </ion-popover>
       </ion-item>

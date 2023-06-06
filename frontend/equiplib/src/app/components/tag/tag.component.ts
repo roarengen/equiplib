@@ -8,11 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TagComponent  implements OnInit {
   @Input() name: string;
   @Input() color: string;
-
+  @Input() editable: boolean = false;
+  @Input() checked: boolean = false;
   alpha: string =  "7a"
 
   constructor() { }
 
   ngOnInit() {}
 
+  toggleChecked() {
+    this.checked = !this.checked;
+  }
 }

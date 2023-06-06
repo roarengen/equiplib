@@ -1,3 +1,10 @@
+.form-body {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem;
+}
+
 .form-title-block {
   margin-top: 3rem;
   border-radius: 10px;

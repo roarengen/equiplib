@@ -43,4 +43,14 @@ export class CustomHttpClient {
       headers: this.addBypass(this.createAuthorizationHeader())
     });
   }
+
+
+  patch<T>(url: string, data: any) {
+    if (this.token == undefined) return this.http.patch<T>(url, data, {
+        headers:this.addBypass(new HttpHeaders())
+    })
+    return this.http.patch<T>(url, data, {
+      headers: this.addBypass(this.createAuthorizationHeader())
+    });
+  }
 }

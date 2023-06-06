@@ -1,4 +1,5 @@
-<ion-chip 
+<ion-chip
+*ngIf="!editable && !checked"
 style="font-weight: 500;"
 [style.background]="color + alpha"
 [style.border]="'1px solid '+ color + 'ff'"
@@ -6,3 +7,27 @@ style="font-weight: 500;"
 >
 {{name}}
 </ion-chip>
+
+<ion-chip
+*ngIf="editable"
+style="font-weight: 500;"
+[style.background]="color + alpha"
+[style.border]="'1px solid '+ color + 'ff'"
+[style.color]="color + 'ff'"
+>
+{{name}}
+<ion-icon name="close-circle"></ion-icon>
+</ion-chip>
+
+<ion-chip
+*ngIf="checked && !editable"
+style="font-weight: 500;"
+[style.background]="color + alpha"
+[style.border]="'1px solid '+ color + 'ff'"
+[style.color]="color + 'ff'"
+(click)="toggleChecked()"
+>
+{{name}}
+<ion-icon name="checkmark-circle-outline"></ion-icon>
+</ion-chip>
+
