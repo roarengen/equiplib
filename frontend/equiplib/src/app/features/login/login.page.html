@@ -7,7 +7,6 @@
     <ion-text class="login-subtitle" color="primary-contrast" size="small">En enkel oversikt, for alt av utstyr.</ion-text>
     </ion-item>
     </ion-item-group>
-    
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ion-list class="form-group">
       <ion-item color="secondary">
@@ -20,7 +19,7 @@
         <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password"></ion-input>
       </ion-item>
     </ion-list>
-    <ion-text>
+    <ion-text class="link-container">
     <a class="link" [routerLink]="['/reset-password']">glemt passord?</a>
   </ion-text>
 
@@ -29,7 +28,6 @@
     Logg inn
     </ion-button>
   </form>
-  
 
   <ion-text>
     <p>Eller skann din QR kode</p>

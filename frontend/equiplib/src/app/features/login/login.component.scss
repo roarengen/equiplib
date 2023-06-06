@@ -20,9 +20,9 @@
   font-weight: 400;
 }
 
-ion-icon { 
+ion-icon {
   zoom: 2.5;
-  font-size: 50px; 
+  font-size: 50px;
 }
 
 button.button-qr {
@@ -37,19 +37,24 @@ ion-button {
   font-weight: 500;
   box-shadow: none;
 
-  
+
 }
 
 ion-input {
   border-bottom: 1px solid rgb(255, 255, 255);
 }
 
-a.link {
-  color: white;
+.link-container
+{
   display: flex;
   justify-content: flex-end;
+}
+
+a.link {
+  color: white;
   padding-right: 1rem;
   padding-top: 0.3rem;
+  width: fit-content;
 }
 
 .login-body {
