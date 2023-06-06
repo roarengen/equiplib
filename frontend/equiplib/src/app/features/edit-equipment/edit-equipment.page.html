@@ -4,11 +4,11 @@
       <h2 class="form-title">Redigering av {{editEquipment.name}}</h2>
     </div>
 
-    <ion-item class="form-item">
+    <div class="form-input-block">
+          <ion-item class="form-item">
       <ion-text>Tags</ion-text>
     </ion-item>
 
-    <div class="form-input-block">
       <div slot="content">
         <app-tag *ngFor="let tag of equiptags; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag(tag, i)"></app-tag>
         <button class="button-add" size="medium" id="add-tag">
