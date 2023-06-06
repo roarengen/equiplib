@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import {ResetPasswordComponent} from './reset-password.component';
 import { FormsModule } from '@angular/forms';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [ResetPasswordComponent],
@@ -10,6 +11,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     IonicModule,
     FormsModule,
+    RouterModule
   ]
 })
 export class ResetPasswordModule { }
