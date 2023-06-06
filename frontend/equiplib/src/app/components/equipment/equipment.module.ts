@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { EquipmentComponent } from './equipment.component';
 import { TagModule } from '../tag/tag.module';
+import { EditButtonModule } from '../edit-button/edit-button.module';
 
 @NgModule({
   declarations: [ EquipmentComponent ],
@@ -13,6 +14,7 @@ import { TagModule } from '../tag/tag.module';
     FormsModule,
     IonicModule,
     TagModule,
+    EditButtonModule,
   ],
   exports: [EquipmentComponent]
 })
