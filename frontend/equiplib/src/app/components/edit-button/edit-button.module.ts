@@ -16,5 +16,5 @@ import { TagModule } from '../tag/tag.module';
   ],
   exports: [EditButtonComponent]
 })
-export class EquipmentModule { }
+export class EditButtonModule { }
 

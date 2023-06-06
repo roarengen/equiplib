@@ -127,8 +127,8 @@
                     <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
-                    <ion-button>Endre</ion-button>
-                    <ion-button>Slett</ion-button>
+                    <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+                    <app-edit-button [deleteButton]="true" ></app-edit-button>
                   </ion-card>
                 </ng-container>
                 </ng-container>
@@ -136,7 +136,7 @@
                 </div>
             </ion-accordion>
           </ion-accordion-group>
-          <ion-button expand="block" routerLink='/manageusers'>Legg til ny bruker<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
+          <ion-button color="tertiary" expand="block" routerLink='/manageusers'>Legg til ny bruker<ion-icon slot="end" name="add-circle-outline"></ion-icon></ion-button>
         </div>
       </ion-accordion>
       <ion-accordion>
