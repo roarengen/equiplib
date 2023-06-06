@@ -1,10 +1,10 @@
 
-<ion-button *ngIf="editButton" color="medium" shape="round" (click)="onClickButton(href)">
+<ion-button *ngIf="editButton" color="edit-button" shape="round" (click)="onClickButton(href)" class="edit-button">
     <div class="edit-text-color">Endre</div>
 </ion-button>
 
 
-<ion-button *ngIf="deleteButton" color="medium" shape="round">
+<ion-button *ngIf="deleteButton" color="edit-button" shape="round" class="delete-button">
     <div class="delete-text-color">Slett</div>
 </ion-button>
 

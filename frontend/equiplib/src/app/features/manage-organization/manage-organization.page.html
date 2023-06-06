@@ -127,8 +127,10 @@
                     <ion-card-header><ion-card-title>{{user.firstname}} {{user.lastname}}</ion-card-title>
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
-                    <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
-                    <app-edit-button [deleteButton]="true" ></app-edit-button>
+                    <div class="button-content">
+                      <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+                      <app-edit-button [deleteButton]="true" ></app-edit-button>
+                  </div>
                   </ion-card>
                 </ng-container>
                 </ng-container>
