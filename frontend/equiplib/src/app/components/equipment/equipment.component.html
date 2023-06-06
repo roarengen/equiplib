@@ -14,7 +14,7 @@
     <p *ngIf="equipment.other3 && other3name">{{other3name}}: {{equipment.other3}}</p>
 
     <div class="button-content">
-      <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+      <app-edit-button [href]="'/editequipment'" [editButton]="true" [setFilterServiceId]="equipment.id" ></app-edit-button>
       <app-edit-button [deleteButton]="true" ></app-edit-button>
       <button size="large" class="button-qr">
         <ion-icon color="tertiary" src="../../../assets/icons/download-qr-code.svg"></ion-icon>

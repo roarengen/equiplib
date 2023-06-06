@@ -6,7 +6,7 @@ import { QrScannerPageRoutingModule } from './qr-scanner-routing.module';
 import { QrScannerPage } from './qr-scanner.page';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { LayoutPageRoutingModule } from '../layout/layout-routing.module';
-import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
+import { FilterService } from 'src/app/services/filter.service';
 
 
 @NgModule({
@@ -19,6 +19,6 @@ import { FilterEquipmentService } from 'src/app/services/filter-equipment.servic
     LayoutPageRoutingModule,
   ],
   declarations: [QrScannerPage],
-  providers: [FilterEquipmentService]
+  providers: [FilterService]
 })
 export class QrScannerPageModule {}

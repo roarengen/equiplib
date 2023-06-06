@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-edit-button',
@@ -12,15 +13,18 @@ export class EditButtonComponent  implements OnInit {
   @Input() public deleteButton: boolean = false;
   @Input() public qrButton: boolean = false;
   @Input() public href: string;
+  @Input() public setFilterServiceId: number;
 
   constructor(
     public router: Router,
+    public filterService: FilterService,
   ) { }
 
   ngOnInit() {}
 
-
-  onClickButton(href: any) {
-    this.router.navigate([href, {state: {}}])
+  async onClickButton(href: any) {
+    console.log(this.setFilterServiceId)
+    this.filterService.data = this.setFilterServiceId
+    this.router.navigate([href])
   }
 }

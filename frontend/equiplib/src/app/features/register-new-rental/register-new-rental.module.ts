@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterNewRentalPageRoutingModule } from './register-new-rental-routing.module';
 import { RegisterNewRentalPage } from './register-new-rental.page';
-import { FilterEquipmentService } from 'src/app/services/filter-equipment.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { TagModule } from 'src/app/components/tag/tag.module';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { TagModule } from 'src/app/components/tag/tag.module';
     TagModule
   ],
   declarations: [RegisterNewRentalPage],
-  providers: [FilterEquipmentService]
+  providers: [FilterService]
 
 })
 export class RegisterNewRentalPageModule {}

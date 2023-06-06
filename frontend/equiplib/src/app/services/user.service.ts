@@ -67,4 +67,8 @@ export class AccountService {
     getOrganization(orgid: number) {
       return this.http.get<Organization>(`${environment.apiUrl}/orgs/${orgid}`);
   }
+
+    updateUser(user: User) {
+      return this.http.patch<User>(`${environment.apiUrl}/users/${user.id}/`, user).subscribe()
+    }
 }

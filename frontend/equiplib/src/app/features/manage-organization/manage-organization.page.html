@@ -142,7 +142,7 @@
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
                     <div class="button-content">
-                      <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+                      <app-edit-button [href]="'/edituser'" [editButton]="true" [setFilterServiceId]="user.id"></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
                   </div>
                   </ion-card>

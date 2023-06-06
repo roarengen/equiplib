@@ -14,6 +14,7 @@ import { ReturnRentalPage } from './features/return-rental/return-rental.page';
 import { QrScannerPage } from './features/qr-scanner/qr-scanner.page';
 import {ResetPasswordComponent} from './features/reset-password/reset-password.component';
 import { EditEquipmentPage } from './features/edit-equipment/edit-equipment.page';
+import { EditUserPage } from './features/edit-user/edit-user.page';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'manageequipment', component: ManageEquipmentPage, canActivate: [AdminGuard]},
       { path: 'manageusers', component: ManageUsersPage},
       { path: 'editequipment', component: EditEquipmentPage},
+      { path: 'edituser', component: EditUserPage},
       { path: 'addtag', component: AddTagComponent},
       { path: 'manageorganization', component: ManageOrganizationPage},
       { path: 'home', component: HomePage, },
