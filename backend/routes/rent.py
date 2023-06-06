@@ -42,7 +42,7 @@ def make_rent(rent: RentCreate, db: Session = Depends(get_db)):
 def get_currently_rented(orgid: int, db: Session = Depends(get_db)):
     rents = crud.get_rents_by_orgid(db, orgid)
     if rents:
-        return list(filter(lambda x: x.rentedToDate == None,rents))
+        return list(filter(lambda x: x.rentedToDate == None, rents))
 
     else: return []
 
