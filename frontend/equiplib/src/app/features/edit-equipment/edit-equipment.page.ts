@@ -1,6 +1,6 @@
 import { LocationService } from './../../services/location.service';
 import { EquipmentService } from './../../services/equipment.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Equipment, Tag } from 'src/app/models/equipment';
 import { TemplateService } from 'src/app/services/template.service';
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: './edit-equipment.page.html',
   styleUrls: ['./edit-equipment.page.scss'],
 })
-export class EditEquipmentPage implements OnInit {
+export class EditEquipmentPage implements OnInit, OnDestroy {
 
   public editEquipment: Equipment = new Equipment();
   public subscription = new Subscription();
@@ -38,14 +38,34 @@ export class EditEquipmentPage implements OnInit {
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid);
     this.tags = equipmentService.getAllTags(this.accountService.user.organizationid);
   }
+
   ngOnInit() {
+    this.resetComponent();
+  }
+
+  ionViewWillEnter() {
     this.selectedEquipment = this.equipmentService.getEquipment(this.filterService.data);
     this.selectedEquipment.subscribe(equipment => {
-    this.editEquipment = equipment;
-    this.equiptags = equipment.tags.map((tag: any) => {
-      return {...tag, visible: true};
-    })
-  })
+      this.editEquipment = equipment;
+      this.equiptags = equipment.tags.map((tag: any) => {
+        return {...tag, visible: true};
+      });
+    });
+  }
+
+  ionViewWillLeave() {
+    this.resetComponent();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private resetComponent(): void {
+    this.editEquipment = new Equipment();
+    this.subscription.unsubscribe();
+    this.selectedEquipment = undefined;
+    this.equiptags = undefined;
   }
 
   async removeTag(tag: any, index: number) {
