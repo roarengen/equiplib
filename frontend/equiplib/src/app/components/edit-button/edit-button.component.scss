@@ -1,7 +1,9 @@
 .edit-button {
     --border-color: var(--ion-color-medium);
     --border-style: solid;
-    --border-width: 1px;
+    --border-width: 1px;  
+    height: 32px;
+    width: 75px;
 }
 .edit-text-color {
     color: var(--ion-color-light);
@@ -11,6 +13,9 @@
     --border-color: var(--ion-color-medium);
     --border-style: solid;
     --border-width: 1px;
+    height: 32px;
+    width: 110px;
+    
 }
 
 .delete-text-color {
