@@ -10,9 +10,9 @@ import { FormBuilder, FormGroup,Validators  } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-edit-User',
-  templateUrl: './edit-User.page.html',
-  styleUrls: ['./edit-User.page.scss'],
+  selector: 'app-edit-user',
+  templateUrl: './edit-user.page.html',
+  styleUrls: ['./edit-user.page.scss'],
 })
 export class EditUserPage implements OnInit {
 
