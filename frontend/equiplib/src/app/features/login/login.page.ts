@@ -4,6 +4,7 @@ import { ActivatedRoute, ActivationStart, Router, RouterOutlet } from '@angular/
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { AccountService } from 'src/app/services/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	templateUrl: './login.page.html',
@@ -17,6 +18,7 @@ export class LoginPage implements OnInit {
 	enterPinCode: boolean = false;
 	QrCode!: string;
 	pin!: string;
+  invalidCredentials: boolean = false;
 
   @ViewChild(RouterOutlet) outlet!: RouterOutlet;
 
@@ -41,14 +43,27 @@ export class LoginPage implements OnInit {
       })
 	}
 
+  ionViewWillEnter() {
+    // Reset component properties
+    this.loading = false;
+    this.submitted = false;
+    this.openQrCode = false;
+    this.enterPinCode = false;
+    this.QrCode = '';
+    this.pin = '';
+    this.invalidCredentials = false;
+
+    // Reset form fields
+    this.form.reset();
+  }
+
 	get f() { return this.form.controls; }
 
-	login(username: string, password: string)
-	{
-		this.submitted = true;
-		this.accountService.login(username, password)
-			.subscribe(
-				login => {
+	login(username: string, password: string) {
+    this.submitted = true;
+    this.accountService.login(username, password)
+      .subscribe({
+        next: login => {
 					this.accountService.user = login.user
           			this.http.token = login.token
 					this.accountService.getOrganization(login.user.organizationid).subscribe(
@@ -59,10 +74,14 @@ export class LoginPage implements OnInit {
 						template => { this.accountService.template = template}
 					)
 					this.router.navigateByUrl('home')
-				})
+				},
+        error: () => {
+          this.invalidCredentials = true;
+        }
+      });
 
-		this.loading = true;
-	}
+    this.loading = true;
+  }
 
 	onSubmit() {
 		this.login(this.f['username'].value, this.f['password'].value)

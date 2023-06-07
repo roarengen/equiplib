@@ -18,6 +18,11 @@
         <ion-label position="floating">Passord</ion-label>
         <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password"></ion-input>
       </ion-item>
+
+      <div *ngIf="submitted && invalidCredentials" class="error-text">
+        Ugyldig passord og brukernavn
+      </div>
+
     </ion-list>
     <ion-text class="link-container">
     <a class="link" [routerLink]="['/reset-password']">glemt passord?</a>

@@ -19,9 +19,8 @@ export class AccountService {
     constructor(
         private router: Router,
         private http: CustomHttpClient
-    ) {
+    ) {}
 
-    }
     getTemplate(organizationid: number)
     {
         return this.http.get<Template>(`${environment.apiUrl}/temps/by_org/` + organizationid)
@@ -69,6 +68,6 @@ export class AccountService {
   }
 
     updateUser(user: User) {
-      return this.http.patch<User>(`${environment.apiUrl}/users/${user.id}/`, user).subscribe()
+      return this.http.patch<User>(`${environment.apiUrl}/users/${user.id}`, user).subscribe()
     }
 }
