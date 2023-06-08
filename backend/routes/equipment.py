@@ -35,7 +35,7 @@ def get_equip(id: int, db : Session = Depends(get_db)):
     equip = crud.get_equip(db, id)
     if not equip:
         logger.debug(f"requested equipment with id: {id} but was not found")
-        return HTTPException(status_code=404, detail="equip not found")
+        raise HTTPException(status_code=404, detail="equip not found")
     return equip
 
 @api.post("/", response_model=Equipment, dependencies=[Depends(require_admin)])
@@ -49,7 +49,7 @@ def post_tag(tag: TagCreate, db: Session = Depends(get_db)):
     tag_exists = any([tag.name == tag.name for tag in tags_in_org])
 
     if tag_exists:
-        return HTTPException(400, "tag already exists")
+        raise HTTPException(400, "tag already exists")
     return crud.create_tag(db, tag)
 
 @api.get("/tags/{orgid}", response_model=list[Tag], dependencies=[Depends(require_admin)])
