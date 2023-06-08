@@ -22,11 +22,11 @@ def get_loc(id: int, db: Session = Depends(get_db), user : User = Depends(requir
     loc = crud.get_location(db, id)
     if not loc:
         logger.debug(f"location requesed with id: {id} but was not found")
-        HTTPException(status_code=404, detail="location not found")
+        raise HTTPException(status_code=404, detail="location not found")
 
     if user.organizationid != loc.organizationid:
         logger.debug(f"location requesed with id: {id} but was not authorized")
-        HTTPException(401)
+        raise HTTPException(401)
 
     return loc
 
@@ -36,7 +36,7 @@ def get_loc_by_org_id(orgid: int = Depends(require_user_to_be_in_org), db: Sessi
     locs = crud.get_locations_by_orgid(db, orgid)
     if not locs:
         logger.debug(f"locations requesed with orgid: {orgid} but was not found")
-        HTTPException(status_code=404, detail=f"no locations found on org with id: {orgid}")
+        raise HTTPException(status_code=404, detail=f"no locations found on org with id: {orgid}")
     return locs
 
 @api.post("/", response_model=Location)
