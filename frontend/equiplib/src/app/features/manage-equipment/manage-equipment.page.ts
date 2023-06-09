@@ -85,7 +85,7 @@ export class ManageEquipmentPage implements OnInit {
 
     async validateInformation(){
       const actionSheet = await this.actionSheetCtrl.create({
-        cssClass: 'register-equipment',
+        cssClass: 'styled',
         header: 'Sjekk at feltene stemmer',
         buttons: [
           {
@@ -112,7 +112,7 @@ export class ManageEquipmentPage implements OnInit {
 
     async downloadQRCodeOption(){
       const actionSheet = await this.actionSheetCtrl.create({
-        cssClass: 'register-equipment',
+        cssClass: 'styled',
         header: 'Vil du laste ned QR-koden?',
         buttons: [
           {

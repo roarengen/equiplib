@@ -26,23 +26,23 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 /* Note: These styles should be located in your global stylesheet */
-ion-action-sheet.register-equipment .action-sheet-group {
+ion-action-sheet.styled .action-sheet-group {
   background: var(--ion-color-step-150)
 }
 
-ion-action-sheet.register-equipment .action-sheet-title {
+ion-action-sheet.styled .action-sheet-title {
   color: #fff;
 }
 
-ion-action-sheet.register-equipment .action-sheet-button.proceed {
+ion-action-sheet.styled .action-sheet-button.proceed {
   color: var(--ion-color-success)
 }
 
-ion-action-sheet.register-equipment .action-sheet-button.dismiss {
+ion-action-sheet.styled .action-sheet-button.dismiss {
   color: var(--ion-color-danger)
 }
 
 
-ion-action-sheet.register-equipment ion-backdrop {
+ion-action-sheet.styled ion-backdrop {
   opacity: 0.6;
 }

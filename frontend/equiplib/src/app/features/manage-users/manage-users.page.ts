@@ -69,7 +69,7 @@ export class ManageUsersPage implements OnInit {
     }
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Sjekk at feltene stemmer',
-      cssClass: 'register-equipment',
+      cssClass: 'styled',
       buttons: [
         {
           cssClass: 'action-sheet-button proceed',
