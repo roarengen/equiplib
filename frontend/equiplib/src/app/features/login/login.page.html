@@ -15,17 +15,17 @@
       </ion-item>
 
       <ion-item color="secondary">
-        <ion-label position="floating">Passord</ion-label>
+        <ion-label position="floating">PIN-kode</ion-label>
         <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password"></ion-input>
       </ion-item>
 
       <div *ngIf="submitted && invalidCredentials" class="error-text">
-        Ugyldig passord og brukernavn
+        Ugyldig PIN-kode og brukernavn
       </div>
 
     </ion-list>
     <ion-text class="link-container">
-    <a class="link" [routerLink]="['/reset-password']">glemt passord?</a>
+    <a class="link" [routerLink]="['/reset-password']">Glemt PIN-kode?</a>
   </ion-text>
 
     <ion-button class="form-group-button" type="submit">

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { createUser} from 'src/app/models/user';
 import { ActionSheetController, ToastController } from '@ionic/angular';
 import { saveAs } from 'file-saver';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-users',
@@ -16,8 +17,11 @@ export class ManageUsersPage implements OnInit {
   public hasSubmittedNewUser: boolean = false;
   public newUser: createUser = new createUser();
   public qrCodeUsername: string = "";
+  form!: FormGroup;
+
 
   constructor(
+    private formBuilder: FormBuilder,
     private toastController: ToastController,
     private cdRef: ChangeDetectorRef,
     private http: CustomHttpClient,
@@ -27,8 +31,16 @@ export class ManageUsersPage implements OnInit {
 
   @ViewChild("qrcode", {read: ElementRef}) qrcode: ElementRef;
 
-    ngOnInit(): void {
-    }
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      firstname: ['', Validators.required, Validators.maxLength(40)],
+      lastname: ['', Validators.required,Validators.maxLength(40)],
+      username: ['', Validators.required, Validators.maxLength(40)],
+      phone: ['', Validators.required, Validators.pattern('^[0-9]+$')],
+      email: ['', Validators.email],
+      password: ['', Validators.minLength(4), Validators.maxLength(6), Validators.pattern('^[0-9]+$')],
+    })
+  }
 
     async presentToast() {
       const toast = await this.toastController.create({

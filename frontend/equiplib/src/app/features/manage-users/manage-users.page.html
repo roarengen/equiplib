@@ -1,5 +1,5 @@
 <ion-content class="ion-padding">
-  <form (ngSubmit)="onSubmitNewUser()">
+  <form [formGroup]="form" (ngSubmit)="onSubmitNewUser()">
     <div class="form-title-block">
       <h2 class="form-title">Legg til ny bruker</h2>
     </div>
@@ -7,32 +7,32 @@
     <div class="form-input-block">
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Brukernavn:</ion-label>
-        <ion-input [(ngModel)]="newUser.username" [clearInput]="true" ngModel required></ion-input>
+        <ion-input formControlName="username" [(ngModel)]="newUser.username" [clearInput]="true"></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Pin:</ion-label>
-        <ion-input [(ngModel)]="newUser.password" [clearInput]="true" type="password" ngModel required></ion-input>
+        <ion-input formControlName="password" [(ngModel)]="newUser.password" [clearInput]="true" type="number" ngModel required></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Fornavn:</ion-label>
-        <ion-input [(ngModel)]="newUser.firstname" [clearInput]="true" ngModel required></ion-input>
+        <ion-input formControlName="firstname" [(ngModel)]="newUser.firstname" [clearInput]="true" ngModel required></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Etternavn:</ion-label>
-        <ion-input [(ngModel)]="newUser.lastname" [clearInput]="true" ngModel required></ion-input>
+        <ion-input formControlName="lastname" [(ngModel)]="newUser.lastname" [clearInput]="true" ngModel required></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Email:</ion-label>
-        <ion-input  [(ngModel)]="newUser.email" type="email" [clearInput]="true" ngModel required></ion-input>
+        <ion-input  formControlName="email"[(ngModel)]="newUser.email" type="email" [clearInput]="true" ngModel required></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
-        <ion-label position="floating">Telefon nummer:</ion-label>
-        <ion-input [(ngModel)]="newUser.phone" type="number" [clearInput]="true" ngModel required> </ion-input>
+        <ion-label position="floating">Telefonnummer:</ion-label>
+        <ion-input type="number" formControlName="phone" [(ngModel)]="newUser.phone" type="number" [clearInput]="true" ngModel required> </ion-input>
       </ion-item>
 
     <ion-item color="input-background">
@@ -45,32 +45,19 @@
         </ion-popover>
       </ion-item>
 
-      <ion-grid>
-        <ion-row>
-          <ion-col size="6">
             <ion-item class="form-item" class="grid-item" color="input-background">
               <ion-select interface="popover" placeholder="Velg Rolle">
                 <ng-container>
                   <ion-select-option >Bruker</ion-select-option>
                   <ion-select-option >Utstyrsansvarlig</ion-select-option>
-                  <ion-select-option >Admin</ion-select-option>
+                  <ion-select-option >Administrator</ion-select-option>
                 </ng-container>
               </ion-select>
             </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item class="form-item" class="grid-item" color="input-background">
-              <ion-label>QR</ion-label>
-              <ion-toggle color="success" [(ngModel)]="setDownloadQR" [enableOnOffLabels]="true" [checked]="true" slot="end"></ion-toggle>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
   </div>
 
   <div class="form-button-container">
-    <ion-button class="form-button" color="register" (click)="validateInformation()">
+    <ion-button [disabled]="form.controls.username.invalid" class="form-button" color="register" (click)="validateInformation()">
       Registrer
     </ion-button>
   </div>

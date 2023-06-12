@@ -10,17 +10,17 @@
         <ion-label class="accordion-title">Rediger organisasjon</ion-label>
       </ion-item>
         <div class="ion-padding accordion-description" slot="content">
-          <form #f="ngForm" (ngSubmit)="onSubmitOrganizationChanges()">
+          <form [formGroup]="form" #f="ngForm" (ngSubmit)="onSubmitOrganizationChanges()">
             <div class="form-input-block">
 
               <ion-item class="form-item" color="input-background">
-                <ion-label position="stacked">Navn:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.name" ngModel required [clearInput]="true">{{this.accountService.organization?.name}}</ion-input>
+                <ion-label position="stacked"><p style="color: red">*</p>Navn:</ion-label>
+                <ion-input  formControlName="name" [(ngModel)]="changesOrganization.name" ngModel required [clearInput]="true"></ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
                 <ion-label position="stacked">Organisasjonsnummer:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.number"[clearInput]="true">{{this.accountService.organization?.number}}</ion-input>
+                <ion-input [(ngModel)]="changesOrganization.number"[clearInput]="true"></ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
@@ -44,7 +44,7 @@
               </ion-item>
           </div>
           <div class="form-button-container">
-            <ion-button color="tertiary" class="form-button" (click)="validateInformation()">
+            <ion-button [disabled]="form.controls.invalid" color="tertiary" class="form-button" (click)="validateInformation()">
               <div class="button-font">
               Lagre
             </div>
@@ -73,7 +73,7 @@
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
                     <div class="button-content">
-                      <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+                      <app-edit-button [href]="'/edituser'" [editButton]="true" [setFilterServiceId]="user.id"></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
                   </div>
                   </ion-card>
@@ -96,7 +96,7 @@
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
                     <div class="button-content">
-                      <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+                      <app-edit-button [href]="'/edituser'" [editButton]="true" [setFilterServiceId]="user.id"></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
                   </div>
                   </ion-card>
@@ -119,7 +119,7 @@
                       <ion-card-subtitle>Brukernavn: {{user.username}}</ion-card-subtitle>
                     </ion-card-header>
                     <div class="button-content">
-                      <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
+                      <app-edit-button [href]="'/edituser'" [editButton]="true" [setFilterServiceId]="user.id"></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
                   </div>
                   </ion-card>
@@ -186,7 +186,7 @@
         <div class="tag-container">
           <app-tag *ngFor="let tag of tags | async ; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag( i )"></app-tag>
         </div>
-          <ion-button color="tertiary" class="add-tag-button"expand="block" routerLink='/addtag'><div class="button-font">Legg til Tag<ion-icon slot="end" name="add-circle-outline"></ion-icon></div></ion-button>
+          <ion-button [disabled]="form.controls.invalid" color="tertiary" class="add-tag-button"expand="block" routerLink='/addtag'><div class="button-font">Legg til Tag<ion-icon slot="end" name="add-circle-outline"></ion-icon></div></ion-button>
       </div>
       </ion-accordion>
     </ion-accordion-group>

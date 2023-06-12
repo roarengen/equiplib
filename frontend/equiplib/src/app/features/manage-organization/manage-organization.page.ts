@@ -10,6 +10,7 @@ import { Location } from './../../models/location';
 import { LocationService } from 'src/app/services/location.service';
 import {Tag} from 'src/app/models/equipment';
 import {EquipmentService} from 'src/app/services/equipment.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-organization',
@@ -23,8 +24,10 @@ export class ManageOrganizationPage implements OnInit {
   public locations: Observable<Location[]>;
   public location: Location = new Location();
   public tags: Observable<Tag[]>;
+  public form!: FormGroup;
 
   constructor(
+    private formBuilder: FormBuilder,
 		private alertController: AlertController,
     public locationService: LocationService,
     private http: CustomHttpClient,
@@ -38,8 +41,12 @@ export class ManageOrganizationPage implements OnInit {
   }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required],
+    })
     this.accountService.getAll()
-    this.accountService.getOrganization(this.accountService.user?.organizationid || 0)
+    this.accountService.getOrganization(this.accountService.user?.organizationid || 0).subscribe( x =>
+      {this.changesOrganization = x})
   }
 
   ionViewWillEnter() {

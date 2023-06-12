@@ -5,12 +5,14 @@
     padding-bottom: 0.5rem;
   }
 
-  .menu-title {
+  .resizeable-title {
     text-align: center;
     padding-right: 71px;
     padding-top: 7.5px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
-  
 
 ion-fab-button {
   margin-bottom: 65px;

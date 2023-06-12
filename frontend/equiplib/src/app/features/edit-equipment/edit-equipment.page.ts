@@ -9,6 +9,7 @@ import { Location } from 'src/app/models/location';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { FilterService } from 'src/app/services/filter.service';
 import { Router } from '@angular/router';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-equipment',
@@ -16,7 +17,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./edit-equipment.page.scss'],
 })
 export class EditEquipmentPage implements OnInit, OnDestroy {
-
   public editEquipment: Equipment = new Equipment();
   public subscription = new Subscription();
   public locations: Observable<Location[]>;
@@ -40,7 +40,7 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.resetComponent();
+    this.resetComponent()
   }
 
   ionViewWillEnter() {

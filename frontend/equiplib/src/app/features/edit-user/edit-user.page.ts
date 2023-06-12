@@ -32,11 +32,8 @@ export class EditUserPage implements OnInit {
   public popoverController?: PopoverController,
   ) {}
   ngOnInit() {
-
     this.accountService.getById(this.getSelectedUserService.data).subscribe(User => {
       this.editUser = User;
-
-      console.log(this.editUser)
 
     this.form = this.formBuilder.group({
       firstname: ['', Validators.required, Validators.maxLength(40)],
@@ -61,7 +58,6 @@ export class EditUserPage implements OnInit {
     this.accountService.updateUser(this.editUser)
     this.presentToast()
     this.router.navigate(['/home']);
-
   }
 
 }
