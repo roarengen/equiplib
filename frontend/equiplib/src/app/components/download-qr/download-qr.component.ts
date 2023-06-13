@@ -6,7 +6,7 @@ import { QrService } from 'src/app/services/qr.service';
   templateUrl: './download-qr.component.html',
   styleUrls: ['./download-qr.component.scss'],
 })
-export class DownloadQrComponent  implements OnInit {
+export class DownloadQrComponent implements OnInit {
 
   @Input() data: string;
   @Input() filename: string;
@@ -18,7 +18,6 @@ export class DownloadQrComponent  implements OnInit {
   ngOnInit() {
     this.qr_url = QrService.formatUrl(this.data, this.qrService.size);
   }
-
 
   onClick()
   {
