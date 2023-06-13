@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class QrService {
-  private size = 150;
+  public size = 150;
 
   public static formatUrl(data: string, size: number)
   {

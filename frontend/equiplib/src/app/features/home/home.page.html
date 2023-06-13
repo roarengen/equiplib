@@ -33,6 +33,10 @@
           [isCurrentlyAvailable]="!rentedEquipmentIds.includes(equipment.id)"
           [location]="getLocationForEquipment(equipment.locationid, observables.locations)"
         ></app-equipment>
+        <download-qr
+        [data]="equipment.id.toString()"
+        [filename]="'qrcode.png'">
+        </download-qr>
       </ion-accordion-group>
     </ion-list>
   </ion-item-group>
