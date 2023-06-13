@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Equipment, Tag } from 'src/app/models/equipment';
+import { Equipment } from 'src/app/models/equipment';
 import { Location} from 'src/app/models/location';
 import { AccountService } from 'src/app/services/user.service';
 
