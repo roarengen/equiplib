@@ -35,7 +35,7 @@
         ></app-equipment>
         <download-qr
         [data]="equipment.id.toString()"
-        [filename]="'qrcode.png'">
+        [filename]="equipment.name +'-qrcode.png'">
         </download-qr>
       </ion-accordion-group>
     </ion-list>
