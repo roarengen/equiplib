@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { EditEquipmentPage } from './edit-equipment.page';
 import { EditEquipmentPageRoutingModule } from './edit-equipment-routing.module';
 import { TagModule } from 'src/app/components/tag/tag.module';
+import { DownloadQrModule } from 'src/app/components/download-qr/download-qr.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { TagModule } from 'src/app/components/tag/tag.module';
     FormsModule,
     IonicModule,
     EditEquipmentPageRoutingModule,
-    TagModule
+    TagModule,
+    DownloadQrModule
   ],
   declarations: [EditEquipmentPage]
 })
