@@ -21,7 +21,7 @@ export class DownloadQrComponent implements OnInit {
 
   onClick()
   {
-    this.qrService.downloadQrFromData(this.data, this.filename);
+    this.qrService.downloadQrFromData(this.data, this.filename.toLowerCase());
   }
 
 }
