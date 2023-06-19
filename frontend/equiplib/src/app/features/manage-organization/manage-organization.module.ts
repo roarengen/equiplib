@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ManageOrganizationPageRoutingModule } from './manage-organization-routing.module';
 import { ManageOrganizationPage } from './manage-organization.page';
 import { TagModule } from 'src/app/components/tag/tag.module';
+import { DownloadQrModule } from 'src/app/components/download-qr/download-qr.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { TagModule } from 'src/app/components/tag/tag.module';
     IonicModule,
     ManageOrganizationPageRoutingModule,
     TagModule,
+    DownloadQrModule,
     EditButtonModule
   ],
   declarations: [ManageOrganizationPage]

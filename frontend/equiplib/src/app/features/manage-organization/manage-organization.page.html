@@ -75,6 +75,10 @@
                     <div class="button-content">
                       <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
+                      <download-qr
+                      [data]="user.id.toString()"
+                      [filename]="user.username ? user.username.toString() + '-qrcode.png' : ''"
+                      />
                   </div>
                   </ion-card>
                 </ng-container>
@@ -98,6 +102,10 @@
                     <div class="button-content">
                       <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
+                      <download-qr
+                      [data]="user.id.toString()"
+                      [filename]="user.username ? user.username.toString() + '-qrcode.png' : ''"
+                      />
                   </div>
                   </ion-card>
                 </ng-container>
@@ -121,6 +129,10 @@
                     <div class="button-content">
                       <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
+                      <download-qr
+                      [data]="user.id.toString()"
+                      [filename]="user.username ? user.username.toString() + '-qrcode.png' : ''"
+                      />
                   </div>
                   </ion-card>
                 </ng-container>
@@ -144,6 +156,10 @@
                     <div class="button-content">
                       <app-edit-button [href]="'/edituser'" [editButton]="true" [setFilterServiceId]="user.id"></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
+                      <download-qr
+                      [data]="user.id.toString()"
+                      [filename]="user.username ? user.username.toString() + '-qrcode.png' : ''"
+                      />
                   </div>
                   </ion-card>
                 </ng-container>
