@@ -76,7 +76,7 @@
                       <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
                       <download-qr
-                      [data]="user.id.toString()"
+                      [data]="user.username.toString()"
                       [filename]="user.username ? user.username.toString() + '-qrcode.png' : ''"
                       />
                   </div>
@@ -103,7 +103,7 @@
                       <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
                       <download-qr
-                      [data]="user.id.toString()"
+                      [data]="user.username.toString()"
                       [filename]="user.username ? user.username.toString() + '-qrcode.png' : ''"
                       />
                   </div>
@@ -130,7 +130,7 @@
                       <app-edit-button [href]="'/editequipment'" [editButton]="true" ></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
                       <download-qr
-                      [data]="user.id.toString()"
+                      [data]="user.username.toString()"
                       [filename]="user.username ? user.username.toString() + '-qrcode.png' : ''"
                       />
                   </div>
@@ -157,7 +157,7 @@
                       <app-edit-button [href]="'/edituser'" [editButton]="true" [setFilterServiceId]="user.id"></app-edit-button>
                       <app-edit-button [deleteButton]="true" ></app-edit-button>
                       <download-qr
-                      [data]="user.id.toString()"
+                      [data]="user.username.toString()"
                       [filename]="user.username ? user.username.toString() + '-qrcode.png' : ''"
                       />
                   </div>
