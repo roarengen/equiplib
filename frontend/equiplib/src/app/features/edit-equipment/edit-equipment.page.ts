@@ -9,7 +9,6 @@ import { Location } from 'src/app/models/location';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { FilterService } from 'src/app/services/filter.service';
 import { Router } from '@angular/router';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-equipment',
@@ -21,8 +20,8 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
   public subscription = new Subscription();
   public locations: Observable<Location[]>;
   public tags!: Observable<Tag[]>
-  public filteredAddedTags: Tag[]
   public selectedEquipment?: Observable<Equipment>;
+  public filteredAddedTags: any;
   public equiptags: any;
 
   constructor(
@@ -37,7 +36,6 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
   ) {
 
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid);
-    this.tags = equipmentService.getAllTags(this.accountService.user.organizationid);
   }
 
   ngOnInit() {
@@ -45,20 +43,23 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.tags.subscribe(
-      tags =>
-      {
-        this.filteredAddedTags = tags;
-      }
-    )
     this.selectedEquipment = this.equipmentService.getEquipment(this.filterService.data);
     this.selectedEquipment.subscribe(equipment => {
       this.editEquipment = equipment;
-      console.log("EDIT EQUIPMENT:")
-      console.log(equipment)
       this.equiptags = equipment.tags.map((tag: any) => {
-        return {...tag, visible: true};
+        return { ...tag, visible: true };
       });
+    });
+
+    this.tags = this.equipmentService.getAllTags(this.accountService.user.organizationid);
+    this.tags.subscribe(tags => {
+      this.filteredAddedTags = tags
+        .map((tag: any) => {
+          return { ...tag, visible: true };
+        })
+        .filter((tag: any) => {
+          return !this.equiptags.some((eqTag: any) => eqTag.id === tag.id);
+        });
     });
   }
 
@@ -75,14 +76,18 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.selectedEquipment = undefined;
     this.equiptags = undefined;
+    this.filteredAddedTags = undefined;
+
   }
 
   async removeTag(tag: any, index: number) {
     this.equiptags.splice(index, 1);
+    this.filteredAddedTags.push({ ...tag, visible: true });
     tag.visible = false;
   }
 
-  async addTag(tag: any){
+  async addTag(tag: any, index: number){
+    this.filteredAddedTags.splice(index, 1)
     this.equiptags.push({ ...tag, visible: true });
     await this.popoverController.dismiss();
   }

@@ -18,7 +18,7 @@
         <ng-template class="tag-popover-content">
           <div class="tag-list">
             <div class="tag-row">
-              <app-tag *ngFor="let tag of tags | async; let i = index" name="{{tag.name}}" color="{{tag.color}}" (click)="addTag(tag)"></app-tag>
+              <app-tag *ngFor="let tag of filteredAddedTags; let i = index" name="{{tag.name}}" color="{{tag.color}}" (click)="addTag(tag, i)"></app-tag>
             </div>
           </div>
         </ng-template>
