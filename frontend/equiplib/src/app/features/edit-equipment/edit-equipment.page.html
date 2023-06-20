@@ -74,6 +74,11 @@
           </ion-item>
 
         </div>
+
+        <download-qr
+        [data]="filterService.data"
+        [filename]="editEquipment.name ? editEquipment.name.toString() + '-qrcode.png' : ''"
+        />
     <div class="form-button-container">
       <ion-button class="form-button" color="register" (click)="editEquips()">
         Bekreft endringer

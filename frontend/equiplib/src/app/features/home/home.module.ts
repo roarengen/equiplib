@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { TagModule } from 'src/app/components/tag/tag.module';
 import { EquipmentModule } from 'src/app/components/equipment/equipment.module';
+import { DownloadQrModule } from 'src/app/components/download-qr/download-qr.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { EquipmentModule } from 'src/app/components/equipment/equipment.module';
     HomePageRoutingModule,
     ZXingScannerModule,
     TagModule,
-    EquipmentModule
+    EquipmentModule,
+    DownloadQrModule
   ],
   declarations: [HomePage]
 })

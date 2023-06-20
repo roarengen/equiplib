@@ -54,6 +54,8 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
     this.selectedEquipment = this.equipmentService.getEquipment(this.filterService.data);
     this.selectedEquipment.subscribe(equipment => {
       this.editEquipment = equipment;
+      console.log("EDIT EQUIPMENT:")
+      console.log(equipment)
       this.equiptags = equipment.tags.map((tag: any) => {
         return {...tag, visible: true};
       });

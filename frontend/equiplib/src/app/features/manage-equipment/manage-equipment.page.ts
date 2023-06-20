@@ -10,6 +10,7 @@ import { ActionSheetController, ToastController } from '@ionic/angular';
 import { saveAs } from 'file-saver';
 import { TemplateService } from 'src/app/services/template.service';
 import { Router } from '@angular/router';
+import { QrService } from 'src/app/services/qr.service';
 
 @Component({
   selector: 'app-manage-equipment',
@@ -21,7 +22,6 @@ export class ManageEquipmentPage implements OnInit {
   form!: FormGroup;
   confirmationPopup: boolean = false;
   public newEquipment: Equipment = new Equipment();
-  public qrCodeId: string = "";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +31,7 @@ export class ManageEquipmentPage implements OnInit {
     public equipmentService: EquipmentService,
     private actionSheetCtrl: ActionSheetController,
     public templateService: TemplateService,
+    public qrService: QrService,
     public router: Router,
     ) {
       this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid);
@@ -39,28 +40,16 @@ export class ManageEquipmentPage implements OnInit {
     ngOnInit() {
       this.form = this.formBuilder.group({
         name: ['', Validators.required],
+        type: ['', Validators.required],
+        model: ['', Validators.required],
+        serialnumber: ['', Validators.required],
+        locationid: ['', Validators.required],
       })
     }
 
-    @ViewChild("qrcode", {read: ElementRef}) qrcode: ElementRef;
-
-    dataURItoBlob(dataURI) {
-      const byteString = atob(dataURI.split(',')[1]);
-      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-      const ab = new ArrayBuffer(byteString.length);
-      const ia = new Uint8Array(ab);
-      for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
-      return new Blob([ab], { type: mimeString });
-    }
-
-    async makeQrBlob()
+    async downloadQR(id: string)
     {
-      const canvas = this.qrcode.nativeElement.querySelector('canvas');
-      const dataUrl = canvas.toDataURL('image/png');
-      const blob = this.dataURItoBlob(dataUrl);
-      saveAs(blob, this.newEquipment.name + '-qrcode');
+      this.qrService.downloadQrFromData(id, this.newEquipment.name +'-qrcode.png')
     }
 
     async presentToast() {
@@ -73,13 +62,15 @@ export class ManageEquipmentPage implements OnInit {
       await toast.present();
     }
 
-    async onSubmitNewEquipment() {
+    async onSubmitNewEquipment(downloadQR: boolean = false) {
       if (this.accountService.user.roleid > 1) {
 
       this.newEquipment.organizationid = this.accountService.organization.id
       this.equipmentService
         .createEquipment(this.newEquipment)
-        .subscribe((equipment: Equipment) => this.qrCodeId = equipment.id.toString())
+        .subscribe((equipment: Equipment) => {
+          if (downloadQR) this.downloadQR(equipment.id.toString())
+        })
       }
     }
 
@@ -119,8 +110,7 @@ export class ManageEquipmentPage implements OnInit {
             cssClass: 'action-sheet-button proceed',
             text: 'Ja',
             handler: () => {
-              this.makeQrBlob();
-              this.onSubmitNewEquipment();
+              this.onSubmitNewEquipment(true);
               this.presentToast();
               actionSheet.dismiss();
               this.router.navigate(['/home']);
