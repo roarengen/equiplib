@@ -21,6 +21,7 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
   public subscription = new Subscription();
   public locations: Observable<Location[]>;
   public tags!: Observable<Tag[]>
+  public filteredAddedTags: Tag[]
   public selectedEquipment?: Observable<Equipment>;
   public equiptags: any;
 
@@ -44,6 +45,12 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
+    this.tags.subscribe(
+      tags =>
+      {
+        this.filteredAddedTags = tags;
+      }
+    )
     this.selectedEquipment = this.equipmentService.getEquipment(this.filterService.data);
     this.selectedEquipment.subscribe(equipment => {
       this.editEquipment = equipment;
