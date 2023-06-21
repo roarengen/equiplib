@@ -46,7 +46,7 @@ def post_equip(equipment: EquipmentCreate, db : Session = Depends(get_db)):
 @api.post("/tag", response_model=Tag, dependencies=[Depends(require_admin)])
 def post_tag(tag: TagCreate, db: Session = Depends(get_db)):
     tags_in_org = crud.get_tags_by_orgid(db, tag.organizationid)
-    tag_exists = any([tag.name == tag.name for tag in tags_in_org])
+    tag_exists = any([tag.name == tag_.name for tag_ in tags_in_org])
 
     if tag_exists:
         raise HTTPException(400, "tag already exists")
