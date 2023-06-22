@@ -5,7 +5,7 @@
   </ion-item>
   <div class="ion-padding accordion-description" slot="content">
     <app-tag *ngFor="let tag of equipment.tags" name="{{tag.name}}" color="{{tag.color}}"></app-tag>
-    <p *ngIf="equipment.serialnumber">Serienummer:{{equipment.serialnumber}}</p>
+    <p *ngIf="equipment.serialnumber">Serienummer: {{equipment.serialnumber}}</p>
     <p *ngIf="equipment.description">Beskrivelse:</p>
     <p>{{equipment.description}}</p>
     <p class="accordion-text">Lokasjon: {{location?.name || "Ingen satt lokasjon"}}</p>
