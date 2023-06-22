@@ -36,25 +36,8 @@ export class QrService {
   }
 
   public downloadQrFromData(data: string, filename: string) {
-  var url = QrService.formatUrl(data, this.size);
+  const url = QrService.formatUrl(data, this.size);
 
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.responseType = 'blob';
-
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      var blob = xhr.response;
-      var link: HTMLAnchorElement = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', filename);
-      link.style.display = 'none';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
-
-  xhr.send();
-}
+  saveAs(url, filename)
+  }
 }
