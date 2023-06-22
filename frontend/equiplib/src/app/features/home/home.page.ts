@@ -8,11 +8,18 @@ import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
 import { AlertController, PopoverController } from '@ionic/angular'
 import { LoadingController } from '@ionic/angular';
+import {QrService} from 'src/app/services/qr.service';
+import {Idownloadable} from 'src/app/models/downloadable';
 
 class Filter {
   tagids: number[] = [];
   name: string = "";
   onlyRented: boolean = false;
+}
+
+class Downloadable implements Idownloadable {
+  data: string;
+  name: string;
 }
 
 @Component({
@@ -43,6 +50,7 @@ export class HomePage implements OnInit {
 		public accountService: AccountService,
     public equipmentService: EquipmentService,
     public rentService: RentService,
+    public QrService: QrService,
   ) {
     this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid)
     this.locations = locationService.getAllLocations(this.accountService.user.organizationid)
@@ -74,6 +82,19 @@ export class HomePage implements OnInit {
     } finally {
       loading.dismiss();
     }
+  }
+
+  downloadAll() {
+    this.equipments.subscribe(equipments => {
+      const items: Downloadable[] = equipments.map(equipment => {
+        const item = new Downloadable();
+        item.data = equipment.id.toString();
+        item.name = equipment.name;
+        return item;
+      });
+
+      this.QrService.downloadQrAsZip(items);
+    });
   }
 
   trackByFn(index: number, equipment: Equipment): number {
