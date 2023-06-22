@@ -36,6 +36,7 @@
     "file-saver": "^2.0.5",
     "FileSaver": "^0.10.0",
     "ionicons": "^6.0.3",
+    "jszip": "^3.10.1",
     "ngx-color-picker": "^14.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
