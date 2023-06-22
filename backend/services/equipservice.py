@@ -13,7 +13,7 @@ def get_equips(db: Session) -> list[Equipment]:
 def get_equips_by_name(db: Session, name: str) -> list[Equipment]:
     return db.query(Equipment).filter(Equipment.name == name).all()
 
-def get_equips_by_org_id(db: Session, orgid: int) -> list[Equipment] | None:
+def get_equips_by_org_id(db: Session, orgid: int) -> list[Equipment]:
     return db.query(Equipment).filter(Equipment.organizationid == orgid).all()
 
 def remove_equip(db: Session, id: int) -> None:
