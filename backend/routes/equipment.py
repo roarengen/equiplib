@@ -39,10 +39,10 @@ def get_equip(id: int, db : Session = Depends(get_db)):
     return equip
 
 @api.post("/", response_model=Equipment, dependencies=[Depends(require_admin)])
-def post_equip(equipment: EquipmentCreate, db : Session = Depends(get_db), orgid = Depends(require_user_to_be_in_org)):
-    #any([equipment.name == eq.name for eq in crud.get_equips_by_org_id(db, orgid)])
+def post_equip(equipment: EquipmentCreate, db : Session = Depends(get_db)):
+    #any([equipment.name == eq.name for eq in crud.get_equips_by_org_id(db, equipment.organizationid)])
 
-    all_equips = crud.get_equips_by_org_id(db, orgid)
+    all_equips = crud.get_equips_by_org_id(db, equipment.organizationid)
     name_already_exists = any([equipment.name == eq.name for eq in all_equips])
 
     if name_already_exists:
