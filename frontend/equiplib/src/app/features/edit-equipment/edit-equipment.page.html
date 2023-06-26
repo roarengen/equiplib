@@ -25,14 +25,11 @@
       </ion-popover>
 
     </div>
-      <ion-item class="form-item" color="input-background">
-        <ion-label position="floating">Navn:</ion-label>
-        <ion-input
-        ngModel required
-        [(ngModel)]="editEquipment.name"
-        [clearInput]="true"
-        ></ion-input>
-      </ion-item>
+
+    <ion-item class="form-item" color="input-background">
+      <ion-label position="floating">Navn:</ion-label>
+      <ion-input  placeholder="Ingen navn satt" [(ngModel)]="editEquipment.name" [clearInput]="true" ngModel required name="name"></ion-input>
+    </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Type:</ion-label>
