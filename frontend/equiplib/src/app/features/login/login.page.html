@@ -39,16 +39,9 @@
   </ion-text>
 
     <ion-item-group>
-      <button *ngIf="!this.openQrCode"(click)="onOpenQrScanner()"size="large" color="secondary" class="button-qr">
+      <button *ngIf="!this.openQrCode" routerLink="/qrloginscanner"size="large" color="secondary" class="button-qr">
         <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
       </button>
-
-      <ion-item *ngIf="this.openQrCode">
-        <zxing-scanner
-        (scanSuccess) = "scanSuccessHandler($event)"
-        (scanError)= "scanErrorHandler($event)"
-        ></zxing-scanner>
-      </ion-item>
     </ion-item-group>
   </ion-item-group>
 </ion-content>

@@ -25,7 +25,7 @@
         formControlName="model"
         name="model"
         [clearInput]="true"
-        ngModel 
+        ngModel
         required
         [(ngModel)]="newEquipment.model"
         ></ion-input>
@@ -74,7 +74,7 @@
         formControlName="other2"
         name="other2"
         [clearInput]="true"
-        ngModel 
+        ngModel
         required
         [(ngModel)]="newEquipment.other2"
         >
@@ -95,25 +95,22 @@
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
-        <ion-textarea 
-        [(ngModel)]="newEquipment.comment" 
-        placeholder="Kommentar/beskrivelse" 
-        [autoGrow]="true" 
+        <ion-textarea
+        [(ngModel)]="newEquipment.comment"
+        placeholder="Kommentar/beskrivelse"
+        [autoGrow]="true"
         value="">
         </ion-textarea>
       </ion-item>
 
-          <ion-item class="form-item" class="grid-item" color="input-background">
-            <ion-select 
-            interface="action-sheet" 
-            placeholder="Velg lokasjon" 
-            name="locationid"
-            [(ngModel)]="newEquipment.locationid">
-              <ng-container>
-                <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
-              </ng-container>
-            </ion-select>
-          </ion-item>
+      <ion-item class="form-item" class="grid-item" color="input-background">
+        <ion-label>Lokasjon:</ion-label>
+        <ion-select interface="action-sheet" placeholder="Velg lokasjon" name="locationid" [(ngModel)]="newEquipment.locationid">
+          <ng-container>
+            <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
+          </ng-container>
+        </ion-select>
+      </ion-item>
 
         </div>
     <div class="form-button-container">

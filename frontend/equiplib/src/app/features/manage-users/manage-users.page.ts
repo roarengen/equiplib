@@ -114,15 +114,13 @@ export class ManageUsersPage implements OnInit {
     const dataUrl = canvas.toDataURL('image/png');
     const blob = this.dataURItoBlob(dataUrl);
     saveAs(blob, this.newUser.firstname + 'qrcode.png');
-
     this.newUser.organizationid = this.accountService.user.organizationid
-    this.newUser.roleid = 1;
+    this.newUser.roleid = Number(this.newUser.roleid);
     this.http.post(`${environment.apiUrl}/users/`, this.newUser).subscribe((response: number) =>
     {if (response === 200) {
       this.presentToast();
     }
     }
-
     )
   }
   else {

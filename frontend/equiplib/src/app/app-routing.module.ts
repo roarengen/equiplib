@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPage } from './features/login/login.page';
 import { HomePage } from './features/home/home.page';
-import { AuthGuard } from './helpers/auth/auth.guard';
 import { AdminGuard } from './helpers/auth/admin.guard';
 import { ManageEquipmentPage } from './features/manage-equipment/manage-equipment.page';
 import { ManageUsersPage } from './features/manage-users/manage-users.page';
@@ -15,6 +14,7 @@ import { QrScannerPage } from './features/qr-scanner/qr-scanner.page';
 import {ResetPasswordComponent} from './features/reset-password/reset-password.component';
 import { EditEquipmentPage } from './features/edit-equipment/edit-equipment.page';
 import { EditUserPage } from './features/edit-user/edit-user.page';
+import { QrScannerLoginPage } from './features/qr-scanner-login/qr-scanner-login.page';
 
 const routes: Routes = [
   {
@@ -39,6 +39,7 @@ const routes: Routes = [
     ]
   },
   { path: 'qrscanner', component: QrScannerPage},
+  { path: 'qrloginscanner', component: QrScannerLoginPage},
   { path: 'login', component: LoginPage},
   { path: 'reset-password', component: ResetPasswordComponent},
 ];

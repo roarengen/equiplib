@@ -44,7 +44,6 @@ export class LoginPage implements OnInit {
 	}
 
   ionViewWillEnter() {
-    // Reset component properties
     this.loading = false;
     this.submitted = false;
     this.openQrCode = false;
@@ -52,8 +51,6 @@ export class LoginPage implements OnInit {
     this.QrCode = '';
     this.pin = '';
     this.invalidCredentials = false;
-
-    // Reset form fields
     this.form.reset();
   }
 
@@ -65,7 +62,7 @@ export class LoginPage implements OnInit {
       .subscribe({
         next: login => {
 					this.accountService.user = login.user
-          			this.http.token = login.token
+          this.http.token = login.token
 					this.accountService.getOrganization(login.user.organizationid).subscribe(
 						organization =>{ this.accountService.organization = organization
             }
@@ -85,57 +82,7 @@ export class LoginPage implements OnInit {
 
 	onSubmit() {
 		this.login(this.f['username'].value, this.f['password'].value)
-
 	}
-
-	onSubmitQrCode() {
-		this.login(this.QrCode, this.pin)
-	}
-
-	onOpenQrScanner() {
-		this.openQrCode = true;
-	}
-
-	scanSuccessHandler(scanValue: string) {
-    this.QrCode = scanValue;
-    this.presentAlertPrompt()
-	}
-
-	scanErrorHandler(scanError: any) {
-    console.log(scanError)
-	}
-
-  async presentAlertPrompt() {
-    const alert = await this.alertController.create({
-      cssClass: 'pinLogin',
-      header: 'PIN',
-      inputs: [
-        {
-          name: 'pin',
-          type: 'text',
-          placeholder: 'Skriv inn din PIN-kode',
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            this.openQrCode = false;
-          }
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-            this.pin = data.pin
-            this.login( this.QrCode, this.pin)
-            alert.dismiss();
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
 
 }
 

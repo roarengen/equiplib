@@ -35,25 +35,29 @@
         <ion-input type="number" formControlName="phone" [(ngModel)]="newUser.phone" type="number" [clearInput]="true" ngModel required> </ion-input>
       </ion-item>
 
-    <ion-item color="input-background">
-      <ion-label>Fødselsdato:</ion-label>
-      <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
-      <ion-popover [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime locale="nb" [showDefaultTitle]="true" max="2023" min="1900" presentation="date" dayShortNames="Søn,Man,Tir,Ons,Tor,Fre,Lør" displayFormat="YYYY-MM-DD"[(ngModel)]="newUser.dateOfBirth" id="datetime"></ion-datetime>
-        </ng-template>
+      <ion-item color="input-background">
+        <ion-label>Innleveringsdato</ion-label>
+        <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
+        <ion-popover [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+            locale="nb" [showDefaultTitle]="true" min="1940" max="2023" presentation="date" dayShortNames="Søn,Man,Tir,Ons,Tor,Fre,Lør" displayFormat="YYYY-MM-DD"[(ngModel)]="newUser.dateOfBirth" id="datetime2">
+            <span slot="title">Velg Dato</span>
+          </ion-datetime>
+          </ng-template>
         </ion-popover>
       </ion-item>
 
-            <ion-item class="form-item" class="grid-item" color="input-background">
-              <ion-select interface="popover" placeholder="Velg Rolle">
-                <ng-container>
-                  <ion-select-option >Bruker</ion-select-option>
-                  <ion-select-option >Utstyrsansvarlig</ion-select-option>
-                  <ion-select-option >Administrator</ion-select-option>
-                </ng-container>
-              </ion-select>
-            </ion-item>
+      <ion-item class="form-item" class="grid-item" color="input-background">
+        <ion-label>Rolle:</ion-label>
+        <ion-select interface="popover" placeholder="Velg Rolle" [(ngModel)]="newUser.roleid">
+          <ng-container>
+            <ion-select-option value="1">Bruker</ion-select-option>
+            <ion-select-option value="2">Utstyrsansvarlig</ion-select-option>
+            <ion-select-option value="3">Administrator</ion-select-option>
+          </ng-container>
+        </ion-select>
+      </ion-item>
   </div>
 
   <div class="form-button-container">
