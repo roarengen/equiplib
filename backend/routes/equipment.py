@@ -61,6 +61,22 @@ def post_tag(tag: TagCreate, db: Session = Depends(get_db)):
         raise HTTPException(400, "tag already exists")
     return crud.create_tag(db, tag)
 
+@api.get("/tag/{tagid}/disable", response_model=Tag, dependencies=[Depends(require_admin)])
+def disable_tag(tagid: int, db: Session = Depends(get_db)):
+    tag = crud.disable_tag(db, tagid)
+    if not tag:
+        return HTTPException(404, "tag not found")
+    
+    return tag
+
+@api.get("/tag/{tagid}/enable", response_model=Tag, dependencies=[Depends(require_admin)])
+def enable_tag(tagid: int, db: Session = Depends(get_db)):
+    tag = crud.enable_tag(db, tagid)
+    if not tag:
+        return HTTPException(404, "tag not found")
+    
+    return tag
+
 @api.get("/tags/{orgid}", response_model=list[Tag], dependencies=[Depends(require_admin)])
 def get_tags_by_orgid(orgid: int, db: Session = Depends(get_db)):
     return crud.get_tags_by_orgid(db, orgid)

@@ -16,6 +16,12 @@ def get_equips_by_name(db: Session, name: str) -> list[Equipment]:
 def get_equips_by_org_id(db: Session, orgid: int) -> list[Equipment]:
     return db.query(Equipment).filter(Equipment.organizationid == orgid).all()
 
+def get_tag_by_id(db: Session, tagid: int) -> Tag | None:
+    return db.query(Tag).filter(Tag.id == tagid).first()
+
+def get_tags_by_orgid(db: Session, orgid: int):
+    return db.query(Tag).where(Tag.organizationid == orgid).all()
+
 def remove_equip(db: Session, id: int) -> None:
     db.delete(db.query(Equipment).filter(Equipment.id == id).first())
 
@@ -38,11 +44,13 @@ def enable_equip(db: Session, id: int) -> Equipment | None:
 
 def disable_equip(db: Session, id: int) -> Equipment | None:
     eq = db.query(Equipment).filter(Equipment.id == id).first()
-    if eq:
-        eq.active = False
-        db.commit()
-        db.refresh(eq)
-        return eq
+    if not eq:
+        return None
+
+    eq.active = False
+    db.commit()
+    db.refresh(eq)
+    return eq
 
 def create_equip(db: Session, equip: EquipmentCreate) -> Equipment:
     new_equip = Equipment(**equip.dict(), active=True)
@@ -58,8 +66,26 @@ def create_tag(db: Session, tag: TagCreate) -> Tag:
     db.refresh(new_tag)
     return new_tag
 
-def get_tags_by_orgid(db: Session, orgid: int):
-    return db.query(Tag).where(Tag.organizationid == orgid).all()
+
+def disable_tag(db: Session, tagid: int) -> Tag | None:
+    tag = db.query(Tag).filter(Tag.id == tagid).first()
+    if not tag:
+        return None
+
+    tag.active = False
+    db.commit()
+    db.refresh(tag)
+    return tag
+
+def enable_tag(db: Session, tagid: int) -> Tag | None:
+    tag = db.query(Tag).filter(Tag.id == tagid).first()
+    if not tag:
+        return None
+
+    tag.active = True
+    db.commit()
+    db.refresh(tag)
+    return tag
 
 def remove_tag_from_equip(db: Session, equipid: int, tagid: int) -> None | Tag:
     equipment = db.query(Equipment).where(Equipment.id == equipid).first()
