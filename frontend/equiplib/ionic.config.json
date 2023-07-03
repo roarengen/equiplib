@@ -1,5 +1,5 @@
 {
-  "name": "LoanOut",
+  "name": "equiplib",
   "integrations": {
     "capacitor": {}
   },

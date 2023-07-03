@@ -1,0 +1,96 @@
+
+<ion-app>
+  <ion-header>
+    <ion-toolbar>
+      <div class="menu-toolbar">
+      <ion-menu-toggle>
+        <button ion-button menuToggle end class="menu-button">
+          <ion-icon class="menu-icon"src="../../../assets/icons/menu.svg"></ion-icon>
+        </button>
+      </ion-menu-toggle>
+      <ion-title class="resizeable-title">{{accountService.organization?.name || ""}}</ion-title>
+    </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Meny</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <div class="flex-wrapper">
+      <ion-list>
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/home']"class="clickable ion-activatable">
+            <ion-icon src="../../../assets/icons/box-search.svg"></ion-icon>
+            Hjem
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/qrscanner']"class="clickable ion-activatable">
+            <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
+            Scanner
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/manageequipment']"class="clickable ion-activatable">
+            <ion-icon src="../../../assets/icons/add_equipment.svg"></ion-icon>
+            Legg til utstyr
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/manageusers']"class="clickable ion-activatable">
+            <ion-icon slot="start" name="person-add-outline"></ion-icon>
+              legg til bruker
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+          <ion-item class="clickable ion-activatable">
+            <ion-menu-toggle>
+            <button color="primary" ion-button size="large" [routerLink]="['/manageorganization']"class="clickable ion-activatable">
+              <ion-icon slot="start" name="briefcase-outline"></ion-icon>
+              Organisasjon
+            </button>
+          </ion-menu-toggle>
+          </ion-item>
+      </ion-list>
+      <ion-item lines="none" class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/login']"class="clickable ion-activatable" (click)="this.accountService.logout()">
+            <ion-icon slot="start" name="log-out-outline"></ion-icon>
+            Logg ut
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+        </div>
+    </ion-content>
+  </ion-menu>
+<div class="main-router-content">
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</div>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon src="../../../assets/icons/box-search.svg"></ion-icon>
+      Hjem
+    </ion-tab-button>
+    <ion-tab-button tab="qrscanner" color="secondary-contrast">
+      <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
+      Skanner
+    </ion-tab-button>
+    <ion-tab-button tab="manageequipment" >
+      <ion-icon src="../../../assets/icons/add_equipment.svg"></ion-icon>
+      Legg til utstyr
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+</ion-app>

@@ -1,0 +1,37 @@
+.form-title {
+  color: #ffffff;
+  background-color: #272B2F;
+  text-align: center;
+  padding: 20px 0 20px 0;
+  font-weight: 500;
+  border-radius: 10px;
+}
+
+.form-title-block {
+  margin-top: 3rem;
+  border-radius: 10px;
+  background-color: #272B2F;
+}
+
+.manage-location {
+  font-weight: 400;
+}
+
+.tag-name {
+  font-weight: 400;
+}
+
+.tag-container {
+  padding: 1rem 0 1rem 0;
+}
+
+.button-content {
+  display: flex;
+  justify-content: left;
+  padding-bottom: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+.button-font {
+  color: var(--ion-color-light);
+}

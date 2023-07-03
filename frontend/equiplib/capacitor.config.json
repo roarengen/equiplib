@@ -1,0 +1,8 @@
+{
+  "appId": "Equiplib",
+  "appName": "Equiplib",
+  "webDir": "src",
+  "server": {
+    "androidScheme": "https"
+  }
+}

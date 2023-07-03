@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.manage.yourequipment",
+	"appName": "equiplib",
+	"webDir": "src",
+	"bundledWebRuntime": false
+}

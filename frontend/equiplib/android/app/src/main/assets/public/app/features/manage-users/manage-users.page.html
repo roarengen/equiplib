@@ -1,0 +1,80 @@
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="onSubmitNewUser()">
+    <div class="form-title-block">
+      <h2 class="form-title">Legg til ny bruker</h2>
+    </div>
+
+    <div class="form-input-block">
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Brukernavn:</ion-label>
+        <ion-input formControlName="username" [(ngModel)]="newUser.username" [clearInput]="true"></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Pin:</ion-label>
+        <ion-input formControlName="password" [(ngModel)]="newUser.password" [clearInput]="true" type="number" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Fornavn:</ion-label>
+        <ion-input formControlName="firstname" [(ngModel)]="newUser.firstname" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Etternavn:</ion-label>
+        <ion-input formControlName="lastname" [(ngModel)]="newUser.lastname" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Email:</ion-label>
+        <ion-input  formControlName="email"[(ngModel)]="newUser.email" type="email" [clearInput]="true" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Telefonnummer:</ion-label>
+        <ion-input type="number" formControlName="phone" [(ngModel)]="newUser.phone" type="number" [clearInput]="true" ngModel required> </ion-input>
+      </ion-item>
+
+      <ion-item color="input-background">
+        <ion-label>Fødselsdato</ion-label>
+        <ion-datetime-button slot="end" datetime="datetime2"></ion-datetime-button>
+        <ion-popover [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+            locale="nb" [showDefaultTitle]="true" min="1940" max="2023" presentation="date" dayShortNames="Søn,Man,Tir,Ons,Tor,Fre,Lør" displayFormat="YYYY-MM-DD"[(ngModel)]="newUser.dateOfBirth" id="datetime2">
+            <span slot="title">Velg Dato</span>
+          </ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+
+      <ion-item class="form-item" class="grid-item" color="input-background">
+        <ion-label>Rolle:</ion-label>
+        <ion-select interface="popover" placeholder="Velg Rolle" [(ngModel)]="newUser.roleid">
+          <ng-container>
+            <ion-select-option value="1">Bruker</ion-select-option>
+            <ion-select-option value="2">Utstyrsansvarlig</ion-select-option>
+            <ion-select-option value="3">Administrator</ion-select-option>
+          </ng-container>
+        </ion-select>
+      </ion-item>
+  </div>
+
+  <div class="form-button-container">
+    <ion-button [disabled]="form.controls.username.invalid" class="form-button" color="register" (click)="validateInformation()">
+      Registrer
+    </ion-button>
+  </div>
+
+</form>
+  <div class="qr-code-wrapper">
+    <qrcode
+    class="qr-code"
+    #qrcode
+    [qrdata]="newUser.username"
+    [errorCorrectionLevel]="'M'"
+    [elementType]="'canvas'"
+    [allowEmptyString]="true">
+    </qrcode>
+    </div>
+  </ion-content>

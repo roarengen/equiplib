@@ -1,0 +1,85 @@
+<ion-content class="ion-padding">
+      <form #f="ngForm" *ngIf="editEquipment">
+    <div class="form-title-block">
+      <h2 class="form-title">Redigering av {{editEquipment.name}}</h2>
+    </div>
+
+    <div class="form-input-block">
+      <div slot="content">
+        <div>
+        <ion-text class="tag-title">Tags</ion-text>
+        </div>
+        <app-tag *ngFor="let tag of equiptags; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag(tag, i)"></app-tag>
+        <button class="button-add" size="medium" id="add-tag">
+        <ion-icon slot="icon-only" name="add-circle-outline" color="success"></ion-icon>
+      </button>
+
+      <ion-popover trigger="add-tag" triggerAction="click">
+        <ng-template class="tag-popover-content">
+          <div class="tag-list">
+            <div class="tag-row">
+              <app-tag *ngFor="let tag of filteredAddedTags; let i = index" name="{{tag.name}}" color="{{tag.color}}" (click)="addTag(tag, i)"></app-tag>
+            </div>
+          </div>
+        </ng-template>
+      </ion-popover>
+
+    </div>
+
+    <ion-item class="form-item" color="input-background">
+      <ion-label position="floating">Navn:</ion-label>
+      <ion-input  placeholder="Ingen navn satt" [(ngModel)]="editEquipment.name" [clearInput]="true" ngModel required name="name"></ion-input>
+    </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Type:</ion-label>
+        <ion-input  placeholder="Ingen type satt" [(ngModel)]="editEquipment.type" [clearInput]="true" ngModel required name="type"></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Serienummer:</ion-label>
+        <ion-input placeholder="Ingen serienummer satt" [(ngModel)]="editEquipment.serialnumber" [clearInput]="true" ngModel required name="serialnumber"> </ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.template.equipOther1" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.template.equipOther1}}:</ion-label>
+        <ion-input  placeholder="Ingen {{templateService.template.equipOther1}} satt"[(ngModel)]="editEquipment.other1" [clearInput]="true" ngModel required name="other1"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.template.equipOther2" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.template.equipOther2}}:</ion-label>
+        <ion-input  placeholder="Ingen {{templateService.template.equipOther2}} satt" [(ngModel)]="editEquipment.other2" [clearInput]="true" ngModel required name="other2"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.template.equipOther3" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.template.equipOther3}}:</ion-label>
+        <ion-input  placeholder="Ingen {{templateService.template.equipOther3}} satt" [(ngModel)]="editEquipment.other3" [clearInput]="true" ngModel required name="other3"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="templateService.other3name" class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.other3name}}</ion-label>
+        <ion-textarea [(ngModel)]="editEquipment.comment" placeholder="Ingen kommentar satt" [autoGrow]="true" name="comment">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-item class="form-item" class="grid-item" color="input-background">
+        <ion-label floating>Lokasjon:</ion-label>
+        <ion-select interface="action-sheet" placeholder="Velg lokasjon" [(ngModel)]="editEquipment.locationid">
+          <ng-container>
+            <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
+          </ng-container>
+        </ion-select>
+      </ion-item>
+        </div>
+        <download-qr class="form-item"
+        [data]="filterService.data"
+        [filename]="editEquipment.name ? editEquipment.name.toString() + '-qrcode.png' : ''"
+        />
+    <div class="form-button-container">
+      <ion-button class="form-button" color="register" (click)="editEquips()">
+        Bekreft endringer
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
+

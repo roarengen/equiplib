@@ -1,0 +1,87 @@
+
+.logo-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-title {
+  text-align: center;
+  font-size: xx-large;
+  font-weight:  500;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: large;
+  margin: auto;
+  font-weight: 400;
+}
+
+ion-icon {
+  zoom: 2.5;
+  font-size: 50px;
+}
+
+button.button-qr {
+  height: 80px;
+  background-color: transparent;
+}
+
+ion-button {
+  padding-top: 15px;
+  height: 75px;
+  width:auto;
+  font-weight: 500;
+  box-shadow: none;
+
+
+}
+
+ion-input {
+  border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.link-container
+{
+  display: flex;
+  justify-content: flex-end;
+}
+
+a.link {
+  color: white;
+  padding-right: 1rem;
+  padding-top: 0.3rem;
+  width: fit-content;
+}
+
+.login-body {
+  padding-top: 10px;
+
+}
+
+ion-toolbar {
+  padding-top: 74px;
+  padding-bottom: 85px;
+}
+
+zxing-scanner {
+  width:100vw;
+  height:100vh;
+  overflow:auto;
+  position: fixed;
+}
+.login-main {
+  margin-top: 5rem;
+}
+
+.error-text {
+  color: red;
+  margin-top: 8px;
+}
+
+.invalid-field {
+  border-color: red;
+}

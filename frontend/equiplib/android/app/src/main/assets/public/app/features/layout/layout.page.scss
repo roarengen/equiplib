@@ -1,0 +1,86 @@
+.menu-toolbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 0.5rem;
+  }
+
+  .resizeable-title {
+    text-align: center;
+    padding-right: 71px;
+    padding-top: 7.5px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+ion-fab-button {
+  margin-bottom: 65px;
+}
+
+ion-tab-button {
+  --color-selected: #FFFF;
+}
+
+ion-icon {
+  background-color: transparent;
+}
+
+button {
+  background-color: transparent;
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+ion-title {
+  text-align: center;
+}
+
+::ng-deep {
+
+  zxing-scanner {
+    height: 100%;
+    width: 100%;
+
+  }
+
+  video {
+    height: 100% !important;
+  }
+}
+
+.flex-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.clickable {
+  pointer-events: auto !important;
+  color: white;
+  font-size:x-large;
+  }
+
+.menu-button {
+  background-color: transparent;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  margin-left: 1rem;
+  margin-top: 10px;
+}
+
+.menu-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.organizationNumber{
+  font-size: 0.7em;
+  text-align: center;
+}
+
+.main-content {
+  margin-top: 3rem;
+}

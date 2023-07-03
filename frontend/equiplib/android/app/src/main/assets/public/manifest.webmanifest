@@ -1,0 +1,16 @@
+{
+  "name": "equiplib",
+  "short_name": "equiplib",
+  "theme_color": "#272B2F",
+  "background_color": "#272B2F",
+  "display": "fullscreen",
+  "scope": "./",
+  "start_url": "./login",
+  "icons": [
+    {
+      "src": "assets/icons/appicon.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

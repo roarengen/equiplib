@@ -1,0 +1,50 @@
+<ion-content class="ion-padding">
+  <form [formGroup]="form" #f="ngForm">
+<div class="form-title-block">
+  <h2 class="form-title">Redigering av {{editUser.username}}</h2>
+</div>
+
+<ion-item class="form-item" color="input-background">
+  <ion-label position="floating">Brukernavn</ion-label>
+  <ion-input
+  formControlName="username"
+  [clearInput]="true"
+  [(ngModel)]="editUser.username"
+  ></ion-input>
+</ion-item>
+
+<ion-item class="form-item" color="input-background">
+  <ion-label position="floating">Fornavn</ion-label>
+  <ion-input
+  formControlName="firstname"
+  [clearInput]="true"
+  [(ngModel)]="editUser.firstname"
+  ></ion-input>
+</ion-item>
+
+<ion-item class="form-item" color="input-background">
+  <ion-label position="floating">Etternavn</ion-label>
+  <ion-input
+  formControlName="lastname"
+  [clearInput]="true"
+  [(ngModel)]="editUser.lastname"
+  ></ion-input>
+</ion-item>
+
+<ion-item class="form-item" color="input-background">
+  <ion-label position="floating">{{templateService.template.equipName ?? "Navn"}}:</ion-label>
+  <ion-input
+  formControlName="phonenumber"
+  [clearInput]="true"
+  [(ngModel)]="editUser.phone"
+  ></ion-input>
+</ion-item>
+
+<div class="form-button-container">
+  <ion-button [disabled]="form.controls.username.invalid" class="form-button" color="register" (click)="editedUser()">
+    Bekreft endringer
+  </ion-button>
+</div>
+</form>
+</ion-content>
+

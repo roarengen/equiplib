@@ -1,0 +1,24 @@
+<ion-accordion value="{{equipment.name}}">
+  <ion-item slot="header">
+    <ion-label class="accordion-title">{{equipment.name}}<p style="color:#FF5722"
+        *ngIf="!isCurrentlyAvailable">Utleid</p></ion-label>
+  </ion-item>
+  <div class="ion-padding accordion-description" slot="content">
+    <app-tag *ngFor="let tag of equipment.tags" name="{{tag.name}}" color="{{tag.color}}"></app-tag>
+    <p *ngIf="equipment.serialnumber">Serienummer: {{equipment.serialnumber}}</p>
+    <p *ngIf="equipment.description">Beskrivelse:</p>
+    <p>{{equipment.description}}</p>
+    <p class="accordion-text">Lokasjon: {{location?.name || "Ingen satt lokasjon"}}</p>
+    <p *ngIf="equipment.other1 && other1name">{{other1name}}: {{equipment.other1}}</p>
+    <p *ngIf="equipment.other2 && other2name">{{other2name}}: {{equipment.other2}}</p>
+    <p *ngIf="equipment.other3 && other3name">{{other3name}}: {{equipment.other3}}</p>
+
+    <div class="button-content">
+      <app-edit-button [href]="'/editequipment'" [editButton]="true" [setFilterServiceId]="equipment.id" ></app-edit-button>
+      <app-edit-button [deleteButton]="true" ></app-edit-button>
+  </div>
+        <download-qr
+        [data]="equipment.id.toString()"
+        [filename]="equipment.name +'-qrcode.png'" />
+  </div>
+</ion-accordion>

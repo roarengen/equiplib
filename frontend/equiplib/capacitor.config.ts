@@ -1,9 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'LoanOut',
-  webDir: 'www',
+  appId: 'io.ionic.manage.yourequipment',
+  appName: 'equiplib',
+  webDir: 'src',
   bundledWebRuntime: false
 };
 

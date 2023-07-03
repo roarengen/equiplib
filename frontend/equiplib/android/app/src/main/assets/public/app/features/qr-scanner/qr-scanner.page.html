@@ -1,0 +1,20 @@
+<ion-content>
+  <zxing-scanner
+  (scanSuccess)= "scannerIsEnabled && scanSuccessHandler($event)"
+  (scanError)= "scanErrorHandler($event)"
+  (scannerEnabled)="scannerIsEnabled"
+  ></zxing-scanner>
+
+  <ion-tabs fullscreen>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button routerLink="/home" routerDirection="root" tab="home">
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+        Tilbake
+      </ion-tab-button>
+      <ion-tab-button (click)="toggleFlashlight()">
+        <ion-icon color="tertiary" name="flashlight-outline"></ion-icon>
+        Lykt
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

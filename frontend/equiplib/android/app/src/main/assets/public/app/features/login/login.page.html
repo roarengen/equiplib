@@ -1,0 +1,47 @@
+<ion-content class="ion-text-center">
+  <ion-item-group class="login-main">
+    <ion-item-group class="logo-group">
+    <ion-img style="width: 128px" src="../../../../assets/icons/Logo.png"></ion-img>
+    <ion-text class="login-title" color="tertiary" size="large">EquipLib</ion-text>
+    <ion-item>
+    <ion-text class="login-subtitle" color="primary-contrast" size="small">En enkel oversikt, for alt av utstyr.</ion-text>
+    </ion-item>
+    </ion-item-group>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-list class="form-group">
+      <ion-item color="secondary">
+        <ion-label position="floating">Brukernavn</ion-label>
+        <ion-input formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [clearInput]="true" ></ion-input>
+      </ion-item>
+
+      <ion-item color="secondary">
+        <ion-label position="floating">PIN-kode</ion-label>
+        <ion-input class="password-input"formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password"></ion-input>
+      </ion-item>
+
+      <div *ngIf="submitted && invalidCredentials" class="error-text">
+        Ugyldig PIN-kode og brukernavn
+      </div>
+
+    </ion-list>
+    <ion-text class="link-container">
+    <a class="link" [routerLink]="['/reset-password']">Glemt PIN-kode?</a>
+  </ion-text>
+
+    <ion-button class="form-group-button" type="submit">
+      <ion-icon slot="end" size="small" src="../../../../assets/icons/icon_login.svg"></ion-icon>
+    Logg inn
+    </ion-button>
+  </form>
+
+  <ion-text>
+    <p>Eller skann din QR kode</p>
+  </ion-text>
+
+    <ion-item-group>
+      <button *ngIf="!this.openQrCode" routerLink="/qrloginscanner"size="large" color="secondary" class="button-qr">
+        <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
+      </button>
+    </ion-item-group>
+  </ion-item-group>
+</ion-content>
