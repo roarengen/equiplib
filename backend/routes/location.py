@@ -44,7 +44,7 @@ def post_location(location: LocationCreate, db: Session = Depends(get_db)):
     logger.info(f"{location} has been created")
     return crud.create_location(db, location)
 
-@api.get("/{id}/disable", response_model=list[Location])
+@api.get("/{id}/disable", response_model=Location | None)
 def disable(id: int, db: Session = Depends(get_db)):
-    logger.info(f"{id} has been disabled")
+    logger.info(f"location with id: {id}, has been disabled")
     return crud.disable_location(db, id)
