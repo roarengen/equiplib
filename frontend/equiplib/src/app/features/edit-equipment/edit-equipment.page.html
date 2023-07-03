@@ -25,25 +25,64 @@
       </ion-popover>
 
     </div>
-
-    <ion-item class="form-item" color="input-background">
-      <ion-label position="floating">Navn:</ion-label>
-      <ion-input  placeholder="Ingen navn satt" [(ngModel)]="editEquipment.name" [clearInput]="true" ngModel required name="name"></ion-input>
-    </ion-item>
-
-    <ion-item class="form-item" color="input-background">
-      <ion-label position="floating">Merke:</ion-label>
-      <ion-input  placeholder="Ingen navn satt" [(ngModel)]="editEquipment.brand" [clearInput]="true" ngModel required name="brand"></ion-input>
-    </ion-item>
-
       <ion-item class="form-item" color="input-background">
-        <ion-label position="floating">Type:</ion-label>
-        <ion-input  placeholder="Ingen type satt" [(ngModel)]="editEquipment.type" [clearInput]="true" ngModel required name="type"></ion-input>
+        <ion-label position="floating">{{templateService.template.equipName ?? "Navn"}}:</ion-label>
+        <ion-input
+        formControlName="name"
+        name="name"
+        [clearInput]="true"
+        ngModel
+        required
+        [(ngModel)]="editEquipment.name"
+        ></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
-        <ion-label position="floating">Serienummer:</ion-label>
-        <ion-input placeholder="Ingen serienummer satt" [(ngModel)]="editEquipment.serialnumber" [clearInput]="true" ngModel required name="serialnumber"> </ion-input>
+        <ion-label position="floating">{{templateService.template.equipBrand ?? "Merke"}}:</ion-label>
+        <ion-input
+        formControlName="brand"
+        name="brand"
+        [clearInput]="true"
+        ngModel
+        required
+        [(ngModel)]="editEquipment.brand"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.template.equipBrand ?? "Modell"}}:</ion-label>
+        <ion-input
+        formControlName="model"
+        name="model"
+        [clearInput]="true"
+        ngModel
+        required
+        [(ngModel)]="editEquipment.model"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.template.equipType ?? "Type"}}:</ion-label>
+        <ion-input
+        formControlName="type"
+        name="type"
+        [clearInput]="true"
+        ngModel
+        required
+        [(ngModel)]="editEquipment.type"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.template.equipSerialnumber ?? "Serienummer"}}:</ion-label>
+        <ion-input
+        formControlName="serialnumber"
+        name="serialnumber"
+        [clearInput]="true"
+        ngModel
+        required
+        [(ngModel)]="editEquipment.serialnumber"
+        > </ion-input>
       </ion-item>
 
       <ion-item *ngIf="templateService.template.equipOther1" class="form-item" color="input-background">
