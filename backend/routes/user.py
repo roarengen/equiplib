@@ -17,7 +17,7 @@ api = APIRouter(
     tags=['users'],
 )
 
-@api.post("/", response_model=User, dependencies=[Depends(require_admin)]) # perhaps lender should be able to rent out
+@api.post("/register", response_model=User, dependencies=[Depends(require_admin)]) # perhaps lender should be able to rent out
 def post_user(user: UserCreate, db: Session = Depends(get_db)):
     if crud.get_user_by_email(db, email=user.email):
         logger.debug(f"new user tried to create with email duplicate: {user.email}")
