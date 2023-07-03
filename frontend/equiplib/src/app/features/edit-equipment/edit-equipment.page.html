@@ -64,7 +64,7 @@
 
       <ion-item class="form-item" class="grid-item" color="input-background">
         <ion-label floating>Lokasjon:</ion-label>
-        <ion-select interface="action-sheet" placeholder="Velg lokasjon" [(ngModel)]="editEquipment.locationid">
+        <ion-select interface="popover" placeholder="Velg lokasjon" [(ngModel)]="editEquipment.locationid">
           <ng-container>
             <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
           </ng-container>
