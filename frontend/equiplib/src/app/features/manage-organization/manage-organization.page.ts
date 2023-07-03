@@ -96,15 +96,12 @@ export class ManageOrganizationPage implements OnInit {
     }
   }
 
-  async removeTag(i) {
-    if (this.accountService.user.roleid > 3) {
-      const tagsArray = await firstValueFrom(this.tags);
-      tagsArray.splice(i, 1);
-      this.tags = new Observable<Tag[]>(subscriber => {
-        subscriber.next(tagsArray);
-        subscriber.complete()
-      })
-    }
+  async deactivateTag(tag: Tag) {
+    if (this.accountService.user.roleid <= 3) return;
+
+    //TODO insert warning prompt
+
+    this.equipmentService.disableTag(tag).subscribe()
   }
 
   async presentAlertPrompt() {

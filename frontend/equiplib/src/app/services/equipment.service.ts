@@ -45,6 +45,13 @@ export class EquipmentService {
     {
         this.qr.downloadQrFromData(equipid.toString(), "qrcode.png");
     }
-
+    disableTag(tag: Tag)
+    {
+        return this.http.get<Tag>(`${environment.apiUrl}/equips/tag/${tag.id}/disable`)
+    }
+    enableTag(tag: Tag)
+    {
+        return this.http.get<Tag>(`${environment.apiUrl}/equips/tag/${tag.id}/enable`)
+    }
 
 }
