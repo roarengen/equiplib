@@ -25,6 +25,8 @@ def disable_location(db: Session, id: int) -> Location | None:
 
 def enable_location(db: Session, id: int) -> Location:
     loc = db.query(Location).filter(Location.id==id).first()
+    if not loc:
+        return None
     loc.active = True
     db.commit()
     db.refresh(loc)

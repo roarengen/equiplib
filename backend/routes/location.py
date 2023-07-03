@@ -48,3 +48,8 @@ def post_location(location: LocationCreate, db: Session = Depends(get_db)):
 def disable(id: int, db: Session = Depends(get_db)):
     logger.info(f"location with id: {id}, has been disabled")
     return crud.disable_location(db, id)
+
+@api.get("/{id}/enable", response_model=Location | None)
+def enable(id: int, db: Session = Depends(get_db)):
+    logger.info(f"location with id: {id}, has been enabled")
+    return crud.enable_location(db, id)
