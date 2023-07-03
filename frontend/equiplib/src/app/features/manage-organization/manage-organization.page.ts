@@ -2,7 +2,7 @@ import { User } from './../../models/user';
 import { Organization } from './../../models/organization';
 import { AccountService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ToggleCustomEvent } from '@ionic/angular';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { environment } from 'src/environments/environment';
 import { Observable, first, firstValueFrom } from 'rxjs';
@@ -86,6 +86,13 @@ export class ManageOrganizationPage implements OnInit {
       ]
     });
     await actionSheet.present();
+  }
+
+  toggleLocationActive(event: Event, location: Location){
+    const ev = event as ToggleCustomEvent;
+    const checked = ev.detail.checked;
+    
+    checked ? this.locationService.enableLocation(location).subscribe() : this.locationService.disableLocation(location).subscribe();
   }
 
   async onCreateNewLocation() {

@@ -24,4 +24,14 @@ export class LocationService  {
     {
         return this.http.post(`${environment.apiUrl}/location/`, location)
     }
+
+    disableLocation(location: Location)
+    {
+        return this.http.get(`${environment.apiUrl}/location/${location.id}/disable`)
+    }
+
+    enableLocation(location: Location)
+    {
+        return this.http.get(`${environment.apiUrl}/location/${location.id}/enable`)
+    }
 }

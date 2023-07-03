@@ -184,7 +184,14 @@
                 <ion-card-subtitle>{{location.description}}</ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
-                <ion-toggle color="success" justify="start" labelPlacement="start" [enableOnOffLabels]="true" [checked]="true">Set aktiv</ion-toggle>
+                <ion-toggle 
+                color="success" 
+                justify="start" 
+                labelPlacement="start" 
+                [enableOnOffLabels]="true"
+                [checked]="location.active"
+                (ionChange)="toggleLocationActive($event, location)"
+                >Set aktiv</ion-toggle>
               </ion-card-content>
             </ion-card>
           </ng-container>
