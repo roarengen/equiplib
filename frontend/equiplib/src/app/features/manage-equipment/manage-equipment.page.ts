@@ -5,12 +5,12 @@ import { AccountService } from 'src/app/services/user.service';
 import { LocationService } from 'src/app/services/location.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Equipment } from 'src/app/models/equipment';
-import { FormBuilder, FormGroup,Validators  } from '@angular/forms';
+import { FormBuilder, Validators  } from '@angular/forms';
 import { ActionSheetController, ToastController } from '@ionic/angular';
-import { saveAs } from 'file-saver';
 import { TemplateService } from 'src/app/services/template.service';
 import { Router } from '@angular/router';
 import { QrService } from 'src/app/services/qr.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-manage-equipment',
@@ -19,9 +19,20 @@ import { QrService } from 'src/app/services/qr.service';
 })
 export class ManageEquipmentPage implements OnInit {
   public locations: Observable<Location[]>;
-  form!: FormGroup;
   confirmationPopup: boolean = false;
   public newEquipment: Equipment = new Equipment();
+  form = this.formBuilder.group({
+        name: ['', [Validators.required]],
+        type: ['', [Validators.required]],
+        model: ['', [Validators.required]],
+        brand: ['', [Validators.required]],
+        serialnumber: ['', [Validators.required]],
+        locationid: ['', [Validators.required]],
+        other1: [''],
+        other2: [''],
+        other3: [''],
+        comment: [''],
+      })
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,13 +49,6 @@ export class ManageEquipmentPage implements OnInit {
     }
 
     ngOnInit() {
-      this.form = this.formBuilder.group({
-        name: ['', Validators.required],
-        type: ['', Validators.required],
-        model: ['', Validators.required],
-        serialnumber: ['', Validators.required],
-        locationid: ['', Validators.required],
-      })
     }
 
     async downloadQR(id: string)
@@ -68,8 +72,11 @@ export class ManageEquipmentPage implements OnInit {
       this.newEquipment.organizationid = this.accountService.organization.id
       this.equipmentService
         .createEquipment(this.newEquipment)
-        .subscribe((equipment: Equipment) => {
-          if (downloadQR) this.downloadQR(equipment.id.toString())
+        .subscribe({
+          next: (equipment: Equipment) => {
+            if (downloadQR) this.downloadQR(equipment.id.toString())
+          },
+          error: error => { console.error(error) }
         })
       }
     }

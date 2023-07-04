@@ -108,6 +108,7 @@
 
       <ion-item class="form-item" color="input-background">
         <ion-textarea
+        formControlName="comment"
         [(ngModel)]="newEquipment.comment"
         placeholder="Kommentar/beskrivelse"
         [autoGrow]="true"
@@ -117,7 +118,7 @@
 
       <ion-item class="form-item" class="grid-item" color="input-background">
         <ion-label>Lokasjon:</ion-label>
-        <ion-select interface="popover" placeholder="Velg lokasjon" name="locationid" [(ngModel)]="newEquipment.locationid">
+        <ion-select formControlName="locationid" interface="popover" placeholder="Velg lokasjon" name="locationid" [(ngModel)]="newEquipment.locationid">
           <ng-container>
             <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
           </ng-container>
@@ -126,7 +127,7 @@
 
         </div>
     <div class="form-button-container">
-      <ion-button [disabled]="form.controls.name.invalid" class="form-button" color="register" (click)="validateInformation()">
+      <ion-button [disabled]="!form.valid" class="form-button" color="register" (click)="validateInformation()">
         Registrer
       </ion-button>
     </div>
