@@ -1,11 +1,10 @@
 import { AccountService } from './../../services/user.service';
-import { CustomHttpClient } from './../../helpers/auth/http-client';
 import { Component, ElementRef, ViewChild, ChangeDetectorRef, OnChanges, SimpleChanges, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { createUser} from 'src/app/models/user';
+import { createUser, User} from 'src/app/models/user';
 import { ActionSheetController, ToastController } from '@ionic/angular';
-import { saveAs } from 'file-saver';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { QrService } from 'src/app/services/qr.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-users',
@@ -17,29 +16,27 @@ export class ManageUsersPage implements OnInit {
   public hasSubmittedNewUser: boolean = false;
   public newUser: createUser = new createUser();
   public qrCodeUsername: string = "";
-  form!: FormGroup;
-
+  form = this.formBuilder.group({
+      firstname: ['', [Validators.required, Validators.maxLength(40)]],
+      lastname: ['', [Validators.required, Validators.maxLength(40)]],
+      username: ['', [Validators.required, Validators.maxLength(40)]],
+      phone: [''],
+      email: ['', [Validators.email]],
+      password: ['', [Validators.minLength(4), Validators.maxLength(6), Validators.pattern('^[0-9]+$')]],
+      roleid: ['', [Validators.required]]
+    })
 
   constructor(
     private formBuilder: FormBuilder,
     private toastController: ToastController,
     private cdRef: ChangeDetectorRef,
-    private http: CustomHttpClient,
     private accountService: AccountService,
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController,
+    private qrService: QrService,
+    private router: Router
   ) {}
 
-  @ViewChild("qrcode", {read: ElementRef}) qrcode: ElementRef;
-
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      firstname: ['', Validators.required, Validators.maxLength(40)],
-      lastname: ['', Validators.required,Validators.maxLength(40)],
-      username: ['', Validators.required, Validators.maxLength(40)],
-      phone: ['', Validators.required, Validators.pattern('^[0-9]+$')],
-      email: ['', Validators.email],
-      password: ['', Validators.minLength(4), Validators.maxLength(6), Validators.pattern('^[0-9]+$')],
-    })
   }
 
     async presentToast() {
@@ -61,17 +58,6 @@ export class ManageUsersPage implements OnInit {
 
       await toast.present();
     }
-
-  dataURItoBlob(dataURI: string) {
-    const byteString = atob(dataURI.split(',')[1]);
-    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], { type: mimeString });
-  }
 
   async validateInformation(){
     this.qrCodeUsername = this.newUser.username
@@ -107,25 +93,24 @@ export class ManageUsersPage implements OnInit {
 
   async onSubmitNewUser() {
 
-    if (this.accountService.user.roleid > 1) {
+    if (this.accountService.user.roleid < 1) return
+
     this.cdRef.detectChanges();
-    const qrCode = this.qrcode.nativeElement;
-    const canvas = qrCode.querySelector('canvas');
-    const dataUrl = canvas.toDataURL('image/png');
-    const blob = this.dataURItoBlob(dataUrl);
-    saveAs(blob, this.newUser.firstname + 'qrcode.png');
+    this.qrService.downloadQrFromData(this.newUser.username, 'qrcode.png')
+
     this.newUser.organizationid = this.accountService.user.organizationid
-    this.newUser.roleid = Number(this.newUser.roleid);
-    this.http.post(`${environment.apiUrl}/users/`, this.newUser).subscribe((response: number) =>
-    {if (response === 200) {
-      this.presentToast();
-    }
+    this.newUser.roleid = this.newUser.roleid;
+
+    this.accountService.register(this.newUser).subscribe({
+      next: (response: User) => {
+        this.router.navigate(['/home'])
+      },
+      error: (error) => {
+        console.error('error occured:', error)
+        this.presentErrorToast()
+      }
     }
     )
-  }
-  else {
-    console.log("Invalid role")
-  }
   }
 
 
