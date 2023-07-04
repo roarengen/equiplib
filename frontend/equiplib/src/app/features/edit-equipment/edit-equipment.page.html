@@ -100,10 +100,9 @@
         <ion-input  placeholder="Ingen {{templateService.template.equipOther3}} satt" [(ngModel)]="editEquipment.other3" [clearInput]="true" ngModel required name="other3"></ion-input>
       </ion-item>
 
-      <ion-item *ngIf="templateService.other3name" class="form-item" color="input-background">
-        <ion-label position="floating">{{templateService.other3name}}</ion-label>
-        <ion-textarea [(ngModel)]="editEquipment.comment" placeholder="Ingen kommentar satt" [autoGrow]="true" name="comment">
-        </ion-textarea>
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">{{templateService.template.equipDescription ?? 'Kommentar/beskrivelse'}}</ion-label>
+        <ion-textarea [(ngModel)]="editEquipment.comment" [autoGrow]="true" name="comment" />
       </ion-item>
 
       <ion-item class="form-item" class="grid-item" color="input-background">

@@ -110,7 +110,7 @@
         <ion-textarea
         formControlName="comment"
         [(ngModel)]="newEquipment.comment"
-        placeholder="Kommentar/beskrivelse"
+        placeholder="{{templateService.template.equipDescription ?? 'Kommentar/beskrivelse'}}"
         [autoGrow]="true"
         value="">
         </ion-textarea>
