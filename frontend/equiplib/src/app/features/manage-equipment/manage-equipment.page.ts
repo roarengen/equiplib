@@ -3,14 +3,13 @@ import { Observable} from 'rxjs';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { AccountService } from 'src/app/services/user.service';
 import { LocationService } from 'src/app/services/location.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Equipment } from 'src/app/models/equipment';
 import { FormBuilder, Validators  } from '@angular/forms';
 import { ActionSheetController, ToastController } from '@ionic/angular';
 import { TemplateService } from 'src/app/services/template.service';
 import { Router } from '@angular/router';
 import { QrService } from 'src/app/services/qr.service';
-import { error } from 'console';
 
 @Component({
   selector: 'app-manage-equipment',

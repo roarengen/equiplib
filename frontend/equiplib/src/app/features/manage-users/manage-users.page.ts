@@ -1,5 +1,5 @@
 import { AccountService } from './../../services/user.service';
-import { Component, ElementRef, ViewChild, ChangeDetectorRef, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { createUser, User} from 'src/app/models/user';
 import { ActionSheetController, ToastController } from '@ionic/angular';
 import { FormBuilder, Validators } from '@angular/forms';
