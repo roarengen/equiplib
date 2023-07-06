@@ -1,5 +1,4 @@
 import { Location } from './../models/location';
-import { Rent } from './../models/rent';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { CustomHttpClient } from '../helpers/auth/http-client';
@@ -13,6 +12,11 @@ export class LocationService  {
     getAllLocations(orgid: number)
     {
         return this.http.get<Location[]>(`${environment.apiUrl}/location/by_org/${orgid}`)
+    }
+
+    getActiveLocations(orgid: number)
+    {
+        return this.http.get<Location[]>(`${environment.apiUrl}/location/by_org/${orgid}/active`)
     }
 
     getLocation(locid: number)

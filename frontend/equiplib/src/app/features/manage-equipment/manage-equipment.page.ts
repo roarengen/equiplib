@@ -44,7 +44,7 @@ export class ManageEquipmentPage implements OnInit {
     public qrService: QrService,
     public router: Router,
     ) {
-      this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid);
+      this.locations = this.locationService.getActiveLocations(this.accountService.user.organizationid);
     }
 
     ngOnInit() {

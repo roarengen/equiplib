@@ -39,6 +39,16 @@ def get_loc_by_org_id(orgid: int = Depends(require_user_to_be_in_org), db: Sessi
         raise HTTPException(status_code=404, detail=f"no locations found on org with id: {orgid}")
     return locs
 
+@api.get("/by_org/{orgid}/active", response_model=list[Location])
+def get_enabled_loc_by_org_id(orgid: int = Depends(require_user_to_be_in_org), db: Session = Depends(get_db)):
+    locs = crud.get_locations_by_orgid(db, orgid)
+    if not locs:
+        logger.debug(f"locations requesed with orgid: {orgid} but was not found")
+        raise HTTPException(status_code=404, detail=f"no locations found on org with id: {orgid}")
+
+    locs = list(filter(lambda x: x.active, locs))
+    return locs
+
 @api.post("/", response_model=Location)
 def post_location(location: LocationCreate, db: Session = Depends(get_db)):
     logger.info(f"{location} has been created")

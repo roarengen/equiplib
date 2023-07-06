@@ -23,7 +23,7 @@ def disable_location(db: Session, id: int) -> Location | None:
     db.refresh(loc)
     return loc
 
-def enable_location(db: Session, id: int) -> Location:
+def enable_location(db: Session, id: int) -> Location | None:
     loc = db.query(Location).filter(Location.id==id).first()
     if not loc:
         return None
