@@ -34,7 +34,7 @@ class User(Base, Serializable):
         if self.activeToDate == None:
             return True
 
-        elif self.activeToDate < datetime.datetime.now():
+        elif self.activeToDate > datetime.datetime.now():
             return True
 
         return False
