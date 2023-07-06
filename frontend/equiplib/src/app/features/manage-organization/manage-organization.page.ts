@@ -24,10 +24,8 @@ export class ManageOrganizationPage implements OnInit {
   public locations: Observable<Location[]>;
   public location: Location = new Location();
   public tags: Observable<Tag[]>;
-  public form!: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
 		private alertController: AlertController,
     public locationService: LocationService,
     private http: CustomHttpClient,
@@ -41,9 +39,6 @@ export class ManageOrganizationPage implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-    })
     this.accountService.getAll()
     this.accountService.getOrganization(this.accountService.user?.organizationid || 0).subscribe( x =>
       {this.changesOrganization = x})
@@ -91,7 +86,7 @@ export class ManageOrganizationPage implements OnInit {
   toggleLocationActive(event: Event, location: Location){
     const ev = event as ToggleCustomEvent;
     const checked = ev.detail.checked;
-    
+
     checked ? this.locationService.enableLocation(location).subscribe() : this.locationService.disableLocation(location).subscribe();
   }
 
