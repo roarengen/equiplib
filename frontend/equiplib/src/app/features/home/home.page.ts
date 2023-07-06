@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.rentService.getCurrentActiveRentals(this.accountService.user.organizationid).subscribe(rents=>rents.map(rent => this.rentedEquipmentIds.push(rent.id)))
+    this.rentService.getCurrentActiveRentals(this.accountService.user.organizationid).subscribe(rents=>rents.map(rent => this.rentedEquipmentIds.push(rent.equipmentid)))
   }
 
   ionViewWillEnter() {
