@@ -103,7 +103,7 @@ def get_users(onlyactive: bool = True, db: Session = Depends(get_db), user: User
     users = crud.get_users_in_org(db, user.organizationid)
     if users:
         if onlyactive:
-            return list(filter(lambda x: x.isactive == onlyactive, [user for user in users]))
+            return list(filter(lambda x: x.isactive == onlyactive, users))
         else:
             return users
     raise HTTPException(404, "no users found in your org")
