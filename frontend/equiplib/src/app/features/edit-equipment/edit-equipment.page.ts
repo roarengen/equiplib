@@ -35,7 +35,7 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
   public popoverController?: PopoverController,
   ) {
 
-    this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid);
+    this.locations = this.locationService.getActiveLocations(this.accountService.user.organizationid);
   }
 
   ngOnInit() {
