@@ -28,7 +28,6 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipName ?? "Navn"}}:</ion-label>
         <ion-input
-        formControlName="name"
         name="name"
         [clearInput]="true"
         ngModel
@@ -40,7 +39,6 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipBrand ?? "Merke"}}:</ion-label>
         <ion-input
-        formControlName="brand"
         name="brand"
         [clearInput]="true"
         ngModel
@@ -52,7 +50,6 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipModel ?? "Modell"}}:</ion-label>
         <ion-input
-        formControlName="model"
         name="model"
         [clearInput]="true"
         ngModel
@@ -64,7 +61,6 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipType ?? "Type"}}:</ion-label>
         <ion-input
-        formControlName="type"
         name="type"
         [clearInput]="true"
         ngModel
@@ -76,7 +72,6 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipSerialnumber ?? "Serienummer"}}:</ion-label>
         <ion-input
-        formControlName="serialnumber"
         name="serialnumber"
         [clearInput]="true"
         ngModel

@@ -40,6 +40,7 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.resetComponent()
+    console.log(this.editEquipment)
   }
 
   ionViewWillEnter() {
@@ -75,7 +76,7 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
     this.editEquipment = new Equipment();
     this.subscription.unsubscribe();
     this.selectedEquipment = undefined;
-    this.equiptags = undefined;
+    this.equiptags = undefined; // why undefined, should't this be an empty list?
     this.filteredAddedTags = undefined;
 
   }
