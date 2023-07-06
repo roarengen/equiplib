@@ -31,7 +31,7 @@ class User(Base, Serializable):
 
     @property
     def isactive(self) -> bool:
-        if bool(self.activeToDate) == None:
+        if self.activeToDate == None:
             return True
 
         elif self.activeToDate < datetime.datetime.now():
