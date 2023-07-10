@@ -103,6 +103,7 @@ export class ManageUsersPage implements OnInit {
 
     this.accountService.register(this.newUser).subscribe({
       next: (response: User) => {
+        this.presentToast()
         this.router.navigate(['/home'])
       },
       error: (error) => {
