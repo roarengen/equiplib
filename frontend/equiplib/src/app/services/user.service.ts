@@ -26,11 +26,12 @@ export class AccountService {
         return this.http.get<Template>(`${environment.apiUrl}/temps/by_org/` + organizationid)
     }
 
-    login(username: any, password:any) {
+    login(username: any, password: any) {
         return this.http.post<LoginResponse>(`${environment.apiUrl}/users/login`, { username, password })
     }
 
     logout() {
+        this.http.token = undefined
         localStorage.clear();
         this.router.navigate(['/login']);
     }
