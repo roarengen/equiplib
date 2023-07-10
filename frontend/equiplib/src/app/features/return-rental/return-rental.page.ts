@@ -57,7 +57,7 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   }
 
   onReturnRental() {
-    if (this.accountService.user.roleid < 1) return
+    if (this.accountService.user.roleid <= 1) return
 
     this.rentalService.returnRental(
       {
