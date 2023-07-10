@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { Rent, returnRent } from 'src/app/models/rent';
+import { Rent } from 'src/app/models/rent';
 import { Equipment } from '../../models/equipment';
 import { AccountService } from 'src/app/services/user.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
@@ -11,8 +11,7 @@ import { RentService } from 'src/app/services/rent.service';
 import { ToastController } from '@ionic/angular';
 import { LocationService } from 'src/app/services/location.service';
 import { Location } from './../../models/location';
-import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
-import { environment } from 'src/environments/environment';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-return-rental',
@@ -30,16 +29,15 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   public selectUser: User = new User();
   public selectedRental: Rent = new Rent();
   private subscription: Subscription = new Subscription();
-  private subscribeRent: Subscription = new Subscription();
 
   constructor(
-    public locationService: LocationService,
-    private http: CustomHttpClient,
     private toastController: ToastController,
+    private router: Router,
+    public locationService: LocationService,
     public getEquipmentIdService: FilterService,
     public accountService: AccountService,
     public equipmentService: EquipmentService,
-    public rentalService: RentService
+    public rentalService: RentService,
 
   ) {
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
@@ -59,29 +57,25 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   }
 
   onReturnRental() {
-    if (this.accountService.user.roleid > 1) {
-      this.http.post(environment.apiUrl + "/rents/return",
+    if (this.accountService.user.roleid < 1) return
+
+    this.rentalService.returnRental(
       {
         rentid: this.selectedRental.id,
         locationid: this.setLocationId,
         userid: this.selectUser.id,
         returndate: this.selectedRental.rentedValidToDate
-      }).subscribe((response: number) => {
-        console.log(response)
-        if (response === 200) {
-          this.presentToast()
-        }
-        else if (response > 400) {
-          this.presentErrorToast()
-        }
-      })
-    }
+      }
+    ).subscribe({
+      next: () => this.presentToast().then(() => this.router.navigateByUrl('home')),
+      error: (err) => {console.log(err);this.presentErrorToast()}}
+    )
   }
 
   async presentToast() {
     const toast = await this.toastController.create({
       message: '<span><img src="../../../assets/icons/return-rental.svg"></img> <p>Utstyret er returnert!</p></span>',
-      duration: 3000,
+      duration: 2000,
       position: 'top'
     });
 

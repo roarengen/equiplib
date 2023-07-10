@@ -12,7 +12,8 @@ export class Rent {
 }
 
 export class returnRent {
-  id!: number;
+  rentid!: number;
   locationid!: number;
   userid!: number;
+  returndate: Date;
 }
