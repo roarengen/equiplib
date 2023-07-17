@@ -1,6 +1,6 @@
 import { LocationService } from './../../services/location.service';
 import { EquipmentService } from './../../services/equipment.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Equipment, Tag } from 'src/app/models/equipment';
 import { TemplateService } from 'src/app/services/template.service';
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: './edit-equipment.page.html',
   styleUrls: ['./edit-equipment.page.scss'],
 })
-export class EditEquipmentPage implements OnInit, OnDestroy {
+export class EditEquipmentPage implements OnInit {
   public editEquipment: Equipment = new Equipment();
   public subscription = new Subscription();
   public locations: Observable<Location[]>;
@@ -39,8 +39,6 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.resetComponent()
-    console.log(this.editEquipment)
   }
 
   ionViewWillEnter() {
@@ -65,20 +63,11 @@ export class EditEquipmentPage implements OnInit, OnDestroy {
   }
 
   ionViewWillLeave() {
-    this.resetComponent();
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  private resetComponent(): void {
     this.editEquipment = new Equipment();
     this.subscription.unsubscribe();
     this.selectedEquipment = undefined;
     this.equiptags = undefined; // why undefined, should't this be an empty list?
     this.filteredAddedTags = undefined;
-
   }
 
   async removeTag(tag: any, index: number) {

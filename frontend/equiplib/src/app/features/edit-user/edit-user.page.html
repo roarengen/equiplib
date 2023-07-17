@@ -1,50 +1,42 @@
 <ion-content class="ion-padding">
-  <form [formGroup]="form" #f="ngForm">
-<div class="form-title-block">
-  <h2 class="form-title">Redigering av {{editUser.username}}</h2>
-</div>
+  <form #f="ngForm">
+    <div class="form-title-block">
+      <h2 class="form-title">Redigering av {{ editUser.username }}</h2>
+    </div>
 
-<ion-item class="form-item" color="input-background">
-  <ion-label position="floating">Brukernavn</ion-label>
-  <ion-input
-  formControlName="username"
-  [clearInput]="true"
-  [(ngModel)]="editUser.username"
-  ></ion-input>
-</ion-item>
+    <ion-item class="form-item" color="input-background">
+      <ion-label position="floating">Brukernavn</ion-label>
+      <ion-input name="username" [(ngModel)]="editUser.username" required></ion-input>
+    </ion-item>
 
-<ion-item class="form-item" color="input-background">
-  <ion-label position="floating">Fornavn</ion-label>
-  <ion-input
-  formControlName="firstname"
-  [clearInput]="true"
-  [(ngModel)]="editUser.firstname"
-  ></ion-input>
-</ion-item>
+    <ion-item class="form-item" color="input-background">
+      <ion-label position="floating">Fornavn</ion-label>
+      <ion-input name="firstname" [(ngModel)]="editUser.firstname" required></ion-input>
+    </ion-item>
 
-<ion-item class="form-item" color="input-background">
-  <ion-label position="floating">Etternavn</ion-label>
-  <ion-input
-  formControlName="lastname"
-  [clearInput]="true"
-  [(ngModel)]="editUser.lastname"
-  ></ion-input>
-</ion-item>
+    <ion-item class="form-item" color="input-background">
+      <ion-label position="floating">Etternavn</ion-label>
+      <ion-input name="lastname" [(ngModel)]="editUser.lastname" required></ion-input>
+    </ion-item>
 
-<ion-item class="form-item" color="input-background">
-  <ion-label position="floating">{{templateService.template.equipName ?? "Navn"}}:</ion-label>
-  <ion-input
-  formControlName="phonenumber"
-  [clearInput]="true"
-  [(ngModel)]="editUser.phone"
-  ></ion-input>
-</ion-item>
+    <ion-item class="form-item" color="input-background">
+      <ion-label position="floating">{{ templateService.template.equipName ?? "Navn" }}:</ion-label>
+      <ion-input name="phonenumber" [(ngModel)]="editUser.phone" required></ion-input>
+    </ion-item>
 
-<div class="form-button-container">
-  <ion-button [disabled]="form.controls.username.invalid" class="form-button" color="register" (click)="editedUser()">
-    Bekreft endringer
-  </ion-button>
-</div>
-</form>
+    <ion-item *ngIf="accountService.user.roleid > 2" class="form-item" class="grid-item" color="input-background">
+      <ion-label>Rolle:</ion-label>
+      <ion-select name="roleid" [(ngModel)]="editUser.roleid" interface="popover" placeholder="Velg Rolle" required>
+        <ion-select-option [value]="1">Lånetaker</ion-select-option>
+        <ion-select-option [value]="2">Utstyrsansvarlig</ion-select-option>
+        <ion-select-option [value]="3">Administrator</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <div class="form-button-container">
+      <ion-button [disabled]="f.invalid" class="form-button" color="register" (click)="editedUser()">
+        Bekreft endringer
+      </ion-button>
+    </div>
+  </form>
 </ion-content>
-

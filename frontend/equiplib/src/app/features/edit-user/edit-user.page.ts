@@ -1,12 +1,11 @@
-import { FilterService } from './../../services/filter.service';
-import { LocationService } from './../../services/location.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { TemplateService } from 'src/app/services/template.service';
 import { AccountService } from 'src/app/services/user.service';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
-import { FormBuilder, FormGroup,Validators  } from '@angular/forms';
+import { FilterService } from './../../services/filter.service';
+import { LocationService } from './../../services/location.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,34 +14,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./edit-user.page.scss'],
 })
 export class EditUserPage implements OnInit {
-
-  form!: FormGroup;
   public editUser: User = new User();
   public subscription = new Subscription();
   public selectedUser?: Observable<User>;
+  public checkRoleChange: number;
 
   constructor(
-  public router: Router,
-  private formBuilder: FormBuilder,
-  public toastController: ToastController,
-  public getSelectedUserService: FilterService,
-  public accountService: AccountService,
-  public locationService: LocationService,
-  public templateService?: TemplateService,
-  public popoverController?: PopoverController,
+    public router: Router,
+    public toastController: ToastController,
+    public getSelectedUserService: FilterService,
+    public accountService: AccountService,
+    public locationService: LocationService,
+    public templateService?: TemplateService,
+    public popoverController?: PopoverController,
   ) {}
-  ngOnInit() {
-    this.accountService.getById(this.getSelectedUserService.data).subscribe(User => {
-      this.editUser = User;
 
-    this.form = this.formBuilder.group({
-      firstname: ['', Validators.required, Validators.maxLength(40)],
-      lastname: ['', Validators.required,Validators.maxLength(40)],
-      username: ['', Validators.required, Validators.maxLength(40)],
-      phonenumber: ['', Validators.required, Validators.maxLength(40), Validators.pattern('^[0-9]+$')],
-      email: ['', Validators.email],
-    })
-  })
+  ngOnInit() {
+    this.accountService.getById(this.getSelectedUserService.data).subscribe(user => {
+      this.editUser = user;
+      this.checkRoleChange = this.editUser.roleid;
+    });
+  }
+
+  ionViewWillLeave() {
+    this.checkRoleChange = null;
+    this.editUser = new User();
+    this.subscription.unsubscribe();
   }
 
   async presentToast() {
@@ -54,10 +51,38 @@ export class EditUserPage implements OnInit {
     await toast.present();
   }
 
-  async editedUser() {
-    this.accountService.updateUser(this.editUser)
-    this.presentToast()
-    this.router.navigate(['/home']);
+  getRole(roleid: any) {
+    if (roleid == 1) {
+      return "Lånetaker";
+    } else if (roleid == 2) {
+      return "Utstyrsansvarlig";
+    } else if (roleid == 3) {
+      return "Administrator";
+    } else if (roleid == 4) {
+      return "Leder";
+    }
+    return "";
   }
 
+  async presentRoleChangeToast() {
+    console.log(this.editUser.roleid);
+    const toast = await this.toastController.create({
+      message: 'Bruker' + this.editUser.username + ' er redigert! Ny rolle: ' + this.getRole(Number(this.editUser.roleid)),
+      duration: 3000,
+      position: 'top'
+    });
+    await toast.present();
+  }
+
+  async editedUser() {
+    this.editUser.roleid = Number(this.editUser.roleid);
+    this.accountService.updateUser(this.editUser);
+    this.router.navigate(['/home']);
+
+    if (this.checkRoleChange == this.editUser.roleid) {
+      this.presentToast();
+    } else if (this.checkRoleChange != this.editUser.roleid) {
+      this.presentRoleChangeToast();
+    }
+  }
 }

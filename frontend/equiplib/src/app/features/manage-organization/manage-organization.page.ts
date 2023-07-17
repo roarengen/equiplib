@@ -45,6 +45,7 @@ export class ManageOrganizationPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.allUsers = this.accountService.getAll()
     this.tags = this.equipmentService.getAllTags(this.accountService.user.organizationid)
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
   }

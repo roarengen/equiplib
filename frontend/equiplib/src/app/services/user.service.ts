@@ -69,6 +69,6 @@ export class AccountService {
   }
 
     updateUser(user: User) {
-      return this.http.patch<User>(`${environment.apiUrl}/users/${user.id}`, user).subscribe()
+      return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, user).subscribe()
     }
 }
