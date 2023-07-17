@@ -24,7 +24,7 @@
       <ion-input name="phonenumber" [(ngModel)]="editUser.phone" required></ion-input>
     </ion-item>
 
-    <ion-item *ngIf="accountService.user.roleid > 2" class="form-item" class="grid-item" color="input-background">
+    <ion-item *ngIf="accountService.user.roleid > 3" class="form-item" class="grid-item" color="input-background">
       <ion-label>Rolle:</ion-label>
       <ion-select name="roleid" [(ngModel)]="editUser.roleid" interface="popover" placeholder="Velg Rolle" required>
         <ion-select-option [value]="1">Lånetaker</ion-select-option>
