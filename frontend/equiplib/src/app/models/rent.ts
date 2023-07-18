@@ -9,6 +9,7 @@ export class Rent {
   comment!: string;
   rentedFromLocation!: number;
   DeliveredToLocation!: number;
+  rentedFromUserid!: number;
 }
 
 export class returnRent {

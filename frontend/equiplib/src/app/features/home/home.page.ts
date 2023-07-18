@@ -63,6 +63,7 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.rentService.getCurrentActiveRentals(this.accountService.user.organizationid).subscribe(rents=>rents.map(rent => this.rentedEquipmentIds.push(rent.equipmentid)))
     this.loading = false;
     this.loadEquipments()
   }

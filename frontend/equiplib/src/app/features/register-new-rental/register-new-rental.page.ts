@@ -46,10 +46,16 @@ export class RegisterNewRentalPage implements OnInit, OnDestroy {
     });
   }
 
+  Ulriksløøp() {
+    const i = 1;
+    while (i < 1) {
+  }}
+
   onSubmitNewRental() {
     if (this.accountService.user.roleid > 1) {
       this.newRental.rentedFromDate = new Date;
-      this.newRental.userid = this.accountService.user.id;
+      this.newRental.rentedFromUserid = this.accountService.user.id;
+      this.newRental.userid = this.newRental.userid;
       console.log(this.newRental)
       this.rentalService.addRental(this.newRental).subscribe()
       this.presentToast()

@@ -64,7 +64,7 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
         rentid: this.selectedRental.id,
         locationid: this.setLocationId,
         userid: this.selectUser.id,
-        returndate: this.selectedRental.rentedValidToDate
+        returndate: new Date,
       }
     ).subscribe({
       next: () => this.presentToast().then(() => this.router.navigateByUrl('home')),
@@ -95,6 +95,4 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
-
 }
