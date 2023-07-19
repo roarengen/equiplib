@@ -90,8 +90,8 @@ def remove_tag_from_equip(equipid: int, tagid:int, db: Session = Depends(get_db)
     return crud.remove_tag_from_equip(db, equipid, tagid)
 
 @api.patch("/tag/{id}", response_model=Tag, dependencies=[Depends(require_admin)])
-def patch_tag(id: int, db: Session = Depends(get_db)):
-    return crud.update_tag(db, id)
+def patch_tag(id: int, tag: Tag, db: Session = Depends(get_db)):
+    return crud.update_tag(db, id, **tag.dict())
 
 @api.patch("/{id}/addtags", response_model=Equipment, dependencies=[Depends(require_admin)])
 def add_tags_to_equip(id: int, tagids: list[int], db: Session = Depends(get_db)):
