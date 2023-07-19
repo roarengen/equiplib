@@ -34,6 +34,15 @@ def update_equip(db: Session, eq_id: int, **kwargs) -> Equipment:
     db.refresh(eq)
     return eq
 
+def update_tag(db: Session, tag_id: int, **kwargs) -> Tag:
+    eq = db.query(Tag).filter(Tag.id == tag_id).first()
+    for key, val in kwargs.items():
+        if val != None and hasattr(eq, key):
+            setattr(eq, key, val)
+    db.commit()
+    db.refresh(eq)
+    return eq
+
 def enable_equip(db: Session, id: int) -> Equipment | None:
     eq = db.query(Equipment).filter(Equipment.id == id).first()
     if eq:
