@@ -35,9 +35,9 @@ export class EquipmentService {
     {
         return this.http.put<Equipment>(`${environment.apiUrl}/equips/${equips.id}`, equips).subscribe()
     }
-    addTagsToEquip(equips: Equipment, tags: [])
+    addTagsToEquip(equips: Equipment, tags: Tag[])
     {
-        return this.http.patch<Equipment>(`${environment.apiUrl}/equips/${equips.id}/addtags`, tags).subscribe()
+        return this.http.patch<Equipment>(`${environment.apiUrl}/equips/${equips.id}/addtags`, tags.map(tag => tag.id)).subscribe()
     }
     downloadEquipment(equip: Equipment)
     {

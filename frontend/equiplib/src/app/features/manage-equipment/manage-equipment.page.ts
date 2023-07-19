@@ -4,9 +4,9 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { AccountService } from 'src/app/services/user.service';
 import { LocationService } from 'src/app/services/location.service';
 import { Component, OnInit } from '@angular/core';
-import { Equipment } from 'src/app/models/equipment';
+import { Equipment, Tag } from 'src/app/models/equipment';
 import { FormBuilder, Validators  } from '@angular/forms';
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, PopoverController, ToastController } from '@ionic/angular';
 import { TemplateService } from 'src/app/services/template.service';
 import { Router } from '@angular/router';
 import { QrService } from 'src/app/services/qr.service';
@@ -20,6 +20,9 @@ export class ManageEquipmentPage implements OnInit {
   public locations: Observable<Location[]>;
   confirmationPopup: boolean = false;
   public newEquipment: Equipment = new Equipment();
+  public tags!: Observable<Tag[]>;
+  public filteredAddedTags: Tag[] = [];
+  public equiptags: Tag[] = [];
   form = this.formBuilder.group({
         name: ['', [Validators.required]],
         type: ['', [Validators.required]],
@@ -39,6 +42,7 @@ export class ManageEquipmentPage implements OnInit {
     public locationService: LocationService,
     public accountService: AccountService,
     public equipmentService: EquipmentService,
+    private popoverController: PopoverController,
     private actionSheetCtrl: ActionSheetController,
     public templateService: TemplateService,
     public qrService: QrService,
@@ -48,6 +52,25 @@ export class ManageEquipmentPage implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    ionViewWillEnter() {
+      this.tags = this.equipmentService.getAllTags(this.accountService.user.organizationid);
+      this.tags.subscribe(tags => {
+        this.filteredAddedTags = tags
+          .map((tag: any) => {
+            return { ...tag, visible: true };
+          })
+          .filter((tag: any) => {
+            return !this.equiptags.some((eqTag: any) => eqTag.id === tag.id);
+          });
+      });
+    }
+
+    ionViewWillLeave() {
+      this.newEquipment = new Equipment();
+      this.equiptags = [];
+      this.filteredAddedTags = [];
     }
 
     async downloadQR(id: string)
@@ -65,15 +88,42 @@ export class ManageEquipmentPage implements OnInit {
       await toast.present();
     }
 
-    async onSubmitNewEquipment(downloadQR: boolean = false) {
-      if (this.accountService.user.roleid > 1) {
+    async presentErrorToast() {
+      const toast = await this.toastController.create({
+        message: 'Noe gikk galt! Utstyret ble ikke riktig registrert.',
+        duration: 4000,
+        position: 'bottom'
+      });
 
+      await toast.present();
+    }
+
+
+    async removeTag(tag: any, index: number) {
+      this.equiptags.splice(index, 1);
+      this.filteredAddedTags.push({ ...tag, visible: true });
+      tag.visible = false;
+    }
+
+    async addTag(tag: any, index: number){
+      this.filteredAddedTags.splice(index, 1)
+      this.equiptags.push({ ...tag, visible: true });
+      await this.popoverController.dismiss();
+    }
+
+    async onSubmitNewEquipment(downloadQR: boolean = false) {
+      console.log(this.equiptags)
+      if (this.accountService.user.roleid > 1) {
       this.newEquipment.organizationid = this.accountService.organization.id
       this.equipmentService
         .createEquipment(this.newEquipment)
         .subscribe({
           next: (equipment: Equipment) => {
             if (downloadQR) this.downloadQR(equipment.id.toString())
+            console.log(this.equiptags)
+            console.log(equipment)
+            this.equipmentService.addTagsToEquip(equipment, this.equiptags)
+            this.router.navigate(['/home']);
           },
           error: error => { console.error(error) }
         })
@@ -119,7 +169,6 @@ export class ManageEquipmentPage implements OnInit {
               this.onSubmitNewEquipment(true);
               this.presentToast();
               actionSheet.dismiss();
-              this.router.navigate(['/home']);
             }
           },
           {
@@ -129,7 +178,6 @@ export class ManageEquipmentPage implements OnInit {
               this.onSubmitNewEquipment();
               this.presentToast();
               actionSheet.dismiss();
-              this.router.navigate(['/home']);
             }
           },
           {
@@ -143,4 +191,5 @@ export class ManageEquipmentPage implements OnInit {
       });
       await actionSheet.present();
     }
+
 }

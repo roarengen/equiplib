@@ -1,11 +1,11 @@
 <ion-content class="ion-padding">
-  <form [formGroup]="form" (ngSubmit)="onSubmitNewUser()">
+  <form [formGroup]="form">
     <div class="form-title-block">
       <h2 class="form-title">Legg til ny bruker</h2>
     </div>
 
      <div class="form-input-block">
-      
+
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Brukernavn:</ion-label>
         <ion-input formControlName ="username" [(ngModel)]="newUser.username" [clearInput]="true"></ion-input>
@@ -13,32 +13,32 @@
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Pin:</ion-label>
-        <ion-input formControlName = "password" [(ngModel)]="newUser.password" [clearInput]="true" type="number" ngModel required></ion-input>
+        <ion-input formControlName = "password" [(ngModel)]="newUser.password" [clearInput]="true" type="number"></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Fornavn:</ion-label>
-        <ion-input formControlName = "firstname" [(ngModel)]="newUser.firstname" [clearInput]="true" ngModel required></ion-input>
+        <ion-input formControlName = "firstname" [(ngModel)]="newUser.firstname" [clearInput]="true"></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Etternavn:</ion-label>
-        <ion-input formControlName = "lastname" [(ngModel)]="newUser.lastname" [clearInput]="true" ngModel required></ion-input>
+        <ion-input formControlName = "lastname" [(ngModel)]="newUser.lastname" [clearInput]="true"></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Email:</ion-label>
-        <ion-input formControlName = "email" [(ngModel)]="newUser.email" type="email" [clearInput]="true" ngModel required></ion-input>
+        <ion-input formControlName = "email" [(ngModel)]="newUser.email" type="email" [clearInput]="true"></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Telefonnummer:</ion-label>
-        <ion-input formControlName = "phone" [(ngModel)]="newUser.phone" type="number" [clearInput]="true" ngModel required> </ion-input>
+        <ion-input formControlName = "phone" [(ngModel)]="newUser.phone" type="number" [clearInput]="true"> </ion-input>
       </ion-item>
 
       <ion-item class="form-item" class="grid-item" color="input-background">
         <ion-label>Rolle:</ion-label>
-        <ion-select formControlName = "roleid" interface="popover" placeholder="Velg Rolle" [(ngModel)]="newUser.roleid" ngModel required>
+        <ion-select formControlName = "roleid" interface="popover" placeholder="Velg Rolle" [(ngModel)]="newUser.roleid">
           <ng-container>
             <ion-select-option value="1">Bruker</ion-select-option>
             <ion-select-option value="2">Utstyrsansvarlig</ion-select-option>

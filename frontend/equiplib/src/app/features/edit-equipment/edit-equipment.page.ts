@@ -17,12 +17,11 @@ import { Router } from '@angular/router';
 })
 export class EditEquipmentPage implements OnInit {
   public editEquipment: Equipment = new Equipment();
-  public subscription = new Subscription();
   public locations: Observable<Location[]>;
   public tags!: Observable<Tag[]>
   public selectedEquipment?: Observable<Equipment>;
-  public filteredAddedTags: any;
-  public equiptags: any;
+  public filteredAddedTags: Tag[] = [];
+  public equiptags: Tag[] = [];
 
   constructor(
   public router: Router,
@@ -64,10 +63,9 @@ export class EditEquipmentPage implements OnInit {
 
   ionViewWillLeave() {
     this.editEquipment = new Equipment();
-    this.subscription.unsubscribe();
     this.selectedEquipment = undefined;
-    this.equiptags = undefined; // why undefined, should't this be an empty list?
-    this.filteredAddedTags = undefined;
+    this.equiptags = [];
+    this.filteredAddedTags = [];
   }
 
   async removeTag(tag: any, index: number) {
@@ -85,7 +83,7 @@ export class EditEquipmentPage implements OnInit {
   async editEquips() {
     this.editEquipment.tags = this.equiptags;
     this.equipmentService.updateEquip(this.editEquipment)
-    this.equipmentService.addTagsToEquip(this.editEquipment, this.equiptags.map((tag: any) => tag.id))
+    this.equipmentService.addTagsToEquip(this.editEquipment, this.equiptags)
     this.presentToast()
     this.router.navigate(['/home']);
   }

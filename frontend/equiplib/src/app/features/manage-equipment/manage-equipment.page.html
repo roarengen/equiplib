@@ -1,6 +1,6 @@
 <ion-content class="ion-padding">
 
-  <form [formGroup]="form" (ngSubmit)="onSubmitNewEquipment()">
+  <form [formGroup]="form">
 
     <div class="form-title-block">
       <h2 class="form-title">Legg til nytt utstyr</h2>
@@ -13,8 +13,6 @@
         formControlName="name"
         name="name"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="newEquipment.name"
         ></ion-input>
       </ion-item>
@@ -25,8 +23,6 @@
         formControlName="brand"
         name="brand"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="newEquipment.brand"
         ></ion-input>
       </ion-item>
@@ -37,8 +33,6 @@
         formControlName="model"
         name="model"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="newEquipment.model"
         ></ion-input>
       </ion-item>
@@ -49,8 +43,6 @@
         formControlName="type"
         name="type"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="newEquipment.type"
         ></ion-input>
       </ion-item>
@@ -61,8 +53,6 @@
         formControlName="serialnumber"
         name="serialnumber"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="newEquipment.serialnumber"
         > </ion-input>
       </ion-item>
@@ -73,8 +63,6 @@
         formControlName="other1"
         name="other1"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="newEquipment.other1"
         >
         </ion-input>
@@ -86,8 +74,6 @@
         formControlName="other2"
         name="other2"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="newEquipment.other2"
         >
         </ion-input>
@@ -99,8 +85,6 @@
         formControlName="other3"
         name="other3"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="newEquipment.other3"
         >
         </ion-input>
@@ -125,6 +109,27 @@
         </ion-select>
       </ion-item>
 
+      <div slot="content">
+        <div>
+        <ion-text class="tag-title">Tags</ion-text>
+        </div>
+        <app-tag *ngFor="let tag of equiptags; let i = index" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="removeTag(tag, i)"></app-tag>
+        <button class="button-add" size="medium" id="add-tag">
+        <ion-icon slot="icon-only" name="add-circle-outline" color="success"></ion-icon>
+      </button>
+
+      <ion-popover trigger="add-tag" triggerAction="click">
+        <ng-template class="tag-popover-content">
+          <div class="tag-list">
+            <div class="tag-row">
+              <app-tag *ngFor="let tag of filteredAddedTags; let i = index" name="{{tag.name}}" color="{{tag.color}}" (click)="addTag(tag, i)"></app-tag>
+            </div>
+          </div>
+        </ng-template>
+      </ion-popover>
+
+    </div>
+
         </div>
     <div class="form-button-container">
       <ion-button [disabled]="!form.valid" class="form-button" color="register" (click)="validateInformation()">
@@ -132,5 +137,4 @@
       </ion-button>
     </div>
   </form>
-
 </ion-content>
