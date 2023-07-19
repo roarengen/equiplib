@@ -11,6 +11,7 @@ import { LocationService } from 'src/app/services/location.service';
 import {Tag} from 'src/app/models/equipment';
 import {EquipmentService} from 'src/app/services/equipment.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-organization',
@@ -32,6 +33,7 @@ export class ManageOrganizationPage implements OnInit {
     public accountService: AccountService,
     private equipmentService: EquipmentService,
     private actionSheetCtrl: ActionSheetController,
+    private router: Router
   ) {
     this.allUsers = this.accountService.getAll()
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
@@ -99,12 +101,11 @@ export class ManageOrganizationPage implements OnInit {
     }
   }
 
-  async deactivateTag(tag: Tag) {
+  async editTag(tag: Tag) {
     if (this.accountService.user.roleid <= 3) return;
 
-    //TODO insert warning prompt
-
-    this.equipmentService.disableTag(tag).subscribe()
+    this.equipmentService.editTag = tag;
+    this.router.navigateByUrl('/edittag');
   }
 
   async presentAlertPrompt() {

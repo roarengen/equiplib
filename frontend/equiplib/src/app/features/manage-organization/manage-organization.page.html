@@ -207,7 +207,7 @@
       </ion-item>
       <div slot="content">
         <div class="tag-container">
-          <app-tag *ngFor="let tag of tags | async" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="deactivateTag(tag)"></app-tag>
+          <app-tag *ngFor="let tag of tags | async" name="{{tag.name}}" color="{{tag.color}}" [editable]="true" (click)="editTag(tag)"></app-tag>
         </div>
           <ion-button color="tertiary" class="add-tag-button"expand="block" routerLink='/addtag'><div class="button-font">Legg til Tag<ion-icon slot="end" name="add-circle-outline"></ion-icon></div></ion-button>
       </div>

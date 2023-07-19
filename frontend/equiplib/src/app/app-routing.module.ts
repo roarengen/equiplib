@@ -15,6 +15,7 @@ import {ResetPasswordComponent} from './features/reset-password/reset-password.c
 import { EditEquipmentPage } from './features/edit-equipment/edit-equipment.page';
 import { EditUserPage } from './features/edit-user/edit-user.page';
 import { QrScannerLoginPage } from './features/qr-scanner-login/qr-scanner-login.page';
+import { EditTagComponent } from './features/edit-tag/edit-tag.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
       { path: 'editequipment', component: EditEquipmentPage},
       { path: 'edituser', component: EditUserPage},
       { path: 'addtag', component: AddTagComponent},
+      { path: 'edittag', component: EditTagComponent},
       { path: 'manageorganization', component: ManageOrganizationPage},
       { path: 'home', component: HomePage, },
       { path: 'registerrental', component: RegisterNewRentalPage, },

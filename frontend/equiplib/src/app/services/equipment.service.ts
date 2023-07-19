@@ -8,6 +8,8 @@ import { QrService } from './qr.service';
 @Injectable({ providedIn: 'root' })
 export class EquipmentService {
 
+    public editTag?: Tag;
+
     constructor(
         private http: CustomHttpClient,
         private qr: QrService
@@ -53,5 +55,8 @@ export class EquipmentService {
     {
         return this.http.get<Tag>(`${environment.apiUrl}/equips/tag/${tag.id}/enable`)
     }
-
+    patchTag(tag: Tag)
+    {
+        return this.http.patch<Tag>(`${environment.apiUrl}/equips/tag/${tag.id}`, tag)
+    }
 }
