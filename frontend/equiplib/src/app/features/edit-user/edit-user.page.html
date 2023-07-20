@@ -24,6 +24,11 @@
       <ion-input name="phonenumber" [(ngModel)]="editUser.phone" required></ion-input>
     </ion-item>
 
+    <ion-item class="form-item" color="input-background">
+      <ion-label position="floating">Fødselsdato:</ion-label>
+      <ion-datetime [(ngModel)]="editUser.dateOfBirth" displayFormat="MM DD YY" placeholder="Select Date" ></ion-datetime>
+    </ion-item>
+
     <ion-item *ngIf="accountService.user.roleid > 3" class="form-item" class="grid-item" color="input-background">
       <ion-label>Rolle:</ion-label>
       <ion-select name="roleid" [(ngModel)]="editUser.roleid" interface="popover" placeholder="Velg Rolle" required>
