@@ -38,7 +38,7 @@
       
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Fødselsdato:</ion-label>
-        <ion-datetime formControlName = "dateOfBirth" [(ngModel)]="newUser.dateOfBirth" displayFormat="MM DD YY" placeholder="Select Date" ></ion-datetime>
+        <ion-datetime formControlName = "dateOfBirth" [(ngModel)]="newUser.dateOfBirth" display-format="h:mm A" picker-format="h:mm A"></ion-datetime>
       </ion-item>
 
       <ion-item class="form-item" class="grid-item" color="input-background">

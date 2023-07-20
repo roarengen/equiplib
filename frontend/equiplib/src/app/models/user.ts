@@ -9,7 +9,7 @@ export class User {
   membershipId!: string;
   city!: string;
   postalcode!: string;
-  dateOfBirth!: string;
+  dateOfBirth!: Date;
   activeFromDate!: Date;
   activeToDate!: Date;
   organizationid!: number;

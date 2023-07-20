@@ -26,7 +26,7 @@
 
     <ion-item class="form-item" color="input-background">
       <ion-label position="floating">Fødselsdato:</ion-label>
-      <ion-datetime [(ngModel)]="editUser.dateOfBirth" displayFormat="MM DD YY" placeholder="Select Date" ></ion-datetime>
+      <ion-datetime [(ngModel)]="editUser.dateOfBirth" display-format="h:mm A" picker-format="h:mm A" [value]="editUser.dateOfBirth"></ion-datetime>
     </ion-item>
 
     <ion-item *ngIf="accountService.user.roleid > 3" class="form-item" class="grid-item" color="input-background">
