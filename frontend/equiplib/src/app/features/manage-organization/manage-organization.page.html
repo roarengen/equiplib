@@ -10,41 +10,41 @@
         <ion-label class="accordion-title">Rediger organisasjon</ion-label>
       </ion-item>
         <div class="ion-padding accordion-description" slot="content">
-          <form (ngSubmit)="onSubmitOrganizationChanges()">
+          <form [formGroup]="form" (ngSubmit)="onSubmitOrganizationChanges()" *ngIf="form">
             <div class="form-input-block">
 
               <ion-item class="form-item" color="input-background">
-                <ion-label position="stacked"><p style="color: red">*</p>Navn:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.name" ngModel required [clearInput]="true">{{this.accountService.organization?.name}}</ion-input>
+                <ion-label position="stacked"><p style="display: inline; color: red">*</p>Navn:</ion-label>
+                <ion-input formControlName="name" [(ngModel)]="changesOrganization.name" [clearInput]="true"></ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
-                <ion-label position="stacked">Organisasjonsnummer:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.number"[clearInput]="true"></ion-input>
+                <ion-label position="stacked"> <p style="display: inline; color: red">*</p>Organisasjonsnummer:</ion-label>
+                <ion-input inputmode="numeric" formControlName="number" [(ngModel)]="changesOrganization.number" [clearInput]="true"></ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
-                <ion-label position="stacked">Epost:</ion-label>
-                <ion-input  [(ngModel)]="changesOrganization.email" type="email" [clearInput]="true" placeholder="Ingen epost satt">{{this.accountService.organization?.email}}</ion-input>
+                <ion-label position="stacked"><p style="display: inline; color: red">*</p>Epost:</ion-label>
+                <ion-input  formControlName="email" [(ngModel)]="changesOrganization.email" type="email" [clearInput]="true" placeholder="Ingen epost satt"></ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
-                <ion-label position="stacked">Telefonnummer:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.phone" type="number" [clearInput]="true" placeholder="Ingen telefonnummer satt">{{this.accountService.organization?.phone}}</ion-input>
+                <ion-label position="stacked"><p style="display: inline; color: red">*</p>Telefonnummer:</ion-label>
+                <ion-input inputmode="numeric" formControlName="phone" [(ngModel)]="changesOrganization.phone" type="number" [clearInput]="true" placeholder="Ingen telefonnummer satt"></ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
                 <ion-label position="stacked">Postnummer:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.postalcode" type="number" [clearInput]="true" placeholder="Ingen postnummer satt">{{this.accountService.organization?.postalcode}}</ion-input>
+                <ion-input inputmode="numeric" formControlName="postalcode" [(ngModel)]="changesOrganization.postalcode" type="number" [clearInput]="true" placeholder="Ingen postnummer satt"></ion-input>
               </ion-item>
 
               <ion-item class="form-item" color="input-background">
                 <ion-label position="stacked">By:</ion-label>
-                <ion-input [(ngModel)]="changesOrganization.city" type="number" [clearInput]="true" placeholder="Ingen by satt">{{this.accountService.organization?.city}} </ion-input>
+                <ion-input formControlName="city" [(ngModel)]="changesOrganization.city" type="number" [clearInput]="true" placeholder="Ingen by satt"></ion-input>
               </ion-item>
           </div>
           <div class="form-button-container">
-            <ion-button color="tertiary" class="form-button" (click)="validateInformation()">
+            <ion-button [disabled]="!form.valid" color="tertiary" class="form-button" (click)="validateInformation()">
               <div class="button-font">
               Lagre
             </div>

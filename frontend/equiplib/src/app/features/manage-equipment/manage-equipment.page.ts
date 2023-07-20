@@ -125,7 +125,7 @@ export class ManageEquipmentPage implements OnInit {
             this.equipmentService.addTagsToEquip(equipment, this.equiptags)
             this.router.navigate(['/home']);
           },
-          error: error => { console.error(error) }
+          error: error => { console.error(error),this.presentErrorToast() }
         })
       }
     }

@@ -64,11 +64,16 @@ export class AccountService {
         .subscribe()
     }
 
+    updateUser(user: User) {
+      return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, user).subscribe()
+    }
+
     getOrganization(orgid: number) {
       return this.http.get<Organization>(`${environment.apiUrl}/orgs/${orgid}`);
   }
 
-    updateUser(user: User) {
-      return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, user).subscribe()
-    }
+  updateOrganization(update_org: Organization) {
+    return this.http.patch<Organization>(`${environment.apiUrl}/orgs/${update_org.id}`, update_org)
+    ;
+}
 }

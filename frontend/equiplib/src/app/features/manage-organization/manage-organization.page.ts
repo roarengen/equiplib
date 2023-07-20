@@ -2,7 +2,7 @@ import { User } from './../../models/user';
 import { Organization } from './../../models/organization';
 import { AccountService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, AlertController, ToggleCustomEvent } from '@ionic/angular';
+import { ActionSheetController, AlertController, ToggleCustomEvent, ToastController } from '@ionic/angular';
 import { CustomHttpClient } from 'src/app/helpers/auth/http-client';
 import { environment } from 'src/environments/environment';
 import { Observable, first, firstValueFrom } from 'rxjs';
@@ -12,6 +12,7 @@ import {Tag} from 'src/app/models/equipment';
 import {EquipmentService} from 'src/app/services/equipment.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { error } from 'console';
 
 @Component({
   selector: 'app-manage-organization',
@@ -26,15 +27,28 @@ export class ManageOrganizationPage implements OnInit {
   public location: Location = new Location();
   public tags: Observable<Tag[]>;
 
+  form = this.formBuilder.group({
+    name: ['', [Validators.required, Validators.maxLength(70)]],
+    number: ['', [Validators.required, Validators.minLength(9),Validators.maxLength(9), Validators.pattern("^[0-9]*$")]],
+    email: ['', [Validators.email, Validators.maxLength(60)]],
+    phone: ['', [Validators.required, Validators.maxLength(40),Validators.pattern("^[0-9]*$")]],
+    city: ['', [Validators.maxLength(40)]],
+    postalcode: ['', [Validators.minLength(4), Validators.maxLength(4), Validators.pattern("^[0-9]*$")]],
+  })
+
   constructor(
+    private formBuilder: FormBuilder,
 		private alertController: AlertController,
     public locationService: LocationService,
     private http: CustomHttpClient,
     public accountService: AccountService,
     private equipmentService: EquipmentService,
     private actionSheetCtrl: ActionSheetController,
+    private toastController: ToastController,
     private router: Router
   ) {
+    this.accountService.getOrganization(this.accountService.user?.organizationid || 0).subscribe( x =>
+      {this.changesOrganization = x})
     this.allUsers = this.accountService.getAll()
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
     this.tags = this.equipmentService.getAllTags(this.accountService.user.organizationid)
@@ -53,9 +67,35 @@ export class ManageOrganizationPage implements OnInit {
   }
 
   onSubmitOrganizationChanges() {
-    if (this.accountService.user.roleid = 4) {
-      this.http.put(`${environment.apiUrl}/users/`, this.changesOrganization).subscribe()
-    }
+    if (this.accountService.user.roleid === 4) {
+      this.accountService.updateOrganization(this.changesOrganization).subscribe({
+        next: () => {
+          this.presentToast()
+          this.accountService.logout()
+				},
+        error: () => {
+          this.presentErrorToast()
+        }
+      });
+  }
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Endringer lagret, du må logge inn på nytt.',
+      duration: 3000,
+      position: 'top'
+    });
+    await toast.present();
+  }
+
+  async presentErrorToast() {
+    const toast = await this.toastController.create({
+      message: 'Noe gikk galt!',
+      duration: 3000,
+      position: 'top'
+    });
+    await toast.present();
   }
 
   async validateInformation(){
