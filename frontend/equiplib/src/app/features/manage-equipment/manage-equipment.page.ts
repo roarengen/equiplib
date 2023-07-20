@@ -10,6 +10,7 @@ import { ActionSheetController, PopoverController, ToastController } from '@ioni
 import { TemplateService } from 'src/app/services/template.service';
 import { Router } from '@angular/router';
 import { QrService } from 'src/app/services/qr.service';
+import {ToastService} from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-manage-equipment',
@@ -38,7 +39,6 @@ export class ManageEquipmentPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private toastController: ToastController,
     public locationService: LocationService,
     public accountService: AccountService,
     public equipmentService: EquipmentService,
@@ -47,6 +47,7 @@ export class ManageEquipmentPage implements OnInit {
     public templateService: TemplateService,
     public qrService: QrService,
     public router: Router,
+    private toastService: ToastService
     ) {
       this.locations = this.locationService.getActiveLocations(this.accountService.user.organizationid);
     }
@@ -78,27 +79,6 @@ export class ManageEquipmentPage implements OnInit {
       this.qrService.downloadQrFromData(id, this.newEquipment.name +'-qrcode.png')
     }
 
-    async presentToast() {
-      const toast = await this.toastController.create({
-        message: 'Nytt utstyr registrert!',
-        duration: 4000,
-        position: 'bottom'
-      });
-
-      await toast.present();
-    }
-
-    async presentErrorToast() {
-      const toast = await this.toastController.create({
-        message: 'Noe gikk galt! Utstyret ble ikke riktig registrert.',
-        duration: 4000,
-        position: 'bottom'
-      });
-
-      await toast.present();
-    }
-
-
     async removeTag(tag: any, index: number) {
       this.equiptags.splice(index, 1);
       this.filteredAddedTags.push({ ...tag, visible: true });
@@ -120,12 +100,13 @@ export class ManageEquipmentPage implements OnInit {
         .subscribe({
           next: (equipment: Equipment) => {
             if (downloadQR) this.downloadQR(equipment.id.toString())
-            console.log(this.equiptags)
-            console.log(equipment)
             this.equipmentService.addTagsToEquip(equipment, this.equiptags)
             this.router.navigate(['/home']);
           },
-          error: error => { console.error(error),this.presentErrorToast() }
+          error: error => {
+            this.toastService.presentToast('Noe gikk galt! Utstyret ble ikke riktig registrert.')
+            console.error(error)
+          }
         })
       }
     }
@@ -167,7 +148,7 @@ export class ManageEquipmentPage implements OnInit {
             text: 'Ja',
             handler: () => {
               this.onSubmitNewEquipment(true);
-              this.presentToast();
+              this.toastService.presentToast('Nytt utstyr registrert!')
               actionSheet.dismiss();
             }
           },
@@ -176,7 +157,7 @@ export class ManageEquipmentPage implements OnInit {
             text: 'Nei',
             handler: () => {
               this.onSubmitNewEquipment();
-              this.presentToast();
+              this.toastService.presentToast('Nytt utstyr registrert!')
               actionSheet.dismiss();
             }
           },
