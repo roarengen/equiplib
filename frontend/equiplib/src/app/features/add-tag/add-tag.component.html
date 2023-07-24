@@ -1,12 +1,12 @@
 <ion-content class="ion-padding">
-  <form (ngSubmit)="onSubmitNewTag()">
+  <form [formGroup]="form">
     <div class="form-title-block">
       <h2 class="form-title">Legg til ny tag</h2>
     </div>
     <div class="form-input-block">
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Navn:</ion-label>
-        <ion-input [(ngModel)]="newTag.name" [clearInput]="true" ngModel required></ion-input>
+        <ion-input [(ngModel)]="newTag.name" [clearInput]="true" formControlName="name"></ion-input>
       </ion-item>
 
       <div class="form-body">
@@ -33,7 +33,7 @@
     </div>
   </form>
   <div class="form-button-container">
-    <ion-button class="form-button" color="register" (click)="submit()">
+    <ion-button  [disabled]="!form.valid"  class="form-button" color="register" (click)="submit()">
       Registrer
     </ion-button>
   </div>

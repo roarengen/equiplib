@@ -1,5 +1,5 @@
 <ion-content class="ion-padding">
-      <form #f="ngForm" *ngIf="editEquipment">
+      <form [formGroup]="form"  *ngIf="editEquipment">
     <div class="form-title-block">
       <h2 class="form-title">Redigering av {{editEquipment.name}}</h2>
     </div>
@@ -28,10 +28,8 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipName ?? "Navn"}}:</ion-label>
         <ion-input
-        name="name"
+        formControlName="name"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="editEquipment.name"
         ></ion-input>
       </ion-item>
@@ -39,10 +37,8 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipBrand ?? "Merke"}}:</ion-label>
         <ion-input
-        name="brand"
+        formControlName="brand"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="editEquipment.brand"
         ></ion-input>
       </ion-item>
@@ -50,10 +46,8 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipModel ?? "Modell"}}:</ion-label>
         <ion-input
-        name="model"
+        formControlName="model"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="editEquipment.model"
         ></ion-input>
       </ion-item>
@@ -61,10 +55,8 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipType ?? "Type"}}:</ion-label>
         <ion-input
-        name="type"
+        formControlName="type"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="editEquipment.type"
         ></ion-input>
       </ion-item>
@@ -72,32 +64,30 @@
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipSerialnumber ?? "Serienummer"}}:</ion-label>
         <ion-input
-        name="serialnumber"
+        formControlName="serialnumber"
         [clearInput]="true"
-        ngModel
-        required
         [(ngModel)]="editEquipment.serialnumber"
         > </ion-input>
       </ion-item>
 
       <ion-item *ngIf="templateService.template.equipOther1" class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipOther1}}:</ion-label>
-        <ion-input  placeholder="Ingen {{templateService.template.equipOther1}} satt"[(ngModel)]="editEquipment.other1" [clearInput]="true" ngModel required name="other1"></ion-input>
+        <ion-input  placeholder="Ingen {{templateService.template.equipOther1}} satt"[(ngModel)]="editEquipment.other1" [clearInput]="true"></ion-input>
       </ion-item>
 
       <ion-item *ngIf="templateService.template.equipOther2" class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipOther2}}:</ion-label>
-        <ion-input  placeholder="Ingen {{templateService.template.equipOther2}} satt" [(ngModel)]="editEquipment.other2" [clearInput]="true" ngModel required name="other2"></ion-input>
+        <ion-input  placeholder="Ingen {{templateService.template.equipOther2}} satt" [(ngModel)]="editEquipment.other2" [clearInput]="true"></ion-input>
       </ion-item>
 
       <ion-item *ngIf="templateService.template.equipOther3" class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipOther3}}:</ion-label>
-        <ion-input  placeholder="Ingen {{templateService.template.equipOther3}} satt" [(ngModel)]="editEquipment.other3" [clearInput]="true" ngModel required name="other3"></ion-input>
+        <ion-input  placeholder="Ingen {{templateService.template.equipOther3}} satt" [(ngModel)]="editEquipment.other3" [clearInput]="true"></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">{{templateService.template.equipDescription ?? 'Kommentar/beskrivelse'}}</ion-label>
-        <ion-textarea [(ngModel)]="editEquipment.comment" [autoGrow]="true" name="comment" />
+        <ion-textarea [(ngModel)]="editEquipment.comment" [autoGrow]="true"/>
       </ion-item>
 
       <ion-item class="form-item" class="grid-item" color="input-background">

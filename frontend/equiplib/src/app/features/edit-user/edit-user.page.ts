@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user';
 import { FilterService } from './../../services/filter.service';
 import { LocationService } from './../../services/location.service';
 import { Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-user',
@@ -19,7 +20,17 @@ export class EditUserPage implements OnInit {
   public selectedUser?: Observable<User>;
   public checkRoleChange: number;
 
+  form = this.formBuilder.group({
+    firstname: ['', [Validators.required, Validators.maxLength(40), Validators.pattern("/^[A-Za-z]+$/")]],
+    lastname: ['', [Validators.required, Validators.maxLength(40), Validators.pattern("/^[A-Za-z]+$/")]],
+    username: ['', [Validators.required, Validators.maxLength(40),Validators.pattern("/^[A-Za-z]+$/")]],
+    phone: ['', [Validators.required, Validators.maxLength(40),Validators.pattern("^[0-9]*$")]],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(60)]],
+    role: ['', [Validators.required]],
+  })
+
   constructor(
+    public formBuilder: FormBuilder,
     public router: Router,
     public toastController: ToastController,
     public getSelectedUserService: FilterService,

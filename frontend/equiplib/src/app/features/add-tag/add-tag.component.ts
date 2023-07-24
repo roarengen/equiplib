@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import {CustomHttpClient} from 'src/app/helpers/auth/http-client';
@@ -14,8 +15,14 @@ import {environment} from 'src/environments/environment';
 export class AddTagComponent  implements OnInit {
 
   public newTag: Tag = new Tag();
+  form = this.formBuilder.group({
+    name: ['', [Validators.required, Validators.pattern("/^[A-Za-z]+$/"), Validators.maxLength(30)]],
+    tagcolor: ['', [Validators.required, , Validators.pattern("/^[A-Za-z]+$/")]],
+  })
+
   presetcolors = ['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)'] //TODO find high-quality colors
   constructor(
+    public formBuilder: FormBuilder,
     public router: Router,
     public toastController: ToastController,
     private http: CustomHttpClient,

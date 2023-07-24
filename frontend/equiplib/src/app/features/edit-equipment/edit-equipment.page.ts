@@ -9,6 +9,7 @@ import { Location } from 'src/app/models/location';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { FilterService } from 'src/app/services/filter.service';
 import { Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-equipment',
@@ -23,7 +24,15 @@ export class EditEquipmentPage implements OnInit {
   public filteredAddedTags: Tag[] = [];
   public equiptags: Tag[] = [];
 
+  form = this.formBuilder.group({
+    name: ['', [Validators.required]],
+    brand: [''],
+    model: [''],
+    type: [''],
+    serialnumber: [''],
+  })
   constructor(
+  public formBuilder: FormBuilder,
   public router: Router,
   public toastController: ToastController,
   public filterService: FilterService,

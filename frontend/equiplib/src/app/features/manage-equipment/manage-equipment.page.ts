@@ -26,10 +26,10 @@ export class ManageEquipmentPage implements OnInit {
   public equiptags: Tag[] = [];
   form = this.formBuilder.group({
         name: ['', [Validators.required]],
-        type: ['', [Validators.required]],
-        model: ['', [Validators.required]],
-        brand: ['', [Validators.required]],
-        serialnumber: ['', [Validators.required]],
+        type: [''],
+        model: [''],
+        brand: [''],
+        serialnumber: [''],
         locationid: ['', [Validators.required]],
         other1: [''],
         other2: [''],
