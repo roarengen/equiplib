@@ -21,6 +21,7 @@ export class ManageUsersPage implements OnInit {
       lastname: ['', [Validators.required, Validators.maxLength(40)]],
       username: ['', [Validators.required, Validators.maxLength(40)]],
       phone: [''],
+      dateOfBirth: [''],
       email: ['', [Validators.email]],
       password: ['', [Validators.minLength(4), Validators.maxLength(6), Validators.pattern('^[0-9]+$')]],
       roleid: ['', [Validators.required]]
