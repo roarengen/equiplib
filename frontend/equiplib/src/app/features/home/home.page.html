@@ -19,8 +19,47 @@
           </ng-template>
         </ion-popover>
 
+        <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-button (click)="cancel()"><ion-icon name="close-outline"></ion-icon></ion-button>
+                </ion-buttons>
+                <ion-title>Filtrer</ion-title>
+
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <ion-item>
+                <ion-badge color="tertiary" slot="end">22</ion-badge>
+              </ion-item>
+              <ion-item class="form-item" class="grid-item" color="input-background">
+                <ion-label>Velg lokasjoner</ion-label>
+                <ion-select (change)="handleLocationFilterChange($event)" multiple="true" [(ngModel)]="filter.locationids">
+                  <ion-select-option *ngFor="let location of locations | async" [value]="location.id">
+                    {{ location.name }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-content>
+
+            <ion-footer>
+              <ion-toolbar>
+                <ion-buttons slot="end">
+                  <ion-button (click)="confirm()" [strong]="true">
+                    Vis  <ion-text color="tertiary">{{ filteredEquipmentCount$ | async }}</ion-text>
+                    Utstyr
+                  </ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-footer>
+
+          </ng-template>
+        </ion-modal>
+
         <ion-searchbar (ionInput)="handleSearchFilterChange($event)" value="" animated="true" placeholder="Søk" show-clear-button="always" clear-icon="trash-bin"></ion-searchbar>
-        <ion-button (click)="openFilter()">
+        <ion-button id="open-modal">
           <ion-icon slot="icon-only" src="../../../../assets/icons/filter.svg"></ion-icon>
         </ion-button>
       </ion-item>
