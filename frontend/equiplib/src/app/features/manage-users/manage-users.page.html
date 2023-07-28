@@ -35,12 +35,25 @@
         <ion-label position="floating">Telefonnummer:</ion-label>
         <ion-input formControlName = "phone" [(ngModel)]="newUser.phone" type="number" [clearInput]="true"> </ion-input>
       </ion-item>
-      
+
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Fødselsdato:</ion-label>
         <ion-datetime formControlName = "dateOfBirth" [(ngModel)]="newUser.dateOfBirth" display-format="h:mm A" picker-format="h:mm A"></ion-datetime>
       </ion-item>
 
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Medlemskode:</ion-label>
+        <ion-input formControlName = "membershipId" [(ngModel)]="newUser.membershipId" [clearInput]="true"></ion-input>
+      </ion-item>
+
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">Adressekode:</ion-label>
+        <ion-input type=number formControlName = "postalcode" [(ngModel)]="newUser.postalcode" [clearInput]="true"></ion-input>
+      </ion-item>
+      <ion-item class="form-item" color="input-background">
+        <ion-label position="floating">By:</ion-label>
+        <ion-input formControlName = "city" [(ngModel)]="newUser.city" [clearInput]="true"></ion-input>
+      </ion-item>
       <ion-item class="form-item" class="grid-item" color="input-background">
         <ion-label>Rolle:</ion-label>
         <ion-select formControlName = "roleid" interface="popover" placeholder="Velg Rolle" [(ngModel)]="newUser.roleid">
