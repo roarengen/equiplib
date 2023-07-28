@@ -36,16 +36,16 @@
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Medlemskode:</ion-label>
-        <ion-input formControlName = "membershipId" [(ngModel)]="newUser.membershipId" [clearInput]="true"></ion-input>
+        <ion-input formControlName = "membershipId" [(ngModel)]="editUser.membershipId" [clearInput]="true"></ion-input>
       </ion-item>
 
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">Adressekode:</ion-label>
-        <ion-input type=number formControlName = "postalcode" [(ngModel)]="newUser.postalcode" [clearInput]="true"></ion-input>
+        <ion-input type=number formControlName = "postalcode" [(ngModel)]="editUser.postalcode" [clearInput]="true"></ion-input>
       </ion-item>
       <ion-item class="form-item" color="input-background">
         <ion-label position="floating">By:</ion-label>
-        <ion-input formControlName = "city" [(ngModel)]="newUser.city" [clearInput]="true"></ion-input>
+        <ion-input formControlName = "city" [(ngModel)]="editUser.city" [clearInput]="true"></ion-input>
       </ion-item>
     <ion-item *ngIf="accountService.user.roleid > 3" class="form-item" class="grid-item" color="input-background">
       <ion-label>Rolle:</ion-label>
