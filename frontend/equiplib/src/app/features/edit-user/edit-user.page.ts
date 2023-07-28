@@ -26,6 +26,9 @@ export class EditUserPage implements OnInit {
     username: ['', [Validators.required, Validators.maxLength(40),Validators.pattern("/^[A-Za-z]+$/")]],
     phone: ['', [Validators.required, Validators.maxLength(40),Validators.pattern("^[0-9]*$")]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(60)]],
+    postalcode: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
+    membershipId: ['', [Validators.required, Validators.maxLength(40)]],
+    city: ['', [Validators.required, Validators.maxLength(40)]],
     role: ['', [Validators.required]],
   })
 
