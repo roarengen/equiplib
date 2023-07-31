@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Rent } from 'src/app/models/rent';
 import { Equipment } from '../../models/equipment';
@@ -19,7 +19,6 @@ import {Router} from '@angular/router';
   styleUrls: ['./return-rental.page.scss'],
 })
 export class ReturnRentalPage implements OnInit, OnDestroy {
-  form!: FormGroup;
   equipmentName: string;
   equipmentDescription: string;
   equipmentTags: any;
@@ -30,9 +29,14 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   public selectedRental: Rent = new Rent();
   private subscription: Subscription = new Subscription();
 
+  form = this.formBuilder.group({
+    returnlocation: ['', [Validators.required]],
+  })
+
   constructor(
     private toastController: ToastController,
     private router: Router,
+    public formBuilder: FormBuilder,
     public locationService: LocationService,
     public getEquipmentIdService: FilterService,
     public accountService: AccountService,

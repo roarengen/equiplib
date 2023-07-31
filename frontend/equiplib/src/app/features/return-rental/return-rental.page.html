@@ -3,7 +3,7 @@
     <h2 class="form-title">Retur av utleie</h2>
   </div>
 
-  <form #f="ngForm" class="register-rental" (ngSubmit)="onReturnRental()">
+  <form [formGroup]="form" class="register-rental">
 
     <ion-card>
       <ion-card-header>
@@ -26,7 +26,7 @@
 
     <ion-item class="form-item" class="grid-item" color="input-background">
       <ion-label>Velg retur lokasjon</ion-label>
-      <ion-select label-placement="floating" placeholder="Lokasjon" [(ngModel)]="setLocationId" >
+      <ion-select formControlName="returnlocation" label-placement="floating" placeholder="Lokasjon" [(ngModel)]="setLocationId" >
         <ion-label>Til lokasjon</ion-label>
         <ng-container>
           <ion-select-option *ngFor="let location of locations | async" [value]="location.id">{{location.name}}</ion-select-option>
@@ -35,7 +35,7 @@
     </ion-item>
 
     <div class="form-button-container">
-      <ion-button class="form-button" color="register" (click)="onReturnRental()">
+      <ion-button [disabled]="!form.valid" class="form-button" color="register" (click)="onReturnRental()">
         Returner
       </ion-button>
     </div>
