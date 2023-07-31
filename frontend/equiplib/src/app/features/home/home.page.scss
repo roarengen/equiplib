@@ -66,3 +66,11 @@ ion-accordion.accordion-collapsed ion-item[slot="header"] {
   background-color: #FF5722;
   z-index: 9999;
 }
+
+ion-checkbox {
+    --size: 26px;
+    --checkbox-background-checked: #75FF45;
+}
+ion-label {
+  font-size: 18px;
+}

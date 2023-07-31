@@ -1,22 +1,25 @@
 import { LocationService } from 'src/app/services/location.service';
 import { Equipment, Tag } from 'src/app/models/equipment';
-import { BehaviorSubject, Observable, map, of, tap } from 'rxjs';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { RentService } from 'src/app/services/rent.service';
 import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
-import { AlertController, IonModal, PopoverController } from '@ionic/angular';
+import { AlertController, IonModal, PopoverController } from '@ionic/angular'
 import { LoadingController } from '@ionic/angular';
-import { QrService } from 'src/app/services/qr.service';
-import { Idownloadable } from 'src/app/models/downloadable';
-import { OverlayEventDetail } from '@ionic/core/components';
+import {QrService} from 'src/app/services/qr.service';
+import {Idownloadable} from 'src/app/models/downloadable';
 
 class Filter {
-  locationids: number[] = [];
   tagids: number[] = [];
-  name: string = '';
-  onlyRented: boolean = false;
+  locationids: number[] = [];
+  name: string = "";
+  showRented: boolean = true;
+  showAvailable: boolean = true;
+  showActive: boolean = true;
+  showDeactivated: boolean = true;
+
 }
 
 class Downloadable implements Idownloadable {
@@ -30,88 +33,42 @@ class Downloadable implements Idownloadable {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  loading: boolean = false;
-  submitted: boolean = false;
-  openQrCode: boolean = false;
-  enterPinCode: boolean = false;
-  QrCode!: string;
-  equipments: Observable<Equipment[]> = of([]);
-  filteredEquipments: Observable<Equipment[]>;
-  locations!: Observable<Location[]>;
-  tags!: Observable<Tag[]>;
+	loading: boolean = false;
+	submitted: boolean = false;
+	openQrCode: boolean = false;
+	enterPinCode: boolean = false;
+	QrCode!: string;
+  equipments: Observable<Equipment[]>
+  filteredEquipments: Observable<Equipment[]>
+  locations!: Observable<Location[]>
+  tags!: Observable<Tag[]>
   rentedEquipmentIds: number[] = [];
   isSelectedTag: boolean[] = [];
-  message =
-    'This modal example uses triggers to automatically open a modal when the button is clicked.';
-  name: string;
-  filter: Filter = new Filter();
-  filteredEquipmentCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  filteredEquipmentCount$: Observable<number> = this.filteredEquipmentCountSubject.asObservable();
 
-  constructor(
+  filter: Filter = new Filter();
+
+	constructor(
     private loadingController: LoadingController,
-    private alertController: AlertController,
     public locationService: LocationService,
-    public accountService: AccountService,
+		public accountService: AccountService,
     public equipmentService: EquipmentService,
     public rentService: RentService,
-    public QrService: QrService
+    public QrService: QrService,
   ) {
-    this.equipments = this.equipmentService.getAllEquipment(
-      this.accountService.user.organizationid
-    );
-    this.locations = locationService.getAllLocations(
-      this.accountService.user.organizationid
-    );
-    this.tags = equipmentService.getAllTags(
-      this.accountService.user.organizationid
-    );
-    this.filteredEquipments = this.equipments;
+    this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid)
+    this.locations = locationService.getAllLocations(this.accountService.user.organizationid)
+    this.tags = equipmentService.getAllTags(this.accountService.user.organizationid)
+    this.filteredEquipments = this.equipments
   }
 
   ngOnInit() {
-    this.rentService
-      .getCurrentActiveRentals(this.accountService.user.organizationid)
-      .subscribe((rents) =>
-        rents.map((rent) => this.rentedEquipmentIds.push(rent.equipmentid))
-      );
-
-    // Set the initial value of filteredEquipments
-    this.filteredEquipments = this.getFilteredEquipment(this.filter);
-
-    // Calculate and update the filtered equipment count
-    this.filteredEquipments.pipe(
-      map((equipments) => equipments.length)
-    ).subscribe((count) => this.filteredEquipmentCountSubject.next(count));
+    this.rentService.getCurrentActiveRentals(this.accountService.user.organizationid).subscribe(rents=>rents.map(rent => this.rentedEquipmentIds.push(rent.equipmentid)))
+    this.onFilterChanged();
   }
 
   ionViewWillEnter() {
-    this.rentService
-      .getCurrentActiveRentals(this.accountService.user.organizationid)
-      .subscribe((rents) =>
-        rents.map((rent) => this.rentedEquipmentIds.push(rent.equipmentid))
-      );
-
     this.loading = false;
-    this.loadEquipments();
-  }
-
-  @ViewChild(IonModal) modal: IonModal;
-
-  cancel() {
-    this.modal.dismiss(null, 'Avbryt');
-  }
-
-  confirm() {
-    this.filteredEquipments = this.getFilteredEquipment(this.filter);
-    this.modal.dismiss(this.name, 'Bekreft');
-  }
-
-  onWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    if (ev.detail.role === 'confirm') {
-      this.message = `Hello, ${ev.detail.data}!`;
-    }
+    this.loadEquipments()
   }
 
   async loadEquipments() {
@@ -119,14 +76,12 @@ export class HomePage implements OnInit {
       cssClass: 'home-loading',
       message: 'Laster..',
       spinner: 'crescent',
-      translucent: true,
+      translucent: true
     });
 
     try {
       await loading.present();
-      this.equipments = this.equipmentService.getAllEquipment(
-        this.accountService.user.organizationid
-      );
+      this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid);
       this.filteredEquipments = this.equipments;
     } finally {
       loading.dismiss();
@@ -134,8 +89,8 @@ export class HomePage implements OnInit {
   }
 
   downloadAll() {
-    this.equipments.subscribe((equipments) => {
-      const items: Downloadable[] = equipments.map((equipment) => {
+    this.equipments.subscribe(equipments => {
+      const items: Downloadable[] = equipments.map(equipment => {
         const item = new Downloadable();
         item.data = equipment.id.toString();
         item.name = equipment.name;
@@ -150,61 +105,44 @@ export class HomePage implements OnInit {
     return equipment.id;
   }
 
-  getFilteredEquipment(filter: Filter): Observable<Equipment[]> {
-    return this.equipments.pipe(
-      map((equipments) => {
-        // Apply filtering based on tagids
-        if (filter.tagids.length > 0) {
-          equipments = equipments.filter((eq) => {
-            return eq.tags.some((eqtag) => filter.tagids.includes(eqtag.id));
-          });
-        }
+  toggleBooleanProperty(propertyName: string) {
+      this[propertyName] = !this[propertyName];
+    }
 
-        // Apply filtering based on locationids
-        if (filter.locationids.length > 0) {
-          equipments = equipments.filter((eq) => {
-            return filter.locationids.includes(eq.locationid);
+    getFilteredEquipment(filter: Filter): Observable<Equipment[]> {
+      return this.equipments.pipe(
+        map(equipments => {
+          return equipments.filter(equipment => {
+            const isTagMatched = filter.tagids.length === 0 || equipment.tags.some(tag => filter.tagids.includes(tag.id));
+            const isLocationMatched = filter.locationids.length === 0 || filter.locationids.includes(equipment.locationid);
+            const isNameMatched = filter.name === '' || equipment.name.toLowerCase().includes(filter.name.toLowerCase());
+            const isStatusMatched = filter.showAvailable || filter.showRented ? (filter.showAvailable && !this.rentedEquipmentIds.includes(equipment.id)) || (filter.showRented && this.rentedEquipmentIds.includes(equipment.id)) : true;
+            return isTagMatched && isLocationMatched && isNameMatched && isStatusMatched;
           });
-        }
+        })
+      );
+    }
 
-        // Apply filtering based on name
-        if (filter.name !== '') {
-          equipments = equipments.filter((equipment) => {
-            return equipment.name.toLowerCase().includes(filter.name.toLowerCase());
-          });
-        }
-
-        // Apply filtering based on onlyRented
-        if (filter.onlyRented) {
-          equipments = equipments.filter((equipment) => {
-            return this.rentedEquipmentIds.includes(equipment.id);
-          });
-        }
-
-        return equipments;
-      })
-    );
-  }
 
   getLocationForEquipment(equipid: number, locations: Location[]): Location {
-    return locations.find((item) => item.id === equipid);
+    return locations.find(item => item.id === equipid);
   }
 
-  handleTagFilterChange(event: any) {
-    this.filter.tagids = event.target.value;
-    this.onFilterChanged();
+  handleTagFilterChange(event: any)
+  {
+      this.filter.tagids = event.target.value
+      this.onFilterChanged()
   }
 
-  async handleLocationFilterChange(event: any) {
+  handleSearchFilterChange(event: any)
+  {
+      this.filter.name = event.target.value
+      this.onFilterChanged()
+  }
+
+  handleLocationFilterChange(event: any) {
     this.filter.locationids = event.target.value;
-    this.onFilterChanged();
-    this.filteredEquipments.subscribe((equipments) => {
-      this.filteredEquipmentCountSubject.next(equipments.length);
-    });
-  }
-
-  handleSearchFilterChange(event: any) {
-    this.filter.name = event.target.value;
+    console.log(this.filter.locationids)
     this.onFilterChanged();
   }
 
@@ -218,17 +156,30 @@ export class HomePage implements OnInit {
 
     const tags = await this.tags.toPromise(); // Extract the value from Observable
 
-    this.isSelectedTag = tags.map((tag: Tag) => this.filter.tagids.includes(tag.id));
+    this.isSelectedTag = tags.map((tag: Tag) =>
+      this.filter.tagids.includes(tag.id)
+    );
 
     this.onFilterChanged();
   }
 
-  async onFilterChanged() {
-    this.getFilteredEquipment(this.filter).pipe(
-      tap((filteredEquipments) => {
-        this.filteredEquipmentCountSubject.next(filteredEquipments.length);
-      })
-    ).subscribe();
+  onFilterChanged()
+  {
+    this.filteredEquipments = this.getFilteredEquipment(this.filter)
+  }
+
+
+  @ViewChild(IonModal) modal: IonModal;
+
+  cancel() {
+    this.modal.dismiss(null, 'Avbryt');
+  }
+
+  confirm() {
+    console.log(this.filter.showAvailable)
+    this.onFilterChanged()
+
+    this.modal.dismiss(null, 'Bekreft');
   }
 
 }

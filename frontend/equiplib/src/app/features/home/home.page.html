@@ -1,25 +1,8 @@
 <ion-content class="ion-padding">
-  <div *ngIf="loading" class="home-loading">
-    <ion-spinner></ion-spinner>
-  </div>
-
   <ion-item-group style="margin-top: 3rem" *ngIf="{ filteredEquipments: filteredEquipments | async, locations: locations | async } as observables">
     <ion-list>
       <ion-item>
-        <ion-button id="filter-tag">
-          <ion-icon slot="icon-only" name="pricetags-outline"></ion-icon>
-        </ion-button>
-        <ion-popover trigger="filter-tag" triggerAction="click">
-          <ng-template class="tag-popover-content">
-            <div class="tag-list">
-              <div class="tag-row">
-                <app-tag *ngFor="let tag of tags | async; let i = index" name="{{ tag.name }}" color="{{ tag.color }}" [checked]="isSelectedTag[i]" (click)="filterOnTags(tag)"></app-tag>
-              </div>
-            </div>
-          </ng-template>
-        </ion-popover>
-
-        <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+        <ion-modal trigger="open-modal">
           <ng-template>
             <ion-header>
               <ion-toolbar>
@@ -31,9 +14,6 @@
               </ion-toolbar>
             </ion-header>
             <ion-content class="ion-padding">
-              <ion-item>
-                <ion-badge color="tertiary" slot="end">22</ion-badge>
-              </ion-item>
               <ion-item class="form-item" class="grid-item" color="input-background">
                 <ion-label>Velg lokasjoner</ion-label>
                 <ion-select (change)="handleLocationFilterChange($event)" multiple="true" [(ngModel)]="filter.locationids">
@@ -42,13 +22,46 @@
                   </ion-select-option>
                 </ion-select>
               </ion-item>
+              <ion-text>Utstyr status:</ion-text>
+              <ion-item>
+                <ion-list>
+                  <ion-item>
+                    <ion-label>Ledige</ion-label>
+                    <ion-checkbox labelPlacement="end" [(ngModel)]="filter.showAvailable">Label at the Start</ion-checkbox>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Utleide</ion-label>
+                    <ion-checkbox labelPlacement="end" justify="space-between" [(ngModel)]="filter.showRented"></ion-checkbox>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Aktive</ion-label>
+                    <ion-checkbox labelPlacement="end" justify="space-between" [(ngModel)]="filter.showActive"></ion-checkbox>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Deaktiverte</ion-label>
+                    <ion-checkbox labelPlacement="end" justify="space-between" [(ngModel)]="filter.showDeactivated"></ion-checkbox>
+                  </ion-item>
+              </ion-list>
+              </ion-item>
+              <ion-text>Tags:</ion-text>
+              <ion-item>
+                <div class="tag-list">
+                  <div class="tag-row">
+                    <app-tag *ngFor="let tag of tags | async; let i = index" name="{{ tag.name }}" color="{{ tag.color }}" [checked]="isSelectedTag[i]" (click)="filterOnTags(tag)"></app-tag>
+                  </div>
+                </div>
+              </ion-item>
+
             </ion-content>
 
             <ion-footer>
               <ion-toolbar>
                 <ion-buttons slot="end">
                   <ion-button (click)="confirm()" [strong]="true">
-                    Vis  <ion-text color="tertiary">{{ filteredEquipmentCount$ | async }}</ion-text>
+                    Vis  <ion-text color="tertiary">12</ion-text>
                     Utstyr
                   </ion-button>
                 </ion-buttons>
