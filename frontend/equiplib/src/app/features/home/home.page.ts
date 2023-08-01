@@ -2,6 +2,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { Equipment, Tag } from 'src/app/models/equipment';
 import { Observable, map } from 'rxjs';
 import { ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { RentService } from 'src/app/services/rent.service';
 import { AccountService } from 'src/app/services/user.service';
@@ -10,6 +11,7 @@ import { AlertController, IonModal, PopoverController } from '@ionic/angular'
 import { LoadingController } from '@ionic/angular';
 import {QrService} from 'src/app/services/qr.service';
 import {Idownloadable} from 'src/app/models/downloadable';
+
 
 class Filter {
   tagids: number[] = [];
@@ -42,11 +44,13 @@ export class HomePage implements OnInit {
 	QrCode!: string;
   equipments: Observable<Equipment[]>
   filteredEquipments: Observable<Equipment[]>
+  filteredEquipmentsCount: number;
   locations!: Observable<Location[]>
   locationNames: string[] = [];
   tags!: Observable<Tag[]>
   rentedEquipmentIds: number[] = [];
   isSelectedTag: boolean[] = [];
+  countAnimationState: 'previous' | 'current' = 'current';
 
   filter: Filter = new Filter();
 
@@ -129,7 +133,6 @@ export class HomePage implements OnInit {
       );
     }
 
-
   getLocationForEquipment(equipid: number, locations: Location[]): Location {
     return locations.find(item => item.id === equipid);
   }
@@ -167,6 +170,8 @@ export class HomePage implements OnInit {
     const selectedLocations = event.target.value;
     this.filter.locationids = selectedLocations.map((location: Location) => location.id);
     this.filter.locationNames = selectedLocations.map((location: Location) => location.name);
+    this.onFilterChanged()
+
   }
 
   async filterOnTags(tag: Tag): Promise<void> {
@@ -182,11 +187,21 @@ export class HomePage implements OnInit {
     this.isSelectedTag = tags.map((tag: Tag) =>
       this.filter.tagids.includes(tag.id)
     );
+    this.onFilterChanged()
   }
 
   onFilterChanged()
   {
     this.filteredEquipments = this.getFilteredEquipment(this.filter)
+    this.filteredEquipments.subscribe(equipments => this.filteredEquipmentsCount = equipments.length);
+  }
+
+  private animateCountChange(newCount: number) {
+    this.countAnimationState = 'previous';
+    setTimeout(() => {
+      this.filteredEquipmentsCount = newCount;
+      this.countAnimationState = 'current';
+    }, 1000);
   }
 
 

@@ -40,19 +40,19 @@
               <ion-item>
                 <ion-list>
                   <ion-item>
-                    <ion-checkbox  justify="space-between" [(ngModel)]="filter.showAvailable">Ledige</ion-checkbox>
+                    <ion-checkbox  justify="space-between" (click)="this.onFilterChanged()" [(ngModel)]="filter.showAvailable">Ledige</ion-checkbox>
                   </ion-item>
 
                   <ion-item>
-                    <ion-checkbox  justify="space-between" [(ngModel)]="filter.showRented">Utleide</ion-checkbox>
+                    <ion-checkbox  justify="space-between" (click)="this.onFilterChanged()" [(ngModel)]="filter.showRented">Utleide</ion-checkbox>
                   </ion-item>
 
                   <ion-item>
-                    <ion-checkbox  justify="space-between" [(ngModel)]="filter.showActive">Aktive</ion-checkbox>
+                    <ion-checkbox  justify="space-between" (click)="this.onFilterChanged()" [(ngModel)]="filter.showActive">Aktive</ion-checkbox>
                   </ion-item>
 
                   <ion-item>
-                    <ion-checkbox  justify="space-between" [(ngModel)]="filter.showDeactivated">Deaktiverte</ion-checkbox>
+                    <ion-checkbox  justify="space-between" (click)="this.onFilterChanged()"[(ngModel)]="filter.showDeactivated">Deaktiverte</ion-checkbox>
                   </ion-item>
 
               </ion-list>
@@ -70,13 +70,9 @@
 
             <ion-footer>
               <ion-toolbar>
-                <ion-buttons slot="start">
-                  <ion-icon name="refresh-outline"></ion-icon>
-                </ion-buttons>
                 <ion-buttons slot="end">
                   <ion-button (click)="confirm()" [strong]="true">
-                    Vis  <ion-text color="tertiary">12</ion-text>
-                    Utstyr
+                    Vis&nbsp;<ion-text color="tertiary" [countUp]="filteredEquipmentsCount"></ion-text>&nbsp;Utstyr
                   </ion-button>
                 </ion-buttons>
               </ion-toolbar>
