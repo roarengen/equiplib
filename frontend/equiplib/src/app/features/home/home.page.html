@@ -2,7 +2,7 @@
   <ion-item-group style="margin-top: 3rem" *ngIf="{ filteredEquipments: filteredEquipments | async, locations: locations | async } as observables">
     <ion-list>
       <ion-item>
-        <ion-modal trigger="open-modal">
+        <ion-modal [keepContentsMounted]="true" trigger="open-modal">
           <ng-template>
             <ion-header>
               <ion-toolbar>
@@ -40,24 +40,21 @@
               <ion-item>
                 <ion-list>
                   <ion-item>
-                    <ion-label>Ledige</ion-label>
-                    <ion-checkbox labelPlacement="end" [(ngModel)]="filter.showAvailable"></ion-checkbox>
-                  </ion-item>
-
-                  <ion-item labelPlacement="end" justify="space-between">
-                    <ion-label>Utleide</ion-label>
-                    <ion-checkbox  [(ngModel)]="filter.showRented"></ion-checkbox>
+                    <ion-checkbox  justify="space-between" [(ngModel)]="filter.showAvailable">Ledige</ion-checkbox>
                   </ion-item>
 
                   <ion-item>
-                    <ion-label>Aktive</ion-label>
-                    <ion-checkbox labelPlacement="end" justify="space-between" [(ngModel)]="filter.showActive"></ion-checkbox>
+                    <ion-checkbox  justify="space-between" [(ngModel)]="filter.showRented">Utleide</ion-checkbox>
                   </ion-item>
 
                   <ion-item>
-                    <ion-label>Deaktiverte</ion-label>
-                    <ion-checkbox labelPlacement="end" justify="space-between" [(ngModel)]="filter.showDeactivated"></ion-checkbox>
+                    <ion-checkbox  justify="space-between" [(ngModel)]="filter.showActive">Aktive</ion-checkbox>
                   </ion-item>
+
+                  <ion-item>
+                    <ion-checkbox  justify="space-between" [(ngModel)]="filter.showDeactivated">Deaktiverte</ion-checkbox>
+                  </ion-item>
+
               </ion-list>
               </ion-item>
               <ion-text>Tags:</ion-text>
