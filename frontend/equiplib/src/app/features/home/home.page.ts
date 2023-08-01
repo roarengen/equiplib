@@ -1,7 +1,7 @@
 import { LocationService } from 'src/app/services/location.service';
 import { Equipment, Tag } from 'src/app/models/equipment';
 import { Observable, map } from 'rxjs';
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { RentService } from 'src/app/services/rent.service';
 import { AccountService } from 'src/app/services/user.service';
@@ -14,6 +14,7 @@ import {Idownloadable} from 'src/app/models/downloadable';
 class Filter {
   tagids: number[] = [];
   locationids: number[] = [];
+  locationNames: string[] = [];
   name: string = "";
   showRented: boolean = true;
   showAvailable: boolean = true;
@@ -33,6 +34,7 @@ class Downloadable implements Idownloadable {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  idk = undefined;
 	loading: boolean = false;
 	submitted: boolean = false;
 	openQrCode: boolean = false;
@@ -41,6 +43,7 @@ export class HomePage implements OnInit {
   equipments: Observable<Equipment[]>
   filteredEquipments: Observable<Equipment[]>
   locations!: Observable<Location[]>
+  locationNames: string[] = [];
   tags!: Observable<Tag[]>
   rentedEquipmentIds: number[] = [];
   isSelectedTag: boolean[] = [];
@@ -48,12 +51,12 @@ export class HomePage implements OnInit {
   filter: Filter = new Filter();
 
 	constructor(
-    private loadingController: LoadingController,
     public locationService: LocationService,
 		public accountService: AccountService,
     public equipmentService: EquipmentService,
     public rentService: RentService,
     public QrService: QrService,
+    private loadingController: LoadingController,
   ) {
     this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid)
     this.locations = locationService.getAllLocations(this.accountService.user.organizationid)
@@ -68,8 +71,11 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
     this.loading = false;
+    this.rentService.getCurrentActiveRentals(this.accountService.user.organizationid).subscribe(rents=>rents.map(rent => this.rentedEquipmentIds.push(rent.equipmentid)))
     this.loadEquipments()
   }
+
+  @ViewChild(IonModal) modal: IonModal;
 
   async loadEquipments() {
     const loading = await this.loadingController.create({
@@ -128,7 +134,7 @@ export class HomePage implements OnInit {
     return locations.find(item => item.id === equipid);
   }
 
-  handleTagFilterChange(event: any)
+  handleTagFilterChange(event: any) //not is use, currently async task that runs on each tag. Needs refactoring.
   {
       this.filter.tagids = event.target.value
       this.onFilterChanged()
@@ -140,10 +146,27 @@ export class HomePage implements OnInit {
       this.onFilterChanged()
   }
 
+  getLocationName(locationId: number, locations: Location[]): string {
+    const location = locations.find((loc: Location) => loc.id === locationId);
+    return location ? location.name : '';
+  }
+
+  compareWith(o1, o2) {
+    if (!o1 || !o2) {
+      return o1 === o2;
+    }
+
+    if (Array.isArray(o2)) {
+      return o2.some((o) => o.id === o1.id);
+    }
+
+    return o1.id === o2.id;
+  }
+
   handleLocationFilterChange(event: any) {
-    this.filter.locationids = event.target.value;
-    console.log(this.filter.locationids)
-    this.onFilterChanged();
+    const selectedLocations = event.target.value;
+    this.filter.locationids = selectedLocations.map((location: Location) => location.id);
+    this.filter.locationNames = selectedLocations.map((location: Location) => location.name);
   }
 
   async filterOnTags(tag: Tag): Promise<void> {
@@ -159,8 +182,6 @@ export class HomePage implements OnInit {
     this.isSelectedTag = tags.map((tag: Tag) =>
       this.filter.tagids.includes(tag.id)
     );
-
-    this.onFilterChanged();
   }
 
   onFilterChanged()
@@ -169,16 +190,12 @@ export class HomePage implements OnInit {
   }
 
 
-  @ViewChild(IonModal) modal: IonModal;
-
   cancel() {
     this.modal.dismiss(null, 'Avbryt');
   }
 
   confirm() {
-    console.log(this.filter.showAvailable)
     this.onFilterChanged()
-
     this.modal.dismiss(null, 'Bekreft');
   }
 

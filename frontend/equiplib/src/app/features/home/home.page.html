@@ -16,23 +16,37 @@
             <ion-content class="ion-padding">
               <ion-item class="form-item" class="grid-item" color="input-background">
                 <ion-label>Velg lokasjoner</ion-label>
-                <ion-select (change)="handleLocationFilterChange($event)" multiple="true" [(ngModel)]="filter.locationids">
-                  <ion-select-option *ngFor="let location of locations | async" [value]="location.id">
-                    {{ location.name }}
+                <ion-select
+                fill="outline"
+                (ionChange)="handleLocationFilterChange($event)"
+                [compareWith]="compareWith"
+                multiple="true"
+              >
+                  <ion-select-option *ngFor="let location of locations | async" [value]="location">
+                    <ion-list>{{ location.name }}</ion-list>
                   </ion-select-option>
                 </ion-select>
               </ion-item>
+                <ion-item lines="none">
+                  <div *ngFor="let locationName of filter.locationNames">
+                  <ion-chip>
+                    <ion-icon name="locate-outline"></ion-icon>
+                    <ion-label>{{ locationName }}</ion-label>
+                  </ion-chip>
+                </div>
+                </ion-item>
+
               <ion-text>Utstyr status:</ion-text>
               <ion-item>
                 <ion-list>
                   <ion-item>
                     <ion-label>Ledige</ion-label>
-                    <ion-checkbox labelPlacement="end" [(ngModel)]="filter.showAvailable">Label at the Start</ion-checkbox>
+                    <ion-checkbox labelPlacement="end" [(ngModel)]="filter.showAvailable"></ion-checkbox>
                   </ion-item>
 
-                  <ion-item>
+                  <ion-item labelPlacement="end" justify="space-between">
                     <ion-label>Utleide</ion-label>
-                    <ion-checkbox labelPlacement="end" justify="space-between" [(ngModel)]="filter.showRented"></ion-checkbox>
+                    <ion-checkbox  [(ngModel)]="filter.showRented"></ion-checkbox>
                   </ion-item>
 
                   <ion-item>
@@ -48,8 +62,8 @@
               </ion-item>
               <ion-text>Tags:</ion-text>
               <ion-item>
-                <div class="tag-list">
-                  <div class="tag-row">
+                <div>
+                  <div>
                     <app-tag *ngFor="let tag of tags | async; let i = index" name="{{ tag.name }}" color="{{ tag.color }}" [checked]="isSelectedTag[i]" (click)="filterOnTags(tag)"></app-tag>
                   </div>
                 </div>
@@ -59,6 +73,9 @@
 
             <ion-footer>
               <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-icon name="refresh-outline"></ion-icon>
+                </ion-buttons>
                 <ion-buttons slot="end">
                   <ion-button (click)="confirm()" [strong]="true">
                     Vis  <ion-text color="tertiary">12</ion-text>
