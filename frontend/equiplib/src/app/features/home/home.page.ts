@@ -7,7 +7,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { RentService } from 'src/app/services/rent.service';
 import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
-import { AlertController, IonModal, PopoverController } from '@ionic/angular'
+import { AlertController, IonModal, PopoverController, ToastController } from '@ionic/angular'
 import { LoadingController } from '@ionic/angular';
 import {QrService} from 'src/app/services/qr.service';
 import {Idownloadable} from 'src/app/models/downloadable';
@@ -51,7 +51,6 @@ export class HomePage implements OnInit {
   rentedEquipmentIds: number[] = [];
   isSelectedTag: boolean[] = [];
   countAnimationState: 'previous' | 'current' = 'current';
-
   filter: Filter = new Filter();
 
 	constructor(
@@ -61,6 +60,7 @@ export class HomePage implements OnInit {
     public rentService: RentService,
     public QrService: QrService,
     private loadingController: LoadingController,
+    private toastController: ToastController
   ) {
     this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid)
     this.locations = locationService.getAllLocations(this.accountService.user.organizationid)
@@ -127,7 +127,8 @@ export class HomePage implements OnInit {
             const isLocationMatched = filter.locationids.length === 0 || filter.locationids.includes(equipment.locationid);
             const isNameMatched = filter.name === '' || equipment.name.toLowerCase().includes(filter.name.toLowerCase());
             const isStatusMatched = filter.showAvailable || filter.showRented ? (filter.showAvailable && !this.rentedEquipmentIds.includes(equipment.id)) || (filter.showRented && this.rentedEquipmentIds.includes(equipment.id)) : true;
-            return isTagMatched && isLocationMatched && isNameMatched && isStatusMatched;
+            const isActiveMatched = filter.showActive || filter.showDeactivated ? (filter.showActive && equipment.active) || (filter.showDeactivated && !equipment.active) : true;
+            return isTagMatched && isLocationMatched && isNameMatched && isStatusMatched && isActiveMatched;
           });
         })
       );
@@ -135,12 +136,6 @@ export class HomePage implements OnInit {
 
   getLocationForEquipment(equipid: number, locations: Location[]): Location {
     return locations.find(item => item.id === equipid);
-  }
-
-  handleTagFilterChange(event: any) //not is use, currently async task that runs on each tag. Needs refactoring.
-  {
-      this.filter.tagids = event.target.value
-      this.onFilterChanged()
   }
 
   handleSearchFilterChange(event: any)
@@ -182,7 +177,7 @@ export class HomePage implements OnInit {
       this.filter.tagids.push(tag.id);
     }
 
-    const tags = await this.tags.toPromise(); // Extract the value from Observable
+    const tags = await this.tags.toPromise();
 
     this.isSelectedTag = tags.map((tag: Tag) =>
       this.filter.tagids.includes(tag.id)
@@ -196,21 +191,29 @@ export class HomePage implements OnInit {
     this.filteredEquipments.subscribe(equipments => this.filteredEquipmentsCount = equipments.length);
   }
 
-  private animateCountChange(newCount: number) {
-    this.countAnimationState = 'previous';
-    setTimeout(() => {
-      this.filteredEquipmentsCount = newCount;
-      this.countAnimationState = 'current';
-    }, 1000);
+  async presentFilterResetToast() {
+    const toast = await this.toastController.create({
+      message: 'Filtre tilbakestilt',
+      duration: 2000,
+      position: 'top'
+    });
+
+    await toast.present();
   }
 
+  resetFilters()
+  {
+    this.filter = new Filter();
+    this.filteredEquipments = this.equipments
+    this.modal.dismiss(null, 'Bekreft');
+    this.presentFilterResetToast()
+  }
 
   cancel() {
     this.modal.dismiss(null, 'Avbryt');
   }
 
   confirm() {
-    this.onFilterChanged()
     this.modal.dismiss(null, 'Bekreft');
   }
 

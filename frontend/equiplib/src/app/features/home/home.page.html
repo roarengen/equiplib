@@ -9,15 +9,15 @@
                 <ion-buttons slot="start">
                   <ion-button (click)="cancel()"><ion-icon name="close-outline"></ion-icon></ion-button>
                 </ion-buttons>
-                <ion-title>Filtrer</ion-title>
+                <ion-title>Filter</ion-title>
 
               </ion-toolbar>
             </ion-header>
             <ion-content class="ion-padding">
               <ion-item class="form-item" class="grid-item" color="input-background">
-                <ion-label>Velg lokasjoner</ion-label>
                 <ion-select
-                fill="outline"
+                label="Lokasjoner"
+                label-placement="floating"
                 (ionChange)="handleLocationFilterChange($event)"
                 [compareWith]="compareWith"
                 multiple="true"
@@ -70,9 +70,14 @@
 
             <ion-footer>
               <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-button class="reset-button" (click)="resetFilters()" [strong]="true">
+                    Tilbakestill filtre
+                  </ion-button>
+                </ion-buttons>
                 <ion-buttons slot="end">
-                  <ion-button (click)="confirm()" [strong]="true">
-                    Vis&nbsp;<ion-text color="tertiary" [countUp]="filteredEquipmentsCount"></ion-text>&nbsp;Utstyr
+                  <ion-button class="modal-button" (click)="confirm()" [strong]="true">
+                    Vis&nbsp;<ion-text [countUp]="filteredEquipmentsCount"></ion-text>&nbsp;Utstyr
                   </ion-button>
                 </ion-buttons>
               </ion-toolbar>
