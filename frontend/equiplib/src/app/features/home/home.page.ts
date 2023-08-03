@@ -99,7 +99,7 @@ export class HomePage implements OnInit {
   }
 
   downloadAll() {
-    this.equipments.subscribe(equipments => {
+    this.filteredEquipments.subscribe(equipments => {
       const items: Downloadable[] = equipments.map(equipment => {
         const item = new Downloadable();
         item.data = equipment.id.toString();
