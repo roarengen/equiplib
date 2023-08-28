@@ -1,16 +1,16 @@
 import { LocationService } from 'src/app/services/location.service';
 import { Equipment, Tag } from 'src/app/models/equipment';
 import { Observable, map } from 'rxjs';
-import { ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { RentService } from 'src/app/services/rent.service';
 import { AccountService } from 'src/app/services/user.service';
 import { Location } from 'src/app/models/location';
-import { AlertController, IonModal, PopoverController, ToastController } from '@ionic/angular'
+import { IonModal, ToastController } from '@ionic/angular'
 import { LoadingController } from '@ionic/angular';
 import {QrService} from 'src/app/services/qr.service';
 import {Idownloadable} from 'src/app/models/downloadable';
+import { FilterService } from './../../services/filter.service';
 
 
 class Filter {

@@ -47,17 +47,19 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
     this.locations = this.locationService.getAllLocations(this.accountService.user.organizationid)
   }
 
-  ngOnInit() {
-      this.accountService.getById(this.getEquipmentIdService.data.userid.toString()).subscribe(selectedUser =>
-        this.selectUser = selectedUser
-        )
-    this.selectedRental = this.getEquipmentIdService.data;
-    this.selectedEquipment = this.equipmentService.getEquipment(Number(this.getEquipmentIdService.data.equipmentid));
-    this.subscription = this.selectedEquipment.subscribe(equipment => {
-    this.equipmentName = equipment.name;
-    this.equipmentDescription = equipment.description;
-    this.equipmentTags = equipment.tags;
-    });
+  ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.accountService.getById(this.getEquipmentIdService.data.userid).subscribe(selectedUser =>
+      this.selectUser = selectedUser
+      )
+  this.selectedRental = this.getEquipmentIdService.data;
+  this.selectedEquipment = this.equipmentService.getEquipment(Number(this.getEquipmentIdService.data.equipmentid));
+  this.subscription = this.selectedEquipment.subscribe(equipment => {
+  this.equipmentName = equipment.name;
+  this.equipmentDescription = equipment.description;
+  this.equipmentTags = equipment.tags;
+  });
   }
 
   onReturnRental() {

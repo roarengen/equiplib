@@ -1,20 +1,5 @@
 .edit-button {
-    --border-color: var(--ion-color-medium);
-    --border-style: solid;
-    --border-width: 1px;
+    text-decoration: underline;
+    background-color: none;
+    --box-shadow: none;
 }
-.edit-text-color {
-    color: var(--ion-color-light);
-}
-
-.delete-button {
-    --border-color: var(--ion-color-medium);
-    --border-style: solid;
-    --border-width: 1px;
-}
-
-.delete-text-color {
-    color: var(--ion-color-danger);
-}
-
-

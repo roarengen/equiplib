@@ -13,12 +13,12 @@
     <p *ngIf="equipment.other2 && other2name">{{other2name}}: {{equipment.other2}}</p>
     <p *ngIf="equipment.other3 && other3name">{{other3name}}: {{equipment.other3}}</p>
 
-    <div class="button-content">
       <app-edit-button [href]="'/editequipment'" [editButton]="true" [setFilterServiceId]="equipment.id" ></app-edit-button>
-      <app-edit-button [deleteButton]="true" ></app-edit-button>
-  </div>
-        <download-qr
+    <download-qr
+        slot="start"
         [data]="equipment.id.toString()"
         [filename]="equipment.name +'-qrcode.png'" />
+    <button slot="end" routerLink="['/returnrental']"(click)="returnRental()">Returner utstyr</button>
+    <button slot="end" routerLink="['/registerrental']" (click)="registerRental()" >Registrer utstyr</button>
   </div>
 </ion-accordion>

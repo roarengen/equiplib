@@ -65,7 +65,6 @@ export class QrScannerPage implements OnInit {
 
         if (foundRent && !this.scannerIsEnabled) {
           this.FilterService.data = foundRent;
-          console.log(this.FilterService.data)
           const alert = await this.alertController.create({
             header: 'Vil du returnere utleien?',
             buttons: [
@@ -89,10 +88,10 @@ export class QrScannerPage implements OnInit {
         } else if (!foundRent && foundEquip) {
           this.FilterService.data = scanValue;
           const alert = await this.alertController.create({
-            header: 'Vil du registrere ny utleie eller endre lokasjonen på utstyret?',
+            header: 'Vil du registrere ny utleie?',
             buttons: [
               {
-                text: 'Endre lokasjon',
+                text: 'Nei',
                 handler: () => {
                   alert.dismiss();
                 }

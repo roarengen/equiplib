@@ -27,7 +27,11 @@ import { CountUpModule } from 'ngx-countup';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot(
+      {
+        mode: 'md'
+      }
+    ),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

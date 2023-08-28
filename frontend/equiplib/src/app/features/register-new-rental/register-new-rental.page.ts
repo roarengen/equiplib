@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, NgZone } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Rent } from 'src/app/models/rent';
 import { Equipment } from './../../models/equipment';
@@ -17,7 +17,6 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./register-new-rental.page.scss'],
 })
 export class RegisterNewRentalPage implements OnInit, OnDestroy {
-  form!: FormGroup;
   equipmentName: string;
   equipmentDescription: string;
   equipmentTags: any;
@@ -26,15 +25,23 @@ export class RegisterNewRentalPage implements OnInit, OnDestroy {
   public newRental: Rent = new Rent();
   private subscription: Subscription = new Subscription();
 
+  form = this.formBuilder.group({
+    userid: ['', [Validators.required]],
+  })
+
   constructor(
+    private formBuilder: FormBuilder,
     private toastController: ToastController,
     public getEquipmentIdService: FilterService,
     public accountService: AccountService,
     public equipmentService: EquipmentService,
-    public rentalService: RentService
+    public rentalService: RentService,
+    public ngZone: NgZone
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter() {
     this.selectUser = this.accountService.getAll();
     this.selectedEquipment = this.equipmentService.getEquipment(Number(this.getEquipmentIdService.data));
     this.subscription = this.selectedEquipment.subscribe(equipment => {
@@ -45,11 +52,6 @@ export class RegisterNewRentalPage implements OnInit, OnDestroy {
     this.equipmentTags = equipment.tags;
     });
   }
-
-  Ulriksløøp() {
-    const i = 1;
-    while (i < 1) {
-  }}
 
   onSubmitNewRental() {
     if (this.accountService.user.roleid > 1) {
