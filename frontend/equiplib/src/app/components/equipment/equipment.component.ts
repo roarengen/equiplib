@@ -17,12 +17,18 @@ export class EquipmentComponent  implements OnInit {
 
   @Input() public equipment: Equipment;
   @Input() public location?: Location;
+  @Input() public rent?: Rent;
   @Input() public isCurrentlyAvailable: boolean;
+  public timeUntilExpired: number;
+  public isExpiredReturnDate: Boolean;
+  public isCloseReturnDate: Boolean;
+  public showAllTags: Boolean;
 
   public other1name?: string
   public other2name?: string
   public other3name?: string
-  public idk: Observable<Rent>
+  public currentDate: Date = new Date();
+  public fetchrent: Observable<Rent>
   constructor(
     public router: Router,
     public accountService: AccountService,
@@ -35,10 +41,32 @@ export class EquipmentComponent  implements OnInit {
     this.other3name = accountService.template?.equipOther3 || null
   }
 
-  returnRental() {
-    this.idk = this.rentService.fetchRentByEquipmentId(this.equipment.id);
 
-    this.idk.subscribe(w => {
+  ngOnInit() {
+    this.checkRentalStatus();
+  }
+
+
+  checkRentalStatus() {
+    if (!this.isCurrentlyAvailable) {
+    this.fetchrent = this.rentService.fetchRentByEquipmentId(this.equipment.id);
+    this.fetchrent.subscribe(w => {
+      const validToDate = new Date(w.rentedValidToDate);
+      if (validToDate < this.currentDate && w.rentedValidToDate != null) {
+          this.isExpiredReturnDate = true;
+      }
+      this.timeUntilExpired = Math.round(Math.abs(this.currentDate.getTime() - validToDate.getTime()) / 36e5)
+      if (this.currentDate < validToDate && this.timeUntilExpired < 48 && w.rentedValidToDate != null) {
+        this.isCloseReturnDate = true;
+      }
+    }
+    )
+  }
+  }
+
+  returnRental() {
+    this.fetchrent = this.rentService.fetchRentByEquipmentId(this.equipment.id);
+    this.fetchrent.subscribe(w => {
       this.filterRentalService.data = w;
       console.log(this.filterRentalService.data);
       this.router.navigate(['/returnrental']);
@@ -51,6 +79,7 @@ export class EquipmentComponent  implements OnInit {
     this.router.navigate(['/registerrental'])
   }
 
-  ngOnInit() {}
-
+  showTags() {
+    this.showAllTags = true;
+  }
 }
