@@ -63,8 +63,6 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
   }
 
   onReturnRental() {
-    if (this.accountService.user.roleid <= 1) return
-
     this.rentalService.returnRental(
       {
         rentid: this.selectedRental.id,
@@ -74,13 +72,13 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
       }
     ).subscribe({
       next: () => this.presentToast().then(() => this.router.navigateByUrl('home')),
-      error: (err) => {console.log(err);this.presentErrorToast()}}
+      error: (err) => {console.log(err);this.presentErrorToast().then(() => this.router.navigateByUrl('home'))}}
     )
   }
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: '<span><img src="../../../assets/icons/return-rental.svg"></img> <p>Utstyret er returnert!</p></span>',
+      message: 'Utstyret er returnert.',
       duration: 2000,
       position: 'top'
     });
@@ -90,7 +88,7 @@ export class ReturnRentalPage implements OnInit, OnDestroy {
 
   async presentErrorToast() {
     const toast = await this.toastController.create({
-      message: ' <span><img src="../../../assets/icons/warning-icon.svg"> <p>Noe gikk galt! Utstyr ble ikke returnert.</p>',
+      message: 'Noe gikk galt! Utstyr ble ikke returnert.',
       duration: 5000,
       position: 'top',
     });

@@ -1,4 +1,12 @@
 <ion-content class="ion-padding">
+
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content
+
+      >
+      </ion-refresher-content>
+    </ion-refresher>
+
   <ion-item-group style="margin-top: 3rem" *ngIf="{ filteredEquipments: filteredEquipments | async, locations: locations | async } as observables">
     <ion-list>
       <ion-item>
@@ -10,9 +18,9 @@
                   <ion-button (click)="cancel()"><ion-icon name="close-outline"></ion-icon></ion-button>
                 </ion-buttons>
                 <ion-title>Filter</ion-title>
-
               </ion-toolbar>
             </ion-header>
+
             <ion-content class="ion-padding">
               <ion-item class="form-item" class="grid-item" color="input-background">
                 <ion-select
@@ -99,6 +107,7 @@
           [equipment]="equipment"
           [isCurrentlyAvailable]="!rentedEquipmentIds.includes(equipment.id)"
           [location]="getLocationForEquipment(equipment.locationid, observables.locations)"
+
         ></app-equipment>
       </ion-accordion-group>
     </ion-list>

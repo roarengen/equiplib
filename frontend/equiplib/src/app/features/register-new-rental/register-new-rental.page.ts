@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, NgZone } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Rent } from 'src/app/models/rent';
 import { Equipment } from './../../models/equipment';
@@ -24,10 +24,7 @@ export class RegisterNewRentalPage implements OnInit, OnDestroy {
   public selectUser: Observable<User[]>;
   public newRental: Rent = new Rent();
   private subscription: Subscription = new Subscription();
-
-  form = this.formBuilder.group({
-    userid: ['', [Validators.required]],
-  })
+  public form: Form;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,8 +55,8 @@ export class RegisterNewRentalPage implements OnInit, OnDestroy {
       this.newRental.rentedFromDate = new Date;
       this.newRental.rentedFromUserid = this.accountService.user.id;
       this.newRental.userid = this.newRental.userid;
-      console.log(this.newRental)
       this.rentalService.addRental(this.newRental).subscribe()
+      console.log(this.newRental.rentedValidToDate)
       this.presentToast()
     }
   }

@@ -1,24 +1,42 @@
 <ion-accordion value="{{equipment.name}}">
   <ion-item slot="header">
-    <ion-label class="accordion-title">{{equipment.name}}<p style="color:#FF5722"
-        *ngIf="!isCurrentlyAvailable">Utleid</p></ion-label>
+    <ion-label class="accordion-title">
+      {{ equipment.name }}
+      <div class="status-container" *ngIf="!isCurrentlyAvailable" >
+        <p class="status-message">Utleid</p>
+        <p *ngIf="isCloseReturnDate" class="status-message">
+          <ion-icon name="time" color="tertiary"></ion-icon>&nbsp;{{ this.timeUntilExpired }}
+        </p>
+        <p *ngIf="isExpiredReturnDate" class="status-message">
+          <ion-icon color="tertiary" name="alert-circle-outline"></ion-icon>&nbsp;Utgått
+        </p>
+      </div>
+    </ion-label>
   </ion-item>
+
   <div class="ion-padding accordion-description" slot="content">
+    <p class="accordion-text"><ion-icon name="location-outline"></ion-icon>&nbsp; <b>Lokasjon:</b> {{location?.name || "Ingen satt lokasjon"}}</p>
+
+    <p style="text-decoration:underline" (click)="showTags()">Vis tags  </p>
+    <p style="text-decoration:underline" (click)="showTags()">Vis detaljer</p>
+
+    <ion-item *ngIf="this.showAllTags">
     <app-tag *ngFor="let tag of equipment.tags" name="{{tag.name}}" color="{{tag.color}}"></app-tag>
+    </ion-item>
     <p *ngIf="equipment.serialnumber">Serienummer: {{equipment.serialnumber}}</p>
     <p *ngIf="equipment.description">Beskrivelse:</p>
     <p>{{equipment.description}}</p>
-    <p class="accordion-text">Lokasjon: {{location?.name || "Ingen satt lokasjon"}}</p>
     <p *ngIf="equipment.other1 && other1name">{{other1name}}: {{equipment.other1}}</p>
     <p *ngIf="equipment.other2 && other2name">{{other2name}}: {{equipment.other2}}</p>
     <p *ngIf="equipment.other3 && other3name">{{other3name}}: {{equipment.other3}}</p>
+
+    <ion-button  slot="end" routerLink="['/returnrental']" (click)="returnRental()">Returner utleie</ion-button>
+    <ion-button  slot="end" routerLink="['/registerrental']" (click)="registerRental()" >Registrer utleie</ion-button>
 
       <app-edit-button [href]="'/editequipment'" [editButton]="true" [setFilterServiceId]="equipment.id" ></app-edit-button>
     <download-qr
         slot="start"
         [data]="equipment.id.toString()"
         [filename]="equipment.name +'-qrcode.png'" />
-    <button slot="end" routerLink="['/returnrental']"(click)="returnRental()">Returner utstyr</button>
-    <button slot="end" routerLink="['/registerrental']" (click)="registerRental()" >Registrer utstyr</button>
   </div>
 </ion-accordion>

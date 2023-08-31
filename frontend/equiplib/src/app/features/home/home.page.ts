@@ -10,8 +10,6 @@ import { IonModal, ToastController } from '@ionic/angular'
 import { LoadingController } from '@ionic/angular';
 import {QrService} from 'src/app/services/qr.service';
 import {Idownloadable} from 'src/app/models/downloadable';
-import { FilterService } from './../../services/filter.service';
-
 
 class Filter {
   tagids: number[] = [];
@@ -42,16 +40,16 @@ export class HomePage implements OnInit {
 	openQrCode: boolean = false;
 	enterPinCode: boolean = false;
 	QrCode!: string;
+  locationNames: string[] = [];
+  rentedEquipmentIds: number[] = [];
+  filter: Filter = new Filter();
+  isSelectedTag: boolean[] = [];
+  filteredEquipmentsCount: number;
+  countAnimationState: 'previous' | 'current' = 'current';
   equipments: Observable<Equipment[]>
   filteredEquipments: Observable<Equipment[]>
-  filteredEquipmentsCount: number;
   locations!: Observable<Location[]>
-  locationNames: string[] = [];
   tags!: Observable<Tag[]>
-  rentedEquipmentIds: number[] = [];
-  isSelectedTag: boolean[] = [];
-  countAnimationState: 'previous' | 'current' = 'current';
-  filter: Filter = new Filter();
 
 	constructor(
     public locationService: LocationService,
@@ -74,8 +72,10 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.rentedEquipmentIds = [];
     this.loading = false;
     this.rentService.getCurrentActiveRentals(this.accountService.user.organizationid).subscribe(rents=>rents.map(rent => this.rentedEquipmentIds.push(rent.equipmentid)))
+    this.onFilterChanged();
     this.loadEquipments()
   }
 
@@ -92,10 +92,24 @@ export class HomePage implements OnInit {
     try {
       await loading.present();
       this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid);
+
+      this.equipments = this.equipments.pipe(
+        map(equipments => {
+          return equipments.sort((a, b) => a.name.localeCompare(b.name));
+        })
+      );
+
       this.filteredEquipments = this.equipments;
     } finally {
       loading.dismiss();
     }
+  }
+
+  handleRefresh(event) {
+    setTimeout(() => {
+      this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid);
+      event.target.complete();
+    }, 2000);
   }
 
   downloadAll() {
@@ -122,7 +136,7 @@ export class HomePage implements OnInit {
     getFilteredEquipment(filter: Filter): Observable<Equipment[]> {
       return this.equipments.pipe(
         map(equipments => {
-          return equipments.filter(equipment => {
+          const filteredEquipments = equipments.filter(equipment => {
             const isTagMatched = filter.tagids.length === 0 || equipment.tags.some(tag => filter.tagids.includes(tag.id));
             const isLocationMatched = filter.locationids.length === 0 || filter.locationids.includes(equipment.locationid);
             const isNameMatched = filter.name === '' || equipment.name.toLowerCase().includes(filter.name.toLowerCase());
@@ -130,6 +144,7 @@ export class HomePage implements OnInit {
             const isActiveMatched = filter.showActive || filter.showDeactivated ? (filter.showActive && equipment.active) || (filter.showDeactivated && !equipment.active) : true;
             return isTagMatched && isLocationMatched && isNameMatched && isStatusMatched && isActiveMatched;
           });
+          return filteredEquipments.sort((a, b) => a.name.localeCompare(b.name));
         })
       );
     }

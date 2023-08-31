@@ -21,6 +21,10 @@ ion-fab-button {
   --box-shadow: none;
 }
 
+ion-refresher ion-refresher-content {
+  background: #000;
+ --color:#FFF!important;
+}
 
 ion-tab-bar {
   padding-top: 10px;

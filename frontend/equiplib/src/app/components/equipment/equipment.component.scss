@@ -9,3 +9,15 @@ button.button-qr {
     height: 50px;
     background-color: transparent;
 }
+
+.status-container {
+  color: var(--ion-color-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.status-message {
+  margin-right: 10px;
+}
