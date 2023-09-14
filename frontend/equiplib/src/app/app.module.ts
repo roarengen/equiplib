@@ -21,6 +21,7 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
   imports: [
     BrowserModule,
     NgxGoogleAnalyticsModule.forRoot('G-WWHZTF89EY'),
+    NgxGoogleAnalyticsModule.forRoot('G-3NG1HMR08D'),
     NgxGoogleAnalyticsRouterModule,
     CountUpModule,
     FormsModule,
