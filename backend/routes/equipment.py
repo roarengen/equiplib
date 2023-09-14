@@ -1,4 +1,4 @@
-from backend.models.location import Location
+from models.location import Location
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.logger import logger
 from sqlalchemy.orm import Session

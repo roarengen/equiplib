@@ -1,4 +1,4 @@
-from backend.models.location import Location
+from models.location import Location
 from sqlalchemy.orm import Session, joinedload
 from models.tag import TagCreate
 from schemas.equipment import Tag
