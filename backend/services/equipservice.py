@@ -1,3 +1,4 @@
+from backend.models.location import Location
 from sqlalchemy.orm import Session, joinedload
 from models.tag import TagCreate
 from schemas.equipment import Tag
@@ -21,6 +22,9 @@ def get_tag_by_id(db: Session, tagid: int) -> Tag | None:
 
 def get_tags_by_orgid(db: Session, orgid: int):
     return db.query(Tag).where(Tag.organizationid == orgid).all()
+
+def get_location_by_equipid(db: Session, equipid: int) -> Location | None:
+    return db.query(Location).where(Equipment.locationid == Location.id).filter(Equipment.id == equipid)
 
 def remove_equip(db: Session, id: int) -> None:
     db.delete(db.query(Equipment).filter(Equipment.id == id).first())

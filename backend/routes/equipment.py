@@ -1,3 +1,4 @@
+from backend.models.location import Location
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.logger import logger
 from sqlalchemy.orm import Session
@@ -68,6 +69,14 @@ def disable_tag(tagid: int, db: Session = Depends(get_db)):
         return HTTPException(404, "tag not found")
     
     return tag
+
+@api.get("/getlocation/{equipid}", response_model=Location, dependencies=[Depends(require_user_to_be_in_org)])
+def get_location_for_equipment(equipid: int, db: Session = Depends(get_db)):
+    equip = crud.get_location_by_equipid(db, equipid)
+    if not equip:
+        return HTTPException(404, "location not found")
+    
+    return equip
 
 @api.get("/tag/{tagid}/enable", response_model=Tag, dependencies=[Depends(require_admin)])
 def enable_tag(tagid: int, db: Session = Depends(get_db)):
