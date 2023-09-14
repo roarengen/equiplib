@@ -12,19 +12,22 @@ import { IonicModule } from '@ionic/angular';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { CountUpModule } from 'ngx-countup';
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    BrowserModule,
+    NgxGoogleAnalyticsModule.forRoot('G-WWHZTF89EY'),
+    NgxGoogleAnalyticsRouterModule,
     CountUpModule,
     FormsModule,
     ColorPickerModule,
     HttpClientModule,
     RouterModule,
     ReactiveFormsModule,
-    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(
