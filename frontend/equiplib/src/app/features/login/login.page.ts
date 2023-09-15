@@ -70,7 +70,13 @@ export class LoginPage implements OnInit {
 					this.accountService.getTemplate(login.user.organizationid).subscribe(
 						template => { this.accountService.template = template}
 					)
+          if ( this.accountService.user.roleid > 1) {
 					this.router.navigateByUrl('home')
+          }
+
+          if ( this.accountService.user.roleid === 1) {
+            this.router.navigateByUrl('user-page')
+            }
 				},
         error: () => {
           this.invalidCredentials = true;

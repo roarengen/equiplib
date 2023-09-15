@@ -92,7 +92,6 @@ export class HomePage implements OnInit {
     try {
       await loading.present();
       this.equipments = this.equipmentService.getAllEquipment(this.accountService.user.organizationid);
-
       this.equipments = this.equipments.pipe(
         map(equipments => {
           return equipments.sort((a, b) => a.name.localeCompare(b.name));

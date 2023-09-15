@@ -16,6 +16,7 @@ import { EditEquipmentPage } from './features/edit-equipment/edit-equipment.page
 import { EditUserPage } from './features/edit-user/edit-user.page';
 import { QrScannerLoginPage } from './features/qr-scanner-login/qr-scanner-login.page';
 import { EditTagComponent } from './features/edit-tag/edit-tag.component';
+import { UserPage } from './features/user-page/user-page.page';
 
 const routes: Routes = [
   {
@@ -38,12 +39,16 @@ const routes: Routes = [
       { path: 'home', component: HomePage, },
       { path: 'registerrental', component: RegisterNewRentalPage, },
       { path: 'returnrental', component: ReturnRentalPage, },
+      { path: 'user-page', component: UserPage },
     ]
   },
   { path: 'qrscanner', component: QrScannerPage},
   { path: 'qrloginscanner', component: QrScannerLoginPage},
   { path: 'login', component: LoginPage},
   { path: 'reset-password', component: ResetPasswordComponent},
+
+
+
 ];
 
 @NgModule({

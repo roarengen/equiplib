@@ -26,6 +26,9 @@ def get_tags_by_orgid(db: Session, orgid: int):
 def get_location_by_equipid(db: Session, equipid: int) -> Location | None:
     return db.query(Location).where(Equipment.locationid == Location.id).filter(Equipment.id == equipid)
 
+def get_location_by_equipid(db: Session, equipid: int) -> Location | None:
+    return db.query(Location).where(Equipment.locationid == Location.id).filter(Equipment.id == equipid)
+
 def remove_equip(db: Session, id: int) -> None:
     db.delete(db.query(Equipment).filter(Equipment.id == id).first())
 

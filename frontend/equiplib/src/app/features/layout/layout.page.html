@@ -20,12 +20,20 @@
     </ion-header>
     <ion-content class="ion-padding">
       <div class="flex-wrapper">
-      <ion-list>
+      <ion-list *ngIf="this.accountService.user.roleid > 1">
         <ion-item class="clickable ion-activatable">
           <ion-menu-toggle>
           <button color="primary" ion-button size="large" [routerLink]="['/home']" class="clickable ion-activatable">
             <ion-icon src="../../../assets/icons/box-search.svg"></ion-icon>
             Hjem
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/user-page']"class="clickable ion-activatable">
+            <ion-icon color="tertiary" name="access"></ion-icon>
+            Min side
           </button>
         </ion-menu-toggle>
         </ion-item>
@@ -63,6 +71,37 @@
           </ion-menu-toggle>
           </ion-item>
       </ion-list>
+
+      <ion-list *ngIf="this.accountService.user.roleid == 1">
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/home']" class="clickable ion-activatable">
+            <ion-icon src="../../../assets/icons/box-search.svg"></ion-icon>
+            Hjem
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/user-page']"class="clickable ion-activatable">
+            <ion-icon color="tertiary" name="access"></ion-icon>
+            Min side
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+
+        <ion-item class="clickable ion-activatable">
+          <ion-menu-toggle>
+          <button color="primary" ion-button size="large" [routerLink]="['/qrscanner']"class="clickable ion-activatable">
+            <ion-icon color="tertiary" name="qr-code-outline"></ion-icon>
+            Scanner
+          </button>
+        </ion-menu-toggle>
+        </ion-item>
+
+      </ion-list>
+
       <ion-item lines="none" class="clickable ion-activatable">
           <ion-menu-toggle>
           <button color="primary" ion-button size="large" [routerLink]="['/login']"class="clickable ion-activatable" (click)="this.accountService.logout()">
@@ -77,7 +116,7 @@
 <div class="main-router-content">
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </div>
-<ion-tabs>
+<ion-tabs *ngIf="accountService.user.roleid > 1">
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="home">
       <ion-icon src="../../../assets/icons/box-search.svg"></ion-icon>
@@ -93,4 +132,22 @@
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
+
+<ion-tabs *ngIf="accountService.user.roleid == 1">
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon src="../../../assets/icons/box-search.svg"></ion-icon>
+      Hjem
+    </ion-tab-button>
+    <ion-tab-button tab="qrscanner" color="secondary-contrast">
+      <ion-icon name="person-outline"></ion-icon>
+      Min side
+    </ion-tab-button>
+    <ion-tab-button tab="manageequipment" >
+      <ion-icon name="chatbox-outline"></ion-icon>
+      Meldinger
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
 </ion-app>

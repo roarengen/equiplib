@@ -19,7 +19,7 @@ export class RentService {
 
     fetchRentsByUserId(userid: number)
     {
-        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/${userid}`)
+        return this.http.get<Rent[]>(`${environment.apiUrl}/rents/by_user/${userid}`)
     }
 
     fetchRentByEquipmentId(equipid: number)
