@@ -17,6 +17,9 @@ def get_equips_by_name(db: Session, name: str) -> list[Equipment]:
 def get_equips_by_org_id(db: Session, orgid: int) -> list[Equipment]:
     return db.query(Equipment).filter(Equipment.organizationid == orgid).all()
 
+def get_equips_by_ids(db: Session, equipids: list) -> list[Equipment]:
+    return db.query(Equipment).filter(Equipment.equipid.in_(equipids)).all()
+
 def get_tag_by_id(db: Session, tagid: int) -> Tag | None:
     return db.query(Tag).filter(Tag.id == tagid).first()
 

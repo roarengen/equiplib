@@ -9,9 +9,9 @@
     text-align: center;
     padding-right: 71px;
     padding-top: 7.5px;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
 ion-fab-button {
