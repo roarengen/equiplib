@@ -39,14 +39,6 @@ def get_equip(id: int, db : Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="equip not found")
     return equip
 
-@api.get("/{idlist}", response_model=list[Equipment])
-def get_equip_by_ids(idlist: list[int], db : Session = Depends(get_db)):
-    equip = crud.get_equips_by_ids(db, idlist)
-    if not equip:
-        logger.debug(f"requested equipments with ids: {idlist} but were not found")
-        raise HTTPException(status_code=404, detail="equips not found")
-    return equip
-
 @api.post("/", response_model=Equipment, dependencies=[Depends(require_admin)])
 def post_equip(equipment: EquipmentCreate, db : Session = Depends(get_db)):
     all_equips = crud.get_equips_by_org_id(db, equipment.organizationid)
