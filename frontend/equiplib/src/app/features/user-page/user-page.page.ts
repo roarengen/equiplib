@@ -31,10 +31,8 @@ export class UserPage {
       this.selectedUserRentals = this.rentService.fetchRentsByUserId(this.accountService.user.id)
       this.selectedUserRentals.subscribe(rentals => {
         const equipIds = rentals.map(rental => rental.equipmentid)
-
-
-        this.selectedRentalsEquipmentInfo = this.equipmentService.getEq
+        this.selectedRentalsEquipmentInfo = this.equipmentService.getMultipleEquipment(equipIds)
+        console.log(this.selectedRentalsEquipmentInfo)
       })
     }
-
 }
