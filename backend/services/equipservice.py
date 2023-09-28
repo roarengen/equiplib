@@ -25,11 +25,11 @@ def get_tag_by_id(db: Session, tagid: int) -> Tag | None:
 
 def get_tags_by_orgid(db: Session, orgid: int):
     return db.query(Tag).where(Tag.organizationid == orgid).all()
-
+'''
 def get_location_by_equipid(db: Session, equipid: int) -> Location | None:
     equip = db.query(Equipment).where(Equipment.id == equipid).first()
     return db.query(Location).where(Location.id == equip.locationid).first()
-
+'''
 def remove_equip(db: Session, id: int) -> None:
     db.delete(db.query(Equipment).filter(Equipment.id == id).first())
 

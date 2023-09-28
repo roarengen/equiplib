@@ -83,7 +83,7 @@ def get_location_for_equipment(equipid: int, db: Session = Depends(get_db)):
         return HTTPException(404, "location not found")
     
     return equip
-
+'''
 @api.get("/tag/{tagid}/enable", response_model=Tag, dependencies=[Depends(require_admin)])
 def enable_tag(tagid: int, db: Session = Depends(get_db)):
     tag = crud.enable_tag(db, tagid)
@@ -91,7 +91,7 @@ def enable_tag(tagid: int, db: Session = Depends(get_db)):
         return HTTPException(404, "tag not found")
     
     return tag
-
+'''
 @api.get("/tags/{orgid}", response_model=list[Tag], dependencies=[Depends(require_admin)])
 def get_tags_by_orgid(orgid: int, db: Session = Depends(get_db)):
     return crud.get_tags_by_orgid(db, orgid)
